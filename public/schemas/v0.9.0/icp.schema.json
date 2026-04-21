@@ -1,0 +1,876 @@
+{
+  "$defs": {
+    "IcpAdditionalNeed": {
+      "additionalProperties": false,
+      "description": "Additional need entry for a derived ICP override.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object"
+    },
+    "IcpAntiIcp": {
+      "additionalProperties": false,
+      "description": "Anti-ICP definition.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "exclusions": {
+          "items": {
+            "$ref": "#/$defs/IcpExclusion"
+          },
+          "type": "array"
+        },
+        "explicit_non_exclusions": {
+          "items": {
+            "$ref": "#/$defs/IcpNonExclusion"
+          },
+          "type": "array"
+        },
+        "qualifying_criterion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "type": "object"
+    },
+    "IcpBudget": {
+      "additionalProperties": false,
+      "description": "ICP budget information.",
+      "properties": {
+        "base_price": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "enterprise_price": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "willingness_to_pay": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpBuyingBehavior": {
+      "additionalProperties": false,
+      "description": "ICP buying behavior.",
+      "properties": {
+        "budget": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IcpBudget"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "compliance_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "compliance_requirements": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "decision_maker": {
+          "description": "Who signs the purchase (e.g. `\"Founder / CEO\"`, `\"CFO with CTO\ninfluence\"`). Optional because many SMB and PLG motions have no\nclearly separate decision-maker from the user.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "decision_process": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "discovery_channels": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IcpDiscoveryChannels"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpCustom": {
+      "description": "Typed custom extension data for `Icp`.",
+      "properties": {
+        "buying_behavior_detail": {
+          "description": "Buying-behavior detail with regional breakdown or other free-form\nstructure. Prefer the typed `Icp.buying_behavior` field for the\ncore shape (decision maker, process, compliance, budget,\ndiscovery channels). This slot is the escape hatch for regional\ndeltas and ICP-specific extensions that don't fit the typed\nschema. Overlaps in concept with `IcpBuyingBehavior` and\n`IcpDiscoveryChannels` — do not duplicate data that is already\ncaptured there."
+        },
+        "data_sovereignty": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "speed_asymmetry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpDiscoveryChannels": {
+      "additionalProperties": false,
+      "description": "ICP discovery channels configuration.",
+      "properties": {
+        "awareness_to_conversion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "community": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "content": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "direct": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "executive_network": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partnership_channel": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IcpPartnershipChannel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vc_portfolio": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "IcpExclusion": {
+      "additionalProperties": false,
+      "description": "An exclusion entry in the anti-ICP definition.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object"
+    },
+    "IcpGeography": {
+      "additionalProperties": false,
+      "description": "Geographic focus.",
+      "properties": {
+        "primary": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "secondary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "primary"
+      ],
+      "type": "object"
+    },
+    "IcpMotivation": {
+      "additionalProperties": false,
+      "description": "Motivation override for a derived ICP.",
+      "properties": {
+        "emotional": {
+          "description": "Emotional subtext — the feeling the product resolves, not the\nutility (e.g. `\"Agency restored after layoff\"`). Kept distinct\nfrom functional motivations because it drives messaging tone.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "primary": {
+          "description": "Primary motivation driving adoption (e.g. `\"Build a sustainable\nsolo business without a cofounder\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "secondary": {
+          "description": "Secondary motivation that reinforces the primary (e.g. `\"Avoid\nthe employer drift that pushed them out\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpNonExclusion": {
+      "additionalProperties": false,
+      "description": "An explicit non-exclusion in the anti-ICP definition.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "IcpOverrides": {
+      "additionalProperties": false,
+      "description": "Override fields for a derived ICP.",
+      "properties": {
+        "additional_needs": {
+          "items": {
+            "$ref": "#/$defs/IcpAdditionalNeed"
+          },
+          "type": "array"
+        },
+        "budget_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "motivation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IcpMotivation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prior_context": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IcpPriorContext"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sub_segment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sub_segment_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpPainPoint": {
+      "additionalProperties": false,
+      "description": "ICP pain point definition (superset for singular and layered variants).",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "not_the_pain": {
+          "description": "Positioning clarification — what users might *think* is the pain\nbut isn't. Used to sharpen messaging against common misreads\n(\"they think the problem is X; it's actually Y\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "primary": {
+          "type": "string"
+        },
+        "secondary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "secondary_description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tertiary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tertiary_description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "primary",
+        "description"
+      ],
+      "type": "object"
+    },
+    "IcpPartnershipChannel": {
+      "additionalProperties": false,
+      "description": "Partnership channel within ICP discovery channels.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mechanism": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "IcpPriorContext": {
+      "additionalProperties": false,
+      "description": "Prior context for a derived ICP override.",
+      "properties": {
+        "layoff_context": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prior_employer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prior_role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IcpPriority": {
+      "description": "ICP priority level.",
+      "enum": [
+        "co-primary",
+        "primary",
+        "secondary",
+        "tertiary"
+      ],
+      "type": "string"
+    },
+    "IcpStageRange": {
+      "additionalProperties": false,
+      "description": "Stage range for an ICP segment.",
+      "properties": {
+        "end": {
+          "description": "Ending stage (inclusive). Same shape as `start`.",
+          "type": "string"
+        },
+        "rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "description": "Starting stage (inclusive). Free-form because real ICPs mix\ncompany stages (`pre-seed`, `seed`, `series-a`) with descriptive\nbands (`\"pre-incorporation\"`, `\"established 50-500 employees\"`).\nPrefer kebab-case stage slugs where they apply.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object"
+    },
+    "IcpStatus": {
+      "description": "ICP lifecycle status.",
+      "enum": [
+        "active",
+        "inactive",
+        "deprecated"
+      ],
+      "type": "string"
+    },
+    "IcpSubSegment": {
+      "additionalProperties": false,
+      "description": "ICP sub-segment definition.",
+      "properties": {
+        "demographics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SubSegmentDemographics"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phase": {
+          "description": "GTM phase this sub-segment belongs to. Small integer `[1, 5]`.\nPhase 1 is the first-to-target cohort; higher phases activate\nas the product matures (post-PMF expansion, vertical-adjacent).",
+          "format": "int64",
+          "maximum": 5,
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "phase_label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "psychographics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SubSegmentPsychographics"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object"
+    },
+    "IcpVertical": {
+      "additionalProperties": false,
+      "description": "Vertical market focus phases.",
+      "properties": {
+        "phase_1": {
+          "type": "string"
+        },
+        "phase_1_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phase_2": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phase_2_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phase_2_trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "phase_1"
+      ],
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "SubSegmentDemographics": {
+      "additionalProperties": false,
+      "description": "Demographics for an ICP sub-segment.",
+      "properties": {
+        "age_range": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "company_size": {
+          "description": "Typical company size for this sub-segment. Free-form to capture\nemployee ranges (`\"1-10\"`, `\"50–500 employees\"`) or descriptive\nbands (`\"solo\"`, `\"solo to small teams\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prior_employer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "prior_role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "SubSegmentPsychographics": {
+      "additionalProperties": false,
+      "description": "Psychographics for an ICP sub-segment.",
+      "properties": {
+        "conversion_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "motivation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "risk_tolerance": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tool_adoption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ValueProgressionStage": {
+      "additionalProperties": false,
+      "description": "A stage in the ICP value progression.",
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "value"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.0/icp.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Ideal Customer Profile.",
+  "properties": {
+    "anti_icp": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpAntiIcp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "as_of": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "bdr_reference": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "buying_behavior": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpBuyingBehavior"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "discovery_channels_additional": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "geography": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpGeography"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "inheritance_note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "inherits_from": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "market_sizing_note": {
+      "description": "ICP-specific note about how this segment fits into TAM/SAM/SOM —\nsegment share, expected ACV, conversion assumptions. Keeps the\nlink between an ICP and the market-sizing model without duplicating\nthe sizing numbers here.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "overrides": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpOverrides"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pain_point": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpPainPoint"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Singular pain point (founder ICP shape). Legacy naming from\nsingle-pain ICP definitions. Prefer the plural `pain_points` form\nin new ICPs; both exist to accommodate the two historical shapes."
+    },
+    "pain_points": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpPainPoint"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Layered pain points (leadership ICP shape). Despite the plural\nname, the value is still an `IcpPainPoint` which already carries\n`primary` / `secondary` / `tertiary` slots."
+    },
+    "priority": {
+      "$ref": "#/$defs/IcpPriority"
+    },
+    "rationale": {
+      "description": "Rationale for why this ICP was chosen — typically references the\nstrategic logic (market pull, founder fit, distribution advantage)\nand should pair with `bdr_reference` where a decision record exists.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "references": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "stage_range": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpStageRange"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/IcpStatus"
+    },
+    "sub_segments": {
+      "items": {
+        "$ref": "#/$defs/IcpSubSegment"
+      },
+      "type": "array"
+    },
+    "value_progression": {
+      "additionalProperties": {
+        "$ref": "#/$defs/ValueProgressionStage"
+      },
+      "description": "Value progression — keys are stage names (e.g. pre_seed, adoption).",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "vertical": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IcpVertical"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "priority",
+    "as_of",
+    "status",
+    "description"
+  ],
+  "title": "Icp",
+  "type": "object"
+}

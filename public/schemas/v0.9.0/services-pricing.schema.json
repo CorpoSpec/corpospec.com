@@ -1,0 +1,274 @@
+{
+  "$defs": {
+    "CapacityConstraints": {
+      "additionalProperties": false,
+      "description": "Capacity constraints for professional services.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_concurrent_engagements": {
+          "description": "Hard upper bound on the number of concurrent client engagements\nthis offering can absorb. Must be at least `1`.",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "staffing_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DayRate": {
+      "additionalProperties": false,
+      "description": "Day rate range for a professional service.\n\n`min` and `max` bound the rate in `currency`. The schema does not\ncross-validate that `min <= max`; that invariant is enforced at the\nvalidator layer so downstream consumers can still deserialise\nhistorical or partial data.",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "max": {
+          "description": "Maximum day rate in `currency`. Non-negative.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "min": {
+          "description": "Minimum day rate in `currency`. Non-negative.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PlannedDayRate": {
+      "additionalProperties": false,
+      "description": "Planned day-rate range in a target currency (e.g. USD rates staged\nfor activation alongside the primary currency).",
+      "properties": {
+        "max": {
+          "description": "Maximum planned day rate. Non-negative.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "min": {
+          "description": "Minimum planned day rate. Non-negative.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "type": "object"
+    },
+    "ServiceDefinition": {
+      "additionalProperties": false,
+      "description": "A professional service offering.",
+      "properties": {
+        "day_rate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DayRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "engagement_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "typical_duration": {
+          "description": "Typical engagement duration. Either an ISO 8601 duration literal\n(`P1W`, `P2W`, `PT8H`) or free-form range prose\n(`\"5-20 days\"`, `\"Monthly retainer (minimum 3 months)\"`).\nKept as `String` because real services quote durations both ways.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "ServicesDualPricingPlan": {
+      "description": "Services-pricing dual-currency plan — lighter than `DualPricingPlan`\nbecause services-pricing needs only routing and tax-compliance detail.",
+      "properties": {
+        "customer_routing": {
+          "description": "Per-region routing. See `DualPricingPlan.customer_routing`."
+        },
+        "eur_entity": {
+          "description": "Legal entity invoicing in EUR.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_compliance": {
+          "description": "Per-customer-type tax compliance rules.\nSee `DualPricingPlan.tax_compliance`."
+        },
+        "usd_entity": {
+          "description": "Legal entity invoicing in USD.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ServicesPricingCustom": {
+      "additionalProperties": true,
+      "description": "Typed custom extension data for `ServicesPricing`.",
+      "properties": {
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Primary billing currency for the services catalogue. Informational;\nthe canonical currency lives on each `DayRate`."
+        },
+        "currency_note": {
+          "description": "Narrative around currency choice and activation timing.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "day_rates_usd_planned": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PlannedDayRate"
+          },
+          "description": "Planned USD day-rate ranges staged for post-activation pricing.\nKeys are service slugs; values are planned min/max rates.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "dual_pricing_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ServicesDualPricingPlan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Dual-currency invoicing plan (which entity bills in which currency,\nplus tax treatment)."
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.0/services-pricing.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Professional services pricing.",
+  "properties": {
+    "capacity_constraints": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CapacityConstraints"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ServicesPricingCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nrr_classification": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "services": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ServiceDefinition"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "title": "ServicesPricing",
+  "type": "object"
+}
