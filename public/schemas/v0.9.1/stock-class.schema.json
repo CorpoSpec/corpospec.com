@@ -1,0 +1,278 @@
+{
+  "$defs": {
+    "AntiDilution": {
+      "description": "Anti-dilution provision.",
+      "enum": [
+        "broad-based-weighted-average",
+        "narrow-based-weighted-average",
+        "full-ratchet",
+        "none"
+      ],
+      "type": "string"
+    },
+    "DilutionModel": {
+      "description": "Dilution model for a stock class.",
+      "properties": {
+        "conversion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "dilution_timing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pre_seed_instrument": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FormationHolder": {
+      "description": "Holder at formation of a stock class.",
+      "properties": {
+        "percentage": {
+          "description": "Percentage of this stock class held at formation, expressed as a\nnumber between 0.0 and 100.0 (inclusive). Across all formation\nholders of a given stock class the percentages should sum to 100.0.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "shareholder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "shares": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "StatusActive": {
+      "description": "Lifecycle status for entities.",
+      "enum": [
+        "active",
+        "inactive",
+        "dissolved",
+        "pre-incorporation",
+        "planned"
+      ],
+      "type": "string"
+    },
+    "StockClassCustom": {
+      "description": "Typed extension fields for StockClass.",
+      "properties": {
+        "dilution_model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DilutionModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "holders_at_formation": {
+          "description": "Holders at the moment the stock class was formed. The `shareholder`\nfield is currently a free-form string; consumers should prefer\nPathRefs (e.g. `entity/equity/stakeholders/<id>`) so these rows stay\naligned with the cap table. Migrating the field type to `PathRef` is\ntracked as a follow-up refactor.",
+          "items": {
+            "$ref": "#/$defs/FormationHolder"
+          },
+          "type": "array"
+        },
+        "jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "option_pool_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "paid_in_before_filing_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "stammkapital_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "StockType": {
+      "description": "Stock class type.",
+      "enum": [
+        "common",
+        "preferred"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.1/stock-class.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stock class definition aligned with Open Cap Format (OCF) stock class object.",
+  "properties": {
+    "anti_dilution": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AntiDilution"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Anti-dilution protection applied to this stock class on down-rounds.\nLeft optional for backward compatibility with stock classes that do\nnot explicitly record a policy; consumers should treat absence as\n\"unspecified\", not as `none`."
+    },
+    "authorized_shares": {
+      "format": "int64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "board_approval_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "conversion_ratio": {
+      "description": "Number of shares of the conversion target (typically common stock)\nthat one share of this class converts into. Must be non-negative;\n`1.0` denotes a standard 1-for-1 conversion. OCF-aligned.",
+      "format": "double",
+      "minimum": 0.0,
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StockClassCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "liquidation_preference": {
+      "description": "Liquidation preference multiple (a non-negative number) that the\nholder receives before residual proceeds are distributed to common\nshareholders. `1.0` denotes a standard 1× preference; `0.0` denotes\nno preference (typical for common stock). OCF-aligned.",
+      "format": "double",
+      "minimum": 0.0,
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "par_value": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MonetaryAmount"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/StatusActive"
+    },
+    "type": {
+      "$ref": "#/$defs/StockType"
+    },
+    "votes_per_share": {
+      "format": "double",
+      "minimum": 0.0,
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "type",
+    "authorized_shares",
+    "status"
+  ],
+  "title": "StockClass",
+  "type": "object"
+}

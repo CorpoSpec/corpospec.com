@@ -1,0 +1,204 @@
+{
+  "$defs": {
+    "DataProcessor": {
+      "description": "A data processor entry in a data protection policy.\n\nRepresents a sub-processor under Art. 28 GDPR. Name and service identify the\nvendor; `dpa_status` tracks the Auftragsverarbeitungsvertrag (DPA) lifecycle.",
+      "properties": {
+        "data_categories": {
+          "description": "Categories of personal data processed (e.g. \"user account\", \"telemetry\").",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dpa_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DpaStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "DPA execution status per Art. 28 GDPR."
+        },
+        "hosting_region": {
+          "description": "Primary hosting region or country for the processed data (e.g. \"EU (Frankfurt)\", \"US\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Legal name of the processor (e.g. \"Supabase\", \"Anthropic\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "service": {
+          "description": "Human-readable description of the service provided (e.g. \"auth, database, storage\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DpaStatus": {
+      "description": "Data processing agreement (DPA) execution status for a processor under Art. 28 GDPR.",
+      "oneOf": [
+        {
+          "const": "signed",
+          "description": "DPA is executed and in force.",
+          "type": "string"
+        },
+        {
+          "const": "pending",
+          "description": "DPA is required and drafted but not yet executed.",
+          "type": "string"
+        },
+        {
+          "const": "in-negotiation",
+          "description": "DPA is under negotiation with the counterparty.",
+          "type": "string"
+        },
+        {
+          "const": "not-required",
+          "description": "Controller has determined no DPA is needed (e.g. no personal data exchanged).",
+          "type": "string"
+        },
+        {
+          "const": "expired",
+          "description": "DPA was executed but has lapsed.",
+          "type": "string"
+        },
+        {
+          "const": "terminated",
+          "description": "Processor relationship has ended.",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Catch-all for statuses not covered above; prefer a specific variant when possible.",
+          "type": "string"
+        }
+      ]
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PolicyCustom": {
+      "description": "Typed custom extension data for `Policy`.",
+      "properties": {
+        "processors": {
+          "description": "Sub-processors covered by this policy, tracked for Art. 28 GDPR compliance.",
+          "items": {
+            "$ref": "#/$defs/DataProcessor"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PolicyStatus": {
+      "description": "Policy lifecycle status.",
+      "enum": [
+        "draft",
+        "active",
+        "under-review",
+        "archived"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.1/policy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Organizational policy document.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PolicyCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "description": "One-paragraph summary of the policy's purpose and the obligations it imposes.",
+      "type": "string"
+    },
+    "effective_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "description": "Short human-readable title (e.g. \"Data Retention Policy\").",
+      "type": "string"
+    },
+    "owner": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef into `people/**` for the person accountable for this policy — reviewing,\nupdating, and enforcing it."
+    },
+    "provisions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "review_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scope": {
+      "description": "Population and data the policy applies to. Prose description of the in-scope\npopulation (e.g. \"All full-time employees\"), systems, or data categories.\nCommon categories include company-wide, engineering, customer-data,\nemployee-data, and third-party-processors.",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/PolicyStatus"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "status",
+    "scope",
+    "owner"
+  ],
+  "title": "Policy",
+  "type": "object"
+}

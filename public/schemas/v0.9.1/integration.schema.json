@@ -1,0 +1,389 @@
+{
+  "$defs": {
+    "Aggregation": {
+      "description": "Aggregation method for pipeline field mappings.",
+      "enum": [
+        "sum",
+        "avg",
+        "count",
+        "first",
+        "last",
+        "max",
+        "min",
+        "median",
+        "p50",
+        "p95",
+        "p99",
+        "percentile",
+        "ratio",
+        "stddev",
+        "variance"
+      ],
+      "type": "string"
+    },
+    "AuthMethod": {
+      "description": "Authentication method.",
+      "enum": [
+        "api_key",
+        "oauth2",
+        "basic",
+        "mtls",
+        "ssh",
+        "none"
+      ],
+      "type": "string"
+    },
+    "DataContract": {
+      "description": "Data contract.",
+      "properties": {
+        "freshness": {
+          "$ref": "#/$defs/Freshness"
+        },
+        "owner": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataQuality"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Data quality expectations. Strongly recommended; absence means no\nquality checks have been declared for this contract."
+        },
+        "schema": {
+          "$ref": "#/$defs/DataSchema"
+        },
+        "sla": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sla"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Service level agreement. Strongly recommended; absence means no SLA\nhas been declared for this contract."
+        }
+      },
+      "required": [
+        "owner",
+        "freshness",
+        "schema"
+      ],
+      "type": "object"
+    },
+    "DataField": {
+      "description": "Data contract field definition.",
+      "properties": {
+        "enum": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "DataQuality": {
+      "description": "Data quality constraints declared by the contract owner.",
+      "properties": {
+        "completeness": {
+          "description": "Expected completeness of the dataset, expressed as a percentage\n(0-100). 100 means every required field is populated in every record.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "uniqueness": {
+          "default": [],
+          "description": "Field names whose values must be unique across the dataset\n(e.g. `[\"id\"]` for a primary key, `[\"user_id\", \"event_id\"]` for a\ncomposite key).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DataSchema": {
+      "description": "Data contract schema.",
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/DataField"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "type": "object"
+    },
+    "FieldMapping": {
+      "description": "Maps a source field to a CorpoSpec metric via aggregation.",
+      "properties": {
+        "aggregation": {
+          "$ref": "#/$defs/Aggregation"
+        },
+        "breakdown_by": {
+          "description": "Dimension to break down by (e.g. `country`, `product_id`). When set,\nthe aggregation is computed per distinct value of this field and the\nresulting metric snapshot is tagged with that dimension value.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "denominator_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "percentile": {
+          "description": "Percentile value in `[0.0, 1.0]` used when `aggregation` is\n`percentile`. Ignored by all other aggregations.",
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "source_field": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/PathRef"
+        }
+      },
+      "required": [
+        "source_field",
+        "target",
+        "aggregation"
+      ],
+      "type": "object"
+    },
+    "Freshness": {
+      "description": "Freshness requirements.",
+      "properties": {
+        "max_staleness_minutes": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "schedule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schedule",
+        "max_staleness_minutes"
+      ],
+      "type": "object"
+    },
+    "InputPort": {
+      "description": "Input port configuration.",
+      "properties": {
+        "authentication": {
+          "$ref": "#/$defs/AuthMethod",
+          "description": "Authentication method used to reach the endpoint."
+        },
+        "endpoint": {
+          "description": "Base URL or host of the input port. Optional because some connectors\ntarget local resources (e.g. a Git working copy) or session-scoped\nendpoints (e.g. WebRTC rooms) where a single base URL does not apply.\nWhen present it must be a valid URI.",
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Short identifier for this port (e.g. `stripe-api`, `local-git-repo`).",
+          "type": "string"
+        },
+        "protocol": {
+          "description": "Transport or API style (e.g. `REST`, `GraphQL`, `gRPC`, `Git CLI`, `WebRTC`).",
+          "type": "string"
+        },
+        "version": {
+          "description": "Protocol or API version the connector targets (e.g. `2024-06-20`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "protocol",
+        "authentication"
+      ],
+      "type": "object"
+    },
+    "IntegrationStatus": {
+      "description": "Integration lifecycle status.",
+      "enum": [
+        "draft",
+        "planned",
+        "development",
+        "testing",
+        "active",
+        "sunset",
+        "retired"
+      ],
+      "type": "string"
+    },
+    "IntegrationType": {
+      "description": "Integration direction type.",
+      "enum": [
+        "source",
+        "destination",
+        "bidirectional"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pipeline": {
+      "description": "Pipeline configuration: how raw records are transformed into metric snapshots.",
+      "properties": {
+        "date_field": {
+          "description": "Field name in the source data that represents the event/row timestamp.\nUsed to bucket records into the reporting period of each metric snapshot.",
+          "type": "string"
+        },
+        "mappings": {
+          "description": "Ordered list of field-to-metric mappings applied to every record.",
+          "items": {
+            "$ref": "#/$defs/FieldMapping"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "date_field",
+        "mappings"
+      ],
+      "type": "object"
+    },
+    "Sla": {
+      "description": "Service level agreement offered by the source system for this contract.",
+      "properties": {
+        "availability": {
+          "description": "Target availability as a percentage (0-100), e.g. `99.9` for three nines.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "support_response_hours": {
+          "description": "Maximum time in hours between a support request and a first response.",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.1/integration.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Integration data contract aligned with ODPS input ports and ODCS contract concepts.",
+  "properties": {
+    "config": {
+      "description": "Connector-specific opaque configuration. The shape is deliberately\nfree-form: each integration defines its own keys (e.g. `profile_ids`,\n`owner`/`repo`, `project_slug`) because connectors target different\nsystems with incompatible parameter models. Consumers must know the\nconnector to interpret this map."
+    },
+    "data_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataContract"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "input_port": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/InputPort"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "outputs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "pipeline": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Pipeline"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/IntegrationStatus"
+    },
+    "system": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/IntegrationType"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "system",
+    "type",
+    "status"
+  ],
+  "title": "Integration",
+  "type": "object"
+}

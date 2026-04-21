@@ -1,0 +1,767 @@
+{
+  "$defs": {
+    "ChangelogEntry": {
+      "description": "A changelog entry recording a dated change.",
+      "properties": {
+        "change": {
+          "description": "Free-form description of what changed and why.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 8601 date on which the change was recorded (YYYY-MM-DD)."
+        }
+      },
+      "type": "object"
+    },
+    "ContentHook": {
+      "description": "Content hook for GTM strategy.",
+      "properties": {
+        "hook": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_icp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DiscountProgram": {
+      "additionalProperties": false,
+      "description": "Discount program within pricing.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "DiscoveryChannels": {
+      "additionalProperties": false,
+      "description": "Discovery channels configuration.",
+      "properties": {
+        "community": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "content": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partnership": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiscoveryPartnership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DiscoveryPartnership": {
+      "additionalProperties": false,
+      "description": "Partnership discovery channel.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mechanism": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DualPricingPlan": {
+      "description": "Dual pricing plan for multi-currency go-to-market.",
+      "properties": {
+        "activation_quarter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alignment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "customer_routing": {
+          "description": "Per-region billing-entity routing. Free-form object keyed by region\nslug (e.g. `dach_eu`, `us`, `uk_rest_world`) mapping to a prose\ndescription of which legal entity invoices that region and in which\ncurrency."
+        },
+        "eur_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_compliance": {
+          "description": "Per-customer-type tax and VAT compliance rules. Free-form object\nkeyed by customer class (e.g. `de_b2b`, `eu_b2c`, `non_eu`) mapping\nto the tax treatment prose."
+        },
+        "trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usd_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usd_pricing_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FunnelStage": {
+      "additionalProperties": false,
+      "description": "A stage in a user growth funnel.",
+      "properties": {
+        "conversion_target": {
+          "description": "Conversion target from this stage to the next, as a proportion in\n`[0.0, 1.0]` (e.g. `0.4` = 40% stage-to-stage conversion).",
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "GrowthFunnel": {
+      "additionalProperties": false,
+      "description": "User growth funnel definition.",
+      "properties": {
+        "stages": {
+          "items": {
+            "$ref": "#/$defs/FunnelStage"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "stages"
+      ],
+      "type": "object"
+    },
+    "GtmCustom": {
+      "description": "Typed custom extension data for `GtmStrategy`.",
+      "properties": {
+        "awareness_to_conversion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "campaigns": {
+          "description": "Campaign PathRef references.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "changelog": {
+          "items": {
+            "$ref": "#/$defs/ChangelogEntry"
+          },
+          "type": "array"
+        },
+        "content_hooks": {
+          "items": {
+            "$ref": "#/$defs/ContentHook"
+          },
+          "type": "array"
+        },
+        "discovery_channels_expanded": {
+          "description": "Expanded discovery channels with regional detail. Free-form object\nused when the canonical `discovery_channels` typing is not expressive\nenough (per-region breakdowns, VC portfolio lists, etc.)."
+        },
+        "dual_pricing_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DualPricingPlan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enterprise_target_arr_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "gdpr_moat": {
+          "description": "GDPR moat positioning and competitive advantage details."
+        },
+        "leadership_target_arr_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pricing_detail": {
+          "description": "Pricing detail with tier prices, margins, and multi-currency plans.\nLegacy free-form extension. Prefer the typed `pricing: Pricing`\nfield at the `GtmStrategy` root; this slot remains for migration\nand region-specific addenda (EUR/USD parity, OSS thresholds, etc.)."
+        },
+        "secondary_icp_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "services_pricing": {
+          "description": "Services pricing PathRef reference.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "GtmModel": {
+      "description": "Go-to-market model.",
+      "enum": [
+        "product-led-growth",
+        "sales-led",
+        "community-led",
+        "partner-led",
+        "viral-organic",
+        "content-led",
+        "hybrid",
+        "location-based",
+        "bid-proposal",
+        "rfp-response",
+        "broker-mediated",
+        "franchise",
+        "trade-show",
+        "dealer-network"
+      ],
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pricing": {
+      "additionalProperties": false,
+      "description": "Pricing configuration.",
+      "properties": {
+        "base_price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "discount_programs": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DiscountProgram"
+          },
+          "type": "array"
+        },
+        "free_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PricingModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paid_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_direction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "structure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_arr_per_customer": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tiers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PricingTier"
+          },
+          "type": "array"
+        },
+        "usage_based_pricing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UsageBasedPricing"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PricingModel": {
+      "description": "Pricing model type.",
+      "enum": [
+        "freemium",
+        "freemium-plus-usage",
+        "subscription",
+        "subscription-plus-usage",
+        "usage-based",
+        "enterprise",
+        "hybrid",
+        "retail",
+        "per-unit",
+        "project-based",
+        "licensing",
+        "hourly-rate",
+        "auction",
+        "cost-plus-pricing"
+      ],
+      "type": "string"
+    },
+    "PricingTier": {
+      "additionalProperties": false,
+      "description": "A single pricing tier.",
+      "properties": {
+        "cost_markup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employee_access": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "TargetSegment": {
+      "additionalProperties": false,
+      "description": "Target market segment.",
+      "properties": {
+        "co_primary_icp_references": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "company_stage": {
+          "description": "Company-stage focus. Free-form because real GTMs mix stage ranges\nand employee-count bands (e.g. `\"pre-incorporation to Series A\n(founders); established 50-5,000 employees (leadership)\"`).\nPrefer kebab-case stage slugs (`pre-seed`, `seed`, `series-a`,\n`series-b`, `series-c`, `growth`, `mature`) plus headcount range\nwhen both apply.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "description": "Prose summary of the target segment (who they are, what they do).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geography": {
+          "description": "Geographic focus. Free-form prose (e.g. `\"DE + US co-primary; DACH adjacent\"`).\nNot constrained to ISO country codes because real GTMs mix regions,\ntiers, and adjacency notes. Prefer ISO 3166-1 alpha-2 codes where\nthe scope fits (`\"DE, AT, CH\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "icp_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "secondary_icp_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vertical_phase_1": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vertical_phase_2": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "UsageBasedPricing": {
+      "additionalProperties": false,
+      "description": "Usage-based pricing configuration.",
+      "properties": {
+        "billing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_target_longterm": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ViralMechanics": {
+      "additionalProperties": false,
+      "description": "Viral growth mechanics configuration.",
+      "properties": {
+        "invite_mechanics": {
+          "description": "Specific invite mechanics (deep links, referral codes, group creation).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "k_factor_target": {
+          "description": "Target k-factor (invitees converted per existing user). Values in\n`[0.0, 3.0]` — anything above 3.0 is almost certainly a modelling\nerror for normal product growth.",
+          "format": "double",
+          "maximum": 3.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "viral_loops": {
+          "description": "Named viral loops in the product (invite → sign-up → invite, etc.).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.1/gtm-strategy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Go-to-market strategy definition.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GtmCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "discovery_channels": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DiscoveryChannels"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "funnel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GrowthFunnel"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "model": {
+      "$ref": "#/$defs/GtmModel",
+      "description": "Canonical GTM model (typed enum)."
+    },
+    "monetization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef to the monetization entity that realises this GTM."
+    },
+    "name": {
+      "description": "Human-readable name. Recommended but optional for backward\ncompatibility — some repos derive the title from `id` or front-matter.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Pricing"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Canonical typed pricing. Mirrors `Monetization.pricing` — the same\n`Pricing` struct is referenced from both pillars. For free-form\naddenda (per-region parity, OSS thresholds, currency rationale),\nuse `custom.pricing_detail`."
+    },
+    "primary_channel": {
+      "description": "Legacy single-channel field. Prefer `primary_channels` (list).\nRetained for backward compatibility with early schemas where a\nGTM was described by one primary channel slug; not in use across\ncurrent corpora. Do not set in new YAML.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primary_channels": {
+      "default": [],
+      "description": "Primary acquisition channels, in priority order. Free-form slugs\n(e.g. `developer-community`, `executive-network`, `dach-ecosystem`,\n`content-marketing`, `open-source`, `vc-accelerator-partnerships`)\n— kebab-case recommended but not enforced because real GTMs use\nidiosyncratic channel names.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "secondary_channels": {
+      "default": [],
+      "description": "Secondary channels, same shape as `primary_channels`.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "target_segment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TargetSegment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "viral_mechanics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ViralMechanics"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "model"
+  ],
+  "title": "GtmStrategy",
+  "type": "object"
+}
