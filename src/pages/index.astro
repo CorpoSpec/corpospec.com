@@ -41,10 +41,10 @@ const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
       <div class="card__title">{totalSlugs} versioned JSON Schemas {latest ? `· ${latest}` : ""}</div>
       <p class="card__desc">Draft 2020-12. Versioned URLs are immutable. Works with every YAML language server.</p>
     </a>
-    <a class="card" href={latest ? `/schemas/${latest}/graph/` : "/schemas/"}>
-      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-market);"></span>Visual</div>
-      <div class="card__title">Entity relationship map</div>
-      <p class="card__desc">See how the pillars fit together — every entity, every common reference, one diagram.</p>
+    <a class="card" href={latest ? `/schemas/${latest}/explore/` : "/schemas/"}>
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-market);"></span>Explorer</div>
+      <div class="card__title">Interactive schema explorer</div>
+      <p class="card__desc">Search entities and fields, follow every reference, and inspect the data model one entity at a time.</p>
     </a>
     <a class="card" href="/guide/">
       <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-product);"></span>Guide</div>

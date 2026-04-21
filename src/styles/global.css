@@ -618,19 +618,6 @@ hr {
   font-size: 14px;
 }
 
-/* Mermaid graph container */
-.graph-frame {
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: #fff;
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  overflow-x: auto;
-}
-.graph-frame .mermaid {
-  font-family: var(--font-sans);
-}
-
 /* Pillar legend */
 .legend {
   display: flex;
