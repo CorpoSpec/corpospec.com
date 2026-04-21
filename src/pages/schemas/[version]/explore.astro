@@ -669,7 +669,14 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
     if (initial && entities[initial]) selectEntity(initial);
   </script>
 
-  <style>
+  <style is:global>
+    /* Must be global: the detail panel, neighborhood SVG, fields table, and
+       relationship chips are all injected via innerHTML from the client
+       script. Astro's scoped `data-astro-cid-*` attributes are only applied
+       to server-rendered markup, so scoping this block would leave all
+       dynamic sub-views unstyled. The `.xp-*` / `.fields` namespace is
+       page-specific enough to remain effectively local. */
+
     /* ─── compact hero ─────────────────────────────────────────────── */
     .hero--compact { padding: 48px 0 24px; margin-bottom: 24px; }
     .hero--compact .lead { font-size: 17px; }
