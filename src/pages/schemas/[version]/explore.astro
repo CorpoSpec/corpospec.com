@@ -682,12 +682,16 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
     .hero--compact .lead { font-size: 17px; }
 
     /* ─── explorer shell ───────────────────────────────────────────── */
+    /* No `overflow: hidden` here: that would turn `.xp` into the sticky
+       ancestor for the toolbar and aside without giving them a real scroll
+       container, which leaves a white stripe above the "stuck" toolbar as
+       the page scrolls. Round corners live on the toolbar + inner panes
+       instead. */
     .xp {
       border: 1px solid var(--rule);
       border-radius: var(--radius);
       background: #fff;
       box-shadow: var(--shadow-sm);
-      overflow: hidden;
     }
 
     .xp__toolbar {
@@ -698,6 +702,8 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
       padding: 12px 16px;
       border-bottom: 1px solid var(--rule);
       background: var(--paper-alt);
+      border-top-left-radius: calc(var(--radius) - 1px);
+      border-top-right-radius: calc(var(--radius) - 1px);
       position: sticky;
       top: 64px;
       z-index: 3;
@@ -783,11 +789,14 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
       border-right: 1px solid var(--rule);
       background: #fff;
       padding: 12px 0 24px;
-      max-height: calc(100vh - 180px);
+      /* Sidebar stays visible while the main panel scrolls with the page.
+         Its own overflow-y handles long catalogs. */
+      max-height: calc(100vh - 160px);
       overflow-y: auto;
       position: sticky;
-      top: 124px;
+      top: 140px;
       align-self: start;
+      border-bottom-left-radius: calc(var(--radius) - 1px);
     }
     .xp__aside-meta {
       padding: 4px 16px 10px;
@@ -849,11 +858,13 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
     .xp-item.is-active .xp-item__count { color: var(--accent-ink); }
 
     /* ─── main panel ───────────────────────────────────────────────── */
+    /* Grows with content — the page scrolls, not this panel. Trapping
+       fields + graph + refs behind an internal scrollbar hid everything
+       below the first viewport. */
     .xp__main {
       padding: 24px 28px 32px;
       min-width: 0; /* prevents grid blowout */
-      max-height: calc(100vh - 140px);
-      overflow-y: auto;
+      border-bottom-right-radius: calc(var(--radius) - 1px);
     }
     .xp__main:focus { outline: none; }
 
@@ -1135,7 +1146,6 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
         border-right: 0;
         border-bottom: 1px solid var(--rule);
       }
-      .xp__main { max-height: none; }
       .xp__toolbar { top: 60px; }
       .xp-refs { grid-template-columns: 1fr; }
       .xp-overview__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
