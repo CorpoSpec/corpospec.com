@@ -1,0 +1,396 @@
+{
+  "$defs": {
+    "FigureAlignment": {
+      "description": "Figure alignment.",
+      "enum": [
+        "proportional",
+        "tabular"
+      ],
+      "type": "string"
+    },
+    "FigureStyle": {
+      "description": "Figure style.",
+      "enum": [
+        "lining",
+        "oldstyle"
+      ],
+      "type": "string"
+    },
+    "FontLicense": {
+      "description": "Font license type.",
+      "enum": [
+        "ofl",
+        "apache2",
+        "commercial",
+        "proprietary"
+      ],
+      "type": "string"
+    },
+    "FontSource": {
+      "description": "Font source.",
+      "enum": [
+        "google-fonts",
+        "adobe-fonts",
+        "custom",
+        "system",
+        "self-hosted"
+      ],
+      "type": "string"
+    },
+    "NumericTypography": {
+      "description": "Numeric typography settings.",
+      "properties": {
+        "figure_alignment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FigureAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Figure alignment. `tabular` gives every digit the same advance width\n(required for columns of numbers); `proportional` lets each digit take\nits natural width (preferred for prose)."
+        },
+        "figure_style": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FigureStyle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Figure style for numerals. `lining` aligns all digits to the cap height\n(prefer in UI, tables, dashboards); `oldstyle` mixes ascenders and\ndescenders for a softer, more editorial feel in running text."
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ScriptCoverage": {
+      "description": "Script coverage entry for internationalization.",
+      "properties": {
+        "fallback": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rtl": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "script": {
+          "type": "string"
+        },
+        "typeface": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "script",
+        "typeface"
+      ],
+      "type": "object"
+    },
+    "TextAlignment": {
+      "description": "Text alignment.",
+      "enum": [
+        "left",
+        "center",
+        "right",
+        "justify"
+      ],
+      "type": "string"
+    },
+    "TextTransform": {
+      "description": "Text transform type.",
+      "enum": [
+        "none",
+        "uppercase",
+        "lowercase",
+        "capitalize"
+      ],
+      "type": "string"
+    },
+    "TypeFamily": {
+      "description": "Type family definition.",
+      "properties": {
+        "fallback_stack": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "file_refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "license": {
+          "$ref": "#/$defs/FontLicense"
+        },
+        "name": {
+          "type": "string"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/TypeRole"
+          },
+          "type": "array"
+        },
+        "source": {
+          "$ref": "#/$defs/FontSource"
+        },
+        "variable_font": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "source",
+        "license",
+        "roles"
+      ],
+      "type": "object"
+    },
+    "TypeRole": {
+      "description": "Typeface role.",
+      "enum": [
+        "display",
+        "body",
+        "ui",
+        "mono",
+        "hand"
+      ],
+      "type": "string"
+    },
+    "TypeScaleToken": {
+      "description": "Type scale token. Includes size_rem as Option<f64> (D2).",
+      "properties": {
+        "letter_spacing_em": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "line_height": {
+          "format": "double",
+          "maximum": 2.5,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "size_px": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "size_rem": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "transform": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TextTransform"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "weight": {
+          "description": "Optional per-token font weight override. Many tokens inherit the family\ndefault weight; only set this when a specific scale step (e.g. `display`\nat 700) needs to deviate. Must be one of the nine standard CSS weights:\n100, 200, 300, 400, 500, 600, 700, 800, 900.",
+          "enum": [
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900
+          ],
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "size_px"
+      ],
+      "type": "object"
+    },
+    "TypographicRules": {
+      "description": "Typographic rules and constraints.",
+      "properties": {
+        "alignment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TextAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Default text alignment for long-form content."
+        },
+        "capitalization_rules": {
+          "default": [],
+          "description": "Free-form capitalization rules (e.g. \"Headlines use Title Case\",\n\"Button labels use Sentence case\"). Each entry is one enforceable rule.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "hyphenation": {
+          "description": "Whether automatic hyphenation is permitted. Typically disabled for\ndisplay type and brand headlines; acceptable for justified body copy.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "max_line_length_ch": {
+          "description": "Maximum measure (line length) in characters. 45-75 is the typical\nreadable range for body text; values outside this band should be\njustified by context (e.g. code blocks, tabular content).",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "WeightRule": {
+      "description": "Weight rule for approved usage contexts.",
+      "properties": {
+        "approved_contexts": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "prohibited_contexts": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "weight_name": {
+          "type": "string"
+        },
+        "weight_value": {
+          "description": "Numeric CSS font weight. Must be one of the nine standard values:\n100 (Thin), 200 (ExtraLight), 300 (Light), 400 (Regular), 500 (Medium),\n600 (SemiBold), 700 (Bold), 800 (ExtraBold), 900 (Black).",
+          "enum": [
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900
+          ],
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "weight_value",
+        "weight_name"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.8.1/brand-typography.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand typography system.",
+  "properties": {
+    "families": {
+      "items": {
+        "$ref": "#/$defs/TypeFamily"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "numeric_typography": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NumericTypography"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "script_coverage": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ScriptCoverage"
+      },
+      "type": "array"
+    },
+    "type_scale": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TypeScaleToken"
+      },
+      "type": "array"
+    },
+    "typographic_rules": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TypographicRules"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "weight_rules": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/WeightRule"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "families"
+  ],
+  "title": "BrandTypography",
+  "type": "object"
+}
