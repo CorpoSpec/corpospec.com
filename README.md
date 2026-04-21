@@ -15,7 +15,8 @@ The site is an Astro static build deployed to GitHub Pages.
 
 ```
 corpospec.com/
-├── .github/workflows/       # Pages deploy + schema ingest
+├── .github/workflows/
+│   └── pages.yml            # Astro build + GitHub Pages deploy
 ├── content/
 │   └── examples/acme/       # Reference company, rendered at /example/
 ├── public/
@@ -24,8 +25,6 @@ corpospec.com/
 │       └── v0.7.1/
 │           ├── *.schema.json
 │           └── context.jsonld
-├── scripts/
-│   └── ingest-release.mjs   # Consumes corpospec-release repository_dispatch
 ├── src/
 │   ├── layouts/BaseLayout.astro
 │   ├── lib/                 # Schema introspection helpers
@@ -43,12 +42,11 @@ corpospec.com/
 
 ## Source of truth
 
-JSON Schemas in `public/schemas/v*/` are **not hand-written**. They are generated from the Rust types in [`beevelop/UNSTARTER`](https://github.com/beevelop/UNSTARTER)'s `corpospec-types` crate, published here as part of the tagged release pipeline, and are immutable once written.
+JSON Schemas in `public/schemas/v*/` are **not hand-written**. They are generated from the Rust types in [`beevelop/UNSTARTER`](https://github.com/beevelop/UNSTARTER)'s `corpospec-types` crate, pushed here as part of the tagged release pipeline, and immutable once written.
 
 - **Schema definitions:** `corpospec/crates/corpospec-types/` in UNSTARTER.
 - **Generator CLI:** `corpospec/crates/corpospec-validate/` in UNSTARTER, subcommand `generate-schemas`.
-- **Release trigger:** UNSTARTER's `.github/workflows/release-deploy.yml` fires `repository_dispatch` (`event_type: corpospec-release`) on every `v*.*.*` tag.
-- **Ingest:** `.github/workflows/ingest.yml` in this repo receives the dispatch, downloads the tarball from the UNSTARTER release, verifies SHA256, and writes to `public/schemas/v{version}/`.
+- **Publish flow:** UNSTARTER's `.github/workflows/release-deploy.yml` regenerates schemas on every `v*.*.*` tag, attaches a tarball + checksums to the GitHub Release, and pushes a new `public/schemas/v{version}/` directory here via an SSH deploy key. The push refuses to proceed if the directory already exists.
 
 ## Local development
 
