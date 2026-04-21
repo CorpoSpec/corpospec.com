@@ -78,6 +78,88 @@ for (const slug of slugs) {
 // Slug -> field count (server-rendered into sidebar).
 const fieldCounts: Record<string, number> = {};
 for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
+
+// ─── Full relationship graph (rendered server-side) ──────────────────
+// Circular chord diagram. Every entity is a node on a ring, ordered by
+// pillar and then alphabetically so same-pillar nodes cluster. Every
+// curated edge is a quadratic Bézier through the centre. Hover
+// highlighting + click-through is wired up client-side.
+const PILLAR_ORDER = [
+  "root", "entity", "people", "governance", "financial",
+  "metrics", "product", "market", "brand", "integrations", "legal",
+];
+
+function esc(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function buildFullGraphSvg(): string {
+  const ordered = slugs.slice().sort((a, b) => {
+    const pa = PILLAR_ORDER.indexOf(entities[a].pillar);
+    const pb = PILLAR_ORDER.indexOf(entities[b].pillar);
+    return (pa - pb) || a.localeCompare(b);
+  });
+
+  const N = ordered.length;
+  const W = 900, H = 700;
+  const cx = W / 2, cy = H / 2;
+  const rNode = 230, rLabel = 252;
+
+  const pos: Record<string, { a: number; x: number; y: number; lx: number; ly: number }> = {};
+  ordered.forEach((slug, i) => {
+    const a = (i / N) * 2 * Math.PI - Math.PI / 2;
+    pos[slug] = {
+      a,
+      x: cx + rNode * Math.cos(a),
+      y: cy + rNode * Math.sin(a),
+      lx: cx + rLabel * Math.cos(a),
+      ly: cy + rLabel * Math.sin(a),
+    };
+  });
+
+  // Edges: curve through centre. Deduplicate (from, to) pairs.
+  const seen = new Set<string>();
+  const edgesSvg: string[] = [];
+  for (const e of edges) {
+    const key = `${e.from}->${e.to}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (!pos[e.from] || !pos[e.to]) continue;
+    const f = pos[e.from], t = pos[e.to];
+    const color = pillarHex[entities[e.from].pillar] ?? "#555";
+    edgesSvg.push(
+      `<path class="xp-full__edge" d="M${f.x.toFixed(1)},${f.y.toFixed(1)} Q${cx},${cy} ${t.x.toFixed(1)},${t.y.toFixed(1)}" fill="none" stroke="${color}" stroke-width="1" opacity="0.3" data-from="${esc(e.from)}" data-to="${esc(e.to)}"/>`,
+    );
+  }
+
+  // Nodes + labels. Labels rotate so they read outward on both sides.
+  const nodesSvg = ordered.map((slug) => {
+    const p = pos[slug];
+    const e = entities[slug];
+    const color = pillarHex[e.pillar] ?? "#555";
+    const flip = Math.cos(p.a) < 0;
+    const rotation = (p.a * 180) / Math.PI + (flip ? 180 : 0);
+    const anchor = flip ? "end" : "start";
+    return `
+      <g class="xp-full__node" data-slug="${esc(slug)}" data-pillar="${esc(e.pillar)}">
+        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="${color}" stroke="#ffffff" stroke-width="1.25"/>
+        <text x="${p.lx.toFixed(1)}" y="${p.ly.toFixed(1)}"
+              transform="rotate(${rotation.toFixed(2)} ${p.lx.toFixed(1)} ${p.ly.toFixed(1)})"
+              text-anchor="${anchor}" class="xp-full__label" fill="${color}">${esc(slug)}</text>
+      </g>
+    `;
+  }).join("");
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" class="xp-full__svg" preserveAspectRatio="xMidYMid meet"
+         role="img" aria-label="Full relationship graph for ${slugs.length} entities">
+      <g class="xp-full__edges">${edgesSvg.join("")}</g>
+      <g class="xp-full__nodes">${nodesSvg}</g>
+    </svg>
+  `;
+}
+
+const fullGraphSvg = buildFullGraphSvg();
 ---
 
 <BaseLayout
@@ -185,6 +267,25 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
             <strong>Pick an entity</strong> from the sidebar to inspect its
             fields and relationships, or search above to jump straight to a field.
           </div>
+
+          <section class="xp-full" id="xp-full" aria-label="Full relationship graph">
+            <header class="xp-full__head">
+              <h2>Full relationship graph</h2>
+              <p class="xp-full__hint">
+                {slugs.length} entities, {edges.length} curated relationships, grouped by pillar
+                around the ring. <strong>Hover a node</strong> to highlight its 1-hop neighborhood,
+                <strong>click</strong> to open the entity. Edge colour = source pillar.
+              </p>
+            </header>
+            <div class="xp-full__frame" set:html={fullGraphSvg} />
+            <div class="xp-full__legend" aria-label="Pillar legend">
+              {PILLARS.filter((p) => groups.some((g) => g.pillar.id === p.id)).map((p) => (
+                <span class="xp-full__legend-item">
+                  <span class="pill-dot" style={`color: ${p.color};`}></span>{p.label}
+                </span>
+              ))}
+            </div>
+          </section>
           <div class="xp-overview__grid">
             {slugs.map((slug) => {
               const e = entities[slug];
@@ -663,6 +764,72 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
       selectEntity(slug && entities[slug] ? slug : null);
     });
 
+    // ─── full graph hover/click ────────────────────────────────────────
+    // Server renders the SVG; JS adds highlighting + navigation.
+    const $fullGraph = document.getElementById("xp-full");
+    if ($fullGraph) {
+      const edges = Array.from($fullGraph.querySelectorAll(".xp-full__edge"));
+      const nodes = Array.from($fullGraph.querySelectorAll(".xp-full__node"));
+
+      // Precompute adjacency so hover doesn't scan edges each time.
+      const adjacency = new Map(); // slug -> Set(connected slug + edge elements)
+      const nodeBySlug = new Map();
+      for (const n of nodes) {
+        const s = n.getAttribute("data-slug");
+        nodeBySlug.set(s, n);
+        if (!adjacency.has(s)) adjacency.set(s, { peers: new Set(), edges: new Set() });
+      }
+      for (const edge of edges) {
+        const f = edge.getAttribute("data-from");
+        const t = edge.getAttribute("data-to");
+        if (adjacency.has(f)) {
+          adjacency.get(f).peers.add(t);
+          adjacency.get(f).edges.add(edge);
+        }
+        if (adjacency.has(t)) {
+          adjacency.get(t).peers.add(f);
+          adjacency.get(t).edges.add(edge);
+        }
+      }
+
+      function focusNode(slug) {
+        if (!adjacency.has(slug)) return;
+        const { peers, edges: incident } = adjacency.get(slug);
+        for (const n of nodes) n.classList.remove("is-active");
+        for (const e of edges) e.classList.remove("is-active");
+        nodeBySlug.get(slug)?.classList.add("is-active");
+        for (const p of peers) nodeBySlug.get(p)?.classList.add("is-active");
+        for (const e of incident) e.classList.add("is-active");
+        $fullGraph.classList.add("is-focus");
+      }
+      function clearFocus() {
+        for (const n of nodes) n.classList.remove("is-active");
+        for (const e of edges) e.classList.remove("is-active");
+        $fullGraph.classList.remove("is-focus");
+      }
+
+      // Delegated hover. mouseover fires on children; find the nearest node.
+      $fullGraph.addEventListener("mouseover", (ev) => {
+        const n = ev.target.closest(".xp-full__node");
+        if (!n) return;
+        const slug = n.getAttribute("data-slug");
+        if (slug) focusNode(slug);
+      });
+      $fullGraph.addEventListener("mouseleave", clearFocus);
+
+      // Click: open the entity.
+      $fullGraph.addEventListener("click", (ev) => {
+        const n = ev.target.closest(".xp-full__node");
+        if (!n) return;
+        const slug = n.getAttribute("data-slug");
+        if (!slug || !entities[slug]) return;
+        ev.preventDefault();
+        history.pushState(null, "", `#entity=${slug}`);
+        selectEntity(slug);
+        $main.scrollTo?.({ top: 0, behavior: "smooth" });
+      });
+    }
+
     // Initial paint.
     renderFilters();
     const initial = readHash();
@@ -1034,8 +1201,19 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
       display: block;
       max-height: 360px;
     }
-    .xp-neighbors .xp-node--neighbor { cursor: pointer; transition: transform 120ms; }
-    .xp-neighbors .xp-node--neighbor:hover { transform: translateY(-1px); }
+    /* SVG <g> nodes already carry a `transform="translate(x, y)"` attribute
+       for their placed position. Using CSS `transform` on hover would
+       replace that attribute in modern browsers and the node would jump
+       to `translate(0, -1)` near the SVG origin — cue erratic flicker as
+       mouseenter/leave fire on adjacent elements. Hover effects here
+       must not touch the transform. */
+    .xp-neighbors .xp-node--neighbor { cursor: pointer; }
+    .xp-neighbors .xp-node--neighbor rect:first-of-type {
+      transition: stroke-width 120ms;
+    }
+    .xp-neighbors .xp-node--neighbor:hover rect:first-of-type {
+      stroke-width: 2.5;
+    }
     .xp-neighbors .xp-node__label {
       font-family: var(--font-mono);
       font-size: 12px;
@@ -1074,6 +1252,81 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
       vertical-align: middle;
       margin-right: 6px;
       background: #7b8199;
+    }
+
+    /* full graph ----------------------------------------------------- */
+    .xp-full {
+      margin: 8px 0 24px;
+      padding: 18px 20px 12px;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-sm);
+      background: var(--paper);
+    }
+    .xp-full__head { margin-bottom: 10px; }
+    .xp-full__head h2 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+    .xp-full__hint {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+    .xp-full__hint strong { color: var(--ink); }
+    .xp-full__frame {
+      background: #fff;
+      border: 1px solid var(--rule-soft);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+    }
+    .xp-full__svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 720px;
+    }
+    .xp-full__node { cursor: pointer; }
+    .xp-full__node circle {
+      transition: r 120ms, stroke-width 120ms;
+    }
+    .xp-full__node:hover circle { r: 7; stroke-width: 2; }
+    .xp-full__label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      dominant-baseline: middle;
+      /* Keep pointer events on so hovering the label counts as hovering the
+         node — the whole group is the hit target. */
+    }
+    .xp-full__node:hover .xp-full__label { font-weight: 700; }
+    .xp-full__edge { transition: opacity 120ms, stroke-width 120ms; }
+
+    /* Focus mode — dim everything, promote the hovered node's neighborhood. */
+    .xp-full.is-focus .xp-full__edge { opacity: 0.06; }
+    .xp-full.is-focus .xp-full__edge.is-active { opacity: 0.9; stroke-width: 1.75; }
+    .xp-full.is-focus .xp-full__node { opacity: 0.22; }
+    .xp-full.is-focus .xp-full__node.is-active { opacity: 1; }
+    .xp-full.is-focus .xp-full__node.is-active circle { r: 6; }
+
+    .xp-full__legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      padding-top: 12px;
+      margin-top: 6px;
+      border-top: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .xp-full__legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* fields table tweaks -------------------------------------------- */
