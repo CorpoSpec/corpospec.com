@@ -9,7 +9,7 @@ unit: count
 direction: up
 frequency: monthly
 source:
-  system: Application database
+  system: postgres
   query: SELECT count(DISTINCT user_id) FROM events WHERE created_at >= date_trunc('month',
     now())
 xbrl_mapping: null

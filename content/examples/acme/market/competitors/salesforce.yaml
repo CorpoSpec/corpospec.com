@@ -33,7 +33,7 @@ legal_name: "Salesforce, Inc."
 team_size: 72000
 
 funding:
-  stage: "public"
+  stage: ipo
   currency: "USD"
   notes: "IPO on NYSE (CRM) in June 2004. Market cap approximately $250B."
   total_raised: 65000000
@@ -44,7 +44,7 @@ funding:
     - "Halsey Minor"
     - "Geneva Venture Partners"
   last_round:
-    type: "IPO"
+    type: ipo
     date: "2004-06-23"
     source: "SEC filings"
 

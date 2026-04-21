@@ -1,4 +1,4 @@
 id: product/features/api
 name: "Developer API"
 description: "RESTful API for programmatic access to workflow management, execution, and monitoring. Enables custom integrations and third-party extensions."
-status: released
+status: shipped

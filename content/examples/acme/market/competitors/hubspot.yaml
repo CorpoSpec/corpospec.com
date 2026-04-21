@@ -31,7 +31,7 @@ status: "active"
 team_size: 7700
 
 funding:
-  stage: "public"
+  stage: ipo
   currency: "USD"
   notes: "IPO on NYSE (HUBS) in October 2014. Google reportedly explored acquisition in 2024."
   total_raised: 100500000
@@ -40,7 +40,7 @@ funding:
     - "Google Ventures"
     - "Salesforce Ventures"
   last_round:
-    type: "IPO"
+    type: ipo
     date: "2014-10-09"
     source: "SEC filings"
 

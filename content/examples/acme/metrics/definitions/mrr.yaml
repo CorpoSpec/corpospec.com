@@ -8,7 +8,7 @@ unit: currency
 direction: up
 frequency: monthly
 source:
-  system: Stripe
+  system: stripe
   query: stripe.subscriptions.list(status=active).sum(plan.amount)
 xbrl_mapping: null
 related_metrics:

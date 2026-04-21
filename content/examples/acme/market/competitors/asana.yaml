@@ -32,7 +32,7 @@ status: "active"
 team_size: 1900
 
 funding:
-  stage: "public"
+  stage: ipo
   currency: "USD"
   notes: "IPO via direct listing on NYSE (ASAN) in September 2020"
   total_raised: 470000000
@@ -42,7 +42,7 @@ funding:
     - "Benchmark"
     - "Founders Fund"
   last_round:
-    type: "Direct Listing"
+    type: direct-listing
     date: "2020-09-30"
     source: "SEC filings"
 

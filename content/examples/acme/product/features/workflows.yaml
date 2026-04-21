@@ -1,4 +1,4 @@
 id: product/features/workflows
 name: "Workflow Engine"
 description: "Core workflow automation engine with trigger-action model. Enables teams to build, run, and monitor automated workflows across integrated tools."
-status: released
+status: shipped

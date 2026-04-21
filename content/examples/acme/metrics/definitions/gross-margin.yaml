@@ -9,7 +9,7 @@ unit: percentage
 direction: up
 frequency: monthly
 source:
-  system: Internal billing service
+  system: custom
   query: (revenue_ledger.sum - cogs_ledger.sum) / revenue_ledger.sum
 xbrl_mapping: null
 related_metrics:

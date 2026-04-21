@@ -8,7 +8,7 @@ unit: currency
 direction: up
 frequency: monthly
 source:
-  system: Stripe
+  system: stripe
   query: MRR * 12 (derived from metrics/definitions/mrr)
 xbrl_mapping: null
 related_metrics:

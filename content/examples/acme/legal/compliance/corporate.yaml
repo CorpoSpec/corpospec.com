@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/control.schema.json
 id: legal/compliance/corporate
 control_id: "SOC2-CC-001"
-catalog: "SOC 2 Type II"
+catalog: soc-2
 title: "SOC 2 Type II Compliance Program"
 status: planned
 last_assessed: null

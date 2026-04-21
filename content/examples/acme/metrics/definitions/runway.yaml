@@ -8,7 +8,7 @@ unit: months
 direction: up
 frequency: monthly
 source:
-  system: QuickBooks
+  system: quickbooks
   query: accounts.balance(type=bank) / abs(metrics/definitions/burn-rate)
 xbrl_mapping: null
 related_metrics:

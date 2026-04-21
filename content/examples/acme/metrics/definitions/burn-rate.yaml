@@ -8,7 +8,7 @@ unit: currency
 direction: down
 frequency: monthly
 source:
-  system: QuickBooks
+  system: quickbooks
   query: reports.profit_and_loss(period=monthly).net_income
 xbrl_mapping: null
 related_metrics:
