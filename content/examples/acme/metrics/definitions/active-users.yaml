@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/metric.schema.json
+id: metrics/definitions/active-users
+name: Monthly Active Users
+abbreviation: MAU
+description: Count of unique users who performed at least one meaningful action on
+  the platform during the calendar month.
+formula: count(distinct user_id where activity_count >= 1)
+unit: count
+direction: up
+frequency: monthly
+source:
+  system: Application database
+  query: SELECT count(DISTINCT user_id) FROM events WHERE created_at >= date_trunc('month',
+    now())
+xbrl_mapping: null
+related_metrics:
+- metrics/definitions/gross-margin
+- metrics/definitions/mrr
+iso_30414_mapping: null
+tags:
+- adoption
+- engagement
+- product-health
+- investor-facing

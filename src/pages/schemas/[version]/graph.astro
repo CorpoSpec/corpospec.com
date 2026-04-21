@@ -1,0 +1,471 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  listVersions,
+  listSlugs,
+  listSlugsByPillar,
+  edgesForVersion,
+  readSchemaFields,
+  readSchemaMeta,
+  pillarForSlug,
+  PILLARS,
+} from "../../../lib/schemas.ts";
+
+export function getStaticPaths() {
+  return listVersions().map((version) => ({ params: { version } }));
+}
+
+const { version } = Astro.params;
+const slugs = listSlugs(version!);
+const groups = listSlugsByPillar(version!);
+const edges = edgesForVersion(version!);
+
+// Pillar hex map — needed client-side; CSS vars do not reach mermaid's SVG.
+const pillarHex: Record<string, string> = {
+  root:         "#5a5f70",
+  entity:       "#4a5ab8",
+  people:       "#b57028",
+  governance:   "#7149b8",
+  financial:    "#1f8262",
+  metrics:      "#2774b8",
+  product:      "#1b7aa1",
+  market:       "#b64668",
+  brand:        "#a23aa6",
+  integrations: "#b55924",
+  legal:        "#636e2d",
+};
+
+// Build a Mermaid ER diagram. ERDs are denser than flowcharts and look the
+// part of a database-style schema map. Relationships use crow's-foot
+// notation: ||--o{ means "one to many".
+//
+// Entity names in mermaid can't contain hyphens, so we normalise to the
+// slug's uppercase snake_case. Display label is the original slug.
+function ermId(slug: string): string {
+  return slug.replace(/-/g, "_").toUpperCase();
+}
+
+let erd = "erDiagram\n";
+for (const e of edges) {
+  erd += `    ${ermId(e.from)} ||--o{ ${ermId(e.to)} : "${e.label ?? "ref"}"\n`;
+}
+// Declare every entity without a body to guarantee even zero-edge entities
+// render as a visible box.
+for (const slug of slugs) {
+  erd += `    ${ermId(slug)}\n`;
+}
+
+// Precompute field tables for the accordion.
+const details = slugs.map((slug) => ({
+  slug,
+  pillar: pillarForSlug(slug),
+  meta: readSchemaMeta(version!, slug),
+  fields: readSchemaFields(version!, slug),
+}));
+
+// Stable JSON payloads for client-side hydration (filter chips, click nav).
+const pillarMap = Object.fromEntries(slugs.map((s) => [s, pillarForSlug(s)]));
+const slugByPillar = Object.fromEntries(groups.map((g) => [g.pillar.id, g.slugs]));
+---
+
+<BaseLayout
+  title={`CorpoSpec ${version} — Entity relationship map`}
+  description="Visual entity relationship diagram of all CorpoSpec schemas with interactive filtering and field browsing."
+  active="schemas"
+>
+  <section class="hero">
+    <div class="hero__eyebrow">
+      <span class="badge badge--version">{version}</span>
+      <span>Entity relationship map</span>
+    </div>
+    <h1>The data model, at a glance</h1>
+    <p class="lead">
+      An ER diagram of every schema in <code>{version}</code>. Filter by pillar, click
+      an entity to open its field reference, or expand the accordion below to scan all
+      fields side by side.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--ghost" href={`/schemas/${version}/`}>← back to schemas</a>
+    </div>
+  </section>
+
+  <h2 class="mt-0">Filter by pillar</h2>
+  <p class="prose">Toggle pillars to narrow the diagram and accordion below. Click an entity in the diagram to open its full field reference.</p>
+  <div class="legend" id="pillar-filter" data-active="all">
+    <button class="chip chip--toggle" data-pillar="all" aria-pressed="true">
+      <span class="pill-dot" style="color: var(--ink);"></span>All pillars
+    </button>
+    {PILLARS.filter((p) => groups.some((g) => g.pillar.id === p.id)).map((p) => (
+      <button class="chip chip--toggle" data-pillar={p.id} aria-pressed="true" style={`--pillar: ${p.color};`}>
+        <span class="pill-dot" style={`color: ${p.color};`}></span>{p.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="graph-frame" id="graph-frame">
+    <div class="graph-toolbar">
+      <span class="graph-toolbar__hint">
+        <span class="kbd">Scroll</span> or drag to pan · click an entity to open it
+      </span>
+      <div class="graph-toolbar__zoom" role="group" aria-label="Zoom">
+        <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+        <button type="button" id="zoom-reset" aria-label="Reset zoom">1×</button>
+        <button type="button" id="zoom-in"  aria-label="Zoom in">+</button>
+      </div>
+    </div>
+    <div class="graph-scroll">
+      <pre class="mermaid" id="erd" set:html={erd}></pre>
+    </div>
+  </div>
+
+  <h2>Entity reference</h2>
+  <p class="prose">Every entity is listed below. Expand one to inspect its top-level fields without leaving this page. Click the slug to open the full detail page.</p>
+  <div class="accordion" id="accordion">
+    {details.map((d) => {
+      const p = PILLARS.find((x) => x.id === d.pillar)!;
+      return (
+        <details class="acc-item" data-pillar={d.pillar}>
+          <summary>
+            <span class="acc-pillar" style={`color: ${p.color};`}>
+              <span class="pill-dot"></span>{p.label}
+            </span>
+            <a class="acc-slug" href={`/schemas/${version}/${d.slug}/`} onclick="event.stopPropagation();">{d.slug}</a>
+            <span class="acc-title">{d.meta.title ?? ""}</span>
+            <span class="acc-count">{d.fields.length} fields</span>
+          </summary>
+          <div class="acc-body">
+            {d.meta.description ? <p style="margin: 0 0 8px; color: var(--ink-soft); font-size: 14px;">{d.meta.description.split("\n")[0]}</p> : null}
+            {d.fields.length === 0 ? (
+              <p class="mono" style="color: var(--muted); margin: 0;">No top-level fields.</p>
+            ) : (
+              <div class="fields" style="box-shadow: none;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Field</th>
+                      <th>Type</th>
+                      <th>Required</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {d.fields.map((f) => (
+                      <tr>
+                        <td><span class="name">{f.name}</span></td>
+                        <td><span class="type">{f.type}</span></td>
+                        <td><span class={`req req--${f.required ? "yes" : "no"}`}>{f.required ? "yes" : "—"}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </details>
+      );
+    })}
+  </div>
+
+  <script
+    is:inline
+    type="module"
+    define:vars={{
+      version,
+      pillarMap,
+      slugByPillar,
+      pillarHex,
+      slugs,
+    }}
+  >
+    // ─── Mermaid: light theme + click-to-navigate ──────────────────────
+    (async () => {
+      const { default: mermaid } = await import("https://esm.sh/mermaid@11");
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "base",
+        themeVariables: {
+          background: "#ffffff",
+          primaryColor: "#ffffff",
+          primaryTextColor: "#12131a",
+          primaryBorderColor: "#3a4ad6",
+          secondaryColor: "#f5f4ee",
+          tertiaryColor: "#fbfaf6",
+          lineColor: "#7b8199",
+          fontFamily: "Inter Variable, Inter, system-ui, sans-serif",
+          fontSize: "13px",
+          noteBkgColor: "#eef0f5",
+          noteTextColor: "#12131a",
+          noteBorderColor: "#e7e8ee",
+        },
+        securityLevel: "loose",
+        er: {
+          diagramPadding: 20,
+          layoutDirection: "LR",
+          minEntityWidth: 120,
+          minEntityHeight: 56,
+          entityPadding: 14,
+          useMaxWidth: false,
+        },
+      });
+
+      await mermaid.run({ querySelector: "pre.mermaid" });
+
+      // Colour entity boxes by pillar + attach click handlers.
+      const svg = document.querySelector("#erd svg");
+      if (!svg) return;
+
+      for (const slug of slugs) {
+        const upper = slug.replace(/-/g, "_").toUpperCase();
+        // Mermaid entity groups have ids like `entity-NAME-<hash>`. Use a
+        // prefix selector scoped to the SVG.
+        const group = svg.querySelector(`g[id^="entity-${upper}-"], g[id="entity-${upper}"]`);
+        if (!group) continue;
+        const pillar = pillarMap[slug] ?? "root";
+        const hex = pillarHex[pillar] ?? "#555";
+        group.setAttribute("data-slug", slug);
+        group.setAttribute("data-pillar", pillar);
+        const rects = group.querySelectorAll("rect");
+        if (rects.length > 0) {
+          rects[0].setAttribute("stroke", hex);
+          rects[0].setAttribute("stroke-width", "1.5");
+          rects[0].setAttribute("fill", "#ffffff");
+        }
+        if (rects.length > 1) {
+          rects[1].setAttribute("fill", `${hex}14`);
+        }
+        group.style.cursor = "pointer";
+        group.addEventListener("click", () => {
+          window.location.href = `/schemas/${version}/${slug}/`;
+        });
+      }
+    })();
+
+    // ─── Filter chips: toggle pillar visibility on ERD + accordion ─────
+    const filterEl = document.getElementById("pillar-filter");
+    const accordion = document.getElementById("accordion");
+
+    const activePillars = new Set(Object.keys(slugByPillar));
+
+    function render() {
+      // Accordion items
+      accordion.querySelectorAll(".acc-item").forEach((el) => {
+        const pillar = el.getAttribute("data-pillar");
+        el.style.display = activePillars.has(pillar) ? "" : "none";
+      });
+      // ERD nodes
+      const svg = document.querySelector("#erd svg");
+      if (svg) {
+        svg.querySelectorAll("[data-slug]").forEach((el) => {
+          const pillar = el.getAttribute("data-pillar");
+          el.style.opacity = activePillars.has(pillar) ? "1" : "0.15";
+          el.style.pointerEvents = activePillars.has(pillar) ? "" : "none";
+        });
+      }
+      // Chip aria-pressed state
+      filterEl.querySelectorAll(".chip--toggle").forEach((btn) => {
+        const p = btn.getAttribute("data-pillar");
+        if (p === "all") {
+          btn.setAttribute("aria-pressed", activePillars.size === Object.keys(slugByPillar).length ? "true" : "false");
+        } else {
+          btn.setAttribute("aria-pressed", activePillars.has(p) ? "true" : "false");
+        }
+      });
+    }
+
+    filterEl.addEventListener("click", (ev) => {
+      const btn = ev.target.closest(".chip--toggle");
+      if (!btn) return;
+      const pillar = btn.getAttribute("data-pillar");
+      if (pillar === "all") {
+        const all = Object.keys(slugByPillar);
+        const allOn = all.every((p) => activePillars.has(p));
+        activePillars.clear();
+        if (!allOn) all.forEach((p) => activePillars.add(p));
+      } else {
+        if (activePillars.has(pillar)) activePillars.delete(pillar);
+        else activePillars.add(pillar);
+      }
+      render();
+    });
+
+    // Apply filters once SVG is painted.
+    const poll = setInterval(() => {
+      if (document.querySelector("#erd svg")) {
+        clearInterval(poll);
+        render();
+      }
+    }, 100);
+
+    // ─── Zoom controls ──────────────────────────────────────────────
+    let zoom = 1;
+    const apply = () => {
+      const svg = document.querySelector("#erd svg");
+      if (svg) {
+        svg.style.transformOrigin = "top left";
+        svg.style.transform = `scale(${zoom})`;
+      }
+    };
+    document.getElementById("zoom-in").addEventListener("click", () => {
+      zoom = Math.min(2.0, zoom + 0.15);
+      apply();
+    });
+    document.getElementById("zoom-out").addEventListener("click", () => {
+      zoom = Math.max(0.5, zoom - 0.15);
+      apply();
+    });
+    document.getElementById("zoom-reset").addEventListener("click", () => {
+      zoom = 1;
+      apply();
+    });
+
+    // ─── Accordion: expand/collapse all ──────────────────────────────
+  </script>
+
+  <style>
+    .chip--toggle {
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      padding: 4px 10px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 120ms, border-color 120ms, color 120ms, opacity 120ms;
+    }
+    .chip--toggle[aria-pressed="false"] {
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+    .chip--toggle:hover { border-color: var(--ink-soft); }
+
+    .graph-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: -8px -8px 12px;
+      padding: 0 8px 12px;
+      border-bottom: 1px dashed var(--rule);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .graph-toolbar__hint .kbd {
+      font-family: var(--font-mono);
+      padding: 1px 6px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--paper-alt);
+      color: var(--ink-soft);
+      font-size: 11px;
+    }
+    .graph-toolbar__zoom {
+      display: inline-flex;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .graph-toolbar__zoom button {
+      background: #fff;
+      border: 0;
+      border-right: 1px solid var(--rule);
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .graph-toolbar__zoom button:last-child { border-right: 0; }
+    .graph-toolbar__zoom button:hover { background: var(--paper-alt); }
+
+    .graph-scroll {
+      overflow: auto;
+      max-height: 640px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+    }
+    .graph-scroll .mermaid { font-family: var(--font-sans); }
+    .graph-scroll .mermaid svg {
+      display: block;
+      min-width: 100%;
+      height: auto;
+      transition: transform 160ms ease;
+    }
+
+    /* Accordion */
+    .accordion {
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .acc-item {
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .acc-item:last-child { border-bottom: 0; }
+    .acc-item > summary {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 140px 1fr 1fr 80px;
+      gap: 16px;
+      align-items: center;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 13.5px;
+      transition: background 120ms;
+    }
+    .acc-item > summary::-webkit-details-marker { display: none; }
+    .acc-item > summary:hover { background: var(--rule-soft); }
+    .acc-item[open] > summary { background: var(--paper-alt); }
+    .acc-pillar {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .acc-slug {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dashed transparent;
+    }
+    .acc-slug:hover {
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+    }
+    .acc-title {
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+    .acc-count {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .acc-body {
+      padding: 12px 16px 20px;
+      border-top: 1px dashed var(--rule-soft);
+      background: #fff;
+    }
+    @media (max-width: 720px) {
+      .acc-item > summary {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 4px;
+      }
+      .acc-pillar { order: 0; }
+      .acc-count  { order: 1; text-align: right; }
+      .acc-slug   { order: 2; grid-column: 1 / -1; }
+      .acc-title  { order: 3; grid-column: 1 / -1; color: var(--muted); }
+    }
+  </style>
+</BaseLayout>

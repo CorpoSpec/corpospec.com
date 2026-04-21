@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/org-structure.schema.json
+id: people/org
+type: FormalOrganization
+name: "Acme Corp, Inc."
+entity: entity/acme-corp
+units:
+  - id: executive
+    type: OrganizationalUnit
+    name: "Executive"
+    head: people/roles/ceo
+    members:
+      - people/team/alex-chen
+    site: hybrid
+  - id: engineering
+    type: OrganizationalUnit
+    name: "Engineering"
+    head: people/roles/cto
+    members:
+      - people/team/sarah-kim
+      - people/team/taylor-brooks
+      - people/team/casey-lin
+      - people/team/riley-chen
+      - people/team/devon-hayes
+    site: remote
+  - id: product
+    type: OrganizationalUnit
+    name: "Product"
+    head: people/roles/ceo
+    members:
+      - people/team/morgan-reeves
+    site: hybrid
+  - id: sales
+    type: OrganizationalUnit
+    name: "Sales"
+    head: people/roles/sales-lead
+    members:
+      - people/team/avery-patel
+    site: hybrid
+  - id: marketing
+    type: OrganizationalUnit
+    name: "Marketing"
+    head: people/roles/marketing-manager
+    members:
+      - people/team/blake-nguyen
+    site: remote
+  - id: operations
+    type: OrganizationalUnit
+    name: "Operations"
+    head: people/roles/data-analyst
+    members:
+      - people/team/harper-santos
+    site: hybrid
+  - id: customer-success
+    type: OrganizationalUnit
+    name: "Customer Success"
+    head: people/roles/customer-success-manager
+    members:
+      - people/team/quinn-murphy
+    site: remote

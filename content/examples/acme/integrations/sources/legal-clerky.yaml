@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/legal-clerky
+name: "Clerky Legal"
+system: "Clerky"
+type: source
+status: draft
+
+input_port:
+  name: "clerky-api"
+  protocol: "REST"
+  authentication: api_key
+
+data_contract:
+  owner: people/team/alex-chen
+  freshness:
+    schedule: "weekly"
+    max_staleness_minutes: 10080
+  schema:
+    fields:
+      - name: document_id
+        type: string
+        required: true
+      - name: document_type
+        type: string
+        required: true
+      - name: status
+        type: string
+        required: true
+      - name: effective_date
+        type: string
+        required: true
+      - name: counterparty
+        type: string
+        required: false
+
+pipeline:
+  date_field: effective_date
+  mappings:
+    - source_field: document_id
+      target: metrics/legal/documents-count
+      aggregation: count
+      breakdown_by: document_type
+
+outputs: []

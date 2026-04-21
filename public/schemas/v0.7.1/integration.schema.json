@@ -1,0 +1,356 @@
+{
+  "$defs": {
+    "Aggregation": {
+      "description": "Aggregation method for pipeline field mappings.",
+      "enum": [
+        "sum",
+        "avg",
+        "count",
+        "last",
+        "max",
+        "min",
+        "ratio"
+      ],
+      "type": "string"
+    },
+    "AuthMethod": {
+      "description": "Authentication method.",
+      "enum": [
+        "api_key",
+        "oauth2",
+        "basic",
+        "mtls",
+        "ssh",
+        "none"
+      ],
+      "type": "string"
+    },
+    "DataContract": {
+      "description": "Data contract.",
+      "properties": {
+        "freshness": {
+          "$ref": "#/$defs/Freshness"
+        },
+        "owner": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DataQuality"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema": {
+          "$ref": "#/$defs/DataSchema"
+        },
+        "sla": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Sla"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "owner",
+        "freshness",
+        "schema"
+      ],
+      "type": "object"
+    },
+    "DataField": {
+      "description": "Data contract field definition.",
+      "properties": {
+        "enum": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "DataQuality": {
+      "description": "Data quality constraints.",
+      "properties": {
+        "completeness": {
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "uniqueness": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DataSchema": {
+      "description": "Data contract schema.",
+      "properties": {
+        "fields": {
+          "items": {
+            "$ref": "#/$defs/DataField"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "fields"
+      ],
+      "type": "object"
+    },
+    "FieldMapping": {
+      "description": "Maps a source field to a CorpoSpec metric via aggregation.",
+      "properties": {
+        "aggregation": {
+          "$ref": "#/$defs/Aggregation"
+        },
+        "breakdown_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "denominator_field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_field": {
+          "type": "string"
+        },
+        "target": {
+          "$ref": "#/$defs/PathRef"
+        }
+      },
+      "required": [
+        "source_field",
+        "target",
+        "aggregation"
+      ],
+      "type": "object"
+    },
+    "Freshness": {
+      "description": "Freshness requirements.",
+      "properties": {
+        "max_staleness_minutes": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "schedule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schedule",
+        "max_staleness_minutes"
+      ],
+      "type": "object"
+    },
+    "InputPort": {
+      "description": "Input port configuration.",
+      "properties": {
+        "authentication": {
+          "$ref": "#/$defs/AuthMethod"
+        },
+        "endpoint": {
+          "format": "uri",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "protocol",
+        "authentication"
+      ],
+      "type": "object"
+    },
+    "IntegrationStatus": {
+      "description": "Integration lifecycle status.",
+      "enum": [
+        "draft",
+        "development",
+        "testing",
+        "active",
+        "sunset",
+        "retired"
+      ],
+      "type": "string"
+    },
+    "IntegrationType": {
+      "description": "Integration direction type.",
+      "enum": [
+        "source",
+        "destination",
+        "bidirectional"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pipeline": {
+      "description": "Pipeline configuration: how raw records are transformed into metric snapshots.",
+      "properties": {
+        "date_field": {
+          "type": "string"
+        },
+        "mappings": {
+          "items": {
+            "$ref": "#/$defs/FieldMapping"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "date_field",
+        "mappings"
+      ],
+      "type": "object"
+    },
+    "Sla": {
+      "description": "Service level agreement.",
+      "properties": {
+        "availability": {
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "support_response_hours": {
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/integration.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Integration data contract aligned with ODPS input ports and ODCS contract concepts.",
+  "properties": {
+    "config": {
+      "description": "Connector-specific key-value configuration (e.g. profile_ids, owner, repo)."
+    },
+    "data_contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DataContract"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "input_port": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/InputPort"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "outputs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "pipeline": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Pipeline"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/IntegrationStatus"
+    },
+    "system": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/IntegrationType"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "system",
+    "type",
+    "status"
+  ],
+  "title": "Integration",
+  "type": "object"
+}

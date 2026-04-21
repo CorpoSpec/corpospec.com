@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/taylor-brooks
+type: Person
+name:
+  given: "Taylor"
+  family: "Brooks"
+  full: "Taylor Brooks"
+email: "taylor.brooks@acmecorp.example.com"
+role: people/roles/head-of-engineering
+unit: engineering
+start_date: "2025-10-15"
+end_date: null
+status: active
+bio: "Head of Engineering. Previously Engineering Manager at Datadog. Specializes in distributed systems and team scaling."

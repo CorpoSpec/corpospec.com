@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/morgan-reeves
+type: Person
+name:
+  given: "Morgan"
+  family: "Reeves"
+  full: "Morgan Reeves"
+email: "morgan.reeves@acmecorp.example.com"
+role: people/roles/product-designer
+unit: product
+start_date: "2025-11-01"
+end_date: null
+status: active
+bio: "Product Designer. Previously at Figma. Focuses on workflow visualization and interaction design."

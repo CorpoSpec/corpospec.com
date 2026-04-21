@@ -1,0 +1,122 @@
+{
+  "$defs": {
+    "AccountType": {
+      "description": "Bank account type.",
+      "enum": [
+        "operating",
+        "savings",
+        "escrow",
+        "tax-reserve",
+        "investment"
+      ],
+      "type": "string"
+    },
+    "BankAccount": {
+      "additionalProperties": false,
+      "description": "Individual bank account entry.",
+      "properties": {
+        "bank": {
+          "type": "string"
+        },
+        "closed": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "iban_last4": {
+          "pattern": "^[0-9]{4}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "opened": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/StatusActive"
+        },
+        "type": {
+          "$ref": "#/$defs/AccountType"
+        }
+      },
+      "required": [
+        "name",
+        "bank",
+        "currency",
+        "type",
+        "status"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "StatusActive": {
+      "description": "Lifecycle status for entities.",
+      "enum": [
+        "active",
+        "inactive",
+        "dissolved",
+        "pre-incorporation",
+        "planned"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/bank-account.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Registry of financial accounts held by an entity.",
+  "properties": {
+    "accounts": {
+      "items": {
+        "$ref": "#/$defs/BankAccount"
+      },
+      "type": "array"
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    }
+  },
+  "required": [
+    "id",
+    "entity",
+    "accounts"
+  ],
+  "title": "BankAccountRegistry",
+  "type": "object"
+}

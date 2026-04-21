@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/pipeflow-crm
+name: "PipeFlow CRM"
+system: "PipeFlow CRM"
+type: source
+status: active
+
+input_port:
+  name: "pipeflow-api"
+  protocol: "REST"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: "hourly"
+    max_staleness_minutes: 60
+  schema:
+    fields:
+      - name: contact_id
+        type: string
+        required: true
+      - name: deal_id
+        type: string
+        required: true
+      - name: deal_stage
+        type: string
+        required: true
+      - name: deal_value
+        type: number
+        required: true
+      - name: updated_at
+        type: string
+        required: true
+
+pipeline:
+  date_field: updated_at
+  mappings:
+    - source_field: deal_value
+      target: metrics/revenue/pipeline-value
+      aggregation: sum
+      breakdown_by: deal_stage
+    - source_field: contact_id
+      target: metrics/sales/contacts-synced
+      aggregation: count
+
+outputs: []

@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { listVersions, listSlugsByPillar, PILLARS } from "../lib/schemas.ts";
+
+const versions = listVersions();
+const latest = versions[0];
+const byPillar = latest ? listSlugsByPillar(latest) : [];
+const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero__eyebrow">
+      <span class="badge">Draft · v0.x</span>
+      <span>Open standard</span>
+    </div>
+    <h1>
+      The open standard for <em>Company&nbsp;as&nbsp;Code</em>.
+    </h1>
+    <p class="lead">
+      CorpoSpec defines a machine-readable schema for every load-bearing fact about a
+      company — entity, people, governance, strategy, finance, product, market, brand,
+      integrations, legal. AI agents and humans read the same source of truth.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="/guide/">Add it to your repo →</a>
+      <a class="btn btn--ghost"   href="/schemas/">Browse the schemas</a>
+      <a class="btn btn--ghost"   href="/example/">Read the ACME example</a>
+    </div>
+  </section>
+
+  <h2>What you get</h2>
+  <div class="cards">
+    <a class="card" href="/spec/">
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--accent);"></span>Specification</div>
+      <div class="card__title">Pillars, PathRef, principles</div>
+      <p class="card__desc">DRY, KISS, and PathRef by default. A tight set of rules that keeps a company repository honest.</p>
+    </a>
+    <a class="card" href={latest ? `/schemas/${latest}/` : "/schemas/"}>
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-governance);"></span>Schemas</div>
+      <div class="card__title">{totalSlugs} versioned JSON Schemas {latest ? `· ${latest}` : ""}</div>
+      <p class="card__desc">Draft 2020-12. Versioned URLs are immutable. Works with every YAML language server.</p>
+    </a>
+    <a class="card" href={latest ? `/schemas/${latest}/graph/` : "/schemas/"}>
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-market);"></span>Visual</div>
+      <div class="card__title">Entity relationship map</div>
+      <p class="card__desc">See how the pillars fit together — every entity, every common reference, one diagram.</p>
+    </a>
+    <a class="card" href="/guide/">
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-product);"></span>Guide</div>
+      <div class="card__title">Hands-on quickstart</div>
+      <p class="card__desc">Add <code>.corpospec/</code> to your repo in ten minutes. Includes editor wiring and validation.</p>
+    </a>
+    <a class="card" href="/example/">
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-financial);"></span>Example</div>
+      <div class="card__title">ACME — a complete sample company</div>
+      <p class="card__desc">All pillars populated. A reference for what a well-structured CorpoSpec repo looks like.</p>
+    </a>
+    <a class="card" href="https://github.com/corpospec/corpospec.com" rel="noopener">
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-legal);"></span>Source</div>
+      <div class="card__title">GitHub — corpospec/corpospec.com</div>
+      <p class="card__desc">This site, every published schema version, and the ingest pipeline. All open source.</p>
+    </a>
+  </div>
+
+  <h2>Ten pillars, one company</h2>
+  <p class="prose">
+    Every pillar maps to a directory under <code>.corpospec/</code>. Each file is a single entity or document validated against its JSON Schema. References between entities are PathRefs — <code>people/team/alex</code> — never copied attributes.
+  </p>
+  <div class="legend">
+    {PILLARS.map((p) => (
+      <span class="chip" style={`color: ${p.color};`}>
+        <span class="pill-dot"></span>{p.label}
+      </span>
+    ))}
+  </div>
+
+  <h2>Pin a version in your YAML</h2>
+  <p class="prose">Versioned URLs are immutable. Add this header to any CorpoSpec YAML file:</p>
+  <pre><code><span class="c"># yaml-language-server: $schema=</span><span class="s">https://corpospec.com/schemas/{latest ?? "v0.7.1"}/entity.schema.json</span></code></pre>
+</BaseLayout>

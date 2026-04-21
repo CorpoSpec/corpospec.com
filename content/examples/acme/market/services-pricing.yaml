@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/services-pricing.schema.json
+id: market/services-pricing
+name: "Acme Professional Services"
+description: >
+  Professional services offered to Enterprise customers and select Pro
+  accounts. Services accelerate time-to-value, enable complex integrations,
+  and drive NRR expansion beyond platform subscription revenue. Delivered
+  by the Customer Success and Solutions Engineering teams.
+
+services:
+  - name: "Guided Onboarding"
+    description: >
+      Structured onboarding program for Enterprise customers. Includes
+      workspace setup, user provisioning, initial workflow configuration,
+      admin training, and a 30-day success review. Ensures the team
+      reaches first value within the first two weeks.
+    day_rate:
+      min: 800
+      max: 1200
+      currency: USD
+    engagement_model: fixed-scope
+    typical_duration: "3-5 days"
+
+  - name: "Platform Implementation"
+    description: >
+      End-to-end implementation for organizations migrating from legacy
+      workflow tools. Covers data migration, workflow re-architecture,
+      integration configuration, UAT support, and go-live cutover.
+      Includes a post-launch stabilization period.
+    day_rate:
+      min: 1200
+      max: 1800
+      currency: USD
+    engagement_model: project-based
+    typical_duration: "10-30 days"
+
+  - name: "Custom Integration Development"
+    description: >
+      Development of custom integrations with internal systems, ERPs,
+      CRMs, or proprietary APIs not covered by the standard integration
+      catalog. Delivered as production-ready connectors with documentation
+      and automated tests.
+    day_rate:
+      min: 1500
+      max: 2200
+      currency: USD
+    engagement_model: project-based
+    typical_duration: "5-15 days"
+
+  - name: "Team Training Workshop"
+    description: >
+      Instructor-led training sessions for end users, workflow designers,
+      and administrators. Covers platform fundamentals, advanced workflow
+      design, AI template authoring, and analytics interpretation.
+      Available on-site or remote.
+    day_rate:
+      min: 600
+      max: 1000
+      currency: USD
+    engagement_model: fixed-scope
+    typical_duration: "1-3 days"
+
+  - name: "Workflow Optimization Review"
+    description: >
+      Diagnostic assessment of existing workflow configurations. Identifies
+      inefficiencies, redundant automations, and opportunities for AI
+      template consolidation. Delivers a prioritized optimization roadmap
+      with estimated ROI per recommendation.
+    day_rate:
+      min: 1000
+      max: 1500
+      currency: USD
+    engagement_model: project-based
+    typical_duration: "2-5 days"
+
+  - name: "Dedicated Solutions Engineer"
+    description: >
+      Embedded solutions engineer assigned to a single Enterprise account
+      on a retainer basis. Handles ongoing configuration, troubleshooting,
+      workflow iteration, and serves as the technical liaison between the
+      customer and the Acme product team.
+    day_rate:
+      min: 1200
+      max: 1800
+      currency: USD
+    engagement_model: retainer
+    typical_duration: "Monthly retainer (minimum 3 months)"
+
+capacity_constraints:
+  description: >
+    Professional services capacity is limited by the Solutions Engineering
+    team headcount. Current team of 2 solutions engineers can support
+    3-4 concurrent engagements. Capacity scales with hiring plan aligned
+    to Enterprise customer growth.
+  max_concurrent_engagements: 4
+  staffing_reference: people/roles/solutions-engineer
+
+nrr_classification: >
+  Professional services revenue is classified as NRR expansion. Platform
+  subscription fees represent the primary revenue line. Services revenue
+  is incremental, engagement-based, and tracked separately in financial
+  reporting. Target services revenue contribution is 15-20% of total
+  Enterprise account revenue.
+
+related_decisions:
+  - governance/decisions/0004-pricing-model
+  - governance/decisions/0012-sales-motion
+  - governance/decisions/0019-customer-success
+  - governance/decisions/0026-support-model

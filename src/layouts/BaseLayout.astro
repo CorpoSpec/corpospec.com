@@ -1,0 +1,79 @@
+---
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Override the canonical URL. Defaults to Astro.url resolved against site. */
+  canonical?: string;
+  /** Highlight a nav item. */
+  active?: "spec" | "schemas" | "guide" | "example" | null;
+}
+
+const {
+  title = "CorpoSpec — The open standard for Company as Code",
+  description = "CorpoSpec defines a machine-readable schema for company structure, governance, strategy, and metrics. AI agents read and act on the state of a business as reliably as they read code.",
+  canonical,
+  active = null,
+} = Astro.props;
+
+const pageUrl = canonical ?? new URL(Astro.url.pathname, Astro.site ?? "https://corpospec.com").toString();
+const specRepo = "https://github.com/corpospec/corpospec.com";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fbfaf6" />
+    <link rel="canonical" href={pageUrl} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="CorpoSpec" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CorpoSpec" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/" class="wordmark" aria-label="CorpoSpec home">
+          <span class="bracket">[</span>corpospec<span class="bracket">]</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/spec/"     aria-current={active === "spec"     ? "page" : undefined}>Spec</a>
+          <a href="/schemas/"  aria-current={active === "schemas"  ? "page" : undefined}>Schemas</a>
+          <a href="/guide/"    aria-current={active === "guide"    ? "page" : undefined}>Guide</a>
+          <a href="/example/"  aria-current={active === "example"  ? "page" : undefined}>Example</a>
+          <a href={specRepo}   rel="noopener">GitHub →</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <span>
+        <strong>CorpoSpec</strong> — open standard for Company&nbsp;as&nbsp;Code.
+      </span>
+      <span>
+        <a href={specRepo} rel="noopener">Source on GitHub</a>
+        &nbsp;·&nbsp;
+        <a href={`${specRepo}/issues`} rel="noopener">Issues</a>
+        &nbsp;·&nbsp;
+        <a href="/spec/">Spec</a>
+      </span>
+    </footer>
+  </body>
+</html>

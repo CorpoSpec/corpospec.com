@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-foundation.schema.json
+id: brand/foundation
+name: "Acme Corp"
+purpose: "Empower growing teams to automate their workflows so they can focus on what matters most."
+values:
+  - name: Simplicity First
+    description: "Complex problems deserve simple solutions. Every feature must reduce complexity, not add to it."
+    behavioral_definition: "Evaluate every feature against the question: does this make the user's life simpler? If not, redesign or remove."
+    anti_pattern: "Feature bloat. Configuration overload. Requiring documentation to understand basic workflows."
+    priority_rank: 1
+  - name: Customer Obsession
+    description: "Every decision starts with the customer's problem. Revenue follows value delivery."
+    behavioral_definition: "Talk to customers weekly. Ship based on validated needs. Measure success by customer outcomes."
+    anti_pattern: "Building features nobody asked for. Optimizing metrics disconnected from customer value."
+    priority_rank: 2
+  - name: Ship and Iterate
+    description: "Perfect is the enemy of good. Ship early, learn fast, iterate continuously."
+    behavioral_definition: "Release every two weeks. Gather feedback immediately. Fix forward rather than design forever."
+    anti_pattern: "Months-long development cycles without customer validation. Gold-plating features before testing."
+    priority_rank: 3
+personality:
+  archetype: creator
+  traits:
+    - name: Pragmatic
+      intensity: 5
+    - name: Energetic
+      intensity: 4
+    - name: Approachable
+      intensity: 4
+    - name: Technical
+      intensity: 3
+    - name: Optimistic
+      intensity: 3
+    - name: Direct
+      intensity: 4
+  spectrum_axes:
+    - name: Communication Style
+      left_pole: Verbose
+      right_pole: Terse
+      position: 6
+    - name: Emotional Tone
+      left_pole: Warm
+      right_pole: Clinical
+      position: 4
+    - name: Decision Making
+      left_pole: Intuitive
+      right_pole: Data-Driven
+      position: 7
+    - name: Pace
+      left_pole: Deliberate
+      right_pole: Rapid
+      position: 7
+related_decisions:
+  - governance/decisions/0010-brand-identity
+positioning:
+  frame_of_reference: "Workflow automation platform for growing teams"
+  point_of_difference: "AI-powered workflow templates that learn from usage patterns and adapt to each team's processes"
+  reason_to_believe: "Built by operators who lived the pain of scaling manual processes. 78% of users see productivity gains within the first week."
+  target_audience: "Operations leaders and founders at companies with 1-500 employees"
+  institutional_framing: "Acme Corp is the automation layer for modern operations teams. Recognized by leading industry analysts as a top workflow automation platform for SMBs, with backing from tier-one enterprise investors."
+promise: "Automate your workflows. Amplify your team."
+narrative:
+  origin: "Alex and Sarah built Acme after watching teams at their previous companies drown in repetitive manual processes that no existing tool could automate without a dedicated engineering team."
+  conflict: "Growing teams face a paradox: the processes that got them to 10 people break at 50. Manual workflows multiply. Context gets lost. New hires spend weeks figuring out how things work instead of contributing."
+  solution: "Acme provides AI-powered workflow automation that learns from your team's patterns, adapts to your processes, and scales as you grow. No code required. No consultants needed."
+  hero: "The operations leader who wants to build systems, not fight fires."
+  villain: "Manual processes, scattered tools, and the productivity tax of scaling a team without automation."
+  analogy: "Acme is to team workflows what Zapier was to app integrations, but with AI that understands your business context."

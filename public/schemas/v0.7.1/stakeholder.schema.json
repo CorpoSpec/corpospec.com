@@ -1,0 +1,454 @@
+{
+  "$defs": {
+    "Acceleration": {
+      "description": "Vesting acceleration type.",
+      "enum": [
+        "none",
+        "single-trigger",
+        "double-trigger"
+      ],
+      "type": "string"
+    },
+    "ConvertibleInstrument": {
+      "additionalProperties": false,
+      "description": "Convertible instrument (SAFE, convertible note, etc.) aligned with OCF.",
+      "properties": {
+        "conversion_trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "discount_rate": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "instrument_type": {
+          "type": "string"
+        },
+        "investment_amount": {
+          "$ref": "#/$defs/MonetaryAmount"
+        },
+        "valuation_cap": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "instrument_type",
+        "investment_amount"
+      ],
+      "type": "object"
+    },
+    "FounderEquity": {
+      "description": "Founder equity position details.",
+      "properties": {
+        "dilution_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "post_pre_seed_percentage_range": {
+          "description": "Can be an array of two floats or a descriptive string."
+        },
+        "pre_pre_seed_percentage": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "OwnershipChain": {
+      "description": "Ownership chain description for a stakeholder.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "legal_holder_of_gmbh_shares": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RelationshipStatus": {
+      "description": "Stakeholder relationship status.",
+      "enum": [
+        "active",
+        "departed"
+      ],
+      "type": "string"
+    },
+    "StakeholderCustom": {
+      "description": "Typed extension fields for Stakeholder.",
+      "properties": {
+        "founder_equity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FounderEquity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ownership_chain": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OwnershipChain"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tax_structure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StakeholderTaxStructure"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vesting_details": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StakeholderVestingDetails"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "StakeholderTaxStructure": {
+      "description": "Tax structure details for a stakeholder.",
+      "properties": {
+        "dba_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "participation_exemption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "StakeholderType": {
+      "description": "Stakeholder type.",
+      "enum": [
+        "founder",
+        "employee",
+        "investor",
+        "advisor",
+        "board-member"
+      ],
+      "type": "string"
+    },
+    "StakeholderVestingDetails": {
+      "description": "Vesting details for a stakeholder.",
+      "properties": {
+        "cliff_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "full_vest_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mechanism": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tied_to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "StockHolding": {
+      "description": "A single stock holding.",
+      "properties": {
+        "acquisition_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quantity": {
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "stock_class": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "vesting": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VestingSchedule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "stock_class",
+        "quantity"
+      ],
+      "type": "object"
+    },
+    "StockOption": {
+      "additionalProperties": false,
+      "description": "Stock option grant aligned with OCF stock plan model.",
+      "properties": {
+        "exercise_price": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MonetaryAmount"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expiration_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "grant_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quantity": {
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "stock_class": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "vesting": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VestingSchedule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "stock_class",
+        "quantity"
+      ],
+      "type": "object"
+    },
+    "VestingSchedule": {
+      "description": "Vesting schedule details.",
+      "properties": {
+        "acceleration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Acceleration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cliff_months": {
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "schedule": {
+          "type": "string"
+        },
+        "start_date": {
+          "$ref": "#/$defs/IsoDate"
+        }
+      },
+      "required": [
+        "schedule",
+        "start_date"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/stakeholder.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Equity stakeholder record aligned with OCF stakeholder schema.",
+  "properties": {
+    "convertibles": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ConvertibleInstrument"
+      },
+      "type": "array"
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StakeholderCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "options": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StockOption"
+      },
+      "type": "array"
+    },
+    "person": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "relationship_status": {
+      "$ref": "#/$defs/RelationshipStatus"
+    },
+    "stock_holdings": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/StockHolding"
+      },
+      "type": "array"
+    },
+    "type": {
+      "$ref": "#/$defs/StakeholderType"
+    }
+  },
+  "required": [
+    "id",
+    "person",
+    "type",
+    "relationship_status"
+  ],
+  "title": "Stakeholder",
+  "type": "object"
+}

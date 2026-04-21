@@ -1,0 +1,214 @@
+{
+  "$defs": {
+    "ComponentType": {
+      "description": "Component type in a control implementation.",
+      "enum": [
+        "service",
+        "process",
+        "policy",
+        "hardware",
+        "software"
+      ],
+      "type": "string"
+    },
+    "ControlComponent": {
+      "description": "Component of a control implementation.",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/ComponentType"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "role"
+      ],
+      "type": "object"
+    },
+    "ControlImplementation": {
+      "description": "Control implementation details.",
+      "properties": {
+        "components": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ControlComponent"
+          },
+          "type": "array"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description"
+      ],
+      "type": "object"
+    },
+    "ControlStatus": {
+      "description": "Control implementation status.",
+      "enum": [
+        "planned",
+        "implemented",
+        "partial",
+        "not-applicable"
+      ],
+      "type": "string"
+    },
+    "Evidence": {
+      "description": "Evidence record.",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/EvidenceType"
+        }
+      },
+      "required": [
+        "type",
+        "path"
+      ],
+      "type": "object"
+    },
+    "EvidenceType": {
+      "description": "Evidence type.",
+      "enum": [
+        "configuration",
+        "process",
+        "document",
+        "screenshot",
+        "log"
+      ],
+      "type": "string"
+    },
+    "Iso27001Mapping": {
+      "description": "ISO 27001 mapping entry.",
+      "properties": {
+        "control": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "control"
+      ],
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Soc2Mapping": {
+      "description": "SOC2 mapping entry.",
+      "properties": {
+        "criteria": {
+          "type": "string"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "criteria"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/control.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Security control implementation aligned with OSCAL component definition model.",
+  "properties": {
+    "assessor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "catalog": {
+      "type": "string"
+    },
+    "control_id": {
+      "type": "string"
+    },
+    "evidence": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "implementation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ControlImplementation"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "iso27001_mapping": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Iso27001Mapping"
+      },
+      "type": "array"
+    },
+    "last_assessed": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "soc2_mapping": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Soc2Mapping"
+      },
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/ControlStatus"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "control_id",
+    "catalog",
+    "title",
+    "status"
+  ],
+  "title": "SecurityControl",
+  "type": "object"
+}

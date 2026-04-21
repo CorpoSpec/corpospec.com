@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/streamconnect
+name: StreamConnect
+system: StreamConnect
+type: source
+status: active
+input_port:
+  name: streamconnect-api
+  protocol: WebRTC
+  authentication: api_key
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: realtime
+    max_staleness_minutes: 1
+  schema:
+    fields:
+    - name: room_id
+      type: string
+      required: true
+    - name: participant_id
+      type: string
+      required: true
+    - name: event_type
+      type: string
+      required: true
+    - name: event_timestamp
+      type: datetime
+      required: true
+pipeline:
+  date_field: event_timestamp
+  mappings:
+  - source_field: participant_id
+    target: metrics/engagement/voice-sessions
+    aggregation: count
+    breakdown_by: room_id
+outputs: []

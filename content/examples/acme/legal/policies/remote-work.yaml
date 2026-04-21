@@ -1,0 +1,15 @@
+id: legal/policies/remote-work
+name: Remote Work Policy
+description: Guidelines for remote and hybrid work arrangements.
+status: active
+scope: All full-time employees
+effective_date: "2025-07-01"
+review_date: "2026-07-01"
+owner: people/team/alex-chen
+provisions:
+  - Core hours 10am-3pm PT for synchronous collaboration
+  - Home office stipend of $1,000 annually
+  - Company equipment must be returned within 14 days of departure
+  - VPN required for accessing internal systems
+related_decisions:
+  - governance/decisions/0007-remote-work

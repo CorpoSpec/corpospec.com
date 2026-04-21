@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/github-issues
+name: "GitHub Issues"
+system: "GitHub"
+type: source
+status: active
+
+input_port:
+  name: "github-issues-api"
+  protocol: "REST"
+  authentication: api_key
+
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: "hourly"
+    max_staleness_minutes: 60
+  schema:
+    fields:
+      - name: issue_number
+        type: integer
+        required: true
+      - name: title
+        type: string
+        required: true
+      - name: state
+        type: string
+        required: true
+        enum:
+          - open
+          - closed
+      - name: labels
+        type: string
+        required: false
+      - name: assignee
+        type: string
+        required: false
+      - name: created_at
+        type: string
+        required: true
+      - name: closed_at
+        type: string
+        required: false
+
+pipeline:
+  date_field: created_at
+  mappings:
+    - source_field: issue_number
+      target: metrics/engineering/issues-opened
+      aggregation: count
+    - source_field: state
+      target: metrics/engineering/issues-closed
+      aggregation: count
+
+outputs: []

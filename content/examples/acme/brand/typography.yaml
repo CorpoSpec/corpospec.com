@@ -1,0 +1,183 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-typography.schema.json
+id: brand/typography
+families:
+  - name: Inter
+    source: google-fonts
+    license: ofl
+    roles:
+      - body
+      - ui
+    fallback_stack:
+      - system-ui
+      - -apple-system
+      - sans-serif
+    variable_font: true
+    file_refs:
+      - brand/fonts/Inter/Inter-Regular.ttf
+      - brand/fonts/Inter/Inter-Medium.ttf
+      - brand/fonts/Inter/Inter-SemiBold.ttf
+      - brand/fonts/Inter/Inter-Bold.ttf
+      - brand/fonts/Inter/Inter-Italic.ttf
+      - brand/fonts/Inter/Inter-MediumItalic.ttf
+      - brand/fonts/Inter/Inter-SemiBoldItalic.ttf
+      - brand/fonts/Inter/Inter-BoldItalic.ttf
+  - name: Plus Jakarta Sans
+    source: google-fonts
+    license: ofl
+    roles:
+      - display
+    fallback_stack:
+      - Inter
+      - system-ui
+      - sans-serif
+    variable_font: true
+    file_refs:
+      - brand/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf
+      - brand/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf
+      - brand/fonts/PlusJakartaSans/PlusJakartaSans-SemiBold.ttf
+      - brand/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf
+  - name: JetBrains Mono
+    source: google-fonts
+    license: ofl
+    roles:
+      - mono
+    fallback_stack:
+      - Fira Code
+      - Consolas
+      - monospace
+    variable_font: true
+    file_refs:
+      - brand/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf
+      - brand/fonts/JetBrainsMono/JetBrainsMono-Medium.ttf
+      - brand/fonts/JetBrainsMono/JetBrainsMono-SemiBold.ttf
+      - brand/fonts/JetBrainsMono/JetBrainsMono-Bold.ttf
+      - brand/fonts/JetBrainsMono/JetBrainsMono-Italic.ttf
+type_scale:
+  - name: display-xl
+    size_px: 72
+    size_rem: 4.5
+    line_height: 1.1
+    letter_spacing_em: -0.02
+    weight: 700
+  - name: display-lg
+    size_px: 48
+    size_rem: 3.0
+    line_height: 1.15
+    letter_spacing_em: -0.015
+    weight: 700
+  - name: display-md
+    size_px: 36
+    size_rem: 2.25
+    line_height: 1.2
+    letter_spacing_em: -0.01
+    weight: 600
+  - name: heading-lg
+    size_px: 28
+    size_rem: 1.75
+    line_height: 1.3
+    letter_spacing_em: -0.005
+    weight: 600
+  - name: heading-md
+    size_px: 22
+    size_rem: 1.375
+    line_height: 1.35
+    letter_spacing_em: -0.003
+    weight: 600
+  - name: heading-sm
+    size_px: 18
+    size_rem: 1.125
+    line_height: 1.4
+    letter_spacing_em: 0.0
+    weight: 600
+  - name: body-lg
+    size_px: 18
+    size_rem: 1.125
+    line_height: 1.6
+    letter_spacing_em: 0.0
+    weight: 400
+  - name: body-md
+    size_px: 16
+    size_rem: 1.0
+    line_height: 1.6
+    letter_spacing_em: 0.0
+    weight: 400
+  - name: body-sm
+    size_px: 14
+    size_rem: 0.875
+    line_height: 1.5
+    letter_spacing_em: 0.005
+    weight: 400
+  - name: caption
+    size_px: 12
+    size_rem: 0.75
+    line_height: 1.4
+    letter_spacing_em: 0.01
+    weight: 400
+weight_rules:
+  - weight_value: 400
+    weight_name: Regular
+    approved_contexts:
+      - Body text
+      - Paragraphs
+      - List items
+      - Form labels
+    prohibited_contexts:
+      - Page titles
+      - Section headers
+  - weight_value: 500
+    weight_name: Medium
+    approved_contexts:
+      - Navigation links
+      - Subtitles
+      - Table headers
+      - Button labels
+    prohibited_contexts:
+      - Body paragraphs
+  - weight_value: 600
+    weight_name: SemiBold
+    approved_contexts:
+      - Section headings
+      - Card titles
+      - Sidebar navigation
+      - Emphasized UI labels
+    prohibited_contexts:
+      - Long-form body text
+  - weight_value: 700
+    weight_name: Bold
+    approved_contexts:
+      - Page titles
+      - Hero headings
+      - Display text
+      - Marketing headlines
+    prohibited_contexts:
+      - Body paragraphs
+      - Captions
+typographic_rules:
+  alignment: left
+  hyphenation: false
+  max_line_length_ch: 75
+  capitalization_rules:
+    - "Sentence case for all UI headings and buttons"
+    - "Title case for marketing page headings only"
+    - "Uppercase for abbreviations and acronyms only"
+    - "Never use all-caps for body text or paragraphs"
+numeric_typography:
+  figure_style: lining
+  figure_alignment: tabular
+script_coverage:
+  - script: Latin
+    typeface: Inter
+    fallback: system-ui
+    rtl: false
+  - script: CJK
+    typeface: Noto Sans CJK
+    fallback: Hiragino Sans
+    rtl: false
+  - script: Arabic
+    typeface: Noto Sans Arabic
+    fallback: Tahoma
+    rtl: true
+  - script: Cyrillic
+    typeface: Inter
+    fallback: system-ui
+    rtl: false

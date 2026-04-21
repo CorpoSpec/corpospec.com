@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/pipedrive
+name: "Pipedrive"
+website: "https://pipedrive.com"
+layer: 2
+category: "Sales CRM"
+relationship: integration-partner
+as_of: "2026-03-01"
+
+description: >
+  Sales-focused CRM designed for small sales teams. Offers workflow
+  automation for sales processes. Simple UI and affordable pricing
+  make it popular with SMBs. Limited beyond sales use cases.
+
+founded: "2010"
+headquarters: "Tallinn, Estonia"
+
+strengths:
+  - "Intuitive UI focused on sales pipeline visualization"
+  - "Affordable pricing for small teams"
+  - "Built-in workflow automation for sales processes"
+  - "Strong mobile app for field sales"
+
+weaknesses:
+  - "Limited to sales workflows only"
+  - "AI features behind competitors"
+  - "Reporting and analytics are basic"
+  - "Integration ecosystem smaller than HubSpot or Salesforce"
+
+core_features:
+  - "Visual sales pipeline management"
+  - "Sales workflow automation"
+  - "Email integration and tracking"
+  - "Activity-based selling methodology"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 0
+    ai-integration: 1
+    real-time-collaboration: 2
+    workflow-automation: 3
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme automates workflows across all departments, not just sales"
+  - "AI templates provide intelligent automation beyond rule-based triggers"
+  - "Complementary integration opportunity with Pipedrive for sales data"
+
+sources:
+  - "pipedrive.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

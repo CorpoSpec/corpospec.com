@@ -1,0 +1,17 @@
+id: legal/policies/information-security
+name: Information Security Policy
+description: Establishes security controls, access management, and incident response procedures.
+status: active
+scope: All employees, contractors, and third-party service providers
+effective_date: "2025-08-01"
+review_date: "2026-08-01"
+owner: people/team/sarah-kim
+provisions:
+  - All production access requires MFA
+  - Quarterly access reviews for all systems
+  - Security incidents reported within 1 hour of detection
+  - Annual penetration testing required
+  - Encryption at rest for all PII
+related_decisions:
+  - governance/decisions/0018-security-framework
+  - governance/decisions/0029-incident-response

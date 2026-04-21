@@ -1,0 +1,4 @@
+metric: metrics/definitions/active-users
+date: "2026-01-01"
+value: 312
+source: manual

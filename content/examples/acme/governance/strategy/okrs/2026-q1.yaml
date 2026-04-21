@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/okr.schema.json
+id: governance/strategy/okrs/2026-q1
+period:
+  type: duration
+  start: "2026-01-01"
+  end: "2026-03-31"
+status: closed
+owner: people/team/alex-chen
+
+objectives:
+  - id: obj-1
+    title: "Achieve $15K MRR"
+    description: "Grow monthly recurring revenue from $10K to $15K through customer acquisition and expansion."
+    priority: high
+    key_results:
+      - id: kr-1-1
+        title: "MRR reaches $15,000"
+        start_value: 10000
+        target_value: 15000
+        current_value: 18200
+        unit: currency
+        metric: metrics/definitions/mrr
+        confidence: 1.0
+      - id: kr-1-2
+        title: "Net new customers acquired"
+        start_value: 0
+        target_value: 25
+        current_value: 28
+        unit: count
+        confidence: 1.0
+      - id: kr-1-3
+        title: "Customer churn rate below 3%"
+        start_value: 5
+        target_value: 3
+        current_value: 2.1
+        unit: percentage
+        confidence: 1.0
+    related_decisions:
+      - governance/decisions/0004-pricing-model
+      - governance/decisions/0012-sales-motion
+
+  - id: obj-2
+    title: "Ship v2.0 platform with AI workflows"
+    description: "Launch the AI-powered workflow automation engine as the core product differentiator."
+    priority: high
+    key_results:
+      - id: kr-2-1
+        title: "AI workflow engine shipped to production"
+        start_value: 0
+        target_value: 1
+        current_value: 1
+        unit: count
+        confidence: 1.0
+      - id: kr-2-2
+        title: "Workflow templates available"
+        start_value: 0
+        target_value: 20
+        current_value: 24
+        unit: count
+        confidence: 1.0
+      - id: kr-2-3
+        title: "API uptime above 99.9%"
+        start_value: 99.5
+        target_value: 99.9
+        current_value: 99.95
+        unit: percentage
+        confidence: 1.0
+    related_decisions:
+      - governance/decisions/0003-product-architecture
+      - governance/decisions/0021-ai-integration
+
+  - id: obj-3
+    title: "Build engineering team to 8 engineers"
+    description: "Hire 4 additional engineers to support product velocity and technical debt reduction."
+    priority: high
+    key_results:
+      - id: kr-3-1
+        title: "Engineers hired"
+        start_value: 4
+        target_value: 8
+        current_value: 7
+        unit: count
+        confidence: 0.88
+      - id: kr-3-2
+        title: "Average time-to-hire below 30 days"
+        start_value: 45
+        target_value: 30
+        current_value: 28
+        unit: days
+        confidence: 1.0
+      - id: kr-3-3
+        title: "Engineering onboarding documentation complete"
+        start_value: 0
+        target_value: 1
+        current_value: 1
+        unit: count
+        confidence: 1.0
+    related_decisions:
+      - governance/decisions/0006-hiring-plan

@@ -1,0 +1,213 @@
+{
+  "$defs": {
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "KeyResult": {
+      "description": "Key result within an objective.",
+      "properties": {
+        "confidence": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "current_value": {
+          "format": "double",
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "metric": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start_value": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_value": {
+          "format": "double",
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        },
+        "unit": {
+          "$ref": "#/$defs/KrUnit"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "target_value",
+        "current_value",
+        "unit"
+      ],
+      "type": "object"
+    },
+    "KrUnit": {
+      "description": "Key result unit.",
+      "enum": [
+        "count",
+        "ratio",
+        "percentage",
+        "currency",
+        "days"
+      ],
+      "type": "string"
+    },
+    "Objective": {
+      "description": "Objective within an OKR set.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "key_results": {
+          "items": {
+            "$ref": "#/$defs/KeyResult"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "$ref": "#/$defs/Priority"
+        },
+        "related_decisions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "priority",
+        "key_results"
+      ],
+      "type": "object"
+    },
+    "OkrStatus": {
+      "description": "OKR status.",
+      "enum": [
+        "draft",
+        "active",
+        "closed",
+        "cancelled"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Period": {
+      "description": "A time period with start and end dates.",
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "type": {
+          "$ref": "#/$defs/PeriodType"
+        }
+      },
+      "required": [
+        "type",
+        "start"
+      ],
+      "type": "object"
+    },
+    "PeriodType": {
+      "description": "Period type discriminator.",
+      "enum": [
+        "instant",
+        "duration"
+      ],
+      "type": "string"
+    },
+    "Priority": {
+      "description": "Priority level.",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/okr.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Objectives and Key Results record for strategic planning.",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "objectives": {
+      "items": {
+        "$ref": "#/$defs/Objective"
+      },
+      "type": "array"
+    },
+    "owner": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "period": {
+      "$ref": "#/$defs/Period"
+    },
+    "status": {
+      "$ref": "#/$defs/OkrStatus"
+    }
+  },
+  "required": [
+    "id",
+    "period",
+    "status",
+    "owner",
+    "objectives"
+  ],
+  "title": "Okr",
+  "type": "object"
+}

@@ -1,0 +1,210 @@
+{
+  "$defs": {
+    "FutureSubsidiary": {
+      "description": "Future subsidiary planned by the organization.",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purpose": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "HiringTimelineEntry": {
+      "description": "Entry in the org-level hiring timeline.",
+      "properties": {
+        "compensation_start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "person": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_date_target": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "OrgCustom": {
+      "description": "Typed extension fields for OrgStructure.",
+      "properties": {
+        "employment_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "future_subsidiary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FutureSubsidiary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hiring_timeline": {
+          "items": {
+            "$ref": "#/$defs/HiringTimelineEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "OrgType": {
+      "description": "Organization type.",
+      "enum": [
+        "FormalOrganization",
+        "OrganizationalUnit"
+      ],
+      "type": "string"
+    },
+    "OrgUnit": {
+      "description": "Organizational unit within the structure.",
+      "properties": {
+        "head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "members": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "planned_roles": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "site": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/org-structure.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Organizational structure aligned with W3C ORG ontology.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrgCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/OrgType"
+    },
+    "units": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/OrgUnit"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name",
+    "entity"
+  ],
+  "title": "OrgStructure",
+  "type": "object"
+}

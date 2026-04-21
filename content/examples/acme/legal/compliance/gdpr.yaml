@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/control.schema.json
+id: legal/compliance/gdpr
+control_id: "GDPR-DPA-001"
+catalog: "GDPR"
+title: "GDPR Data Protection Compliance"
+status: partial
+last_assessed: "2026-02-01"
+assessor: null
+implementation:
+  description: >
+    Partial GDPR compliance implemented. Privacy policy published.
+    Data processing agreements drafted for key vendors. Cookie consent
+    mechanism deployed. Data subject access request process defined
+    but not yet automated.
+  components:
+    - name: Privacy Policy
+      type: policy
+      role: "Public-facing privacy policy covering data collection, use, and rights"
+    - name: Cookie Consent
+      type: software
+      role: "Cookie consent banner with granular opt-in/opt-out controls"
+    - name: Vendor DPAs
+      type: process
+      role: "Data processing agreements with AWS, DataVault, and NovaMind AI"
+evidence:
+  - type: document
+    path: "legal/policies/privacy-policy.md"
+  - type: configuration
+    path: "legal/compliance/vendor-dpa-tracker.yaml"
+soc2_mapping: []
+iso27001_mapping:
+  - control: "A.18.1.4"
+    description: "Privacy and protection of personally identifiable information"

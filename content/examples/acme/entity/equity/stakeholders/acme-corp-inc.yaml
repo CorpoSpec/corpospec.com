@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/stakeholder.schema.json
+id: entity/equity/stakeholders/acme-corp-inc
+person: people/team/alex-chen
+type: investor
+relationship_status: active
+stock_holdings: []
+options: []
+convertibles: []

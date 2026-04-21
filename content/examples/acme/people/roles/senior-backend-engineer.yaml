@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/senior-backend-engineer
+title: "Senior Backend Engineer"
+abbreviation: "SBE"
+unit: engineering
+reports_to: people/roles/head-of-engineering
+level: ic
+responsibilities:
+  - "API design and backend service development"
+  - "Database performance and query optimization"
+  - "Event-driven architecture implementation"
+  - "Code review and mentoring junior engineers"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 140000
+  max: 180000
+  equity_percentage: "0.1-0.3%"

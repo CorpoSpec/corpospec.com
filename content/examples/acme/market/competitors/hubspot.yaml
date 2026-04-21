@@ -1,0 +1,116 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/hubspot
+name: "HubSpot"
+website: "https://hubspot.com"
+layer: 1
+category: "CRM and Marketing Platform"
+relationship: integration-partner
+as_of: "2026-03-01"
+
+description: >
+  All-in-one CRM, marketing, sales, and service platform. Strong
+  in the SMB and mid-market segment. Offers Operations Hub with
+  workflow automation that overlaps with Acme's positioning.
+
+founded: "2006"
+headquarters: "Cambridge, MA"
+
+strengths:
+  - "Comprehensive platform covering CRM, marketing, sales, and service"
+  - "Strong free tier driving massive top-of-funnel adoption"
+  - "Operations Hub with data sync and workflow automation"
+  - "Extensive partner ecosystem and marketplace"
+
+weaknesses:
+  - "Operations Hub is a secondary product, not core focus"
+  - "Complex pricing with many add-ons and tiers"
+  - "Workflow automation limited to HubSpot ecosystem data"
+  - "Heavy platform lock-in discourages best-of-breed approach"
+
+status: "active"
+team_size: 7700
+
+funding:
+  stage: "public"
+  currency: "USD"
+  notes: "IPO on NYSE (HUBS) in October 2014. Google reportedly explored acquisition in 2024."
+  total_raised: 100500000
+  notable_investors:
+    - "Sequoia Capital"
+    - "Google Ventures"
+    - "Salesforce Ventures"
+  last_round:
+    type: "IPO"
+    date: "2014-10-09"
+    source: "SEC filings"
+
+pricing:
+  model: "Freemium with hub-based tiered pricing"
+  tiers:
+    - name: "Free Tools"
+      price: 0
+      period: "monthly"
+      currency: "USD"
+      notes: "Basic CRM, forms, email marketing with HubSpot branding"
+    - name: "Starter"
+      price: 20
+      period: "monthly per seat"
+      currency: "USD"
+      notes: "Removal of branding, basic automation, 1,000 contacts"
+    - name: "Professional"
+      price: 890
+      period: "monthly (5 seats)"
+      currency: "USD"
+      notes: "Marketing automation, custom reporting, A/B testing"
+    - name: "Enterprise"
+      price: 3600
+      period: "monthly (10 seats)"
+      currency: "USD"
+      notes: "Custom objects, hierarchical teams, predictive lead scoring"
+
+traction:
+  arr: 2628000000
+  arr_date: "2025-12-31"
+  arr_growth: "20% YoY"
+  website_monthly_visits: 45000000
+  website_traffic_source: "SimilarWeb"
+  website_visits_date: "2026-02"
+  companies_on_platform: 228000
+
+target_market:
+  segment: "SMB to mid-market"
+  focus: "Inbound marketing, sales CRM, and customer service"
+  company_size: "10-2,000 employees"
+  geography: "Global, strongest in North America and Europe"
+  use_case: "Unified CRM with marketing automation and sales pipeline management"
+
+technology:
+  frontend: "React"
+  backend: "Java, Python"
+  data: "MySQL, HBase, Kafka"
+  infrastructure: "AWS"
+  ai: "ChatSpot and Breeze AI assistants"
+
+core_features:
+  - "CRM with contact and deal management"
+  - "Marketing automation and email campaigns"
+  - "Operations Hub workflow automation"
+  - "Service ticketing and knowledge base"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 0
+    ai-integration: 2
+    real-time-collaboration: 2
+    workflow-automation: 3
+    api-extensibility: 4
+
+competitive_advantages:
+  - "Acme works across all tools, not just within one ecosystem"
+  - "AI-powered templates that learn vs static workflow rules"
+  - "No platform lock-in; integrates with existing stack"
+
+sources:
+  - "hubspot.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

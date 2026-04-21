@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/linear
+name: "Linear"
+website: "https://linear.app"
+layer: 2
+category: "Issue Tracking"
+relationship: integration-partner
+as_of: "2026-03-01"
+
+description: >
+  Modern issue tracking tool built for high-performance engineering
+  teams. Clean design and fast performance. Workflow automations
+  focused on engineering process optimization.
+
+founded: "2019"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "Fastest issue tracking UI on the market"
+  - "Opinionated workflow design reduces configuration overhead"
+  - "Strong developer experience with keyboard shortcuts and API"
+  - "Triage and auto-assignment automations"
+
+weaknesses:
+  - "Engineering-only focus limits addressable market"
+  - "Automation limited to issue lifecycle events"
+  - "No broader business workflow capabilities"
+  - "Limited reporting and analytics"
+
+core_features:
+  - "Issue tracking and sprint management"
+  - "Automated triage and assignment"
+  - "Cycles and roadmaps"
+  - "Git integration for PR tracking"
+
+product:
+  stage: growth
+  feature_ratings:
+    versioning: 1
+    ai-integration: 2
+    real-time-collaboration: 3
+    workflow-automation: 3
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme serves all team functions, not just engineering"
+  - "Broader workflow automation beyond issue lifecycle"
+  - "Complementary integration: Acme automates processes that start or end in Linear"
+
+sources:
+  - "linear.app (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

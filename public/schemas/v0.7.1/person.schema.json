@@ -1,0 +1,308 @@
+{
+  "$defs": {
+    "DOInsurance": {
+      "description": "D&O insurance details for a person.",
+      "properties": {
+        "annual_premium_eur_estimate": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "coverage_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "required": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PersonCustom": {
+      "description": "Typed extension fields for Person.",
+      "properties": {
+        "compensation_post_pre_seed_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_pre_pre_seed_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "d_o_insurance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DOInsurance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "employment_contract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "health_insurance": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rentenversicherung": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sozialversicherung_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_residency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PersonName": {
+      "description": "Person name.",
+      "properties": {
+        "family": {
+          "type": "string"
+        },
+        "full": {
+          "type": "string"
+        },
+        "given": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "given",
+        "family",
+        "full"
+      ],
+      "type": "object"
+    },
+    "PersonStatus": {
+      "description": "Person employment status.",
+      "enum": [
+        "active",
+        "departed",
+        "on-leave",
+        "planned"
+      ],
+      "type": "string"
+    },
+    "PostalAddress": {
+      "description": "Physical address aligned with schema.org PostalAddress.",
+      "properties": {
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "country": {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        "postal_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "street": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "country"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Person record aligned with vCard/jCard (RFC 6350) and W3C ORG Membership.",
+  "properties": {
+    "bio": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PersonCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "date_of_birth": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "email": {
+      "format": "email",
+      "type": "string"
+    },
+    "end_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "equity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "$ref": "#/$defs/PersonName"
+    },
+    "personal_address": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PostalAddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phone": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "role": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/PersonStatus"
+    },
+    "type": {
+      "type": "string"
+    },
+    "unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name",
+    "email",
+    "status"
+  ],
+  "title": "Person",
+  "type": "object"
+}

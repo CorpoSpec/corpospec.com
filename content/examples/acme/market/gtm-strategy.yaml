@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/gtm-strategy.schema.json
+id: market/gtm-strategy
+name: "Go-to-Market Strategy"
+description: "GTM approach for Acme Platform, focused on product-led growth with developer community distribution."
+as_of: "2026-03-01"
+
+model: product-led-growth
+primary_channels:
+  - developer-community
+  - content-marketing
+secondary_channels:
+  - vc-accelerator-partnerships
+  - open-source
+
+target_segment:
+  description: >
+    Primary: SMB operations leaders and founders at companies with
+    10-500 employees needing workflow automation. Teams drowning in
+    manual processes that multiply faster than headcount. Secondary:
+    Mid-market operations teams ready to consolidate fragmented tools.
+  geography: "US, EU"
+  company_stage: "seed to Series B"
+  vertical_phase_1: "tech-saas"
+  vertical_phase_2: "horizontal (post-PMF)"
+  icp_reference: market/icp/smb-saas-founder
+  secondary_icp_reference: market/icp/mid-market-ops
+  co_primary_icp_references:
+    - market/icp/enterprise-it
+
+funnel:
+  stages:
+    - name: "Awareness"
+      description: "Prospect discovers Acme through content, community, or referral"
+      conversion_target: 0.12
+    - name: "Consideration"
+      description: "Prospect visits website, reads docs, compares alternatives"
+      conversion_target: 0.35
+    - name: "Trial"
+      description: "Prospect signs up for free tier and creates first workflow"
+      conversion_target: 0.45
+    - name: "Activation"
+      description: "User completes onboarding and runs 3+ workflows in first week"
+      conversion_target: 0.55
+    - name: "Conversion"
+      description: "User upgrades to paid plan after hitting free tier limits"
+      conversion_target: 0.08
+    - name: "Expansion"
+      description: "Paid customer adds team members or upgrades to higher tier"
+      conversion_target: 0.25
+
+viral_mechanics:
+  k_factor_target: 1.3
+  invite_mechanics:
+    - "In-app team invite flow with pre-built workflow templates"
+    - "Shared workflow links that require signup to edit"
+    - "Monthly usage reports shareable on LinkedIn"
+  viral_loops:
+    - "Workflow collaboration: shared workflows require recipients to have accounts"
+    - "Template marketplace: users publish and share workflow templates publicly"
+    - "Success stories: automated case study generation from usage data"
+
+discovery_channels:
+  model: "product-led with content amplification"
+  content:
+    - "SEO-optimized blog targeting operational pain point keywords"
+    - "YouTube tutorials on workflow automation patterns"
+    - "Weekly newsletter with workflow automation tips"
+    - "Interactive ROI calculator on landing page"
+  community:
+    - "Slack community for operations leaders"
+    - "Monthly virtual meetup for workflow automation practitioners"
+    - "Open-source workflow template repository on GitHub"
+  partnership:
+    description: "Integration partnerships with complementary SaaS tools"
+    mechanism:
+      - "Co-marketing with Slack, Notion, and GitHub"
+      - "Listed in partner marketplaces and app directories"
+      - "Joint webinars with integration partners"
+
+pricing:
+  model: freemium-plus-usage
+  structure: "Free tier for small teams + usage-based pricing for larger teams and AI features"
+  paid_tier: "Starter ($29/month), Pro ($79/seat/month), Enterprise ($499+/month)"
+  base_price_monthly: 29
+  tiers:
+    - name: "Free"
+      scope: "Up to 3 users, 100 workflow runs/month"
+      price_monthly: 0
+      note: "Free forever for small teams"
+    - name: "Starter"
+      scope: "Up to 10 users, 1,000 workflow runs/month, basic integrations"
+      price_monthly: 29
+      note: "Self-serve onboarding"
+    - name: "Pro"
+      scope: "Up to 50 users, unlimited workflow runs, AI templates, priority support"
+      price_monthly: 79
+      note: "Most popular plan. Per-seat pricing at $79/seat/month."
+    - name: "Enterprise"
+      scope: "Unlimited users, SSO/SAML, audit logs, dedicated support, SLA"
+      price_monthly: 499
+      note: "Custom pricing available"
+
+custom:
+  content_strategy: "Developer-focused tutorials, workflow automation guides, and case studies"
+  partnership_approach: "Integration partnerships with existing SaaS tools (Slack, Notion, GitHub)"

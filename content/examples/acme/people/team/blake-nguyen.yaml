@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/blake-nguyen
+type: Person
+name:
+  given: "Blake"
+  family: "Nguyen"
+  full: "Blake Nguyen"
+email: "blake.nguyen@acmecorp.example.com"
+role: people/roles/marketing-manager
+unit: marketing
+start_date: "2026-02-01"
+end_date: null
+status: active
+bio: "Marketing Manager. Previously at Notion. Content marketing, SEO, and developer community growth."

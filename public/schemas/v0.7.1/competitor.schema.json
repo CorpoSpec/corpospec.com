@@ -1,0 +1,730 @@
+{
+  "$defs": {
+    "CompetitorCustom": {
+      "description": "Typed custom extension data for `Competitor`.",
+      "properties": {
+        "eu_data_residency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EuDataResidency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "CompetitorFunding": {
+      "additionalProperties": false,
+      "description": "Competitor funding information.",
+      "properties": {
+        "arr": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "funding_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_round": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompetitorFundingRound"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notable_investors": {
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stage": {
+          "type": "string"
+        },
+        "total_raised": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valuation": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valuation_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "stage"
+      ],
+      "type": "object"
+    },
+    "CompetitorFundingRound": {
+      "additionalProperties": false,
+      "description": "Funding round details for a competitor.",
+      "properties": {
+        "amount": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "CompetitorPricing": {
+      "additionalProperties": false,
+      "description": "Competitor pricing model.",
+      "properties": {
+        "includes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "planned_tier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompetitorPricingTier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revenue_share": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "revenue_share_notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tiers": {
+          "items": {
+            "$ref": "#/$defs/CompetitorPricingTier"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CompetitorPricingTier": {
+      "additionalProperties": false,
+      "description": "A pricing tier in a competitor's pricing model.",
+      "properties": {
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "CompetitorProduct": {
+      "additionalProperties": false,
+      "description": "Competitor product information.",
+      "properties": {
+        "ai_features": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "architecture": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "distribution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "feature_ratings": {
+          "additionalProperties": {
+            "format": "uint8",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "launch_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "license": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "open_source": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "open_standard": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "stage": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage"
+      ],
+      "type": "object"
+    },
+    "CompetitorRelationship": {
+      "description": "Relationship classification of a competitor.",
+      "enum": [
+        "direct-competitor",
+        "integration-partner",
+        "cautionary-reference",
+        "reference-company"
+      ],
+      "type": "string"
+    },
+    "CompetitorTargetMarket": {
+      "additionalProperties": false,
+      "description": "Competitor target market.",
+      "properties": {
+        "company_size": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "focus": {
+          "type": "string"
+        },
+        "geography": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "segment": {
+          "type": "string"
+        },
+        "use_case": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "segment",
+        "focus"
+      ],
+      "type": "object"
+    },
+    "CompetitorTraction": {
+      "additionalProperties": false,
+      "description": "Competitor traction metrics.",
+      "properties": {
+        "active_ad_campaigns": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arr_growth": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cash_flows_through_platform": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "combined_ad_spend_daily": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "companies_on_platform": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "discord": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "github_forks": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "github_stars": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "largest_customer_mrr": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "npm_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stars_timeframe": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "website_monthly_visits": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "website_traffic_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "website_visits_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EuDataResidency": {
+      "description": "EU data residency offering details for a competitor.",
+      "properties": {
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "offering": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/competitor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Competitor profile.",
+  "properties": {
+    "acquirer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "as_of": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "category": {
+      "type": "string"
+    },
+    "competitive_advantages": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "core_features": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "founded": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "funding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorFunding"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "github": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "headquarters": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "integration_opportunity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "layer": {
+      "format": "int64",
+      "type": "integer"
+    },
+    "legal_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "planned_features": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorPricing"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "product": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorProduct"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "relationship": {
+      "$ref": "#/$defs/CompetitorRelationship"
+    },
+    "shutdown_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "strategic_relevance": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "strengths": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "target_market": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorTargetMarket"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "team_notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "team_size": {
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "technology": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Technology stack — keys are layer names, values are descriptions.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "traction": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorTraction"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "weaknesses": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "website": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "website",
+    "layer",
+    "category",
+    "relationship",
+    "as_of",
+    "description",
+    "sources"
+  ],
+  "title": "Competitor",
+  "type": "object"
+}

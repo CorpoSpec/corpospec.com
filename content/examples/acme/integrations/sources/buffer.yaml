@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/buffer
+name: "Buffer"
+system: "Buffer"
+type: source
+status: active
+
+input_port:
+  name: "buffer-api"
+  protocol: "REST"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/alex-chen
+  freshness:
+    schedule: "daily"
+    max_staleness_minutes: 1440
+  schema:
+    fields:
+      - name: post_id
+        type: string
+        required: true
+      - name: platform
+        type: string
+        required: true
+      - name: reach
+        type: integer
+        required: true
+      - name: engagement
+        type: integer
+        required: true
+      - name: clicks
+        type: integer
+        required: true
+      - name: date
+        type: string
+        required: true
+
+pipeline:
+  date_field: date
+  mappings:
+    - source_field: reach
+      target: metrics/marketing/social-reach
+      aggregation: sum
+      breakdown_by: platform
+    - source_field: engagement
+      target: metrics/marketing/social-engagement
+      aggregation: sum
+      breakdown_by: platform
+    - source_field: clicks
+      target: metrics/marketing/social-clicks
+      aggregation: sum
+      breakdown_by: platform
+
+outputs: []

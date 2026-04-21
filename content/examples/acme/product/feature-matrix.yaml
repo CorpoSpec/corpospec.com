@@ -1,0 +1,19 @@
+id: product/feature-matrix
+name: Competitive Feature Matrix
+description: Dimensions for evaluating TaskFlow Pro competitive positioning
+dimensions:
+  - id: versioning
+    name: Version Control
+    description: Built-in versioning and change tracking for project data
+  - id: ai-integration
+    name: AI Integration
+    description: Native AI-powered features for automation and insights
+  - id: real-time-collaboration
+    name: Real-Time Collaboration
+    description: Simultaneous multi-user editing and communication
+  - id: workflow-automation
+    name: Workflow Automation
+    description: Configurable automation rules and process workflows
+  - id: api-extensibility
+    name: API Extensibility
+    description: Developer-friendly API for custom integrations and extensions

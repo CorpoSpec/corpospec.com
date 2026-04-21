@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { buildTree, readFileText, countFiles } from "../../lib/example.ts";
+import type { TreeNode } from "../../lib/example.ts";
+
+const tree = buildTree();
+const { files, dirs } = countFiles();
+
+// Highlight files — rendered inline below the tree. Kept short to stay scannable.
+const highlights: Array<{ title: string; path: string; note: string }> = [
+  {
+    title: "Manifest",
+    path: "manifest.yaml",
+    note: "Declares company_id, corpospec_version, and the pillars this repo populates.",
+  },
+  {
+    title: "Entity — legal identity",
+    path: "entity/company.yaml",
+    note: "Legal name, registered address, officers, jurisdiction PathRef.",
+  },
+  {
+    title: "People — team member",
+    path: "people/team/alex-chen.yaml",
+    note: "One file per person. Role PathRef, contact fields, employment facts.",
+  },
+  {
+    title: "Governance — decision record",
+    path: "governance/decisions/0001-entity-jurisdiction.md",
+    note: "Architecture decision as a markdown file with YAML frontmatter.",
+  },
+  {
+    title: "Financial — model",
+    path: "financials/model.yaml",
+    note: "Plan, actuals, and forecasts via PathRef into sibling directories.",
+  },
+  {
+    title: "Metrics — definition",
+    path: "metrics/definitions/mrr.yaml",
+    note: "Formula, unit, owner. Metrics are defined once, referenced many times.",
+  },
+];
+
+function renderTree(nodes: TreeNode[], depth = 0): string {
+  let out = "";
+  const indent = "  ".repeat(depth);
+  for (const n of nodes) {
+    if (n.isDir) {
+      out += `${indent}<span class="dir">${n.name}/</span>\n`;
+      if (n.children) out += renderTree(n.children, depth + 1);
+    } else {
+      out += `${indent}<span class="file">${n.name}</span>\n`;
+    }
+  }
+  return out;
+}
+
+// Cap tree display at a reasonable depth so the page doesn't become a data dump.
+function prune(nodes: TreeNode[], maxLeavesPerDir: number): TreeNode[] {
+  return nodes.map((n) => {
+    if (n.isDir && n.children) {
+      const dirs = n.children.filter((c) => c.isDir);
+      const filesOnly = n.children.filter((c) => !c.isDir);
+      const shown = filesOnly.slice(0, maxLeavesPerDir);
+      const truncated = filesOnly.length > maxLeavesPerDir
+        ? [...shown, { name: `… ${filesOnly.length - maxLeavesPerDir} more`, path: "", isDir: false }]
+        : shown;
+      return { ...n, children: [...prune(dirs, maxLeavesPerDir), ...truncated] };
+    }
+    return n;
+  });
+}
+
+const displayTree = prune(tree, 4);
+---
+
+<BaseLayout
+  title="ACME — a complete CorpoSpec example"
+  description="A reference CorpoSpec repository populated across every pillar. Inspect the file tree and sample files."
+  active="example"
+>
+  <section class="hero">
+    <div class="hero__eyebrow">
+      <span class="badge">Example</span>
+      <span>Reference repository</span>
+    </div>
+    <h1>ACME — a complete CorpoSpec example</h1>
+    <p class="lead">
+      ACME is a fictional company whose <code>.corpospec/</code> repository populates
+      every pillar. Use it as a template or a sanity check when you shape your own
+      repository. {files} files across {dirs} directories.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="/guide/">Follow the quickstart →</a>
+      <a class="btn btn--ghost" href="/schemas/v0.7.1/">Cross-reference the schemas</a>
+    </div>
+  </section>
+
+  <h2>Repository layout</h2>
+  <p class="prose">
+    Trimmed to a few files per directory for readability. The full tree lives under
+    <code>content/examples/acme/</code> in the corpospec.com site repo.
+  </p>
+  <div class="tree">
+<pre style="background:none;border:0;padding:0;margin:0;color:inherit;" set:html={`<span class="dir">.corpospec/</span>\n${renderTree(displayTree, 1)}`}></pre>
+  </div>
+
+  <h2>Key files</h2>
+  {highlights.map((h) => {
+    const content = readFileText(h.path);
+    return (
+      <div style="margin-bottom: 28px;">
+        <h3 style="margin-top: 0; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+          <span>{h.title}</span>
+          <span class="mono" style="font-size: 13px; color: var(--muted);">.corpospec/{h.path}</span>
+        </h3>
+        <p class="prose" style="margin-bottom: 10px;">{h.note}</p>
+        {content ? (
+          <pre><code>{content.length > 2400 ? content.slice(0, 2400) + "\n\n# …truncated…" : content}</code></pre>
+        ) : (
+          <p class="mono" style="color: var(--muted);">File not found in the ACME snapshot.</p>
+        )}
+      </div>
+    );
+  })}
+
+  <h2>Adopt this pattern</h2>
+  <div class="cards">
+    <a class="card" href="/guide/">
+      <div class="card__eyebrow">Guide</div>
+      <div class="card__title">Hands-on quickstart</div>
+      <p class="card__desc">From empty directory to validating CorpoSpec repo in ten minutes.</p>
+    </a>
+    <a class="card" href="/spec/">
+      <div class="card__eyebrow">Spec</div>
+      <div class="card__title">Read the principles</div>
+      <p class="card__desc">DRY, KISS, PathRef by default. A short set of rules.</p>
+    </a>
+    <a class="card" href="/schemas/v0.7.1/">
+      <div class="card__eyebrow">Schemas</div>
+      <div class="card__title">Browse every schema</div>
+      <p class="card__desc">Pillar-grouped. Fields with types, required markers, descriptions.</p>
+    </a>
+  </div>
+</BaseLayout>

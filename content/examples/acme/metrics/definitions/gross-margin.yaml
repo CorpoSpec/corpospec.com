@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/metric.schema.json
+id: metrics/definitions/gross-margin
+name: Gross Margin
+abbreviation: GM
+description: Gross margin percentage. Ratio of gross profit to total revenue, measuring
+  profitability after cost of goods sold.
+formula: (revenue - cost_of_revenue) / revenue
+unit: percentage
+direction: up
+frequency: monthly
+source:
+  system: Internal billing service
+  query: (revenue_ledger.sum - cogs_ledger.sum) / revenue_ledger.sum
+xbrl_mapping: null
+related_metrics:
+- metrics/definitions/mrr
+- metrics/definitions/arr
+iso_30414_mapping: null
+tags:
+- profitability
+- cogs
+- investor-facing
+- unit-economics

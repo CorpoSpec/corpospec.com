@@ -1,0 +1,111 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/icp.schema.json
+id: market/icp/enterprise-it
+name: "Enterprise IT Leader"
+priority: secondary
+as_of: "2026-03-01"
+status: active
+
+description: >
+  IT leaders at companies with 500+ employees evaluating workflow
+  automation as part of digital transformation initiatives.
+  Require enterprise security features (SSO, audit logs, SOC 2),
+  integration with existing enterprise stack, and vendor compliance.
+
+stage_range:
+  start: series-c
+  end: public
+
+geography:
+  primary: "US"
+  secondary: "EU"
+
+pain_point:
+  primary: "Shadow IT and uncontrolled automation sprawl"
+  description: >
+    Individual departments adopt point solutions for automation
+    without IT oversight. This creates security risks, compliance
+    gaps, and integration nightmares. IT leaders need a governed
+    platform that enables business teams to automate while
+    maintaining security and compliance standards.
+
+vertical:
+  phase_1: "Technology and financial services"
+  phase_1_rationale: "Highest automation spend and most receptive to AI-powered workflow tools"
+  phase_2: "Healthcare and manufacturing"
+  phase_2_rationale: "Heavily regulated industries with complex workflows and strong compliance requirements"
+  phase_2_trigger: "HIPAA compliance and industry-specific workflow templates"
+
+buying_behavior:
+  decision_maker: "CIO or VP of IT, with sign-off from CISO and procurement"
+  decision_process: "Formal vendor evaluation with RFP. Security review, compliance audit, proof-of-concept with IT team, then phased rollout. 3-6 month cycle from first contact to signed contract."
+  budget:
+    willingness_to_pay: "High for proven enterprise platforms with compliance certifications"
+    base_price: "$499-2,000/month"
+    enterprise_price: "$5,000-25,000/month for enterprise-wide deployment"
+    pricing_note: "Annual contracts required. Multi-year discounts expected."
+  compliance_requirements:
+    - "SOC 2 Type II"
+    - "ISO 27001"
+    - "GDPR compliance"
+    - "HIPAA (healthcare vertical)"
+    - "SSO/SAML with MFA"
+    - "Data residency options"
+    - "Vendor security questionnaire"
+  compliance_note: "CISO review is a gate. Missing any compliance certification is a disqualifier."
+  discovery_channels:
+    model: "analyst and executive network driven"
+    content:
+      - "Gartner and Forrester analyst reports"
+      - "CIO-focused publications"
+      - "Enterprise technology conferences"
+    community:
+      - "CIO roundtables"
+      - "ISACA and ISSA chapters"
+    executive_network:
+      - "Board advisor introductions"
+      - "VC portfolio CIO network"
+    direct:
+      - "Enterprise AE outbound to IT leadership"
+      - "Executive dinners and events"
+
+anti_icp:
+  description: "Enterprise IT leaders at organizations with no automation mandate or active digital transformation initiative."
+  exclusions:
+    - name: "Government agencies with FedRAMP requirements"
+      description: "Acme does not have FedRAMP authorization. Government sales require dedicated compliance investment."
+    - name: "Companies requiring air-gapped deployments"
+      description: "Acme is cloud-native. Air-gapped or fully on-premise deployments are not supported."
+    - name: "IT leaders without budget authority"
+      description: "IT managers who cannot sponsor a procurement process create long cycles with low close rates."
+  explicit_non_exclusions:
+    - name: "Companies already using Salesforce Flow"
+      reason: "Acme complements rather than replaces Salesforce. Cross-tool automation is a differentiator."
+
+sub_segments:
+  - name: "CIO / VP IT"
+    description: >
+      Senior IT leader responsible for enterprise technology
+      strategy. Evaluates platforms for security, compliance,
+      and integration capabilities. Long sales cycles (3-6 months).
+    demographics:
+      age_range: "40-55"
+      prior_role: "IT director or enterprise architect"
+      location: "US Fortune 1000 metros"
+    psychographics:
+      motivation: "Governance, security, and consolidated tooling"
+      tool_adoption: "Conservative. Requires proof of enterprise readiness."
+      risk_tolerance: "Low"
+
+  - name: "IT Operations Manager"
+    description: >
+      Hands-on IT manager responsible for tool evaluation and
+      implementation. Runs proof-of-concept deployments. Reports
+      to CIO or VP IT.
+    demographics:
+      age_range: "30-45"
+      prior_role: "Systems administrator or DevOps engineer"
+      location: "US, EU"
+    psychographics:
+      motivation: "Reduce support tickets and manual IT workflows"
+      tool_adoption: "Technical evaluator. Tests APIs and security features."
+      risk_tolerance: "Moderate"

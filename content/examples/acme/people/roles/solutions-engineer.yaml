@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/solutions-engineer
+title: "Solutions Engineer"
+abbreviation: "SE"
+unit: engineering
+reports_to: people/roles/head-of-engineering
+level: ic
+responsibilities:
+  - "Customer implementation and onboarding support"
+  - "Custom integration development and configuration"
+  - "Technical pre-sales demonstrations and proof-of-concept builds"
+  - "Customer workflow optimization and best practices"
+headcount: 2
+compensation_band:
+  currency: USD
+  min: 120000
+  max: 160000
+  equity_percentage: "0.1-0.3%"

@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/freshdesk
+name: "Freshdesk"
+website: "https://freshdesk.com"
+layer: 2
+category: "Customer Support Software"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  Part of Freshworks suite. Affordable customer support platform
+  targeting SMBs. Offers ticketing, knowledge base, and basic
+  automation. Competes on price against Zendesk.
+
+founded: "2010"
+headquarters: "San Mateo, CA"
+
+strengths:
+  - "Aggressive pricing targeting SMBs"
+  - "Part of broader Freshworks suite (CRM, ITSM, marketing)"
+  - "Free tier available for small teams"
+  - "Strong in India and APAC markets"
+
+weaknesses:
+  - "AI capabilities behind market leaders"
+  - "Enterprise features less mature than Zendesk"
+  - "Integration ecosystem smaller than competitors"
+  - "Brand perception as budget alternative"
+
+core_features:
+  - "Ticketing and email management"
+  - "Knowledge base"
+  - "Basic workflow automation"
+  - "Multi-channel support"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 0
+    ai-integration: 1
+    real-time-collaboration: 2
+    workflow-automation: 3
+    api-extensibility: 2
+
+competitive_advantages:
+  - "AI-native workflow automation vs basic rule-based automation"
+  - "Focus on internal operations, not just customer support"
+  - "Deeper AI integration with learning templates"
+
+sources:
+  - "freshdesk.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

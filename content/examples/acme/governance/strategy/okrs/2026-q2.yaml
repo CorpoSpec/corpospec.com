@@ -1,0 +1,218 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/okr.schema.json
+id: governance/strategy/okrs/2026-q2
+period:
+  type: duration
+  start: "2026-04-01"
+  end: "2026-06-30"
+status: active
+owner: people/team/alex-chen
+
+objectives:
+  - id: obj-1
+    title: "Reach $25K MRR"
+    description: "Continue MRR growth trajectory to reach $25K by end of Q2, putting the company on track for $3M ARR by year-end."
+    priority: high
+    key_results:
+      - id: kr-1-1
+        title: "MRR reaches $25,000"
+        start_value: 18200
+        target_value: 25000
+        current_value: 18200
+        unit: currency
+        metric: metrics/definitions/mrr
+        confidence: 0.45
+      - id: kr-1-2
+        title: "Net new customers acquired in Q2"
+        start_value: 0
+        target_value: 35
+        current_value: 0
+        unit: count
+        confidence: 0.35
+      - id: kr-1-3
+        title: "Net revenue retention above 110%"
+        start_value: 100
+        target_value: 110
+        current_value: 108
+        unit: percentage
+        confidence: 0.65
+      - id: kr-1-4
+        title: "Average contract value increased to $400/month"
+        start_value: 280
+        target_value: 400
+        current_value: 310
+        unit: currency
+        confidence: 0.50
+    related_decisions:
+      - governance/decisions/0004-pricing-model
+      - governance/decisions/0011-market-positioning
+
+  - id: obj-2
+    title: "Launch enterprise tier"
+    description: "Ship the enterprise product tier with SSO, audit logs, and dedicated support to move upmarket."
+    priority: high
+    key_results:
+      - id: kr-2-1
+        title: "Enterprise tier shipped with SSO and audit logs"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.60
+      - id: kr-2-2
+        title: "Enterprise pilot customers signed"
+        start_value: 0
+        target_value: 5
+        current_value: 2
+        unit: count
+        confidence: 0.55
+      - id: kr-2-3
+        title: "SOC 2 Type II audit initiated"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.40
+      - id: kr-2-4
+        title: "Enterprise documentation and onboarding flow complete"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.50
+    related_decisions:
+      - governance/decisions/0008-data-privacy
+      - governance/decisions/0019-customer-success
+
+  - id: obj-3
+    title: "Achieve product-led growth flywheel"
+    description: "Establish self-serve onboarding with conversion rate targets that enable scalable growth without proportional sales headcount."
+    priority: high
+    key_results:
+      - id: kr-3-1
+        title: "Self-serve signup to paid conversion rate"
+        start_value: 3
+        target_value: 8
+        current_value: 5
+        unit: percentage
+        confidence: 0.45
+      - id: kr-3-2
+        title: "Time to value under 10 minutes"
+        start_value: 25
+        target_value: 10
+        current_value: 15
+        unit: count
+        confidence: 0.50
+      - id: kr-3-3
+        title: "Monthly active users exceeding 500"
+        start_value: 280
+        target_value: 500
+        current_value: 340
+        unit: count
+        metric: metrics/definitions/active-users
+        confidence: 0.55
+      - id: kr-3-4
+        title: "Feature adoption rate for AI workflows above 60%"
+        start_value: 35
+        target_value: 60
+        current_value: 42
+        unit: percentage
+        confidence: 0.45
+    related_decisions:
+      - governance/decisions/0012-sales-motion
+      - governance/decisions/0025-onboarding-flow
+
+  - id: obj-4
+    title: "Prepare Series A fundraise"
+    description: "Build the data room, refine the pitch, and begin warm introductions to target Series A investors."
+    priority: medium
+    key_results:
+      - id: kr-4-1
+        title: "Data room complete with all materials"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.40
+      - id: kr-4-2
+        title: "Investor conversations initiated"
+        start_value: 0
+        target_value: 15
+        current_value: 3
+        unit: count
+        confidence: 0.50
+      - id: kr-4-3
+        title: "Financial model updated with 3-year projections"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        metric: metrics/definitions/arr
+        confidence: 0.45
+      - id: kr-4-4
+        title: "Board deck template finalized"
+        start_value: 0
+        target_value: 1
+        current_value: 1
+        unit: count
+        confidence: 1.0
+    related_decisions:
+      - governance/decisions/0002-initial-funding
+      - governance/decisions/0014-investor-reporting
+
+  - id: obj-5
+    title: "Strengthen platform reliability and security"
+    description: "Improve infrastructure resilience and begin compliance certifications to support enterprise customers."
+    priority: medium
+    key_results:
+      - id: kr-5-1
+        title: "API uptime maintained above 99.95%"
+        start_value: 99.9
+        target_value: 99.95
+        current_value: 99.92
+        unit: percentage
+        confidence: 0.60
+      - id: kr-5-2
+        title: "Incident response playbook documented and tested"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.55
+      - id: kr-5-3
+        title: "Automated security scanning in CI pipeline"
+        start_value: 0
+        target_value: 1
+        current_value: 1
+        unit: count
+        confidence: 1.0
+      - id: kr-5-4
+        title: "Database failover tested and validated"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.40
+      - id: kr-5-5
+        title: "GDPR data processing agreements in place"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.35
+      - id: kr-5-6
+        title: "Zero critical security vulnerabilities in production"
+        start_value: 2
+        target_value: 0
+        current_value: 1
+        unit: count
+        confidence: 0.50
+      - id: kr-5-7
+        title: "Load testing completed for 10x current traffic"
+        start_value: 0
+        target_value: 1
+        current_value: 0
+        unit: count
+        confidence: 0.30
+    related_decisions:
+      - governance/decisions/0018-security-framework
+      - governance/decisions/0029-incident-response

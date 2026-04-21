@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-logo.schema.json
+id: brand/logo
+primary:
+  composition: horizontal
+  file_refs:
+    - brand/logos/acme-primary.svg
+  minimum_size_px: 120
+  minimum_size_mm: 30.0
+variants:
+  - id: symbol
+    name: Symbol Only
+    composition: symbol-only
+    use_case: Favicon, app icon, small contexts
+    file_refs:
+      - brand/logos/acme-symbol.svg
+    contexts_approved:
+      - Mobile app icon
+      - Browser favicon
+      - Social media avatar
+    contexts_prohibited:
+      - Print below 24px
+  - id: wordmark
+    name: Wordmark
+    composition: wordmark-only
+    use_case: Text-heavy layouts, partnerships
+    file_refs:
+      - brand/logos/acme-wordmark.svg
+    contexts_approved:
+      - Email signatures
+      - Document headers
+    contexts_prohibited:
+      - Small icons below 64px
+      - Dark photography backgrounds without overlay
+      - Animated or video contexts
+clear_space:
+  formula: "0.5x height of symbol"
+  reference_element: Symbol mark
+  minimum_px: 16
+  minimum_mm: 4.0
+usage_rules:
+  prohibited:
+    - Do not rotate or skew
+    - Do not change colors outside approved palette
+    - Do not add effects (shadows, gradients, outlines)
+  approved_background_contrast_minimum: 4.5
+sizing_tiers:
+  - name: Large
+    min_px: 200
+    required_variant: horizontal
+  - name: Medium
+    min_px: 80
+    max_px: 199
+    required_variant: horizontal
+  - name: Small
+    min_px: 32
+    max_px: 79
+    required_variant: symbol
+  - name: Micro
+    max_px: 31
+    required_variant: symbol
+favicon:
+  sizes:
+    - px: 16
+      platform: Browser
+      file_ref: brand/logos/favicon-16.png
+    - px: 32
+      platform: Browser
+      file_ref: brand/logos/favicon-32.png
+    - px: 180
+      platform: iOS
+      file_ref: brand/logos/apple-touch-icon.png
+    - px: 192
+      platform: Android
+      file_ref: brand/logos/android-chrome-192.png
+  background_color: "#1A365D"
+color_expressions:
+  - id: on-white
+    background_type: white
+    foreground_colors:
+      - "#1A365D"
+      - "#3182CE"
+  - id: on-black
+    background_type: black
+    foreground_colors:
+      - "#FFFFFF"
+      - "#63B3ED"
+  - id: on-brand
+    background_type: brand-color
+    foreground_colors:
+      - "#FFFFFF"
+  - id: on-dark
+    background_type: dark
+    foreground_colors:
+      - "#FFFFFF"
+      - "#63B3ED"
+  - id: on-transparent
+    background_type: transparent
+    foreground_colors:
+      - "#1A365D"
+      - "#3182CE"
+animation:
+  entry_duration_ms: 600
+  hold_duration_ms: 2000
+  exit_duration_ms: 400
+  loop_animation: false
+  file_refs:
+    - brand/logos/acme-logo-animation.json

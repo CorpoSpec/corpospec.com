@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/calendar
+name: "Google Calendar"
+system: "Google Calendar"
+type: source
+status: draft
+
+input_port:
+  name: "google-calendar-api"
+  protocol: "REST"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/alex-chen
+  freshness:
+    schedule: "realtime"
+    max_staleness_minutes: 5
+  schema:
+    fields:
+      - name: event_id
+        type: string
+        required: true
+      - name: title
+        type: string
+        required: true
+      - name: start_time
+        type: string
+        required: true
+      - name: end_time
+        type: string
+        required: true
+      - name: attendees
+        type: string
+        required: false
+      - name: location
+        type: string
+        required: false
+
+pipeline:
+  date_field: start_time
+  mappings:
+    - source_field: event_id
+      target: metrics/operations/meetings-count
+      aggregation: count
+
+outputs: []

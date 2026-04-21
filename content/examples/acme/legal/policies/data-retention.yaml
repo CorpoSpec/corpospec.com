@@ -1,0 +1,16 @@
+id: legal/policies/data-retention
+name: Data Retention Policy
+description: Defines retention periods and deletion procedures for all company data categories.
+status: active
+scope: All departments handling customer or employee data
+effective_date: "2025-09-01"
+review_date: "2026-09-01"
+owner: people/team/alex-chen
+provisions:
+  - Customer data retained for 3 years after account closure
+  - Employee records retained for 7 years post-departure
+  - Financial records retained for 7 years per IRS requirements
+  - Application logs retained for 90 days
+  - Backup data purged after 30 days
+related_decisions:
+  - governance/decisions/0008-data-privacy

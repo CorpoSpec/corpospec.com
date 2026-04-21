@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/stakeholder.schema.json
+id: entity/equity/stakeholders/jordan-park
+person: people/team/jordan-park
+type: board-member
+relationship_status: active
+stock_holdings:
+  - stock_class: entity/equity/stock-classes/common-a
+    quantity: 250000
+    acquisition_date: "2025-10-01"
+    vesting:
+      schedule: "3-year monthly"
+      start_date: "2025-10-01"
+      cliff_months: 0
+      acceleration: none
+options: []
+convertibles: []

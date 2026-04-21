@@ -1,0 +1,82 @@
+name: Deploy Pages
+
+# Deploys the static Astro build to GitHub Pages on every push to main,
+# and on every workflow_dispatch / ingest commit. The Pages source is
+# configured to "GitHub Actions" in repo settings.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Astro site
+        run: pnpm build
+
+      - name: Verify dist contents
+        shell: bash
+        run: |
+          test -f dist/index.html     || (echo "Missing index.html"     && exit 1)
+          test -f dist/CNAME          || (echo "Missing CNAME"          && exit 1)
+          test -f dist/spec/index.html || (echo "Missing spec page"      && exit 1)
+          test -f dist/guide/index.html || (echo "Missing guide page"    && exit 1)
+          test -f dist/example/index.html || (echo "Missing example page" && exit 1)
+          test -f dist/schemas/index.html || (echo "Missing schemas index" && exit 1)
+          test -f dist/sitemap-index.xml || (echo "Missing sitemap"      && exit 1)
+
+          # Every published schema must remain reachable at the canonical URL.
+          for f in public/schemas/v*/*.schema.json; do
+            rel="${f#public/}"
+            test -f "dist/${rel}" || (echo "Missing $rel in dist" && exit 1)
+          done
+
+          # Never publish secrets or source control data.
+          ! find dist -name '.env*' | grep -q . || (echo "Found .env in dist" && exit 1)
+          ! find dist -name '.git*' | grep -q . || (echo "Found .git in dist" && exit 1)
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

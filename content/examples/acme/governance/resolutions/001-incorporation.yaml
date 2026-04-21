@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/resolution.schema.json
+id: governance/resolutions/001-incorporation
+entity: entity/acme-corp
+date: "2025-06-15"
+procedure: written_circular
+legal_basis: "Delaware General Corporation Law, Title 8, Chapter 1"
+decision_makers:
+  - people/team/alex-chen
+  - people/team/sarah-kim
+items:
+  - number: 1
+    subject: "Approval of incorporation of Acme Corp, Inc. as a Delaware C-Corporation"
+    outcome: approved
+    notes: "Unanimous written consent of the incorporators to form Acme Corp, Inc. under the laws of the State of Delaware, with registered agent CT Corporation System, 1209 Orange Street, Wilmington, DE 19801."
+  - number: 2
+    subject: "Authorization of 10,000,000 shares of Common Stock at $0.0001 par value"
+    outcome: approved
+    notes: "The corporation is authorized to issue 10,000,000 shares of Common Stock with a par value of $0.0001 per share. An additional 2,000,000 shares are reserved for a future employee stock option pool."
+  - number: 3
+    subject: "Appointment of Alex Chen as Chief Executive Officer and President"
+    outcome: approved
+    related_contract: legal/contracts/employment-alex-chen
+    notes: "Alex Chen is appointed as CEO and President, effective immediately upon incorporation. Authorized to execute all documents necessary for the formation and initial operations of the corporation."
+  - number: 4
+    subject: "Appointment of Sarah Kim as Chief Technology Officer and Secretary"
+    outcome: approved
+    related_contract: legal/contracts/employment-sarah-kim
+    notes: "Sarah Kim is appointed as CTO and Secretary, effective immediately upon incorporation. Authorized to maintain corporate records and execute technical agreements on behalf of the corporation."
+  - number: 5
+    subject: "Adoption of bylaws and corporate governance framework"
+    outcome: approved
+    notes: "The initial bylaws of Acme Corp, Inc. are adopted as presented, establishing board composition, meeting procedures, indemnification provisions, and fiscal year ending December 31."
+related_contracts:
+  - legal/contracts/employment-alex-chen
+  - legal/contracts/employment-sarah-kim
+related_decisions:
+  - governance/decisions/0001-entity-formation
+retention_years: 99

@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/icp.schema.json
+id: market/icp/smb-saas-founder
+name: "SMB SaaS Founder"
+priority: primary
+as_of: "2026-03-01"
+status: active
+
+description: >
+  First-time or repeat SaaS founders running companies with 1-50
+  employees. Experiencing operational growing pains as team processes
+  break down. Looking for workflow automation that does not require
+  dedicated engineering resources to implement and maintain.
+
+stage_range:
+  start: pre-seed
+  end: series-a
+
+geography:
+  primary: "US"
+  secondary: "EU"
+
+pain_point:
+  primary: "Manual processes that worked at 5 people break at 20"
+  description: >
+    Founders spend increasing time on operational firefighting as the
+    team grows. Onboarding, reporting, approvals, and communication
+    workflows become bottlenecks. Each new hire adds process overhead
+    that compounds until the founder spends more time managing
+    operations than building the product.
+
+vertical:
+  phase_1: "B2B SaaS"
+  phase_1_rationale: "SaaS founders experience operational pain earliest and adopt tools fastest"
+  phase_2: "All tech startups"
+  phase_2_rationale: "Adjacent verticals with similar operational patterns"
+  phase_2_trigger: "50+ paying SaaS customers with proven templates"
+
+buying_behavior:
+  decision_maker: "Founder or CEO (sole decision maker at this stage)"
+  decision_process: "Fast evaluation. Trials tool personally. Decides within 1-2 weeks based on time-to-value."
+  budget:
+    willingness_to_pay: "High if ROI is immediate and obvious"
+    base_price: "$29-99/month"
+    pricing_note: "Price-sensitive on monthly basis but values time savings over cost"
+  compliance_requirements:
+    - "SOC 2 Type II (nice-to-have, not required)"
+    - "Data encryption at rest"
+  discovery_channels:
+    model: "peer-driven"
+    content:
+      - "Founder Twitter/X threads"
+      - "Product Hunt launches"
+      - "Indie Hackers forum"
+    community:
+      - "Y Combinator Slack"
+      - "Founder communities on Discord"
+    vc_portfolio:
+      - "Investor portfolio newsletters"
+
+anti_icp:
+  description: "Founders at pre-revenue companies with no established processes to automate."
+  exclusions:
+    - name: "Pre-product founders"
+      description: "No product, no customers, no processes to automate yet. Acme solves scaling pain, not ideation."
+    - name: "Solo founders with no team"
+      description: "Workflow automation requires at least 2 people. Solo operators have no handoff points to optimize."
+    - name: "Founders seeking custom dev shops"
+      description: "Looking for bespoke software development, not self-serve automation tooling."
+  explicit_non_exclusions:
+    - name: "Non-technical founders"
+      reason: "The platform is designed for non-technical users. Lack of technical skills is a feature match, not an exclusion."
+
+sub_segments:
+  - name: "Technical Founder"
+    description: >
+      Software engineer or technical PM building a SaaS product.
+      Comfortable with APIs and automation but does not want to
+      build internal tools. Values speed and flexibility.
+    demographics:
+      age_range: "25-40"
+      prior_role: "Software engineer or technical PM"
+      location: "US tech hubs, remote"
+    psychographics:
+      motivation: "Ship product faster by eliminating operational overhead"
+      tool_adoption: "Early adopter. Tries tools quickly, keeps what delivers value."
+      risk_tolerance: "High"
+
+  - name: "Non-Technical Operator"
+    description: >
+      Business-focused founder who relies on the team for technical
+      decisions. Needs no-code solutions for workflow automation.
+      Values simplicity and proven results over novel technology.
+    demographics:
+      age_range: "30-50"
+      prior_role: "Business development, sales, or operations"
+      location: "US, EU"
+    psychographics:
+      motivation: "Focus on customers and revenue, not internal processes"
+      tool_adoption: "Selective. Adopts tools recommended by peers."
+      risk_tolerance: "Moderate"

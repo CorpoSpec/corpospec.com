@@ -1,0 +1,152 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-colors.schema.json
+id: brand/colors
+primary_palette:
+  - name: Deep Blue
+    hex: "#1A365D"
+    pantone: "289 C"
+  - name: Electric Blue
+    hex: "#3182CE"
+    pantone: "285 C"
+  - name: Coral
+    hex: "#F56565"
+    pantone: "178 C"
+secondary_palette:
+  - name: Dark Slate
+    hex: "#2D3748"
+  - name: Cool Gray
+    hex: "#718096"
+  - name: Light Gray
+    hex: "#E2E8F0"
+  - name: Success Green
+    hex: "#48BB78"
+  - name: Warning Yellow
+    hex: "#ECC94B"
+neutral_palette:
+  - name: Near Black
+    hex: "#1A202C"
+  - name: Dark Gray
+    hex: "#4A5568"
+  - name: Medium Gray
+    hex: "#A0AEC0"
+  - name: Light Silver
+    hex: "#EDF2F7"
+  - name: White
+    hex: "#FFFFFF"
+semantic_tokens:
+  success:
+    default_hex: "#48BB78"
+    light_hex: "#C6F6D5"
+    dark_hex: "#276749"
+    on_color_hex: "#FFFFFF"
+  warning:
+    default_hex: "#ECC94B"
+    light_hex: "#FEFCBF"
+    dark_hex: "#975A16"
+    on_color_hex: "#1A202C"
+  error:
+    default_hex: "#F56565"
+    light_hex: "#FED7D7"
+    dark_hex: "#9B2C2C"
+    on_color_hex: "#1A202C"
+  info:
+    default_hex: "#3182CE"
+    light_hex: "#BEE3F8"
+    dark_hex: "#2A4365"
+    on_color_hex: "#FFFFFF"
+accessibility:
+  standard: wcag21-aa
+  pairs:
+    - foreground: "#FFFFFF"
+      background: "#1A365D"
+      contrast_ratio: 12.63
+      wcag_aa: true
+      wcag_aaa: true
+    - foreground: "#FFFFFF"
+      background: "#3182CE"
+      contrast_ratio: 4.56
+      wcag_aa: true
+      wcag_aaa: false
+    - foreground: "#1A202C"
+      background: "#E2E8F0"
+      contrast_ratio: 11.47
+      wcag_aa: true
+      wcag_aaa: true
+    - foreground: "#1A202C"
+      background: "#F56565"
+      contrast_ratio: 4.78
+      wcag_aa: true
+      wcag_aaa: false
+    - foreground: "#1A202C"
+      background: "#FFFFFF"
+      contrast_ratio: 16.75
+      wcag_aa: true
+      wcag_aaa: true
+    - foreground: "#1A202C"
+      background: "#ECC94B"
+      contrast_ratio: 9.28
+      wcag_aa: true
+      wcag_aaa: true
+dark_mode:
+  auto_follow_os: true
+  user_override: true
+  image_treatment: luminosity-adjusted
+data_visualization:
+  - palette_type: categorical
+    colors:
+      - "#3182CE"
+      - "#F56565"
+      - "#48BB78"
+      - "#ECC94B"
+      - "#9F7AEA"
+      - "#ED8936"
+      - "#38B2AC"
+      - "#E53E3E"
+    colorblind_safe: true
+  - palette_type: sequential
+    colors:
+      - "#BEE3F8"
+      - "#90CDF4"
+      - "#63B3ED"
+      - "#4299E1"
+      - "#3182CE"
+      - "#2B6CB0"
+      - "#2C5282"
+      - "#1A365D"
+    colorblind_safe: true
+  - palette_type: diverging
+    colors:
+      - "#F56565"
+      - "#FC8181"
+      - "#FEB2B2"
+      - "#E2E8F0"
+      - "#90CDF4"
+      - "#63B3ED"
+      - "#3182CE"
+    colorblind_safe: true
+ui_tokens:
+  - mode: light
+    background_primary: "#FFFFFF"
+    background_secondary: "#F7FAFC"
+    surface_elevated: "#FFFFFF"
+    text_primary: "#1A202C"
+    text_secondary: "#4A5568"
+    text_disabled: "#A0AEC0"
+    border_default: "#E2E8F0"
+    border_focused: "#3182CE"
+    interactive_default: "#3182CE"
+    interactive_hover: "#2B6CB0"
+    interactive_pressed: "#2C5282"
+    interactive_disabled: "#CBD5E0"
+  - mode: dark
+    background_primary: "#1A202C"
+    background_secondary: "#171923"
+    surface_elevated: "#2D3748"
+    text_primary: "#F7FAFC"
+    text_secondary: "#A0AEC0"
+    text_disabled: "#4A5568"
+    border_default: "#4A5568"
+    border_focused: "#63B3ED"
+    interactive_default: "#63B3ED"
+    interactive_hover: "#4299E1"
+    interactive_pressed: "#3182CE"
+    interactive_disabled: "#2D3748"

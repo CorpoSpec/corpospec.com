@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/jira
+name: "Jira"
+website: "https://atlassian.com/jira"
+layer: 1
+category: "Issue Tracking and Project Management"
+relationship: integration-partner
+as_of: "2026-03-01"
+
+description: >
+  Industry-standard issue tracking and project management tool
+  from Atlassian. Jira Automation provides workflow automation
+  within the Atlassian ecosystem. Dominant in engineering teams
+  but expanding to business teams with Jira Work Management.
+
+founded: "2002"
+headquarters: "Sydney, Australia"
+
+strengths:
+  - "Market leader in engineering project management"
+  - "Jira Automation with 100+ smart rules"
+  - "Deep Atlassian ecosystem (Confluence, Bitbucket, Trello)"
+  - "Enterprise-grade with compliance certifications"
+
+weaknesses:
+  - "Complex configuration requires Jira admin expertise"
+  - "Automation limited to Atlassian ecosystem"
+  - "Poor UX for non-engineering teams"
+  - "Per-user pricing expensive at scale"
+
+core_features:
+  - "Issue tracking and sprint management"
+  - "Jira Automation rules engine"
+  - "Jira Work Management for business teams"
+  - "Advanced roadmaps and reporting"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 2
+    ai-integration: 1
+    real-time-collaboration: 2
+    workflow-automation: 4
+    api-extensibility: 4
+
+competitive_advantages:
+  - "Acme automates across all tools, not just Atlassian products"
+  - "Designed for operations teams, not engineering teams"
+  - "AI-native automation vs rule-based triggers"
+
+sources:
+  - "atlassian.com/jira (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

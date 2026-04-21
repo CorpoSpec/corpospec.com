@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/banking
+name: "Banking Integration"
+system: "Banking"
+type: source
+status: draft
+
+input_port:
+  name: "banking-api"
+  protocol: "REST"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/alex-chen
+  freshness:
+    schedule: "daily"
+    max_staleness_minutes: 1440
+  schema:
+    fields:
+      - name: transaction_id
+        type: string
+        required: true
+      - name: amount
+        type: number
+        required: true
+      - name: currency
+        type: string
+        required: true
+      - name: date
+        type: string
+        required: true
+      - name: description
+        type: string
+        required: false
+      - name: category
+        type: string
+        required: false
+
+pipeline:
+  date_field: date
+  mappings:
+    - source_field: amount
+      target: metrics/finance/bank-transactions
+      aggregation: sum
+      breakdown_by: category
+
+outputs: []

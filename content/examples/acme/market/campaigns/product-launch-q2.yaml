@@ -1,0 +1,178 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/campaign.schema.json
+id: market/campaigns/product-launch-q2
+name: "Acme Platform v2.0 Product Launch"
+type: product
+status: planned
+
+description: >
+  Multi-channel product launch campaign for Acme Platform v2.0, introducing
+  AI-powered workflow templates, advanced integrations (Slack, Notion, GitHub),
+  and a redesigned onboarding flow. Targets existing free-tier users for
+  conversion and net-new acquisition across all three ICPs. Timed to coincide
+  with SaaStr Annual and the end of Q2 budget cycles when mid-market ops
+  teams finalize tooling decisions.
+
+objective: >
+  Drive 2,400 new signups, convert 360 free-tier users to paid plans, and
+  generate 45 enterprise demo requests within the 3-month campaign window.
+  Secondary objective: establish Acme Platform as the category leader in
+  AI-powered workflow automation for SMBs.
+
+duration_months: 3
+
+delivery_mechanism: >
+  Phased rollout. Week 1-2: teaser content and waitlist via email and social.
+  Week 3: public launch with product hunt, press coverage, and webinar.
+  Week 4-12: sustained content marketing, retargeting ads, and partner
+  co-marketing. Enterprise outreach runs in parallel throughout.
+
+budget:
+  currency: USD
+  total: 185000.00
+  monthly: 61667.00
+  cost_per_acquisition: 42.50
+  description: >
+    Allocated across paid acquisition ($72K), content production ($38K),
+    event sponsorships ($35K), influencer partnerships ($22K), and
+    tooling/analytics ($18K). CPA target of $42.50 assumes blended cost
+    across paid and organic channels with a 35% organic attribution rate.
+
+eligibility:
+  admission: open
+  capacity: 5000
+  criteria:
+    - "B2B SaaS company with 5-500 employees"
+    - "Currently using manual or spreadsheet-based workflows"
+    - "At least one operations or project management tool in current stack"
+    - "US or EU based company"
+
+related_decisions:
+  - governance/decisions/0004-pricing-model
+  - governance/decisions/0011-market-positioning
+  - governance/decisions/0012-sales-motion
+  - governance/decisions/0023-content-strategy
+  - governance/decisions/0025-onboarding-flow
+
+custom:
+  launch_date: "2026-04-14"
+  end_date: "2026-07-14"
+  target_icps:
+    - market/icp/smb-saas-founder
+    - market/icp/mid-market-ops
+    - market/icp/enterprise-it
+  channels:
+    - name: "Product Hunt"
+      type: organic
+      role: "Day-one launch amplification"
+      target_metric: "Top 3 Product of the Day"
+      spend: 2500
+    - name: "LinkedIn Ads"
+      type: paid
+      role: "Primary paid acquisition for mid-market ops and enterprise IT"
+      target_metric: "1,200 qualified signups"
+      spend: 38000
+    - name: "Google Search Ads"
+      type: paid
+      role: "Intent-based capture for workflow automation queries"
+      target_metric: "800 signups at $28 CPA"
+      spend: 22400
+    - name: "Email Nurture Sequences"
+      type: owned
+      role: "Free-tier conversion and waitlist activation"
+      target_metric: "360 free-to-paid conversions"
+      spend: 4200
+    - name: "Content Marketing"
+      type: owned
+      role: "SEO-driven blog posts, case studies, and workflow automation guides"
+      target_metric: "45,000 organic sessions"
+      spend: 38000
+    - name: "Webinar Series"
+      type: owned
+      role: "Live product demos targeting mid-market and enterprise"
+      target_metric: "1,800 registrations, 45% attendance rate"
+      spend: 8500
+    - name: "SaaStr Annual Sponsorship"
+      type: event
+      role: "Brand awareness and enterprise pipeline generation"
+      target_metric: "120 qualified enterprise leads"
+      spend: 35000
+    - name: "Developer Influencer Partnerships"
+      type: partner
+      role: "Technical credibility and SMB founder reach"
+      target_metric: "400 signups via partner attribution"
+      spend: 22000
+    - name: "Retargeting Display"
+      type: paid
+      role: "Re-engage site visitors who did not convert"
+      target_metric: "6% retargeting conversion rate"
+      spend: 11600
+  kpis:
+    - metric: "New signups"
+      target: 2400
+      measurement: "Cumulative over 3 months"
+    - metric: "Free-to-paid conversion"
+      target: 360
+      measurement: "Users upgrading from free tier during campaign window"
+    - metric: "Enterprise demo requests"
+      target: 45
+      measurement: "Qualified demo bookings from enterprise ICP"
+    - metric: "Cost per acquisition"
+      target: 42.50
+      measurement: "Total spend / total new paying customers"
+    - metric: "Campaign ROI"
+      target: 3.2
+      measurement: "12-month projected LTV of acquired customers / total campaign spend"
+    - metric: "Organic traffic lift"
+      target: 0.65
+      measurement: "65% increase in organic sessions vs. pre-campaign baseline"
+  timeline:
+    - phase: "Pre-launch"
+      start: "2026-04-01"
+      end: "2026-04-13"
+      activities:
+        - "Publish 6 teaser blog posts on AI workflow automation"
+        - "Launch email waitlist for v2.0 early access"
+        - "Seed content with developer influencers"
+        - "Configure ad campaigns and retargeting pixels"
+    - phase: "Launch Week"
+      start: "2026-04-14"
+      end: "2026-04-20"
+      activities:
+        - "Product Hunt launch"
+        - "Press embargo lift and media outreach"
+        - "Launch webinar with live product demo"
+        - "Activate all paid channels simultaneously"
+        - "Email blast to existing 8,400 free-tier users"
+    - phase: "Sustained Growth"
+      start: "2026-04-21"
+      end: "2026-06-15"
+      activities:
+        - "Weekly blog posts and case study releases"
+        - "Bi-weekly webinars with customer spotlights"
+        - "LinkedIn thought leadership from CEO and CTO"
+        - "Optimize ad spend based on channel performance"
+        - "Enterprise outbound via SDR team"
+    - phase: "Close and Convert"
+      start: "2026-06-16"
+      end: "2026-07-14"
+      activities:
+        - "Limited-time annual plan discount for campaign signups"
+        - "Enterprise POC follow-ups and contract negotiations"
+        - "Campaign retrospective and performance analysis"
+        - "Handoff high-intent leads to customer success"
+  competitors_targeted:
+    - market/competitors/asana
+    - market/competitors/monday
+    - market/competitors/clickup
+    - market/competitors/notion
+  messaging:
+    primary_headline: "Workflows that build themselves."
+    supporting_message: >
+      Acme Platform v2.0 uses AI to generate, optimize, and maintain your
+      operational workflows. Stop building processes from scratch. Start
+      shipping faster.
+    differentiator: >
+      Unlike legacy project management tools that require manual setup and
+      constant maintenance, Acme Platform learns from your team's behavior
+      and automatically suggests workflow improvements — reducing operational
+      overhead by an average of 12 hours per team per week.

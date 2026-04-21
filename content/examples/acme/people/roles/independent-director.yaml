@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/independent-director
+title: "Independent Director"
+abbreviation: "ID"
+unit: governance
+reports_to: null
+level: director
+responsibilities:
+  - "Board oversight and corporate governance"
+  - "Strategic advisory and fiduciary duty"
+  - "Audit and compliance committee participation"
+  - "Independent judgment on management decisions"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 0
+  max: 0
+  equity_percentage: "0.25-0.5%"
+  note: "Board compensation via equity grant. No cash salary."

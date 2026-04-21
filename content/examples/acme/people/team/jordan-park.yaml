@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/jordan-park
+type: Person
+name:
+  given: "Jordan"
+  family: "Park"
+  full: "Jordan Park"
+email: "jordan@parkcapital.example.com"
+role: people/roles/independent-director
+unit: null
+start_date: "2025-09-01"
+end_date: null
+status: active
+equity: entity/equity/stakeholders/jordan-park
+bio: "Independent board director and angel investor. Managing Partner at Park Capital, an early-stage B2B SaaS fund. Former VP Engineering at Salesforce. Board experience includes three successful Series A through Series C companies in the enterprise software space."
+phone: "+1-415-555-0192"
+date_of_birth: "1978-11-23"
+personal_address:
+  street: "2847 Pacific Avenue"
+  city: "San Francisco"
+  postal_code: "94115"
+  state: "CA"
+  country: "US"

@@ -1,0 +1,78 @@
+{
+  "$defs": {
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "Lei": {
+      "description": "ISO 17442 Legal Entity Identifier (20-character alphanumeric).",
+      "pattern": "^[A-Z0-9]{18}[0-9]{2}$",
+      "type": "string"
+    },
+    "Pillar": {
+      "description": "Pillar name.",
+      "enum": [
+        "entity",
+        "financials",
+        "metrics",
+        "product",
+        "market",
+        "people",
+        "legal",
+        "governance",
+        "integrations",
+        "brand"
+      ],
+      "type": "string"
+    },
+    "Semver": {
+      "description": "Semantic version string (MAJOR.MINOR.PATCH).",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Repository metadata declaring spec version and company identity.",
+  "properties": {
+    "company_id": {
+      "type": "string"
+    },
+    "corpospec_version": {
+      "$ref": "#/$defs/Semver"
+    },
+    "created": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "lei": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Lei"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pillars": {
+      "items": {
+        "$ref": "#/$defs/Pillar"
+      },
+      "type": "array"
+    },
+    "schema_version": {
+      "$ref": "#/$defs/Semver"
+    }
+  },
+  "required": [
+    "corpospec_version",
+    "company_id",
+    "created",
+    "schema_version",
+    "pillars"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}

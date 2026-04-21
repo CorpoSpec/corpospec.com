@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/quinn-murphy
+type: Person
+name:
+  given: "Quinn"
+  family: "Murphy"
+  full: "Quinn Murphy"
+email: "quinn.murphy@acmecorp.example.com"
+role: people/roles/customer-success-manager
+unit: customer-success
+start_date: "2026-02-01"
+end_date: null
+status: active
+bio: "Customer Success Manager. Previously at Intercom. Specializes in onboarding, retention, and expansion for B2B SaaS."

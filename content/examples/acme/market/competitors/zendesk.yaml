@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/zendesk
+name: "Zendesk"
+website: "https://zendesk.com"
+layer: 1
+category: "Customer Service Platform"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  Enterprise customer service and engagement platform. Offers ticketing,
+  live chat, knowledge base, and AI-powered support automation.
+  Recently added workflow automation features that overlap with Acme's
+  core product.
+
+founded: "2007"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "Massive installed base with 100K+ customers"
+  - "Deep integration ecosystem with 1,000+ marketplace apps"
+  - "Strong brand recognition in customer service category"
+  - "Enterprise sales motion and global support infrastructure"
+
+weaknesses:
+  - "Legacy architecture limits innovation speed"
+  - "Pricing is complex and expensive for SMBs"
+  - "Workflow automation is bolted-on, not core product DNA"
+  - "Customer satisfaction declining due to product complexity"
+
+core_features:
+  - "Ticketing and case management"
+  - "Live chat and messaging"
+  - "Knowledge base and self-service portal"
+  - "Basic workflow automation (Zendesk Explore)"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 0
+    ai-integration: 2
+    real-time-collaboration: 2
+    workflow-automation: 3
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme is workflow-first; Zendesk is ticketing-first with automation added"
+  - "AI-native templates vs retrofitted AI features"
+  - "10x simpler pricing model"
+
+sources:
+  - "zendesk.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/monday
+name: "monday.com"
+website: "https://monday.com"
+layer: 1
+category: "Work Management Platform"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  Work operating system with project management, CRM, and workflow
+  automation. Broad horizontal platform targeting teams of all sizes.
+  Monday WorkForms and automations overlap with Acme's workflow
+  automation positioning.
+
+founded: "2012"
+headquarters: "Tel Aviv, Israel"
+
+strengths:
+  - "Flexible platform adaptable to many use cases"
+  - "Strong visual UI with drag-and-drop workflow builder"
+  - "Publicly traded with significant marketing budget"
+  - "Growing AI features with monday AI"
+
+weaknesses:
+  - "Jack of all trades, master of none"
+  - "Workflow automation is basic compared to purpose-built tools"
+  - "Expensive at scale with per-seat pricing"
+  - "Limited API automation capabilities"
+
+core_features:
+  - "Project and task management"
+  - "Custom workflow automations"
+  - "CRM and sales tracking"
+  - "Dashboards and reporting"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 1
+    ai-integration: 2
+    real-time-collaboration: 3
+    workflow-automation: 4
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme's AI templates learn from usage; monday automations are static rules"
+  - "Purpose-built for workflow automation vs general work management"
+  - "Usage-based pricing vs expensive per-seat model"
+
+sources:
+  - "monday.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

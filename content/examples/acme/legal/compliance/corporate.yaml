@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/control.schema.json
+id: legal/compliance/corporate
+control_id: "SOC2-CC-001"
+catalog: "SOC 2 Type II"
+title: "SOC 2 Type II Compliance Program"
+status: planned
+last_assessed: null
+assessor: null
+implementation:
+  description: >
+    SOC 2 Type II compliance program planned for Q3 2026.
+    Initial gap assessment scheduled. Targeting Security and
+    Availability trust service criteria. Audit firm selection
+    in progress.
+  components:
+    - name: Access Control Policy
+      type: policy
+      role: "Role-based access control policies for all production systems"
+    - name: Change Management
+      type: process
+      role: "Code review and deployment approval workflow"
+    - name: Monitoring
+      type: software
+      role: "Datadog monitoring and alerting for production infrastructure"
+evidence: []
+soc2_mapping:
+  - criteria: "CC6.1"
+    description: "Logical and physical access controls"
+  - criteria: "CC7.2"
+    description: "System monitoring"
+  - criteria: "CC8.1"
+    description: "Change management"
+iso27001_mapping:
+  - control: "A.9.1.1"
+    description: "Access control policy"

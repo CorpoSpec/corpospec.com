@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/metric.schema.json
+id: metrics/definitions/burn-rate
+name: Monthly Burn Rate
+abbreviation: Burn
+description: Net cash consumed per month. Negative indicates cash outflow.
+formula: abs(monthly_expenses - monthly_revenue)
+unit: currency
+direction: down
+frequency: monthly
+source:
+  system: QuickBooks
+  query: reports.profit_and_loss(period=monthly).net_income
+xbrl_mapping: null
+related_metrics:
+- metrics/definitions/runway
+iso_30414_mapping: null
+tags:
+- financial-health
+- investor-facing

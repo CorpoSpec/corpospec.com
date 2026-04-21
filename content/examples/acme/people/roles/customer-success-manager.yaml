@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/customer-success-manager
+title: "Customer Success Manager"
+abbreviation: "CSM"
+unit: customer-success
+reports_to: people/roles/ceo
+level: manager
+responsibilities:
+  - "Customer onboarding and implementation"
+  - "Account health monitoring and retention"
+  - "Expansion and upsell opportunity identification"
+  - "Customer feedback collection and product advocacy"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 90000
+  max: 130000
+  equity_percentage: "0.05-0.15%"

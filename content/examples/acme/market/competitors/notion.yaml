@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/notion
+name: "Notion"
+website: "https://notion.so"
+layer: 2
+category: "Collaborative Workspace"
+relationship: integration-partner
+as_of: "2026-03-01"
+
+description: >
+  All-in-one workspace combining docs, wikis, databases, and project
+  management. Notion AI adds AI-powered writing and data analysis.
+  Database automations provide basic workflow capabilities.
+
+founded: "2013"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "Extremely flexible database and document system"
+  - "Strong community with templates marketplace"
+  - "Notion AI for content generation and summarization"
+  - "Affordable pricing with generous free tier"
+
+weaknesses:
+  - "Workflow automation is secondary to document management"
+  - "Database automations are basic compared to purpose-built tools"
+  - "Performance degrades with large workspaces"
+  - "Limited enterprise compliance features"
+
+core_features:
+  - "Docs and wikis"
+  - "Databases with views and relations"
+  - "Basic database automations"
+  - "Notion AI for content and analysis"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 2
+    ai-integration: 2
+    real-time-collaboration: 4
+    workflow-automation: 2
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme is automation-first; Notion is documentation-first"
+  - "AI workflow templates vs basic database triggers"
+  - "Integration opportunity: Acme can automate Notion-based processes"
+
+sources:
+  - "notion.so (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

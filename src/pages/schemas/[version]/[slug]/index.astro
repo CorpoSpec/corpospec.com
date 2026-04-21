@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import {
+  listVersions,
+  listSlugs,
+  readSchema,
+  readSchemaFields,
+  readSchemaDefs,
+  pillarForSlug,
+  pillarMeta,
+} from "../../../../lib/schemas.ts";
+
+export function getStaticPaths() {
+  return listVersions().flatMap((version) =>
+    listSlugs(version).map((slug) => ({ params: { version, slug } })),
+  );
+}
+
+const { version, slug } = Astro.params;
+const schema = readSchema(version!, slug!);
+if (!schema) {
+  return Astro.rewrite("/404");
+}
+
+const fields = readSchemaFields(version!, slug!);
+const defs = readSchemaDefs(version!, slug!);
+const pillar = pillarMeta(pillarForSlug(slug!));
+const rawUrl = `/schemas/${version}/${slug}.schema.json`;
+const canonicalId = schema.$id ?? `https://corpospec.com${rawUrl}`;
+---
+
+<BaseLayout
+  title={`${schema.title ?? slug} — CorpoSpec ${version}`}
+  description={schema.description ?? `JSON Schema definition for ${slug}.`}
+  active="schemas"
+>
+  <section class="hero">
+    <div class="hero__eyebrow" style={`color: ${pillar.color};`}>
+      <span class="pill-dot"></span>
+      <span>{pillar.label} pillar</span>
+      <span>·</span>
+      <span class="badge badge--version">{version}</span>
+    </div>
+    <h1 style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+      <span class="mono" style="font-size: 0.75em; color: var(--muted); font-weight: 500;">{slug}</span>
+      <span>{schema.title ?? slug}</span>
+    </h1>
+    {schema.description ? <p class="lead prose">{schema.description}</p> : null}
+    <p class="prose" style="color: var(--muted); font-size: 14px;">
+      <strong>$id</strong> · <code>{canonicalId}</code>
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href={rawUrl}>View raw JSON →</a>
+      <a class="btn btn--ghost" href={`/schemas/${version}/`}>← all schemas</a>
+    </div>
+  </section>
+
+  <h2>Fields</h2>
+  {fields.length === 0 ? (
+    <p>This schema defines no top-level fields directly (see definitions below).</p>
+  ) : (
+    <div class="fields">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 22%;">Field</th>
+            <th style="width: 22%;">Type</th>
+            <th style="width: 10%;">Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fields.map((f) => (
+            <tr>
+              <td><span class="name">{f.name}</span></td>
+              <td><span class="type">{f.type}</span></td>
+              <td><span class={`req req--${f.required ? "yes" : "no"}`}>{f.required ? "yes" : "—"}</span></td>
+              <td><span class="desc">{f.description ?? ""}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {defs.length > 0 ? (
+    <>
+      <h2>Definitions</h2>
+      <p class="prose">Shared types referenced within this schema.</p>
+      <div class="defs">
+        {defs.map((d) => (
+          <div class="def">
+            <div class="name">{d.name}</div>
+            {d.description ? <div class="desc">{d.description}</div> : null}
+            {d.type && !d.pattern && !d.enum ? <div class="pattern">type: {d.type}</div> : null}
+            {d.pattern ? <div class="pattern">pattern: {d.pattern}</div> : null}
+            {d.enum ? <div class="pattern">enum: {d.enum.map((e) => JSON.stringify(e)).join(", ")}</div> : null}
+          </div>
+        ))}
+      </div>
+    </>
+  ) : null}
+
+  <h2>Reference in your YAML</h2>
+  <pre><code><span class="c"># yaml-language-server: $schema=</span><span class="s">{canonicalId}</span></code></pre>
+</BaseLayout>

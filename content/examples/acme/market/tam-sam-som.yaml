@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/market-sizing.schema.json
+id: market/tam-sam-som
+name: "Market Sizing Model"
+description: "Total addressable market for workflow automation and operations software."
+as_of: "2026-03-01"
+currency: USD
+
+tam:
+  description: "Global workflow automation and business operations software market"
+  value: 85000000000
+  methodology: >
+    Top-down from Mordor Intelligence global workflow automation market
+    ($85B in 2026, 23.4% CAGR). Includes process automation, business
+    process management, and AI-powered operations tools.
+
+sam:
+  description: "Operations software spend by SMBs and mid-market companies in US and EU"
+  value: 12000000000
+  methodology: >
+    Bottom-up from target segments:
+    Segment 1 - SMBs (10-200 employees) in US and EU: 2.1M companies.
+    Average addressable workflow automation spend: $3,600/year.
+    2.1M x $3,600 = $7.56B.
+    Segment 2 - Mid-market (200-500 employees) in US and EU: 180K companies.
+    Average addressable spend: $24,000/year.
+    180K x $24K = $4.32B.
+    Total SAM: $7.56B + $4.32B = $11.88B, rounded to $12B.
+
+som:
+  description: "Achievable revenue within 18 months in US market"
+  value: 45000000
+  methodology: >
+    Bottom-up from go-to-market capacity:
+    SMB segment: 800 paying customers x $3,600 ARR = $2.88M.
+    Mid-market segment: 150 paying customers x $24,000 ARR = $3.6M.
+    Enterprise pilots: 25 customers x $48,000 ARR = $1.2M.
+    Total 18-month ARR target: ~$7.7M.
+    Pipeline and expansion revenue to $45M requires Series A investment
+    and expanded sales team. Conservative SOM accounts for full
+    addressable opportunity with adequate capital deployment.

@@ -1,0 +1,876 @@
+{
+  "$defs": {
+    "Assets": {
+      "description": "Balance sheet assets.",
+      "properties": {
+        "accounts_receivable": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cash_and_equivalents": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_assets": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_assets"
+      ],
+      "type": "object"
+    },
+    "BalanceSheet": {
+      "description": "Balance sheet.",
+      "properties": {
+        "assets": {
+          "$ref": "#/$defs/Assets"
+        },
+        "equity": {
+          "$ref": "#/$defs/Equity"
+        },
+        "liabilities": {
+          "$ref": "#/$defs/Liabilities"
+        }
+      },
+      "required": [
+        "assets",
+        "liabilities",
+        "equity"
+      ],
+      "type": "object"
+    },
+    "CashFlow": {
+      "description": "Cash flow statement.",
+      "properties": {
+        "financing": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "investing": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "net_change": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "operating": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Equity": {
+      "description": "Balance sheet equity.",
+      "properties": {
+        "total_equity": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_equity"
+      ],
+      "type": "object"
+    },
+    "FinancialAssumption": {
+      "description": "A financial model assumption.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "invalidation_condition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "type": "object"
+    },
+    "FinancialModelCustom": {
+      "description": "Typed custom extension data for `FinancialModel`.",
+      "properties": {
+        "assumptions": {
+          "items": {
+            "$ref": "#/$defs/FinancialAssumption"
+          },
+          "type": "array"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "founder_contribution": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FounderContribution"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fx_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FxReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "german_payroll_burden": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GermanPayrollBurden"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "incorporation_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "insurance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InsuranceCosts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monthly_recurring_expenses_post_gmbh": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MonthlyRecurringExpensesPostGmbh"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "monthly_recurring_expenses_pre_formation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MonthlyRecurringExpensesPreFormation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "one_time_expenses": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OneTimeExpenses"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "per_employee_monthly_costs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PerEmployeeMonthlyCosts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pre_seed_wandeldarlehen_scenarios": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WandeldarlehenScenarios"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FounderContribution": {
+      "description": "Founder equity contribution details.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "contributor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "holding_vehicle": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FxReference": {
+      "description": "Foreign exchange reference rates.",
+      "properties": {
+        "base_currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usd_eur_rate": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "GermanPayrollBurden": {
+      "description": "German employer payroll burden (Sozialversicherung).",
+      "properties": {
+        "components": {
+          "additionalProperties": {
+            "format": "double",
+            "type": "number"
+          },
+          "description": "Individual Sozialversicherung components by name (e.g. rentenversicherung, krankenversicherung).",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "employer_social_contribution_rate": {
+          "description": "Overall employer social contribution rate (e.g. \"0.21\" or 0.21)."
+        },
+        "lohnbuchhaltung_per_employee_monthly": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IncomeStatement": {
+      "description": "Income statement.",
+      "properties": {
+        "cost_of_revenue": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gross_profit": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "net_income": {
+          "format": "double",
+          "type": "number"
+        },
+        "operating_expenses": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OperatingExpenses"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operating_income": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "revenue": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "revenue",
+        "net_income"
+      ],
+      "type": "object"
+    },
+    "InsuranceCosts": {
+      "description": "Insurance cost details.",
+      "properties": {
+        "d_and_o_annual": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "Liabilities": {
+      "description": "Balance sheet liabilities.",
+      "properties": {
+        "accounts_payable": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_liabilities": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "total_liabilities"
+      ],
+      "type": "object"
+    },
+    "MonthlyRecurringExpensesPostGmbh": {
+      "description": "Monthly recurring expenses after GmbH formation.",
+      "properties": {
+        "ai_tooling": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "apple_developer_amortized": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "canva": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "claude_max_per_user": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "d_and_o_insurance_amortized": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "github_enterprise_per_user": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "google_workspace_per_user": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "lohnbuchhaltung_per_employee": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "steuerberater_retainer_post_llc": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "MonthlyRecurringExpensesPreFormation": {
+      "description": "Monthly recurring expenses before GmbH formation.",
+      "properties": {
+        "ai_tooling": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "apple_developer_amortized": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "canva": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "claude_code": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "google_workspace": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "steuerberater_retainer_pre_llc": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "OneTimeExpenses": {
+      "description": "One-time formation and setup expenses.",
+      "properties": {
+        "google_play_developer": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "notary_plus_handelsregister": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stammkapital_paid_in_at_formation": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stammkapital_total": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "OperatingExpenses": {
+      "description": "Operating expenses breakdown.",
+      "properties": {
+        "general_and_administrative": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "research_and_development": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "sales_and_marketing": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PerEmployeeMonthlyCosts": {
+      "description": "Per-employee monthly tool costs.",
+      "properties": {
+        "claude_max_5x": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "github_enterprise": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "google_workspace_business_starter": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "total_per_employee": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Period": {
+      "description": "A time period with start and end dates.",
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "type": {
+          "$ref": "#/$defs/PeriodType"
+        }
+      },
+      "required": [
+        "type",
+        "start"
+      ],
+      "type": "object"
+    },
+    "PeriodType": {
+      "description": "Period type discriminator.",
+      "enum": [
+        "instant",
+        "duration"
+      ],
+      "type": "string"
+    },
+    "WandeldarlehenScenario": {
+      "additionalProperties": true,
+      "description": "A single Wandeldarlehen dilution scenario.",
+      "properties": {
+        "cap": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "dilution_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "founder_post_conversion_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "raise": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "WandeldarlehenScenarios": {
+      "description": "Pre-seed Wandeldarlehen (convertible loan) scenario modelling.",
+      "properties": {
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "discount": {
+          "description": "Discount rate (may be string like \"0.20\" or numeric)."
+        },
+        "instrument": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interest_rate": {
+          "description": "Interest rate (may be string like \"0.05\" or numeric)."
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scenarios": {
+          "items": {
+            "$ref": "#/$defs/WandeldarlehenScenario"
+          },
+          "type": "array"
+        },
+        "target_amount": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "valuation_cap_range": {
+          "description": "Valuation cap range — may be a string or a `{min, max}` object."
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/financial-model.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Period financial data with concept names aligned to XBRL US-GAAP taxonomy.",
+  "properties": {
+    "balance_sheet": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BalanceSheet"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "cash_flow": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CashFlow"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "currency": {
+      "$ref": "#/$defs/IsoCurrency"
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FinancialModelCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "income_statement": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IncomeStatement"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "period": {
+      "$ref": "#/$defs/Period"
+    }
+  },
+  "required": [
+    "id",
+    "period",
+    "entity",
+    "currency"
+  ],
+  "title": "FinancialModel",
+  "type": "object"
+}

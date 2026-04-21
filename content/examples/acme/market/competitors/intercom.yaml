@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/intercom
+name: "Intercom"
+website: "https://intercom.com"
+layer: 1
+category: "Customer Messaging Platform"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  AI-first customer service platform with conversational support,
+  product tours, and workflow automation. Strong in the startup
+  and mid-market segment. Recently pivoted to AI-first positioning
+  with Fin AI agent.
+
+founded: "2011"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "AI-first product positioning with Fin agent"
+  - "Strong developer community and API ecosystem"
+  - "Product tours and onboarding automation"
+  - "Modern UI and user experience"
+
+weaknesses:
+  - "Expensive per-seat pricing model"
+  - "Workflow automation limited to customer-facing use cases"
+  - "High churn among SMB customers due to price increases"
+  - "Feature bloat reducing core product clarity"
+
+core_features:
+  - "AI-powered customer support (Fin)"
+  - "Live chat and messaging"
+  - "Product tours and onboarding"
+  - "Customer data platform"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 0
+    ai-integration: 2
+    real-time-collaboration: 3
+    workflow-automation: 2
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme automates internal team workflows, not just customer-facing"
+  - "Usage-based pricing vs expensive per-seat model"
+  - "Broader workflow scope beyond customer support"
+
+sources:
+  - "intercom.com (accessed 2026-03-01)"
+  - "Crunchbase (accessed 2026-03-01)"

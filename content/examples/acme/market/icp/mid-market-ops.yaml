@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/icp.schema.json
+id: market/icp/mid-market-ops
+name: "Mid-Market Operations Leader"
+priority: primary
+as_of: "2026-03-01"
+status: active
+
+description: >
+  Operations leaders at companies with 50-500 employees responsible
+  for process efficiency and team productivity. Managing multiple
+  tools and manual processes across departments. Need centralized
+  workflow automation to reduce operational overhead and improve
+  cross-team coordination.
+
+stage_range:
+  start: series-a
+  end: series-c
+
+geography:
+  primary: "US"
+  secondary: "EU"
+
+pain_point:
+  primary: "Fragmented tools and manual handoffs across departments"
+  description: >
+    Operations leaders manage 15-30 tools across the organization
+    with no unified workflow layer. Every department has its own
+    processes, many of which involve manual handoffs, spreadsheet
+    tracking, and email chains. Onboarding a new employee requires
+    touching 8-12 systems. Cross-department workflows break regularly.
+
+vertical:
+  phase_1: "Tech and SaaS companies"
+  phase_1_rationale: "Tech mid-market has highest tool adoption rate and shortest sales cycles"
+  phase_2: "Financial services and healthcare"
+  phase_2_rationale: "Heavy compliance and process-driven industries with high automation ROI"
+  phase_2_trigger: "Proven enterprise security features and SOC 2 certification"
+
+buying_behavior:
+  decision_maker: "VP Operations or Head of Business Operations"
+  decision_process: "Structured evaluation with pilot phase. Runs 30-day proof-of-concept with one department before company-wide rollout. Requires business case with projected ROI."
+  budget:
+    willingness_to_pay: "Moderate to high with proven ROI documentation"
+    base_price: "$99-499/month"
+    enterprise_price: "$499-2,000/month for full organization deployment"
+    pricing_note: "Budget approved quarterly. Prefers annual contracts for discount."
+  compliance_requirements:
+    - "SOC 2 Type II"
+    - "GDPR compliance"
+    - "SSO/SAML integration"
+    - "Audit logging"
+  compliance_note: "IT security review required before procurement. Typically 2-4 weeks."
+  discovery_channels:
+    model: "content and peer-driven"
+    content:
+      - "Operations-focused blogs and podcasts"
+      - "G2 and Gartner Peer Insights reviews"
+      - "Industry analyst reports"
+    community:
+      - "Operations professionals on LinkedIn"
+      - "RevOps community events"
+    direct:
+      - "Outbound SDR campaigns targeting ops titles"
+      - "LinkedIn thought leadership from Acme founders"
+
+anti_icp:
+  description: "Operations leaders at companies with rigid change management processes that prevent tool adoption."
+  exclusions:
+    - name: "Companies with 18+ month procurement cycles"
+      description: "Sales cycle exceeds Acme's current capacity for enterprise sales. Focus on faster-moving mid-market."
+    - name: "Operations teams without executive sponsor"
+      description: "Bottom-up adoption without leadership support leads to failed pilots and churn."
+    - name: "Companies requiring on-premise deployment"
+      description: "Acme is cloud-only. On-premise requirements are a disqualifier."
+  explicit_non_exclusions:
+    - name: "Non-tech industries"
+      reason: "Phase 2 expansion targets non-tech verticals. Early interest from non-tech ops leaders is a positive signal."
+
+sub_segments:
+  - name: "VP Operations"
+    description: >
+      Senior operations leader reporting to CEO or COO. Responsible
+      for company-wide process efficiency. Budget authority for
+      operations tools. Evaluates ROI carefully.
+    demographics:
+      age_range: "35-50"
+      prior_role: "Operations manager or consultant"
+      location: "US major metros"
+    psychographics:
+      motivation: "Measurable efficiency gains and cost reduction"
+      tool_adoption: "Methodical. Runs pilots before company-wide rollout."
+      risk_tolerance: "Low"
+
+  - name: "Head of Business Operations"
+    description: >
+      Mid-level operations leader managing a team of 3-10. Hands-on
+      with tool implementation. Champions automation initiatives.
+    demographics:
+      age_range: "28-40"
+      prior_role: "Business analyst or operations associate"
+      location: "US, EU"
+    psychographics:
+      motivation: "Prove value of automation to leadership"
+      tool_adoption: "Proactive. Tests multiple solutions before recommending."
+      risk_tolerance: "Moderate"

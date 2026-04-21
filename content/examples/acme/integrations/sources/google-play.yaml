@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/google-play
+name: "Google Play Console"
+system: "Google Play Console"
+type: source
+status: active
+
+input_port:
+  name: "google-play-api"
+  protocol: "REST"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: "daily"
+    max_staleness_minutes: 1440
+  schema:
+    fields:
+      - name: package_name
+        type: string
+        required: true
+      - name: installs
+        type: integer
+        required: true
+      - name: uninstalls
+        type: integer
+        required: true
+      - name: revenue
+        type: number
+        required: true
+      - name: ratings
+        type: number
+        required: true
+      - name: date
+        type: string
+        required: true
+
+pipeline:
+  date_field: date
+  mappings:
+    - source_field: installs
+      target: metrics/growth/android-installs
+      aggregation: sum
+    - source_field: uninstalls
+      target: metrics/growth/android-uninstalls
+      aggregation: sum
+    - source_field: revenue
+      target: metrics/revenue/android-revenue
+      aggregation: sum
+    - source_field: ratings
+      target: metrics/engagement/android-ratings
+      aggregation: avg
+      breakdown_by: package_name
+
+outputs: []

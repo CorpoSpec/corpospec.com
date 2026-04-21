@@ -1,0 +1,118 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/asana
+name: "Asana"
+website: "https://asana.com"
+layer: 1
+category: "Work Management Platform"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  Work management platform with project tracking, goals, and
+  workflow automation. AI Studio offers custom AI workflows.
+  Strong in mid-market. Workflow Rules engine competes with
+  Acme's core product.
+
+founded: "2008"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "Purpose-built for work management with clean UX"
+  - "Asana AI Studio with custom AI workflows"
+  - "Strong portfolio and goals tracking"
+  - "Enterprise-ready with SSO, audit logs, and compliance"
+
+weaknesses:
+  - "Workflow automation requires Asana as the hub"
+  - "Limited customization for non-standard processes"
+  - "AI features still early compared to purpose-built AI tools"
+  - "Per-seat pricing discourages broad team adoption"
+
+status: "active"
+team_size: 1900
+
+funding:
+  stage: "public"
+  currency: "USD"
+  notes: "IPO via direct listing on NYSE (ASAN) in September 2020"
+  total_raised: 470000000
+  notable_investors:
+    - "Generation Investment Management"
+    - "8VC"
+    - "Benchmark"
+    - "Founders Fund"
+  last_round:
+    type: "Direct Listing"
+    date: "2020-09-30"
+    source: "SEC filings"
+
+pricing:
+  model: "Per-seat subscription with tiered features"
+  tiers:
+    - name: "Personal"
+      price: 0
+      period: "monthly"
+      currency: "USD"
+      notes: "Up to 10 users, basic project management"
+    - name: "Starter"
+      price: 10.99
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Timeline, dashboards, workflow builder"
+    - name: "Advanced"
+      price: 24.99
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Portfolios, goals, custom rules, approvals"
+    - name: "Enterprise"
+      price: null
+      period: "annual per user"
+      currency: "USD"
+      notes: "SSO/SAML, data export, custom branding, priority support"
+
+traction:
+  arr: 688000000
+  arr_date: "2025-12-31"
+  arr_growth: "10% YoY"
+  website_monthly_visits: 35000000
+  website_traffic_source: "SimilarWeb"
+  website_visits_date: "2026-02"
+  companies_on_platform: 150000
+
+target_market:
+  segment: "Mid-market and enterprise"
+  focus: "Work management and project coordination"
+  company_size: "50-10,000 employees"
+  geography: "Global, strongest in US and Europe"
+  use_case: "Cross-functional project management and goal tracking"
+
+technology:
+  frontend: "React"
+  backend: "Java (Luna framework)"
+  data: "MySQL, Redis"
+  infrastructure: "AWS"
+  ai: "Asana Intelligence (proprietary AI layer)"
+
+core_features:
+  - "Project and task management"
+  - "Workflow Rules automation"
+  - "Goals and portfolio tracking"
+  - "AI Studio custom workflows"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 1
+    ai-integration: 2
+    real-time-collaboration: 3
+    workflow-automation: 4
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme works across any tool stack, not locked to one platform"
+  - "AI templates that learn and adapt vs static rule-based workflows"
+  - "Focus on operational automation, not project tracking"
+
+sources:
+  - "asana.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

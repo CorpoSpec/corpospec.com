@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/contract.schema.json
+id: legal/contracts/employment-alex-chen
+type: employment
+title: "Employment Agreement - Alex Chen"
+counterparty: people/team/alex-chen
+status: active
+effective_date: "2025-06-15"
+expiration_date: null
+governing_law: "US"
+contract_subtype: employee
+compensation:
+  base_salary:
+    amount: 130000
+    currency: USD
+    frequency: annual
+  benefits:
+    - type: health
+      description: "Comprehensive health insurance (medical, dental, vision)"
+    - type: equipment
+      description: "Company-provided laptop and home office stipend"
+key_terms:
+  - "At-will employment"
+  - "Non-compete clause (12 months post-termination, California exempt)"
+  - "Invention assignment agreement"
+  - "Confidentiality obligations"
+notice_period_days: 30
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0001-entity-formation

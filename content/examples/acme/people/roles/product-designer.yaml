@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/product-designer
+title: "Product Designer"
+abbreviation: "PD"
+unit: product
+reports_to: people/roles/ceo
+level: ic
+responsibilities:
+  - "User research and workflow analysis"
+  - "UI/UX design and prototyping"
+  - "Design system governance and component library"
+  - "Cross-functional collaboration with engineering"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 120000
+  max: 160000
+  equity_percentage: "0.1-0.3%"

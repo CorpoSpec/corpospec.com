@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/devops-engineer
+title: "DevOps Engineer"
+abbreviation: "DevOps"
+unit: engineering
+reports_to: people/roles/head-of-engineering
+level: ic
+responsibilities:
+  - "CI/CD pipeline design and maintenance"
+  - "Infrastructure automation and cloud provisioning"
+  - "Monitoring, alerting, and incident response"
+  - "Container orchestration and deployment strategy"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 140000
+  max: 180000
+  equity_percentage: "0.1-0.3%"

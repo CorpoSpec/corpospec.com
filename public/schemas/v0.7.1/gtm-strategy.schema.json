@@ -1,0 +1,746 @@
+{
+  "$defs": {
+    "ChangelogEntry": {
+      "description": "A changelog entry recording a dated change.",
+      "properties": {
+        "change": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ContentHook": {
+      "description": "Content hook for GTM strategy.",
+      "properties": {
+        "hook": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_icp": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DiscountProgram": {
+      "additionalProperties": false,
+      "description": "Discount program within pricing.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "DiscoveryChannels": {
+      "additionalProperties": false,
+      "description": "Discovery channels configuration.",
+      "properties": {
+        "community": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "content": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partnership": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DiscoveryPartnership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DiscoveryPartnership": {
+      "additionalProperties": false,
+      "description": "Partnership discovery channel.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mechanism": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DualPricingPlan": {
+      "description": "Dual pricing plan for multi-currency go-to-market.",
+      "properties": {
+        "activation_quarter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alignment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "customer_routing": {
+          "description": "Per-region billing entity routing."
+        },
+        "eur_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_compliance": {
+          "description": "Per-customer-type tax/VAT compliance rules."
+        },
+        "trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usd_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usd_pricing_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FunnelStage": {
+      "additionalProperties": false,
+      "description": "A stage in a user growth funnel.",
+      "properties": {
+        "conversion_target": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "GrowthFunnel": {
+      "additionalProperties": false,
+      "description": "User growth funnel definition.",
+      "properties": {
+        "stages": {
+          "items": {
+            "$ref": "#/$defs/FunnelStage"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "stages"
+      ],
+      "type": "object"
+    },
+    "GtmCustom": {
+      "description": "Typed custom extension data for `GtmStrategy`.",
+      "properties": {
+        "awareness_to_conversion": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "campaigns": {
+          "description": "Campaign PathRef references.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "changelog": {
+          "items": {
+            "$ref": "#/$defs/ChangelogEntry"
+          },
+          "type": "array"
+        },
+        "content_hooks": {
+          "items": {
+            "$ref": "#/$defs/ContentHook"
+          },
+          "type": "array"
+        },
+        "discovery_channels_expanded": {
+          "description": "Expanded discovery channels with regional detail."
+        },
+        "dual_pricing_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DualPricingPlan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enterprise_target_arr_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "gdpr_moat": {
+          "description": "GDPR moat positioning and competitive advantage details."
+        },
+        "leadership_target_arr_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pricing_detail": {
+          "description": "Pricing detail with tier prices and currency plans."
+        },
+        "secondary_icp_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "services_pricing": {
+          "description": "Services pricing PathRef reference.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "GtmModel": {
+      "description": "Go-to-market model.",
+      "enum": [
+        "product-led-growth",
+        "sales-led",
+        "community-led",
+        "partner-led",
+        "viral-organic",
+        "content-led",
+        "hybrid",
+        "location-based",
+        "bid-proposal",
+        "rfp-response",
+        "broker-mediated",
+        "franchise",
+        "trade-show",
+        "dealer-network"
+      ],
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pricing": {
+      "additionalProperties": false,
+      "description": "Pricing configuration.",
+      "properties": {
+        "base_price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "discount_programs": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DiscountProgram"
+          },
+          "type": "array"
+        },
+        "free_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PricingModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paid_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_direction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "structure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_arr_per_customer": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tiers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PricingTier"
+          },
+          "type": "array"
+        },
+        "usage_based_pricing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UsageBasedPricing"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PricingModel": {
+      "description": "Pricing model type.",
+      "enum": [
+        "freemium",
+        "freemium-plus-usage",
+        "subscription",
+        "subscription-plus-usage",
+        "usage-based",
+        "enterprise",
+        "hybrid",
+        "retail",
+        "per-unit",
+        "project-based",
+        "licensing",
+        "hourly-rate",
+        "auction",
+        "cost-plus-pricing"
+      ],
+      "type": "string"
+    },
+    "PricingTier": {
+      "additionalProperties": false,
+      "description": "A single pricing tier.",
+      "properties": {
+        "cost_markup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employee_access": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "TargetSegment": {
+      "additionalProperties": false,
+      "description": "Target market segment.",
+      "properties": {
+        "co_primary_icp_references": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "company_stage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geography": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "icp_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "secondary_icp_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vertical_phase_1": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vertical_phase_2": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "UsageBasedPricing": {
+      "additionalProperties": false,
+      "description": "Usage-based pricing configuration.",
+      "properties": {
+        "billing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_target_longterm": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ViralMechanics": {
+      "additionalProperties": false,
+      "description": "Viral growth mechanics configuration.",
+      "properties": {
+        "invite_mechanics": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "k_factor_target": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "viral_loops": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/gtm-strategy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Go-to-market strategy definition.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GtmCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "discovery_channels": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DiscoveryChannels"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "funnel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GrowthFunnel"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "model": {
+      "$ref": "#/$defs/GtmModel"
+    },
+    "monetization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Pricing"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "primary_channel": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "primary_channels": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "secondary_channels": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "target_segment": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TargetSegment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "viral_mechanics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ViralMechanics"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "model"
+  ],
+  "title": "GtmStrategy",
+  "type": "object"
+}

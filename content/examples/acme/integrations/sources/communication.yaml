@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/communication
+name: "Slack Communication"
+system: "Slack"
+type: source
+status: draft
+
+input_port:
+  name: "slack-api"
+  protocol: "WebSocket"
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: "realtime"
+    max_staleness_minutes: 1
+  schema:
+    fields:
+      - name: channel_id
+        type: string
+        required: true
+      - name: message_id
+        type: string
+        required: true
+      - name: user_id
+        type: string
+        required: true
+      - name: text
+        type: string
+        required: true
+      - name: timestamp
+        type: string
+        required: true
+      - name: thread_ts
+        type: string
+        required: false
+
+pipeline:
+  date_field: timestamp
+  mappings:
+    - source_field: message_id
+      target: metrics/operations/messages-count
+      aggregation: count
+      breakdown_by: channel_id
+
+outputs: []

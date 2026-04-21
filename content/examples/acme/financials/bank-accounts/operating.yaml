@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/bank-account.schema.json
+id: financials/bank-accounts/operating
+entity: entity/acme-corp
+accounts:
+- name: Primary Operating Account
+  bank: Silicon Valley Bank
+  currency: USD
+  type: operating
+  status: active
+  iban_last4: '7832'
+  opened: '2025-06-22'
+  closed: null
+- name: Tax Reserve Account
+  bank: Silicon Valley Bank
+  currency: USD
+  type: tax-reserve
+  status: active
+  iban_last4: '4518'
+  opened: '2025-08-01'
+  closed: null
+- name: High-Yield Savings
+  bank: Mercury
+  currency: USD
+  type: savings
+  status: active
+  iban_last4: '9201'
+  opened: '2025-10-15'
+  closed: null

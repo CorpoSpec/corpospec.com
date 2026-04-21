@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/app-store-connect
+name: "App Store Connect"
+system: "App Store Connect"
+type: source
+status: active
+
+input_port:
+  name: "app-store-connect-api"
+  protocol: "REST"
+  authentication: api_key
+
+data_contract:
+  owner: people/team/sarah-kim
+  freshness:
+    schedule: "daily"
+    max_staleness_minutes: 1440
+  schema:
+    fields:
+      - name: app_id
+        type: string
+        required: true
+      - name: downloads
+        type: integer
+        required: true
+      - name: revenue
+        type: number
+        required: true
+      - name: ratings
+        type: number
+        required: true
+      - name: date
+        type: string
+        required: true
+
+pipeline:
+  date_field: date
+  mappings:
+    - source_field: downloads
+      target: metrics/growth/ios-downloads
+      aggregation: sum
+    - source_field: revenue
+      target: metrics/revenue/ios-revenue
+      aggregation: sum
+    - source_field: ratings
+      target: metrics/engagement/ios-ratings
+      aggregation: avg
+      breakdown_by: app_id
+
+outputs: []

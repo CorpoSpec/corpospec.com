@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/riley-chen
+type: Person
+name:
+  given: "Riley"
+  family: "Chen"
+  full: "Riley Chen"
+email: "riley.chen@acmecorp.example.com"
+role: people/roles/frontend-engineer
+unit: engineering
+start_date: "2026-01-15"
+end_date: null
+status: active
+bio: "Frontend Engineer. Previously at Vercel. Specializes in React, Next.js, and design systems."

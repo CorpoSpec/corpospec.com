@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/risk-register.schema.json
+id: legal/risk-register
+as_of: "2026-03-15"
+risks:
+  - id: "RISK-001"
+    name: "Cash runway exhaustion"
+    description: "Seed funding of $2.5M provides approximately 24 months of runway at current burn rate. Failure to raise Series A or reach profitability before runway expires would force emergency cost reductions or wind-down."
+    likelihood: medium
+    impact: critical
+    status: open
+    mitigation: "Monthly burn rate tracking with 90-day rolling forecast. Series A fundraising process initiated at 6 months remaining runway. Revenue targets set to reduce dependency on external funding by Q4 2026."
+    owner: people/team/alex-chen
+    review_date: "2026-06-15"
+
+  - id: "RISK-002"
+    name: "Key-person dependency"
+    description: "Critical technical knowledge concentrated in CTO Sarah Kim. Loss of CTO would severely impact product development velocity and architectural continuity across the platform."
+    likelihood: low
+    impact: high
+    status: mitigated
+    mitigation: "Architecture decision records maintained for all technical choices. Pair programming required for infrastructure components. Engineering onboarding documentation covers system architecture. Hired senior engineer as technical backup in January 2026."
+    owner: people/team/sarah-kim
+    review_date: "2026-07-01"
+
+  - id: "RISK-003"
+    name: "Customer data breach"
+    description: "Unauthorized access to customer project management data or PII. As a B2B SaaS platform handling enterprise workflows and customer success data, a breach would cause regulatory liability, reputational damage, and customer churn."
+    likelihood: low
+    impact: critical
+    status: mitigated
+    mitigation: "SOC 2 Type I audit completed February 2026. Encryption at rest (AES-256) and in transit (TLS 1.3). Role-based access control with principle of least privilege. Quarterly penetration testing by third-party firm. Incident response plan documented and rehearsed."
+    owner: people/team/sarah-kim
+    review_date: "2026-05-01"
+
+  - id: "RISK-004"
+    name: "Regulatory compliance gap"
+    description: "Failure to comply with GDPR, CCPA, or emerging data protection regulations in target markets. EU expansion planned for H2 2026 increases regulatory surface area. Non-compliance risks fines up to 4% of global annual revenue under GDPR."
+    likelihood: medium
+    impact: high
+    status: open
+    mitigation: "External privacy counsel engaged for GDPR readiness assessment. Data processing agreements template finalized. Privacy policy and cookie consent aligned with ePrivacy requirements. DPA appointed for German subsidiary operations."
+    owner: people/team/alex-chen
+    review_date: "2026-06-01"
+
+  - id: "RISK-005"
+    name: "Market competition from incumbents"
+    description: "Established project management platforms (Asana, Monday.com, Jira) could add customer success features, reducing Acme's differentiation. Incumbents have larger engineering teams, existing customer bases, and brand recognition."
+    likelihood: high
+    impact: medium
+    status: accepted
+    mitigation: "Product strategy focused on deep integration between project management and customer success workflows, which incumbents cannot replicate without fundamental re-architecture. Targeting mid-market segment underserved by enterprise tools. Customer advisory board provides continuous feedback loop on differentiation."
+    owner: people/team/alex-chen
+    review_date: "2026-09-01"
+
+  - id: "RISK-006"
+    name: "Cloud vendor lock-in"
+    description: "Heavy reliance on AWS-specific services (Aurora, SQS, Lambda) creates switching costs and concentration risk. AWS pricing changes or service deprecation could materially impact operating costs or require re-engineering."
+    likelihood: low
+    impact: medium
+    status: mitigated
+    mitigation: "Application layer uses database-agnostic ORM abstractions. Message queue interface abstracted behind internal adapter pattern. Infrastructure defined as code via Terraform with provider-agnostic module structure where feasible. Multi-cloud egress cost monitored monthly."
+    owner: people/team/sarah-kim
+    review_date: "2026-08-01"
+
+  - id: "RISK-007"
+    name: "Inability to hire critical engineering roles"
+    description: "Competitive talent market in San Francisco and remote-first companies bidding up compensation for senior engineers. Failure to fill open roles delays product roadmap and increases burden on existing team."
+    likelihood: medium
+    impact: medium
+    status: open
+    mitigation: "Equity compensation packages competitive for seed-stage. Remote-friendly policy expands candidate pool beyond Bay Area. Technical blog and open-source contributions used for employer branding. Referral bonus program active. German subsidiary provides access to EU talent market."
+    owner: people/team/alex-chen
+    review_date: "2026-05-15"

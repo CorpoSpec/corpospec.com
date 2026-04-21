@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/cto
+title: "Chief Technology Officer"
+abbreviation: "CTO"
+unit: engineering
+reports_to: people/roles/ceo
+level: c-suite
+responsibilities:
+  - "Technical strategy and architecture"
+  - "Engineering team leadership"
+  - "Security and compliance posture"
+  - "Infrastructure and DevOps"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 120000
+  max: 150000
+  equity_percentage: "40%"
+  note: "Founder salary. Below market rate, offset by equity."

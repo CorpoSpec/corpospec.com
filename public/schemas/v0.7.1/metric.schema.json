@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "MetricDirection": {
+      "description": "Metric direction.",
+      "enum": [
+        "up",
+        "down",
+        "neutral"
+      ],
+      "type": "string"
+    },
+    "MetricFrequency": {
+      "description": "Metric frequency.",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "annually"
+      ],
+      "type": "string"
+    },
+    "MetricSource": {
+      "description": "Metric data source.",
+      "properties": {
+        "integration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "system": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "MetricUnit": {
+      "description": "Metric unit type.",
+      "enum": [
+        "currency",
+        "count",
+        "ratio",
+        "percentage",
+        "days",
+        "months",
+        "hours",
+        "weight",
+        "volume",
+        "area",
+        "score",
+        "nps",
+        "units",
+        "bps"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/metric.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Metric definition with formula, source, and standards mapping.",
+  "properties": {
+    "abbreviation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "direction": {
+      "$ref": "#/$defs/MetricDirection"
+    },
+    "formula": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "frequency": {
+      "$ref": "#/$defs/MetricFrequency"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "iso_30414_mapping": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "related_metrics": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MetricSource"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tags": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "unit": {
+      "$ref": "#/$defs/MetricUnit"
+    },
+    "xbrl_mapping": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "unit",
+    "direction",
+    "frequency"
+  ],
+  "title": "MetricDefinition",
+  "type": "object"
+}

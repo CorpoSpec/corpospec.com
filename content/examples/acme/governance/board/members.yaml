@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/board.schema.json
+id: governance/board/members
+name: "Board Composition"
+as_of: "2026-03-01"
+entity: entity/acme-corp
+
+members:
+  - person: people/team/alex-chen
+    role: chair
+    appointed: "2025-06-15"
+    term: indefinite
+    committees: []
+  - person: people/team/sarah-kim
+    role: director
+    appointed: "2025-06-15"
+    term: indefinite
+    committees: []
+  - person: people/team/jordan-park
+    role: independent-director
+    appointed: "2025-10-01"
+    term: indefinite
+    committees: []

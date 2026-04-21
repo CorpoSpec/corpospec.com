@@ -1,0 +1,4 @@
+metric: metrics/definitions/mrr
+date: "2026-02-01"
+value: 15200
+source: manual

@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "BoardMember": {
+      "additionalProperties": false,
+      "description": "Board member entry.",
+      "properties": {
+        "appointed": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "committees": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "person": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "role": {
+          "type": "string"
+        },
+        "term": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "person",
+        "role",
+        "appointed"
+      ],
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/board.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Board of directors or managing directors composition.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "members": {
+      "items": {
+        "$ref": "#/$defs/BoardMember"
+      },
+      "type": "array"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "entity",
+    "members"
+  ],
+  "title": "Board",
+  "type": "object"
+}

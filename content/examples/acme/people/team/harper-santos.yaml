@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/harper-santos
+type: Person
+name:
+  given: "Harper"
+  family: "Santos"
+  full: "Harper Santos"
+email: "harper.santos@acmecorp.example.com"
+role: people/roles/data-analyst
+unit: operations
+start_date: "2026-02-15"
+end_date: null
+status: active
+bio: "Data Analyst. Previously at Amplitude. Product analytics, cohort analysis, and funnel optimization."

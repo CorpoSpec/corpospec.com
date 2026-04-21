@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/sarah-kim
+type: Person
+name:
+  given: "Sarah"
+  family: "Kim"
+  full: "Sarah Kim"
+email: "sarah@acme-corp.example.com"
+role: people/roles/cto
+unit: engineering
+start_date: "2025-06-15"
+end_date: null
+status: active
+equity: entity/equity/stakeholders/sarah-kim
+bio: "Co-founder and CTO. Previously Staff Engineer at Stripe. MIT EECS."

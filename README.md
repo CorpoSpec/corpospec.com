@@ -1,0 +1,71 @@
+# corpospec.com
+
+The open standard for **Company as Code** — published at [corpospec.com](https://corpospec.com).
+
+This repository hosts:
+
+- **The specification** (`/spec/`) — principles, pillars, PathRef grammar.
+- **The schemas** (`/schemas/v<version>/`) — versioned, immutable JSON Schemas. Each slug is served as raw JSON at `https://corpospec.com/schemas/v<version>/<slug>.schema.json`.
+- **The guide** (`/guide/`) — hands-on quickstart for adopting CorpoSpec in any repository.
+- **The example** (`/example/`) — a complete reference company (ACME) populated across every pillar.
+
+The site is an Astro static build deployed to GitHub Pages.
+
+## Repo layout
+
+```
+corpospec.com/
+├── .github/workflows/       # Pages deploy + schema ingest
+├── content/
+│   └── examples/acme/       # Reference company, rendered at /example/
+├── public/
+│   ├── CNAME                # corpospec.com
+│   └── schemas/             # Versioned schema artefacts (served raw)
+│       └── v0.7.1/
+│           ├── *.schema.json
+│           └── context.jsonld
+├── scripts/
+│   └── ingest-release.mjs   # Consumes corpospec-release repository_dispatch
+├── src/
+│   ├── layouts/BaseLayout.astro
+│   ├── lib/                 # Schema introspection helpers
+│   ├── pages/
+│   │   ├── index.astro
+│   │   ├── spec/
+│   │   ├── guide/
+│   │   ├── example/
+│   │   └── schemas/
+│   └── styles/global.css
+├── astro.config.mjs
+├── package.json
+└── LICENSE
+```
+
+## Source of truth
+
+JSON Schemas in `public/schemas/v*/` are **not hand-written**. They are generated from the Rust types in [`beevelop/UNSTARTER`](https://github.com/beevelop/UNSTARTER)'s `corpospec-types` crate, published here as part of the tagged release pipeline, and are immutable once written.
+
+- **Schema definitions:** `corpospec/crates/corpospec-types/` in UNSTARTER.
+- **Generator CLI:** `corpospec/crates/corpospec-validate/` in UNSTARTER, subcommand `generate-schemas`.
+- **Release trigger:** UNSTARTER's `.github/workflows/release-deploy.yml` fires `repository_dispatch` (`event_type: corpospec-release`) on every `v*.*.*` tag.
+- **Ingest:** `.github/workflows/ingest.yml` in this repo receives the dispatch, downloads the tarball from the UNSTARTER release, verifies SHA256, and writes to `public/schemas/v{version}/`.
+
+## Local development
+
+```bash
+# Requires Node 22+ and pnpm 10+
+pnpm install
+pnpm dev           # http://localhost:4321
+pnpm build         # writes ./dist
+pnpm astro check   # typecheck
+```
+
+## Licence
+
+[MIT](LICENCE). The specification, schemas, documentation, and site code are all open.
+
+## Contributing
+
+Spec evolution happens upstream in [`beevelop/UNSTARTER`](https://github.com/beevelop/UNSTARTER) (Rust types + generator + validator). Site-level changes — docs wording, layout, new pages — are welcome via PR here. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Do **not** hand-edit files under `public/schemas/v*/`. They are released artefacts. To propose a schema change, open a PR against the Rust types in UNSTARTER.

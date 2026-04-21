@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/stock-class.schema.json
+id: entity/equity/stock-classes/common-a
+name: "Common Stock Class A"
+type: common
+authorized_shares: 10000000
+par_value:
+  amount: 0.00001
+  currency: USD
+votes_per_share: 1
+board_approval_date: "2025-06-15"
+status: active
+notes: >
+  10,000,000 authorized shares split between two co-founders.
+  Additional shares to be authorized for ESOP and future fundraising.

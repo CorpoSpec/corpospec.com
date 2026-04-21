@@ -1,0 +1,4 @@
+metric: metrics/definitions/arr
+date: "2026-01-01"
+value: 150000
+source: manual

@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/financial-model.schema.json
+id: financials/forecasts/2026-q2
+period:
+  type: duration
+  start: "2026-04-01"
+  end: "2026-06-30"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 62400
+  cost_of_revenue: 15600
+  gross_profit: 46800
+  operating_expenses:
+    research_and_development: 112500
+    sales_and_marketing: 48000
+    general_and_administrative: 25500
+  operating_income: -139200
+  net_income: -139200
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 1050800
+    accounts_receivable: 48000
+    total_assets: 1098800
+  liabilities:
+    accounts_payable: 22000
+    total_liabilities: 22000
+  equity:
+    total_equity: 1076800
+
+cash_flow:
+  operating: -139200
+  investing: -5000
+  financing: 0
+  net_change: -144200
+
+custom:
+  description: >
+    Q2 2026 forecast (April-June). MRR growth from $18,200 to $22,000.
+    Continued investment in engineering and go-to-market. No additional
+    fundraising in Q2. Series A preparation begins.
+  forecast_type: projection
+  confidence: medium
+  monthly_breakdown:
+    - month: "2026-04"
+      mrr: 18900
+      revenue: 18900
+      expenses: 46400
+      ending_cash: 1162500
+    - month: "2026-05"
+      mrr: 20200
+      revenue: 20200
+      expenses: 47600
+      ending_cash: 1135100
+    - month: "2026-06"
+      mrr: 22000
+      revenue: 22000
+      expenses: 48800
+      ending_cash: 1050800
+  assumptions:
+    - id: asm-fcst-001
+      description: "MRR grows from $18,200 to $22,000 across Q2 at ~15% MoM compounding."
+      evidence: "Historical MRR trend and pipeline analysis."
+    - id: asm-fcst-002
+      description: "No additional fundraising in Q2. Series A preparation only."
+      evidence: "Board decision to target Series A in Q4 2026."
+    - id: asm-fcst-003
+      description: "Headcount remains at 12 through Q2. No new hires until Series A."
+      evidence: "Hiring freeze approved by board to extend runway."

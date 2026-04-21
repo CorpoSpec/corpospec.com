@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { listVersions, listSlugs } from "../../lib/schemas.ts";
+
+const versions = listVersions();
+---
+
+<BaseLayout title="CorpoSpec Schemas — versioned releases" active="schemas">
+  <section class="hero">
+    <div class="hero__eyebrow"><span>Schemas</span></div>
+    <h1>Versioned schema releases</h1>
+    <p class="lead">
+      Every version below serves an immutable set of JSON Schemas at
+      <code>/schemas/v&lt;version&gt;/&lt;slug&gt;.schema.json</code>. Pin a specific
+      version in your <code>yaml-language-server</code> header and it will never change.
+    </p>
+  </section>
+
+  {versions.length === 0 ? (
+    <p class="mono">No schema versions are published yet.</p>
+  ) : (
+    <div class="rows">
+      {versions.map((v) => (
+        <a href={`/schemas/${v}/`}>
+          <span class="left">
+            <span class="badge badge--version">{v}</span>
+            <span class="title">JSON Schema Draft 2020-12</span>
+          </span>
+          <span class="right">{listSlugs(v).length} schemas</span>
+        </a>
+      ))}
+    </div>
+  )}
+</BaseLayout>

@@ -1,0 +1,80 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/financial-model.schema.json
+id: financials/model
+period:
+  type: instant
+  start: "2026-03-01"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 218400
+  cost_of_revenue: 54600
+  gross_profit: 163800
+  operating_expenses:
+    research_and_development: 420000
+    sales_and_marketing: 180000
+    general_and_administrative: 96000
+  operating_income: -532200
+  net_income: -532200
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 1190000
+    accounts_receivable: 42000
+    total_assets: 1232000
+  liabilities:
+    accounts_payable: 18000
+    total_liabilities: 18000
+  equity:
+    total_equity: 1214000
+
+cash_flow:
+  operating: -44350
+  investing: -5000
+  financing: 0
+  net_change: -49350
+
+custom:
+  description: >
+    Instant snapshot as of 2026-03-01. Acme Corp is a post-seed SaaS company
+    building workflow automation for growing teams. Revenue is MRR $18,200
+    annualized to $218,400. Growing 15% month-over-month.
+  stage: post-seed
+  monthly_recurring_expenses:
+    - name: AWS
+      amount: 4200
+    - name: Google Workspace
+      amount: 180
+    - name: GitHub Enterprise
+      amount: 252
+    - name: NovaMind AI API
+      amount: 3800
+    - name: Datadog
+      amount: 450
+    - name: Slack
+      amount: 156
+    - name: Linear
+      amount: 120
+    - name: Figma
+      amount: 90
+    - name: Notion
+      amount: 144
+    - name: Office lease
+      amount: 2500
+  assumptions:
+    - id: asm-fin-001
+      description: "Pre-Series A, $2.5M seed closed Oct 2025."
+      evidence: "Signed SAFE agreements and bank deposit confirmation."
+      invalidation_condition: "Failure to deploy capital within projected timeline."
+    - id: asm-fin-002
+      description: "MRR growing 15% month-over-month."
+      evidence: "Stripe dashboard shows consistent 14-16% MoM growth since Dec 2025."
+      invalidation_condition: "MRR growth drops below 10% for two consecutive months."
+    - id: asm-fin-003
+      description: "14.2 months runway at current burn."
+      evidence: "$1,190,000 cash / $49,350 monthly net burn = 24.1 months remaining."
+      invalidation_condition: "Unexpected large expense or revenue decline."
+    - id: asm-fin-004
+      description: "Target Series A at $3M ARR."
+      evidence: "Benchmark data from comparable B2B SaaS companies at Series A."
+      invalidation_condition: "Market conditions shift requiring earlier or later fundraise."

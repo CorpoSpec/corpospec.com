@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-voice.schema.json
+id: brand/voice
+dimensions:
+  - name: Approachable
+    definition: Friendly and conversational without being casual or unprofessional
+    sounds_like:
+      - "Let's get your workflows running"
+      - "Your team just saved 12 hours this week"
+    does_not_sound_like:
+      - "Leverage synergies to optimize throughput"
+      - "Per our previous correspondence"
+  - name: Energetic
+    definition: Enthusiastic about solving problems without overpromising
+    sounds_like:
+      - "Ship faster, break less"
+      - "Your automation is already learning"
+    does_not_sound_like:
+      - "Revolutionary paradigm shift"
+      - "10x your everything overnight"
+  - name: Direct
+    definition: Clear and concise communication that respects the reader's time
+    sounds_like:
+      - "Here's what changed"
+      - "3 workflows need your attention"
+    does_not_sound_like:
+      - "We wanted to reach out and let you know that..."
+      - "As previously mentioned in our earlier communication"
+tone_matrix:
+  - situation: Error message
+    tone_adjustments:
+      - More empathetic
+      - Include actionable next step
+    examples:
+      - "That workflow hit a snag. Here's how to fix it."
+  - situation: Onboarding
+    tone_adjustments:
+      - More encouraging
+      - Step-by-step guidance
+    examples:
+      - "Great start. Let's connect your first data source."
+writing_principles:
+  active_voice_required: true
+  max_sentence_words: 20
+  max_paragraph_sentences: 4
+  target_reading_level: "Grade 8-10"
+  contractions_allowed: true
+  humor_level: subtle
+terminology:
+  - preferred: workflow
+    prohibited:
+      - flow
+      - process chain
+    definition: An automated sequence of tasks triggered by an event or schedule
+    usage_context: All product UI, documentation, and marketing materials
+  - preferred: automation
+    prohibited:
+      - bot
+      - robot
+    definition: A configured workflow that executes without manual intervention
+    usage_context: Product descriptions, feature pages, and onboarding flows
+style_guide:
+  primary_guide: AP Stylebook
+  date_format: "MMM D, YYYY"
+  number_format: "1,000.00"
+  currency_format: "$1,000.00"
+localization:
+  strategy: transcreate
+  brand_terms_handling: retain-english
+  markets_with_custom_tone:
+    - Japan
+    - Germany
+    - Brazil
+ui_copy_guidelines:
+  button_labels: "Use action verbs in sentence case. Maximum 3 words. Examples: Save changes, Create workflow, Get started."
+  error_messages: "State what happened, why, and how to fix it. Never blame the user. Example: Could not save. Check your connection and try again."
+  empty_states: "Explain what belongs here and provide a single clear action. Example: No workflows yet. Create your first workflow to get started."
+  tooltips: "One sentence maximum. Clarify purpose, not procedure. Never repeat the label text."

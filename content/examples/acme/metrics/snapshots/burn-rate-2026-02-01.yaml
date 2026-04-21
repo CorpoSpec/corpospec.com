@@ -1,0 +1,4 @@
+metric: metrics/definitions/burn-rate
+date: "2026-02-01"
+value: 48000
+source: manual

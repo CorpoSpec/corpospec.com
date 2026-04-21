@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+id: integrations/sources/git
+name: "Git Repository"
+system: "Git"
+type: source
+status: active
+
+input_port:
+  name: "local-git-repo"
+  protocol: "Git CLI"
+  authentication: none
+
+data_contract:
+  owner: people/team/alex-chen
+  freshness:
+    schedule: "on-commit"
+    max_staleness_minutes: 1
+  schema:
+    fields:
+      - name: file_path
+        type: string
+        required: true
+      - name: content
+        type: string
+        required: true
+      - name: commit_sha
+        type: string
+        required: true
+
+outputs: []

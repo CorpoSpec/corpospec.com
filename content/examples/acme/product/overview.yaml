@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/product.schema.json
+id: product/overview
+name: "Acme Platform"
+tagline: "Workflow automation for growing teams."
+description: >
+  Acme Platform is a workflow automation tool that helps growing teams
+  eliminate manual processes. AI-powered templates learn from usage
+  patterns and adapt to each team's workflows. Built for operations
+  leaders and founders scaling from 1 to 500 employees.
+stage: growth
+url: "https://app.acme-corp.example.com"
+distribution:
+  - web-direct
+  - app-store
+  - play-store
+localization:
+  default_language: "en"
+  languages:
+    - "en"
+    - "de"
+    - "fr"
+    - "es"
+technology_stack:
+  frontend: "React / Next.js"
+  backend: "Node.js / TypeScript"
+  protocol: "REST + GraphQL"
+  data: "PostgreSQL + Redis"
+  ai: "NovaMind AI API"
+  hosting: "AWS (ECS + RDS)"
+platforms:
+  - web
+  - ios
+  - android
+phases:
+  - name: Foundation
+    status: complete
+    period:
+      type: duration
+      start: "2025-06-15"
+      end: "2025-12-31"
+    deliverables:
+      - "Core workflow engine with trigger-action model"
+      - "User management and team workspaces"
+      - "Slack, Notion, and GitHub integrations"
+      - "Free and Starter pricing tiers"
+      - "Self-serve onboarding flow"
+  - name: Growth
+    status: in-progress
+    period:
+      type: duration
+      start: "2026-01-01"
+      end: "2026-06-30"
+    deliverables:
+      - "AI-powered workflow templates"
+      - "Enterprise tier with SSO and audit logs"
+      - "Advanced analytics dashboard"
+      - "Pro pricing tier"
+      - "iOS and Android mobile apps"
+  - name: Scale
+    status: planned
+    period:
+      type: duration
+      start: "2026-07-01"
+    deliverables:
+      - "Workflow template marketplace"
+      - "Custom AI model training per tenant"
+      - "Multi-region deployment (US, EU)"
+      - "White-label partner program"
+      - "API v2 with webhook subscriptions"
+target_customers:
+  - priority: primary
+    segment: "Operations leaders at companies with 10-500 employees"
+    description: "Operations leaders responsible for team productivity and process efficiency"
+    icp_reference: market/icp/mid-market-ops
+  - priority: secondary
+    segment: "Founders at early-stage startups (1-50 employees)"
+    description: "Founders building their first operational workflows"
+    icp_reference: market/icp/smb-saas-founder
+value_proposition:
+  primary_pain: "Growing teams drown in manual processes that multiply faster than headcount"
+  solution: "AI-powered workflow automation that learns, adapts, and scales without engineering effort"
+design_principles:
+  - name: "Simplicity Over Power"
+    description: >
+      Every feature must reduce complexity for the user. If a workflow
+      requires documentation to understand, it needs redesign. The product
+      succeeds when users accomplish more by configuring less.
+    anti_pattern: >
+      Feature bloat that serves edge cases at the expense of core usability.
+      Configuration screens with dozens of options that overwhelm new users.
+  - name: "Learn From Usage"
+    description: >
+      The platform observes how teams use workflows and adapts suggestions
+      accordingly. AI recommendations improve with each interaction. Templates
+      evolve based on aggregate usage patterns across similar teams.
+    anti_pattern: >
+      Static templates that never adapt. AI suggestions that ignore the
+      team's established patterns and preferences.
+
+custom:
+  phase_descriptions:
+    foundation: "Core workflow engine, user management, basic integrations."
+    growth: "AI workflow templates, enterprise tier, advanced analytics."
+    scale: "Marketplace, custom AI models, multi-region deployment."

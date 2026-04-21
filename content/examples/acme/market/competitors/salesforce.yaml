@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/salesforce
+name: "Salesforce"
+website: "https://salesforce.com"
+layer: 1
+category: "Enterprise CRM Platform"
+relationship: reference-company
+as_of: "2026-03-01"
+
+description: >
+  The dominant enterprise CRM and business platform. Salesforce Flow
+  provides workflow automation across the Salesforce ecosystem.
+  AgentForce is their AI agent platform. Massive enterprise presence
+  but complex and expensive for SMBs.
+
+founded: "1999"
+headquarters: "San Francisco, CA"
+
+strengths:
+  - "Market leader with dominant enterprise market share"
+  - "Salesforce Flow provides powerful workflow automation"
+  - "AgentForce AI platform with autonomous agents"
+  - "Massive ISV ecosystem with AppExchange"
+
+weaknesses:
+  - "Extremely expensive for SMBs and startups"
+  - "Requires dedicated admin or consultant for configuration"
+  - "Workflow automation locked within Salesforce ecosystem"
+  - "Implementation timeline measured in months, not days"
+
+status: "active"
+legal_name: "Salesforce, Inc."
+team_size: 72000
+
+funding:
+  stage: "public"
+  currency: "USD"
+  notes: "IPO on NYSE (CRM) in June 2004. Market cap approximately $250B."
+  total_raised: 65000000
+  valuation: 250000000000
+  valuation_source: "NYSE market cap, March 2026"
+  notable_investors:
+    - "Larry Ellison"
+    - "Halsey Minor"
+    - "Geneva Venture Partners"
+  last_round:
+    type: "IPO"
+    date: "2004-06-23"
+    source: "SEC filings"
+
+pricing:
+  model: "Per-user subscription with edition-based tiering"
+  tiers:
+    - name: "Starter Suite"
+      price: 25
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Basic CRM, email integration, lead management"
+    - name: "Professional"
+      price: 80
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Sales forecasting, pipeline management, quoting"
+    - name: "Enterprise"
+      price: 165
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Advanced analytics, workflow automation, API access"
+    - name: "Unlimited"
+      price: 330
+      period: "monthly per user"
+      currency: "USD"
+      notes: "Premier support, sandbox, Data Cloud included"
+
+traction:
+  arr: 37800000000
+  arr_date: "2025-12-31"
+  arr_growth: "8% YoY"
+  website_monthly_visits: 120000000
+  website_traffic_source: "SimilarWeb"
+  website_visits_date: "2026-02"
+  companies_on_platform: 150000
+
+target_market:
+  segment: "Mid-market to enterprise"
+  focus: "Enterprise CRM, sales automation, and business platform"
+  company_size: "200-100,000+ employees"
+  geography: "Global, dominant in North America"
+  use_case: "End-to-end customer lifecycle management with sales, service, and marketing"
+
+technology:
+  frontend: "Lightning Web Components (proprietary)"
+  backend: "Java, Apex (proprietary)"
+  data: "Oracle Database, proprietary multi-tenant architecture"
+  infrastructure: "Proprietary data centers and public cloud (AWS, GCP)"
+  ai: "Einstein AI, AgentForce autonomous agents"
+
+core_features:
+  - "CRM and sales pipeline management"
+  - "Salesforce Flow workflow automation"
+  - "AgentForce AI agents"
+  - "AppExchange marketplace"
+
+product:
+  stage: mature
+  feature_ratings:
+    versioning: 1
+    ai-integration: 3
+    real-time-collaboration: 2
+    workflow-automation: 4
+    api-extensibility: 4
+
+competitive_advantages:
+  - "Acme deploys in minutes vs months for Salesforce"
+  - "No consultants needed; self-serve setup"
+  - "10-50x cheaper for equivalent workflow automation"
+
+sources:
+  - "salesforce.com (accessed 2026-03-01)"
+  - "Gartner Magic Quadrant (accessed 2026-03-01)"

@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/cohort.schema.json
+id: market/cohorts/early-adopters
+name: Early Adopters — Beta Launch
+period: '2025-09-15'
+size: 247
+retention:
+- period_offset: 0
+  retained: 247
+  retention_rate: 1.0
+- period_offset: 1
+  retained: 198
+  retention_rate: 0.802
+- period_offset: 2
+  retained: 171
+  retention_rate: 0.692
+- period_offset: 3
+  retained: 154
+  retention_rate: 0.623
+- period_offset: 4
+  retained: 141
+  retention_rate: 0.571
+- period_offset: 5
+  retained: 132
+  retention_rate: 0.534
+- period_offset: 6
+  retained: 126
+  retention_rate: 0.51

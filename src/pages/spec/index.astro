@@ -1,0 +1,175 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { PILLARS, listVersions, listSlugsByPillar } from "../../lib/schemas.ts";
+
+const latest = listVersions()[0];
+const byPillar = latest ? listSlugsByPillar(latest) : [];
+---
+
+<BaseLayout title="CorpoSpec Specification" active="spec">
+  <section class="hero">
+    <div class="hero__eyebrow">
+      <span class="badge">Draft</span>
+      <span>The specification</span>
+    </div>
+    <h1>Specification</h1>
+    <p class="lead">
+      CorpoSpec is a convention for storing company data as plain YAML files in Git,
+      validated by JSON Schema. The schemas are generated from a single canonical type
+      system and published at versioned, immutable URLs.
+    </p>
+  </section>
+
+  <h2>Core concept — Company as Code</h2>
+  <div class="prose">
+    <p>
+      A company's structure, governance, strategy, metrics, and operations live as
+      machine-readable files in a Git repository. Git gives you the audit log. JSON Schema
+      gives you the contract. AI agents read, reason about, and act on company state.
+    </p>
+    <p>
+      This removes the split between "the company's real data" and "what tools see".
+      Every legal entity, every decision, every hire, every forecast is a file. No CRM
+      export. No slide deck out of date. No source of truth that nobody owns.
+    </p>
+  </div>
+
+  <h2>Design principles</h2>
+  <div class="principles">
+    <div class="principle">
+      <h4>SINGLE SOURCE OF TRUTH</h4>
+      <p>Every fact exists in exactly one place. Never duplicate what can be referenced. If a value is computable, store only the source.</p>
+    </div>
+    <div class="principle">
+      <h4>KISS</h4>
+      <p>Minimal schema surface. Every field must justify its existence. If removing a field loses no information, remove it.</p>
+    </div>
+    <div class="principle">
+      <h4>PATHREF BY DEFAULT</h4>
+      <p>Reference entities by path — <code>people/team/alex</code> — never by copied attributes. A decision is its ID, not a prose summary.</p>
+    </div>
+    <div class="principle">
+      <h4>VERSIONED, IMMUTABLE</h4>
+      <p>Every <code>v0.7.1</code> schema URL serves the same bytes forever. Consumers pin once and never break.</p>
+    </div>
+  </div>
+
+  <h2>PathRef</h2>
+  <div class="prose">
+    <p>
+      A PathRef is a path relative to the <code>.corpospec/</code> root, without the leading
+      slash and without a file extension. It identifies exactly one entity.
+    </p>
+    <pre><code><span class="c"># In governance/decisions/0018-agent-network-architecture.md</span>
+<span class="k">decision_makers:</span>
+  - <span class="s">people/team/alex</span>
+  - <span class="s">people/team/jordan</span>
+<span class="k">supersedes:</span> <span class="s">governance/decisions/0005-observability</span>
+</code></pre>
+    <p>
+      Validation tools resolve PathRefs to real files at validation time. Broken references
+      fail the build.
+    </p>
+  </div>
+
+  <h2>Pillars</h2>
+  <p class="prose">
+    Ten pillars. Every YAML file in a CorpoSpec repository belongs to exactly one.
+    Pillar directories organise files; schemas define their shape.
+  </p>
+
+  <div class="legend">
+    {PILLARS.map((p) => (
+      <span class="chip" style={`color: ${p.color};`}>
+        <span class="pill-dot"></span>{p.label}
+      </span>
+    ))}
+  </div>
+
+  {byPillar.map(({ pillar, slugs }) => (
+    <div class="pillar-group" style={`--accent-pillar: ${pillar.color};`}>
+      <div class="pillar-group__head">
+        <h3 style={`color: ${pillar.color};`}><span class="pill-dot"></span>{pillar.label}</h3>
+        <span class="pillar-group__meta">{slugs.length} schema{slugs.length === 1 ? "" : "s"} · <span>{pillar.blurb}</span></span>
+      </div>
+      <div class="pillar-group__body">
+        {slugs.map((s) => (
+          <a href={`/schemas/${latest}/${s}/`}>
+            <span class="slug">{s}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <h2>Repository layout</h2>
+  <p class="prose">A CorpoSpec repository has a single top-level directory: <code>.corpospec/</code>. Each pillar maps to a subdirectory.</p>
+
+  <div class="tree">
+<pre style="background:none;border:0;padding:0;margin:0;color:inherit;">.corpospec/
+├── <span class="dir">manifest.yaml</span>                     <span class="c"># root · company_id, pillars, corpospec_version</span>
+├── <span class="dir">entity/</span>
+│   ├── company.yaml                 <span class="c"># entity</span>
+│   ├── jurisdiction/de.yaml         <span class="c"># jurisdiction-de</span>
+│   └── equity/
+│       ├── stakeholders/*.yaml      <span class="c"># stakeholder</span>
+│       └── stock-classes/*.yaml     <span class="c"># stock-class</span>
+├── <span class="dir">people/</span>
+│   ├── team/*.yaml                  <span class="c"># person</span>
+│   ├── roles/*.yaml                 <span class="c"># role</span>
+│   └── org.yaml                     <span class="c"># org-structure</span>
+├── <span class="dir">governance/</span>
+│   ├── decisions/*.md               <span class="c"># bdr</span>
+│   ├── resolutions/*.yaml           <span class="c"># resolution</span>
+│   ├── strategy/okrs/*.yaml         <span class="c"># okr</span>
+│   ├── board/*.yaml                 <span class="c"># board</span>
+│   └── risk/*.yaml                  <span class="c"># risk-register</span>
+├── <span class="dir">financials/</span>
+│   ├── model.yaml                   <span class="c"># financial-model</span>
+│   ├── actuals/*.yaml
+│   ├── forecasts/*.yaml
+│   └── bank-accounts/*.yaml         <span class="c"># bank-account</span>
+├── <span class="dir">metrics/</span>
+│   └── definitions/*.yaml           <span class="c"># metric</span>
+├── <span class="dir">product/</span>
+│   ├── overview.yaml                <span class="c"># product</span>
+│   ├── features/*.yaml              <span class="c"># product-feature</span>
+│   └── feature-matrix.yaml          <span class="c"># feature-matrix</span>
+├── <span class="dir">market/</span>
+│   ├── tam-sam-som.yaml             <span class="c"># market-sizing</span>
+│   ├── gtm-strategy.yaml            <span class="c"># gtm-strategy</span>
+│   ├── icp/*.yaml                   <span class="c"># icp</span>
+│   ├── competitors/*.yaml           <span class="c"># competitor</span>
+│   ├── campaigns/*.yaml             <span class="c"># campaign</span>
+│   ├── monetization/*.yaml          <span class="c"># monetization</span>
+│   └── services-pricing.yaml        <span class="c"># services-pricing</span>
+├── <span class="dir">brand/</span>
+│   ├── foundation.yaml
+│   ├── voice.yaml
+│   ├── logo.yaml
+│   ├── colors.yaml
+│   ├── typography.yaml
+│   └── architecture.yaml
+├── <span class="dir">integrations/</span>
+│   └── sources/*.yaml               <span class="c"># integration</span>
+└── <span class="dir">legal/</span>
+    ├── contracts/agreements/*.yaml  <span class="c"># contract</span>
+    ├── policies/*.yaml              <span class="c"># policy</span>
+    ├── action-items/*.yaml          <span class="c"># legal-action-item</span>
+    └── regulatory/*.yaml            <span class="c"># control</span>
+</pre>
+  </div>
+
+  <h2>Validation</h2>
+  <div class="prose">
+    <p>
+      CorpoSpec ships a reference validator — <code>corpospec-validate</code>, a Rust CLI
+      that generates schemas from canonical types at build time and validates every YAML
+      file against its pillar's schema.
+    </p>
+    <p>
+      Third-party validators work too, as long as they speak JSON Schema Draft 2020-12
+      and can resolve <code>https://corpospec.com/schemas/&lt;version&gt;/*</code>.
+    </p>
+  </div>
+</BaseLayout>

@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/competitor.schema.json
+id: market/competitors/clickup
+name: "ClickUp"
+website: "https://clickup.com"
+layer: 1
+category: "Productivity Platform"
+relationship: direct-competitor
+as_of: "2026-03-01"
+
+description: >
+  All-in-one productivity platform combining project management,
+  docs, goals, and workflow automation. ClickUp Brain adds AI
+  capabilities. Aggressive pricing and feature development pace.
+
+founded: "2017"
+headquarters: "San Diego, CA"
+
+strengths:
+  - "Comprehensive feature set at aggressive price point"
+  - "ClickUp Brain AI across the platform"
+  - "Custom automations with 50+ triggers and actions"
+  - "Rapid product development velocity"
+
+weaknesses:
+  - "Feature overload creates steep learning curve"
+  - "Performance issues with complex workspaces"
+  - "Workflow automation UI is complex for non-technical users"
+  - "Quality concerns from rapid feature shipping"
+
+core_features:
+  - "Project and task management"
+  - "Custom workflow automations"
+  - "Docs and whiteboards"
+  - "ClickUp Brain AI assistant"
+
+product:
+  stage: growth
+  feature_ratings:
+    versioning: 1
+    ai-integration: 2
+    real-time-collaboration: 3
+    workflow-automation: 3
+    api-extensibility: 3
+
+competitive_advantages:
+  - "Acme prioritizes simplicity; ClickUp prioritizes feature count"
+  - "AI templates that learn vs predefined automation recipes"
+  - "Focus on workflow automation depth vs breadth of features"
+
+sources:
+  - "clickup.com (accessed 2026-03-01)"
+  - "G2 reviews (accessed 2026-03-01)"

@@ -1,0 +1,560 @@
+{
+  "$defs": {
+    "CompensationBand": {
+      "description": "Compensation band.",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "equity_percentage": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "min": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "currency",
+        "min",
+        "max"
+      ],
+      "type": "object"
+    },
+    "CompensationSchedule": {
+      "description": "Compensation schedule for a role.",
+      "properties": {
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "post_pre_seed_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "post_pre_seed_trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pre_pre_seed_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pre_pre_seed_start_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EmployerContributions": {
+      "description": "Employer social-insurance contribution breakdown (German system).",
+      "properties": {
+        "arbeitslosenversicherung_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "krankenversicherung_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pflegeversicherung_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rentenversicherung_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unfallversicherung_pct_estimate": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "HeadcountPlan": {
+      "description": "Headcount plan for a role.",
+      "properties": {
+        "first_hire": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_count": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IpBoundaries": {
+      "description": "IP boundary definitions for a role.",
+      "properties": {
+        "own_company_work": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "separation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "template": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unstarter_work": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RoleCustom": {
+      "description": "Typed extension fields for Role.\nUnion of all role-specific custom fields observed in .corpospec/ YAML data.",
+      "properties": {
+        "bdr_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "benefits": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "compensation_midpoint_eur": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompensationSchedule"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employer_contributions_breakdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmployerContributions"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "employer_contributions_pct_estimate": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "employment_contract": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_entity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employment_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "headcount_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HeadcountPlan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hiring_after": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hiring_priority": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "hiring_start_target": {
+          "description": "Can be a plain string or a structured object (e.g. `{ fdf_1, fdf_2 }`)."
+        },
+        "ip_assignment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ip_boundaries": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IpBoundaries"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "minimum_wage_compliance": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requirements": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RoleRequirements"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheinselbstaendigkeit_safeguards": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScheinselbstaendigkeitSafeguards"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sozialversicherung_status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_allocation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeAllocation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vesting_tie": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vsop_grant_range": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vsop_template": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vsop_vesting": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "RoleLevel": {
+      "description": "Role level in the organization.",
+      "enum": [
+        "c-suite",
+        "vp",
+        "director",
+        "lead",
+        "ic",
+        "partner",
+        "associate",
+        "principal",
+        "manager",
+        "supervisor",
+        "foreman",
+        "technician",
+        "fellow",
+        "resident"
+      ],
+      "type": "string"
+    },
+    "RoleRequirements": {
+      "description": "Role requirements (must-have / nice-to-have).",
+      "properties": {
+        "must_have": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "nice_to_have": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ScheinselbstaendigkeitSafeguards": {
+      "description": "Scheinselbstaendigkeit risk safeguards.",
+      "properties": {
+        "legal_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "required_mitigation": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "risk_assessment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "TimeAllocation": {
+      "description": "Time allocation model for a role.",
+      "properties": {
+        "default": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "options": {
+          "items": {
+            "$ref": "#/$defs/TimeAllocationOption"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeAllocationOption": {
+      "description": "Time allocation option for a role (e.g. FDF split model).",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "split": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/role.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Role definition aligned with W3C ORG Post and Role.",
+  "properties": {
+    "abbreviation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "compensation_band": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompensationBand"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RoleCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "headcount": {
+      "format": "int64",
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "level": {
+      "$ref": "#/$defs/RoleLevel"
+    },
+    "reports_to": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responsibilities": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "title": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "unit",
+    "level",
+    "responsibilities"
+  ],
+  "title": "Role",
+  "type": "object"
+}

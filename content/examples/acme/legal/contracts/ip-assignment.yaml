@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/contract.schema.json
+id: legal/contracts/ip-assignment
+type: service
+title: "Intellectual Property Assignment Agreement"
+counterparty: people/team/alex-chen
+status: active
+effective_date: "2025-06-15"
+expiration_date: null
+governing_law: "US"
+key_terms:
+  - "All IP created by founders assigned to Acme Corp, Inc."
+  - "Prior inventions excluded per Schedule A"
+  - "Work-for-hire doctrine applies to all employment-related IP"
+  - "Assignment includes patents, copyrights, trade secrets, and trademarks"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0001-entity-formation

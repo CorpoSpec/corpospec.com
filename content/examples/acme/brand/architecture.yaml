@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-architecture.schema.json
+id: brand/architecture
+model: branded-house
+master_brand: Acme
+sub_brands:
+  - name: Acme Workflows
+    relationship_type: feature
+    description: Core workflow automation engine
+    visual_independence_level: 1
+    product_ref: product/features/workflows
+  - name: Acme Templates
+    relationship_type: feature
+    description: Pre-built workflow template library
+    visual_independence_level: 1
+    product_ref: product/features/templates
+  - name: Acme API
+    relationship_type: endorsed
+    description: Developer integration platform
+    visual_independence_level: 2
+    product_ref: product/features/api
+naming_convention:
+  pattern: "Acme {Feature}"
+  examples:
+    - Acme Workflows
+    - Acme Templates
+    - Acme API
+  max_characters: 30
+  prohibited_patterns:
+    - "Acme.io"
+    - "AcmeApp"
+governance:
+  owner: people/team/alex-chen
+  review_required_for:
+    - New sub-brand creation
+    - Logo modifications
+    - Color palette changes
+  approval_process: CEO approval required for any brand identity changes
+co_branding:
+  approved_arrangements:
+    - Side by side with equal sizing
+    - Acme logo left, partner logo right
+    - Stacked with Acme logo on top
+  prohibited_contexts:
+    - Competitor products or marketing
+    - Political campaigns or organizations
+    - Adult content or gambling platforms
+    - Any context implying Acme endorsement without written agreement
+  separator_style: "vertical-line"
+  min_clear_space_px: 24
+  max_size_ratio: 1.5
+version_history:
+  - version: "1.0"
+    date: "2025-06-15"
+    changes:
+      - Initial brand identity established
+    rationale: Company founding
+    approved_by: people/team/alex-chen

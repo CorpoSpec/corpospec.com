@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/sales-lead
+title: "Sales Lead"
+abbreviation: "SL"
+unit: sales
+reports_to: people/roles/ceo
+level: lead
+responsibilities:
+  - "Sales pipeline management and forecasting"
+  - "Product-led growth conversion strategy"
+  - "Mid-market outbound and inbound sales execution"
+  - "CRM management and sales process optimization"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 100000
+  max: 140000
+  equity_percentage: "0.1-0.25%"
+  note: "Base salary. OTE with commission approximately 1.5x base."

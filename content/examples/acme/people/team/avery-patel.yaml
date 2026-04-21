@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/avery-patel
+type: Person
+name:
+  given: "Avery"
+  family: "Patel"
+  full: "Avery Patel"
+email: "avery.patel@acmecorp.example.com"
+role: people/roles/sales-lead
+unit: sales
+start_date: "2026-01-02"
+end_date: null
+status: active
+bio: "Sales Lead. Previously AE at HubSpot. Focused on mid-market SaaS sales and product-led growth conversion."

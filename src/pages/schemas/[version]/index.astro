@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  listVersions,
+  listSlugs,
+  listSlugsByPillar,
+  hasContext,
+  readSchemaMeta,
+} from "../../../lib/schemas.ts";
+
+export function getStaticPaths() {
+  return listVersions().map((version) => ({ params: { version } }));
+}
+
+const { version } = Astro.params;
+const slugs = listSlugs(version!);
+const groups = listSlugsByPillar(version!);
+const ctx = hasContext(version!);
+---
+
+<BaseLayout
+  title={`CorpoSpec Schemas ${version}`}
+  description={`${slugs.length} JSON Schemas published at corpospec.com/schemas/${version}/.`}
+  active="schemas"
+>
+  <section class="hero">
+    <div class="hero__eyebrow">
+      <span class="badge badge--version">{version}</span>
+      <span>Schemas</span>
+    </div>
+    <h1 style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+      <span>Schemas</span>
+      <span class="mono" style="font-size: 18px; font-weight: 500; color: var(--muted);">{version}</span>
+    </h1>
+    <p class="lead">
+      {slugs.length} JSON Schemas, grouped by pillar. {ctx ? "Includes the JSON-LD context." : "No JSON-LD context in this release."}
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href={`/schemas/${version}/graph/`}>View relationship map →</a>
+      <a class="btn btn--ghost" href="/spec/">Read the spec</a>
+    </div>
+  </section>
+
+  {groups.map(({ pillar, slugs }) => (
+    <div class="pillar-group">
+      <div class="pillar-group__head">
+        <h3 style={`color: ${pillar.color};`}>
+          <span class="pill-dot"></span>{pillar.label}
+        </h3>
+        <span class="pillar-group__meta">
+          {slugs.length} schema{slugs.length === 1 ? "" : "s"} · {pillar.blurb}
+        </span>
+      </div>
+      <div class="pillar-group__body">
+        {slugs.map((slug) => {
+          const meta = readSchemaMeta(version!, slug);
+          return (
+            <a href={`/schemas/${version}/${slug}/`}>
+              <span class="slug">{slug}</span>
+              {meta.description ? (
+                <span class="desc">{meta.description.split("\n")[0]}</span>
+              ) : (
+                <span class="desc">{meta.title ?? slug}</span>
+              )}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+
+  {ctx ? (
+    <>
+      <h2>JSON-LD context</h2>
+      <div class="rows">
+        <a href={`/schemas/${version}/context.jsonld`}>
+          <span class="left">
+            <span class="slug">context.jsonld</span>
+            <span class="title">Maps field names to schema.org, W3C ORG, vCard, XBRL, GLEIF…</span>
+          </span>
+          <span class="right">view raw</span>
+        </a>
+      </div>
+    </>
+  ) : null}
+</BaseLayout>

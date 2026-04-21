@@ -1,0 +1,87 @@
+{
+  "$defs": {
+    "FeatureDimension": {
+      "additionalProperties": false,
+      "description": "A dimension in a competitive feature matrix.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "type": "object"
+    },
+    "FeatureMatrixCustom": {
+      "description": "Typed extension fields for FeatureMatrix.",
+      "properties": {
+        "dimension_meta": {
+          "additionalProperties": true,
+          "description": "Per-dimension metadata (keys are dimension IDs, values are priority/config).",
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/feature-matrix.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Feature matrix defining competitive comparison dimensions.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FeatureMatrixCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/FeatureDimension"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "dimensions"
+  ],
+  "title": "FeatureMatrix",
+  "type": "object"
+}

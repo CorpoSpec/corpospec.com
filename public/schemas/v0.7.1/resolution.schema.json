@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ResolutionItem": {
+      "description": "A single item within a corporate resolution.",
+      "properties": {
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "outcome": {
+          "$ref": "#/$defs/ResolutionOutcome"
+        },
+        "related_contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "subject": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "number",
+        "subject",
+        "outcome"
+      ],
+      "type": "object"
+    },
+    "ResolutionOutcome": {
+      "description": "Outcome of a single resolution item.",
+      "enum": [
+        "approved",
+        "rejected",
+        "deferred",
+        "withdrawn"
+      ],
+      "type": "string"
+    },
+    "ResolutionProcedure": {
+      "description": "Voting procedure for a corporate resolution.",
+      "enum": [
+        "written_circular",
+        "meeting"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/resolution.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Formal corporate resolution (e.g. Gesellschafterbeschluss under § 48 GmbHG).",
+  "properties": {
+    "date": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "decision_makers": {
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/ResolutionItem"
+      },
+      "type": "array"
+    },
+    "legal_basis": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "procedure": {
+      "$ref": "#/$defs/ResolutionProcedure"
+    },
+    "related_contracts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "retention_years": {
+      "format": "int64",
+      "minimum": 1,
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "entity",
+    "date",
+    "procedure",
+    "decision_makers",
+    "items"
+  ],
+  "title": "Resolution",
+  "type": "object"
+}

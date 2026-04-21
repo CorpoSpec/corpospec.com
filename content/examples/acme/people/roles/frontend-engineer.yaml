@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+id: people/roles/frontend-engineer
+title: "Frontend Engineer"
+abbreviation: "FE"
+unit: engineering
+reports_to: people/roles/head-of-engineering
+level: ic
+responsibilities:
+  - "UI component development and design system maintenance"
+  - "Frontend performance optimization"
+  - "Accessibility and cross-browser compatibility"
+  - "Integration with backend APIs"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 130000
+  max: 170000
+  equity_percentage: "0.1-0.3%"

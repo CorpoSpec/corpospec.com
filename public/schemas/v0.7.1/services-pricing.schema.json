@@ -1,0 +1,163 @@
+{
+  "$defs": {
+    "CapacityConstraints": {
+      "additionalProperties": false,
+      "description": "Capacity constraints for professional services.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max_concurrent_engagements": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "staffing_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DayRate": {
+      "additionalProperties": false,
+      "description": "Day rate range for a professional service.",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "max": {
+          "format": "double",
+          "type": "number"
+        },
+        "min": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ServiceDefinition": {
+      "additionalProperties": false,
+      "description": "A professional service offering.",
+      "properties": {
+        "day_rate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DayRate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "engagement_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "typical_duration": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/services-pricing.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Professional services pricing.",
+  "properties": {
+    "capacity_constraints": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CapacityConstraints"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "custom": true,
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nrr_classification": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "services": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ServiceDefinition"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "title": "ServicesPricing",
+  "type": "object"
+}

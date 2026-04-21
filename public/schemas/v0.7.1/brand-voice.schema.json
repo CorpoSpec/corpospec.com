@@ -1,0 +1,339 @@
+{
+  "$defs": {
+    "BrandTermHandling": {
+      "description": "Brand term handling in translation.",
+      "enum": [
+        "transliterate",
+        "translate",
+        "retain-english"
+      ],
+      "type": "string"
+    },
+    "HumorLevel": {
+      "description": "Humor level.",
+      "enum": [
+        "none",
+        "subtle",
+        "overt"
+      ],
+      "type": "string"
+    },
+    "LocalizationGuidelines": {
+      "description": "Localization guidelines.",
+      "properties": {
+        "brand_terms_handling": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BrandTermHandling"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "markets_with_custom_tone": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "strategy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TranslationStrategy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "StyleGuideRef": {
+      "description": "Style guide reference.",
+      "properties": {
+        "currency_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number_format": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "primary_guide": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "TermEntry": {
+      "description": "Terminology entry with preferred and prohibited terms.",
+      "properties": {
+        "definition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "preferred": {
+          "type": "string"
+        },
+        "prohibited": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "usage_context": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "preferred"
+      ],
+      "type": "object"
+    },
+    "ToneContext": {
+      "description": "Tone adjustment for a specific context.",
+      "properties": {
+        "examples": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "situation": {
+          "type": "string"
+        },
+        "tone_adjustments": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "situation",
+        "tone_adjustments"
+      ],
+      "type": "object"
+    },
+    "TranslationStrategy": {
+      "description": "Translation strategy.",
+      "enum": [
+        "translate",
+        "transcreate",
+        "both"
+      ],
+      "type": "string"
+    },
+    "UiCopyGuidelines": {
+      "description": "UI copy guidelines by component type.",
+      "properties": {
+        "button_labels": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "empty_states": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error_messages": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tooltips": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "VoiceDimension": {
+      "description": "Voice dimension defining how the brand communicates.",
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "does_not_sound_like": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sounds_like": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "definition",
+        "sounds_like",
+        "does_not_sound_like"
+      ],
+      "type": "object"
+    },
+    "WritingPrinciples": {
+      "description": "Writing principles and constraints.",
+      "properties": {
+        "active_voice_required": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "contractions_allowed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "humor_level": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HumorLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_paragraph_sentences": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "max_sentence_words": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "target_reading_level": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.7.1/brand-voice.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand voice and tone definition.",
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/VoiceDimension"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "localization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LocalizationGuidelines"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "style_guide": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StyleGuideRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "terminology": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TermEntry"
+      },
+      "type": "array"
+    },
+    "tone_matrix": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ToneContext"
+      },
+      "type": "array"
+    },
+    "ui_copy_guidelines": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UiCopyGuidelines"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "writing_principles": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WritingPrinciples"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "dimensions"
+  ],
+  "title": "BrandVoice",
+  "type": "object"
+}

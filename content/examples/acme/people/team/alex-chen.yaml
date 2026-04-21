@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+id: people/team/alex-chen
+type: Person
+name:
+  given: "Alex"
+  family: "Chen"
+  full: "Alex Chen"
+email: "alex@acme-corp.example.com"
+role: people/roles/ceo
+unit: executive
+start_date: "2025-06-15"
+end_date: null
+status: active
+equity: entity/equity/stakeholders/alex-chen
+bio: "Co-founder and CEO. Previously VP Product at DataFlow. Stanford CS."
