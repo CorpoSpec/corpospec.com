@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-iconography.schema.json
+id: brand/iconography
+name: "Acme System Icons"
+grid:
+  base_size_px: 24
+  padding_px: 2
+  keyline_shapes:
+    - "square-20"
+    - "rect-20x16"
+    - "circle-18"
+    - "rect-16x20"
+variants:
+  - slug: regular-outlined-24
+    name: "Regular · Outlined · 24px"
+    weight: regular
+    style: outlined
+    stroke_width_px: 1.5
+    corner_radius_px: 2.0
+    use_cases:
+      - "Navigation"
+      - "List rows"
+      - "Empty states"
+  - slug: bold-outlined-24
+    name: "Bold · Outlined · 24px"
+    weight: bold
+    style: outlined
+    stroke_width_px: 2.0
+    corner_radius_px: 2.0
+    use_cases:
+      - "Emphasis states"
+      - "Buttons"
+  - slug: regular-filled-24
+    name: "Regular · Filled · 24px"
+    weight: filled
+    style: filled
+    use_cases:
+      - "Active tab indicators"
+      - "Selected list rows"
+source_files:
+  - brand/logos/icons-outlined.svg
+  - brand/logos/icons-filled.svg
+color_usage: >
+  Outlined variants inherit text colour. Filled variants use the primary
+  accent token for active states and `--color-graphite` for passive states.
+  Never hard-code hex values on icons; always reference a semantic token.
+anti_patterns:
+  - "Never rotate icons to imply state — use distinct icons instead."
+  - "Never apply drop shadows or gradients to system icons."
+  - "Never mix weights or styles within the same UI surface."

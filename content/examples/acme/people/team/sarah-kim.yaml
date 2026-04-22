@@ -8,6 +8,7 @@ name:
 email: "sarah@acme-corp.example.com"
 role: people/roles/cto
 unit: engineering
+employer: entity/acme
 start_date: "2025-06-15"
 end_date: null
 status: active

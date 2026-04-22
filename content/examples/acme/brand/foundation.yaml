@@ -59,6 +59,10 @@ positioning:
   target_audience: "Operations leaders and founders at companies with 1-500 employees"
   institutional_framing: "Acme Corp is the automation layer for modern operations teams. Recognized by leading industry analysts as a top workflow automation platform for SMBs, with backing from tier-one enterprise investors."
 promise: "Automate your workflows. Amplify your team."
+secondary_taglines:
+  - "Work smarter, ship faster."
+  - "Automation for the teams that build."
+  - "Your workflows, on autopilot."
 narrative:
   origin: "Alex and Sarah built Acme after watching teams at their previous companies drown in repetitive manual processes that no existing tool could automate without a dedicated engineering team."
   conflict: "Growing teams face a paradox: the processes that got them to 10 people break at 50. Manual workflows multiply. Context gets lost. New hires spend weeks figuring out how things work instead of contributing."

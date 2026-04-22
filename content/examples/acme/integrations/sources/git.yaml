@@ -7,7 +7,8 @@ status: active
 
 input_port:
   name: "local-git-repo"
-  protocol: "Git CLI"
+  protocols:
+    - kind: git
   authentication: none
 
 data_contract:

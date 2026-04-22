@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/privacy-classification.schema.json
+id: legal/privacy-classification
+product: product/overview
+as_of: "2026-03-01"
+# ACME is a B2B workflow platform targeted at operations leaders. Not directed
+# at children; user sign-up requires a work email from a registered company.
+# COPPA does not apply; GDPR-K does not apply.
+coppa: false
+gdpr_kids: false
+# No age gate is rendered because the product is adults-only by contract
+# (Terms of Service §3 requires users to be at least 18 and have authority
+# to bind their employer). The `age_gate` field is therefore intentionally
+# absent.
+app_store_content_rating: "Everyone"
+admob_category_filter: null
+policy: legal/policies/privacy-notice
+notes: >
+  The absence of an age gate is intentional. If Acme ever expands into
+  consumer / social use cases (out of scope for the 2026 roadmap), this
+  classification must be revisited alongside a dedicated children's
+  privacy policy.

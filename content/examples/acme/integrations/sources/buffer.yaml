@@ -7,7 +7,8 @@ status: active
 
 input_port:
   name: "buffer-api"
-  protocol: "REST"
+  protocols:
+    - kind: rest
   authentication: oauth2
 
 data_contract:

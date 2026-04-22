@@ -69,15 +69,27 @@ referral_program:
   trigger: "Referred user converts to a paid Starter or Pro plan"
   tracking_method: "Unique referral link with 90-day attribution window tracked via PostHog"
   tiers:
+    # Baseline row (#228): structurally represents the "no referrals → no
+    # bonus" state so the tier ladder is complete from zero.
+    - threshold: 0
+      reward:
+        kind: badge
+        description: "Default: standard paid-plan experience. No bonus."
     - threshold: 1
-      reward: "One month free on current plan"
-      reward_days: 30
+      reward:
+        kind: trial-extension
+        duration_days: 30
+        description: "One month free on current plan"
     - threshold: 3
-      reward: "Three months free on current plan"
-      reward_days: 90
+      reward:
+        kind: trial-extension
+        duration_days: 90
+        description: "Three months free on current plan"
     - threshold: 10
-      reward: "Lifetime 25% discount on any paid plan"
-      reward_days: null
+      reward:
+        kind: discount
+        percent: 25
+        description: "Lifetime 25% discount on any paid plan"
 
 related_decisions:
   - governance/decisions/0004-pricing-model

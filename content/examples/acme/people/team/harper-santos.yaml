@@ -8,6 +8,7 @@ name:
 email: "harper.santos@acmecorp.example.com"
 role: people/roles/data-analyst
 unit: operations
+employer: entity/acme
 start_date: "2026-02-15"
 end_date: null
 status: active

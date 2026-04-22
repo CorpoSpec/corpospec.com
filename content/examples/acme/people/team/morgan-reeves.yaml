@@ -8,6 +8,7 @@ name:
 email: "morgan.reeves@acmecorp.example.com"
 role: people/roles/product-designer
 unit: product
+employer: entity/acme
 start_date: "2025-11-01"
 end_date: null
 status: active

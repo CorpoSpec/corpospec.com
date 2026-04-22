@@ -8,6 +8,7 @@ name:
 email: "blake.nguyen@acmecorp.example.com"
 role: people/roles/marketing-manager
 unit: marketing
+employer: entity/acme
 start_date: "2026-02-01"
 end_date: null
 status: active

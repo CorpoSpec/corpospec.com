@@ -8,6 +8,7 @@ name:
 email: "taylor.brooks@acmecorp.example.com"
 role: people/roles/head-of-engineering
 unit: engineering
+employer: entity/acme
 start_date: "2025-10-15"
 end_date: null
 status: active

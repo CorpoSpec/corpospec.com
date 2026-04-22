@@ -7,7 +7,11 @@ currency: USD
 
 tam:
   description: "Global workflow automation and business operations software market"
-  value: 85000000000
+  value:
+    amount: 85000000000
+    unit:
+      kind: currency
+      code: USD
   methodology: >
     Top-down from Mordor Intelligence global workflow automation market
     ($85B in 2026, 23.4% CAGR). Includes process automation, business
@@ -15,7 +19,11 @@ tam:
 
 sam:
   description: "Operations software spend by SMBs and mid-market companies in US and EU"
-  value: 12000000000
+  value:
+    amount: 12000000000
+    unit:
+      kind: currency
+      code: USD
   methodology: >
     Bottom-up from target segments:
     Segment 1 - SMBs (10-200 employees) in US and EU: 2.1M companies.
@@ -28,7 +36,11 @@ sam:
 
 som:
   description: "Achievable revenue within 18 months in US market"
-  value: 45000000
+  value:
+    amount: 45000000
+    unit:
+      kind: currency
+      code: USD
   methodology: >
     Bottom-up from go-to-market capacity:
     SMB segment: 800 paying customers x $3,600 ARR = $2.88M.

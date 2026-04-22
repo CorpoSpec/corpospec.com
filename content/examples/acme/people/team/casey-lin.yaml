@@ -8,6 +8,7 @@ name:
 email: "casey.lin@acmecorp.example.com"
 role: people/roles/senior-backend-engineer
 unit: engineering
+employer: entity/acme
 start_date: "2025-12-01"
 end_date: null
 status: active

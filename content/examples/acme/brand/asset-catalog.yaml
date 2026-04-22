@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-asset-catalog.schema.json
+id: brand/asset-catalog
+assets:
+  - slug: wordmark-primary-dark
+    kind:
+      kind: wordmark
+    file_ref: brand/logos/acme-wordmark-dark.svg
+    role: "Primary wordmark on dark surfaces (≥ 48px tall)."
+    used_in:
+      - product/overview
+    notes: "Ink on white; vector source at brand/logos/acme-wordmark.ai."
+  - slug: wordmark-primary-light
+    kind:
+      kind: wordmark
+    file_ref: brand/logos/acme-wordmark-light.svg
+    role: "Primary wordmark on light surfaces (≥ 48px tall)."
+    used_in:
+      - product/overview
+  - slug: app-icon-ios
+    kind:
+      kind: adaptive-icon
+    file_ref: brand/logos/acme-icon-ios.png
+    role: "iOS home-screen adaptive icon (1024×1024)."
+  - slug: app-icon-android
+    kind:
+      kind: adaptive-icon
+    file_ref: brand/logos/acme-icon-android.png
+    role: "Android adaptive icon (432×432 safe area, 512×512 canvas)."
+  - slug: splash-hero
+    kind:
+      kind: splash-image
+    file_ref: brand/logos/acme-splash-hero.png
+    role: "Onboarding splash; centred wordmark on ink background."
+  - slug: inter-font-family
+    kind:
+      kind: font
+    file_ref: brand/fonts/Inter-variable.woff2
+    role: "Primary brand typeface (UI, body, marketing)."
+    notes: "Licensed under the Open Font License; redistributable."

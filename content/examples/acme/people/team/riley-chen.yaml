@@ -8,6 +8,7 @@ name:
 email: "riley.chen@acmecorp.example.com"
 role: people/roles/frontend-engineer
 unit: engineering
+employer: entity/acme
 start_date: "2026-01-15"
 end_date: null
 status: active

@@ -6,7 +6,8 @@ type: source
 status: active
 input_port:
   name: streamconnect-api
-  protocol: WebRTC
+  protocols:
+    - kind: webrtc
   authentication: api_key
 data_contract:
   owner: people/team/sarah-kim

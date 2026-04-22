@@ -8,6 +8,7 @@ name:
 email: "jordan@parkcapital.example.com"
 role: people/roles/independent-director
 unit: null
+employer: entity/acme
 start_date: "2025-09-01"
 end_date: null
 status: active

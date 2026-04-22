@@ -7,7 +7,8 @@ status: active
 
 input_port:
   name: "app-store-connect-api"
-  protocol: "REST"
+  protocols:
+    - kind: rest
   authentication: api_key
 
 data_contract:
@@ -48,3 +49,33 @@ pipeline:
       breakdown_by: app_id
 
 outputs: []
+
+typed_config:
+  kind: appstoreconnect
+  team_id: "A1B2C3D4E5"
+  bundle_id: "com.acme.workflow"
+  app_name: "Acme Workflow"
+  display_name: "Acme"
+  category: "Productivity"
+  age_rating: "4+"
+  content_rating: "No objectionable content"
+  fastlane_path: "fastlane/Fastfile"
+  ci_workflow_ref: ".github/workflows/ios-release.yml"
+  territories:
+    - US
+    - GB
+    - DE
+    - FR
+    - NL
+
+secret_bindings:
+  - env_var: APP_STORE_CONNECT_API_KEY
+    source:
+      kind: vault-ref
+      reference: "ops/ios/app-store-connect-api-key"
+    role: api-token
+    notes: "Rotated quarterly via Release Engineering runbook."
+  - env_var: APP_STORE_CONNECT_KEY_ID
+    source:
+      kind: environment
+    role: api-key-id

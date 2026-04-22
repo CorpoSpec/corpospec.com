@@ -7,7 +7,8 @@ status: draft
 
 input_port:
   name: "slack-api"
-  protocol: "WebSocket"
+  protocols:
+    - kind: websocket
   authentication: oauth2
 
 data_contract:

@@ -7,7 +7,8 @@ status: draft
 
 input_port:
   name: "puzzle-api"
-  protocol: "REST"
+  protocols:
+    - kind: rest
   authentication: api_key
 
 data_contract:

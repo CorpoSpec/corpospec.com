@@ -8,6 +8,7 @@ name:
 email: "quinn.murphy@acmecorp.example.com"
 role: people/roles/customer-success-manager
 unit: customer-success
+employer: entity/acme
 start_date: "2026-02-01"
 end_date: null
 status: active

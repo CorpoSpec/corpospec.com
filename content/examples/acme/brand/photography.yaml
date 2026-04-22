@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-photography.schema.json
+id: brand/photography
+name: "Acme Documentary"
+style: documentary
+subject_matter:
+  - "Operations leaders at work"
+  - "Small teams in shared spaces"
+  - "Workflow artefacts (whiteboards, sticky notes, dashboards)"
+composition_rules:
+  - rule: "Eye-level framing; never look down on subjects."
+    rationale: "Equal power dynamic — we photograph teams, not trophies."
+  - rule: "Natural light preferred; fill with soft bounce only."
+    rationale: "Reads as candid and honest; studio lighting reads as stock."
+  - rule: "Subjects glance away from camera in 70% of shots."
+    rationale: "Moment-in-work feels lived-in; direct eye contact feels staged."
+  - rule: "Screens in frame must show real Acme UI, never placeholder mockups."
+color_treatment: >
+  Warm colour grade: lift shadows slightly; desaturate teals;
+  preserve skin tones. Avoid cinematic orange-and-teal looks.
+prohibited:
+  - "Stock-photo archetypes (smiling-across-laptop)"
+  - "Minors without guardian consent"
+  - "Watermarked / unlicensed imagery"
+sample_assets:
+  - brand/asset-catalog

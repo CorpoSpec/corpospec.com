@@ -5,6 +5,12 @@ website: "https://asana.com"
 layer: 1
 category: "Work Management Platform"
 relationship: direct-competitor
+threat_level: high
+category_representative: true
+why_we_win: >
+  Acme ships AI-native workflow templates that learn from usage patterns,
+  whereas Asana AI Studio requires explicit rule definition; teams reach
+  productivity faster on Acme without ops-engineering overhead.
 as_of: "2026-03-01"
 
 description: >

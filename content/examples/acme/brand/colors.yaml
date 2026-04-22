@@ -76,6 +76,16 @@ accessibility:
       contrast_ratio: 4.78
       wcag_aa: true
       wcag_aaa: false
+    - foreground: "#F56565"
+      background: "#FFFFFF"
+      contrast_ratio: 3.28
+      wcag_aa: false
+      wcag_aaa: false
+      documented_exception: >
+        Brand-red on white fails WCAG 2.1 AA for text (3.28:1) but is
+        retained for non-text destructive icons (trash, delete confirm)
+        where the icon's meaning is reinforced by an adjacent label and
+        a confirm dialog. Never use this pair for body or UI text.
     - foreground: "#1A202C"
       background: "#FFFFFF"
       contrast_ratio: 16.75
