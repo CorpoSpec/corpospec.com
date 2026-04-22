@@ -1,0 +1,394 @@
+{
+  "$defs": {
+    "BackgroundType": {
+      "description": "Background type for logo color expressions.",
+      "enum": [
+        "white",
+        "black",
+        "brand-color",
+        "dark",
+        "transparent"
+      ],
+      "type": "string"
+    },
+    "ClearSpace": {
+      "description": "Clear space requirements around the logo.",
+      "properties": {
+        "formula": {
+          "type": "string"
+        },
+        "minimum_mm": {
+          "description": "Optional absolute fallback in millimetres for print contexts. Normally\nderived from `formula` applied to the reproduction size; specify it\nonly when a hard floor is mandated independent of the formula (e.g.\nregulatory packaging, co-branded templates).",
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minimum_px": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "reference_element": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "formula",
+        "reference_element"
+      ],
+      "type": "object"
+    },
+    "FaviconSize": {
+      "description": "Favicon size specification.",
+      "properties": {
+        "file_ref": {
+          "description": "Optional repo-relative path to the rendered asset. May be absent when\nthe size is declared as a specification target and the asset is\ngenerated at build time from a source SVG.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platform": {
+          "description": "Optional platform hint (e.g. `ios`, `android`, `windows-tile`). Omit\nfor generic browser favicons that are not platform-specific.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "px": {
+          "description": "Square edge length in pixels. Standard values are 16, 32, 48, 180\n(Apple touch icon), 192, 512 (Android/PWA manifest).",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "px"
+      ],
+      "type": "object"
+    },
+    "FaviconSpec": {
+      "description": "Favicon specification.",
+      "properties": {
+        "background_color": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sizes": {
+          "items": {
+            "$ref": "#/$defs/FaviconSize"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "sizes"
+      ],
+      "type": "object"
+    },
+    "LogoAnimation": {
+      "description": "Logo animation specification.",
+      "properties": {
+        "entry_duration_ms": {
+          "description": "Duration in milliseconds of the entry/intro phase (e.g. fade-in,\ndraw-on, scale-up). Must be non-negative; 0 disables the entry phase.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "exit_duration_ms": {
+          "description": "Duration in milliseconds of the exit/outro phase (e.g. fade-out,\ncollapse). Must be non-negative; 0 disables the exit phase.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "file_refs": {
+          "default": [],
+          "description": "Repo-relative paths to animation source files (Lottie JSON, MP4, WebM,\nanimated SVG, After Effects project). Multiple entries allow providing\nthe same animation in several formats for different consumers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "hold_duration_ms": {
+          "description": "Duration in milliseconds the logo is held at rest between entry and\nexit phases. Use 0 for instantaneous transitions.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "loop_animation": {
+          "description": "Whether the animation loops indefinitely after the exit phase. Typical\nsplash screens set this to `false`; ambient brand moments set `true`.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "LogoColorExpression": {
+      "description": "Logo color expression for a given background.",
+      "properties": {
+        "background_type": {
+          "$ref": "#/$defs/BackgroundType"
+        },
+        "foreground_colors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "background_type",
+        "foreground_colors"
+      ],
+      "type": "object"
+    },
+    "LogoComposition": {
+      "description": "Logo composition type.",
+      "enum": [
+        "horizontal",
+        "stacked",
+        "symbol-only",
+        "wordmark-only",
+        "full"
+      ],
+      "type": "string"
+    },
+    "LogoMark": {
+      "description": "Primary or variant logo mark.",
+      "properties": {
+        "composition": {
+          "$ref": "#/$defs/LogoComposition"
+        },
+        "file_refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "minimum_size_mm": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "minimum_size_px": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "composition"
+      ],
+      "type": "object"
+    },
+    "LogoSizingTier": {
+      "description": "Logo sizing tier with variant requirements.",
+      "properties": {
+        "max_px": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "min_px": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "required_variant": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "LogoUsageRules": {
+      "description": "Logo usage rules and prohibitions.",
+      "properties": {
+        "approved_background_contrast_minimum": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "prohibited": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "prohibited"
+      ],
+      "type": "object"
+    },
+    "LogoVariant": {
+      "description": "Logo variant for specific use cases.",
+      "properties": {
+        "composition": {
+          "$ref": "#/$defs/LogoComposition"
+        },
+        "contexts_approved": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "contexts_prohibited": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "file_refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "use_case": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "composition",
+        "use_case"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.0/brand-logo.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand logo definition.",
+  "properties": {
+    "animation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LogoAnimation"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "clear_space": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ClearSpace"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "color_expressions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LogoColorExpression"
+      },
+      "type": "array"
+    },
+    "favicon": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FaviconSpec"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "primary": {
+      "$ref": "#/$defs/LogoMark"
+    },
+    "sizing_tiers": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LogoSizingTier"
+      },
+      "type": "array"
+    },
+    "usage_rules": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LogoUsageRules"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "variants": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LogoVariant"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "primary"
+  ],
+  "title": "BrandLogo",
+  "type": "object"
+}

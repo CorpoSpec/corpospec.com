@@ -1,0 +1,172 @@
+{
+  "$defs": {
+    "BdrStatus": {
+      "description": "BDR status. Includes Draft and Rejected from server types (D1 exception).",
+      "enum": [
+        "draft",
+        "proposed",
+        "accepted",
+        "rejected",
+        "deprecated",
+        "superseded"
+      ],
+      "type": "string"
+    },
+    "FinancialImpact": {
+      "description": "Financial impact of a decision.",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "estimated_cost": {
+          "format": "double",
+          "type": "number"
+        },
+        "recurring": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "estimated_cost",
+        "currency",
+        "recurring"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pillar": {
+      "description": "Pillar name.",
+      "enum": [
+        "entity",
+        "financials",
+        "metrics",
+        "product",
+        "market",
+        "people",
+        "legal",
+        "governance",
+        "integrations",
+        "brand"
+      ],
+      "type": "string"
+    },
+    "RiskLevel": {
+      "description": "Risk level.",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.0/bdr.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "YAML frontmatter schema for Business Decision Records (extended MADR format).\nIncludes `related` field from report types (D7).",
+  "properties": {
+    "consulted": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "date": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "decision_makers": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "financial_impact": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FinancialImpact"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "informed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "pillars": {
+      "items": {
+        "$ref": "#/$defs/Pillar"
+      },
+      "type": "array"
+    },
+    "related": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "review_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "risk_level": {
+      "$ref": "#/$defs/RiskLevel"
+    },
+    "status": {
+      "$ref": "#/$defs/BdrStatus"
+    },
+    "supersedes": {
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "title": {
+      "description": "Optional explicit title for the decision. When present, the Cockpit and\nreport pipeline prefer this over the first body H1 heading.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "status",
+    "date",
+    "decision_makers",
+    "pillars",
+    "risk_level"
+  ],
+  "title": "Bdr",
+  "type": "object"
+}

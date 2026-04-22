@@ -1,0 +1,353 @@
+{
+  "$defs": {
+    "BrandTermHandling": {
+      "description": "Brand term handling in translation.",
+      "enum": [
+        "transliterate",
+        "translate",
+        "retain-english"
+      ],
+      "type": "string"
+    },
+    "HumorLevel": {
+      "description": "Humor level.",
+      "enum": [
+        "none",
+        "subtle",
+        "overt"
+      ],
+      "type": "string"
+    },
+    "LocalizationGuidelines": {
+      "description": "Localization guidelines.",
+      "properties": {
+        "brand_terms_handling": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BrandTermHandling"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How brand-owned terms (product names, taglines, trademarks) are\nhandled during translation. Typically required for multi-locale brands,\nbut omitted for single-locale brands where the question is moot."
+        },
+        "markets_with_custom_tone": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "strategy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TranslationStrategy"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "StyleGuideRef": {
+      "description": "Style guide reference.",
+      "properties": {
+        "currency_format": {
+          "description": "Canonical currency format including symbol position and spacing\n(e.g. `$1,234.56`, `1.234,56 EUR`, `CHF 1'234.56`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date_format": {
+          "description": "Canonical date format for this brand, expressed as a format token\nstring (e.g. `YYYY-MM-DD`, `MMMM D, YYYY`, `D.M.YYYY`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number_format": {
+          "description": "Canonical number format. Specify the thousands separator, decimal\nmark, and grouping (e.g. `1,234.56` US, `1.234,56` DE, `1 234,56` FR).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "primary_guide": {
+          "description": "Primary external style guide the brand adheres to. Free-form string:\na canonical name (e.g. \"AP Stylebook\", \"Chicago Manual of Style\"),\na repo path, or a URL. Consumers that need strict URI validation\nshould additionally apply `format: uri` locally.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "TermEntry": {
+      "description": "Terminology entry with preferred and prohibited terms.",
+      "properties": {
+        "definition": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "preferred": {
+          "type": "string"
+        },
+        "prohibited": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "usage_context": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "preferred"
+      ],
+      "type": "object"
+    },
+    "ToneContext": {
+      "description": "Tone adjustment for a specific context.",
+      "properties": {
+        "examples": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "situation": {
+          "type": "string"
+        },
+        "tone_adjustments": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "situation",
+        "tone_adjustments"
+      ],
+      "type": "object"
+    },
+    "TranslationStrategy": {
+      "description": "Translation strategy.",
+      "enum": [
+        "translate",
+        "transcreate",
+        "both"
+      ],
+      "type": "string"
+    },
+    "UiCopyGuidelines": {
+      "description": "UI copy guidelines by component type.",
+      "properties": {
+        "button_labels": {
+          "description": "Guidance for action/button labels (e.g. \"Use sentence case, start with\na verb, aim for 1-3 words, avoid `Submit`/`OK`\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "empty_states": {
+          "description": "Guidance for empty-state copy (e.g. \"Explain what will appear, give a\nconcrete first action, keep tone encouraging not apologetic\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error_messages": {
+          "description": "Guidance for error messages (e.g. \"State what went wrong, why, and\nwhat to do next; never blame the user; avoid stack traces\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tooltips": {
+          "description": "Guidance for tooltip copy (e.g. \"Max 80 characters, sentence case, no\ntrailing period unless multi-sentence; describe purpose not mechanics\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "VoiceDimension": {
+      "description": "Voice dimension defining how the brand communicates.",
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "does_not_sound_like": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sounds_like": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "definition",
+        "sounds_like",
+        "does_not_sound_like"
+      ],
+      "type": "object"
+    },
+    "WritingPrinciples": {
+      "description": "Writing principles and constraints.",
+      "properties": {
+        "active_voice_required": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "contractions_allowed": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "humor_level": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HumorLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_paragraph_sentences": {
+          "description": "Optional upper bound on sentences per paragraph. 3-5 is typical for\nreadable long-form content.",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "max_sentence_words": {
+          "description": "Optional upper bound on words per sentence. Typical values are 15-25\nfor UI and marketing copy. Omit when the brand does not enforce a\nsentence-length cap.",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "target_reading_level": {
+          "description": "Target audience reading level. Free-form because multiple taxonomies\nexist (Flesch-Kincaid grade like \"grade 8\", Flesch reading ease score,\nCEFR like \"B2\", or plain descriptors like \"general audience\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.0/brand-voice.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand voice and tone definition.",
+  "properties": {
+    "dimensions": {
+      "items": {
+        "$ref": "#/$defs/VoiceDimension"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "localization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LocalizationGuidelines"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "style_guide": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StyleGuideRef"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "terminology": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TermEntry"
+      },
+      "type": "array"
+    },
+    "tone_matrix": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ToneContext"
+      },
+      "type": "array"
+    },
+    "ui_copy_guidelines": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/UiCopyGuidelines"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "writing_principles": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WritingPrinciples"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "dimensions"
+  ],
+  "title": "BrandVoice",
+  "type": "object"
+}
