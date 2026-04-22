@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "Impact": {
+      "description": "Impact severity of a risk.",
+      "enum": [
+        "negligible",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "Likelihood": {
+      "description": "Likelihood of a risk occurring.",
+      "enum": [
+        "very-low",
+        "low",
+        "medium",
+        "high",
+        "very-high"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Risk": {
+      "additionalProperties": false,
+      "description": "A single risk entry in the risk register.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "impact": {
+          "$ref": "#/$defs/Impact"
+        },
+        "likelihood": {
+          "$ref": "#/$defs/Likelihood"
+        },
+        "mitigation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "review_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/RiskStatus"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "likelihood",
+        "impact",
+        "status"
+      ],
+      "type": "object"
+    },
+    "RiskStatus": {
+      "description": "Status of a risk entry.",
+      "enum": [
+        "open",
+        "mitigated",
+        "accepted",
+        "closed"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.9.2/risk-register.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Risk register containing all identified risks.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "risks": {
+      "items": {
+        "$ref": "#/$defs/Risk"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "risks"
+  ],
+  "title": "RiskRegister",
+  "type": "object"
+}
