@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "BoardCommittee": {
+      "description": "Standing committee of a board. `other` is the escape hatch for\ncommittees not yet enumerated — prefer adding a variant over using\n`other`.",
+      "enum": [
+        "audit",
+        "compensation",
+        "governance",
+        "nominating",
+        "risk",
+        "investment",
+        "technology",
+        "other"
+      ],
+      "type": "string"
+    },
+    "BoardMember": {
+      "additionalProperties": false,
+      "description": "Board member entry.",
+      "properties": {
+        "appointed": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "committees": {
+          "default": [],
+          "description": "Standing committees on which this member sits. See `BoardCommittee`.",
+          "items": {
+            "$ref": "#/$defs/BoardCommittee"
+          },
+          "type": "array"
+        },
+        "person": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "role": {
+          "$ref": "#/$defs/BoardMemberRole",
+          "description": "Governance or executive role held by the member. See `BoardMemberRole`."
+        },
+        "term": {
+          "description": "Free-form term length description (e.g. \"3 years\", \"indefinite\",\n\"until 2028 AGM\"). Human-readable counterpart to `term_end_date`;\neither field may be present independently.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "term_end_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Structured term expiry date. Set when the term has a concrete end\ndate suitable for queries and reminders. Leave unset for indefinite\nterms or when only the free-form `term` description is available."
+        }
+      },
+      "required": [
+        "person",
+        "role",
+        "appointed"
+      ],
+      "type": "object"
+    },
+    "BoardMemberRole": {
+      "description": "Role of a board or committee member. The role enum covers both\ngovernance functions (chair, secretary, independent) and executive\nofficer posts (ceo, cfo, cto) because small entities frequently seat\nthe same person in both. German-style single-director GmbHs use\n`sole-director`; Anglo-Saxon boards use `director`/`independent-director`.\n`other` is the escape hatch for roles not yet enumerated — prefer\nadding a variant over using `other`.",
+      "enum": [
+        "chair",
+        "vice-chair",
+        "member",
+        "director",
+        "independent-director",
+        "sole-director",
+        "ceo",
+        "cfo",
+        "cto",
+        "secretary",
+        "independent",
+        "observer",
+        "advisor",
+        "other"
+      ],
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.2/board.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Board of directors or managing directors composition.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "members": {
+      "items": {
+        "$ref": "#/$defs/BoardMember"
+      },
+      "type": "array"
+    },
+    "name": {
+      "description": "Display name of this governance body (e.g. \"Board of Directors\",\n\"Geschaeftsfuehrung\", \"Audit Committee\"). Identifies the body when\nan entity has multiple boards or committees recorded separately.",
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "entity",
+    "members"
+  ],
+  "title": "Board",
+  "type": "object"
+}

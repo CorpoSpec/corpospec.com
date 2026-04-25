@@ -1,0 +1,125 @@
+{
+  "$defs": {
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PhotographyRule": {
+      "additionalProperties": false,
+      "description": "A single photography guideline rule (e.g. \"always front-light subjects\").",
+      "properties": {
+        "rationale": {
+          "description": "Optional rationale for the rule.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rule": {
+          "description": "Short rule statement.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule"
+      ],
+      "type": "object"
+    },
+    "PhotographyStyle": {
+      "description": "Photography style archetype. Captures the visual register a brand shoots in.",
+      "oneOf": [
+        {
+          "const": "editorial",
+          "description": "Staged studio photography.",
+          "type": "string"
+        },
+        {
+          "const": "documentary",
+          "description": "On-location, real-world.",
+          "type": "string"
+        },
+        {
+          "const": "product",
+          "description": "Product-only, no people.",
+          "type": "string"
+        },
+        {
+          "const": "conceptual",
+          "description": "Abstract, conceptual imagery.",
+          "type": "string"
+        },
+        {
+          "const": "cinematic",
+          "description": "Cinematic film-still aesthetic.",
+          "type": "string"
+        },
+        {
+          "const": "mixed",
+          "description": "Mixed / hybrid style.",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.2/brand-photography.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand photography guidelines. Captures the rules for how the brand shoots,\nselects, and treats photographic imagery — independent of individual\nassets enumerated in `AssetCatalog`.",
+  "properties": {
+    "color_treatment": {
+      "description": "Prose description of the colour grade / LUT treatment applied to\nimagery post-capture.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "composition_rules": {
+      "description": "Composition rules (framing, lighting, depth-of-field, symmetry).",
+      "items": {
+        "$ref": "#/$defs/PhotographyRule"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (conventionally `brand/photography`)."
+    },
+    "name": {
+      "description": "Display name (e.g. `\"KICKGEIST Match-Day Documentary\"`).",
+      "type": "string"
+    },
+    "prohibited": {
+      "description": "Things the brand never photographs / never shows (e.g.\n`[\"staged stock imagery\", \"minors without guardian consent\"]`).",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "sample_assets": {
+      "description": "PathRefs to representative sample assets from `AssetCatalog`.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "style": {
+      "$ref": "#/$defs/PhotographyStyle",
+      "description": "Primary style archetype."
+    },
+    "subject_matter": {
+      "description": "Subject-matter domains the brand photographs (e.g.\n`[\"fans in stadiums\", \"match-day rituals\"]`).",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "style"
+  ],
+  "title": "PhotographyGuidelines",
+  "type": "object"
+}

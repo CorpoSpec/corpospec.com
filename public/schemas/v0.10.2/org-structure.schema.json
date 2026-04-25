@@ -1,0 +1,310 @@
+{
+  "$defs": {
+    "FutureSubsidiary": {
+      "description": "Future subsidiary planned by the organization.",
+      "properties": {
+        "name": {
+          "description": "Working name of the planned subsidiary. Required: the record has no\npurpose without a named target entity.",
+          "type": "string"
+        },
+        "purpose": {
+          "description": "Prose describing the strategic purpose of the subsidiary.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "description": "Lifecycle status — prose because real values combine a state word\nwith an explanatory clause (e.g. \"Deferred — modelling post-pre-seed\nclose\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "HiringTimelineEntry": {
+      "description": "Entry in the org-level hiring timeline.",
+      "properties": {
+        "compensation_start_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Date at which compensation begins to accrue (may differ from\n`start_date`; see `PersonCustom.compensation_start_date`)."
+        },
+        "label": {
+          "description": "Short label that disambiguates multiple instances of the same role\n(e.g. `FDF #1`, `FDF #2`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "person": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the person filling the role (if known)."
+        },
+        "role": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the role being filled."
+        },
+        "start_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Committed start date."
+        },
+        "start_date_target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target start date when `start_date` is not yet committed."
+        }
+      },
+      "type": "object"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "OrgCustom": {
+      "description": "Typed extension fields for OrgStructure.",
+      "properties": {
+        "employment_entity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the legal entity that employs everyone in this structure."
+        },
+        "employment_jurisdiction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCountry"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 3166-1 alpha-2 country code of the employing jurisdiction."
+        },
+        "future_subsidiary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FutureSubsidiary"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Planned future subsidiary (currently modelled as singular — upgrade\nto `Vec<FutureSubsidiary>` when multi-subsidiary plans appear)."
+        },
+        "hiring_timeline": {
+          "description": "Ordered hiring plan across roles and time.",
+          "items": {
+            "$ref": "#/$defs/HiringTimelineEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "OrgType": {
+      "description": "Organization type.",
+      "oneOf": [
+        {
+          "const": "FormalOrganization",
+          "description": "A legally constituted organization (W3C ORG `FormalOrganization`).",
+          "type": "string"
+        },
+        {
+          "const": "OrganizationalUnit",
+          "description": "A sub-unit within a formal organization (W3C ORG `OrganizationalUnit`).",
+          "type": "string"
+        }
+      ]
+    },
+    "OrgUnit": {
+      "description": "Organizational unit within the structure.",
+      "properties": {
+        "head": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the role that heads (manages) this unit."
+        },
+        "id": {
+          "description": "Local identifier of this unit (e.g. `executive`, `engineering`).\nReferenced by `Person.unit` and `Role.unit`.",
+          "type": "string"
+        },
+        "members": {
+          "default": [],
+          "description": "Direct reports of the unit head (excluding the head itself).",
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Human-readable name of the unit (e.g. `\"Engineering\"`).",
+          "type": "string"
+        },
+        "planned_roles": {
+          "default": [],
+          "description": "Role PathRefs that are planned but not yet filled in this unit.\nRealised by `Role.responsibilities` on the respective role records.",
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "site": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OrgUnitSite"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Work-location model of the unit."
+        },
+        "type": {
+          "$ref": "#/$defs/OrgType",
+          "description": "W3C ORG type discriminator. Almost always\n`OrgType::OrganizationalUnit` for sub-units."
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "OrgUnitSite": {
+      "description": "Work-location model for an `OrgUnit`.",
+      "oneOf": [
+        {
+          "const": "remote",
+          "description": "Fully remote.",
+          "type": "string"
+        },
+        {
+          "const": "hybrid",
+          "description": "Hybrid — mix of remote and onsite.",
+          "type": "string"
+        },
+        {
+          "const": "onsite",
+          "description": "Onsite at a physical office.",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Any other arrangement (co-working, client site, etc.).",
+          "type": "string"
+        }
+      ]
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.2/org-structure.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Organizational structure aligned with W3C ORG ontology.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OrgCustom"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Typed custom extension fields (employment defaults, hiring timeline)."
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef to the legal entity that owns this structure."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (conventionally `people/org`)."
+    },
+    "name": {
+      "description": "Legal / display name of the organization (e.g. `\"Unstarter GmbH\"`).",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/OrgType",
+      "description": "W3C ORG type discriminator. For the root record this is always\n`FormalOrganization`."
+    },
+    "units": {
+      "default": [],
+      "description": "Sub-units of the organization.",
+      "items": {
+        "$ref": "#/$defs/OrgUnit"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name",
+    "entity"
+  ],
+  "title": "OrgStructure",
+  "type": "object"
+}
