@@ -1,0 +1,260 @@
+{
+  "$defs": {
+    "BrandArchetypeEnum": {
+      "description": "Brand archetype based on Jungian archetypes.",
+      "enum": [
+        "creator",
+        "ruler",
+        "sage",
+        "explorer",
+        "hero",
+        "outlaw",
+        "magician",
+        "everyman",
+        "lover",
+        "caregiver",
+        "jester",
+        "innocent"
+      ],
+      "type": "string"
+    },
+    "BrandNarrative": {
+      "description": "Brand narrative structure.",
+      "properties": {
+        "analogy": {
+          "description": "Optional metaphor or comparison that clarifies the brand narrative\n(e.g. \"Stripe for accountants\"). Not every brand has or needs an analogy;\nomit if none applies rather than forcing an awkward fit.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "conflict": {
+          "type": "string"
+        },
+        "hero": {
+          "type": "string"
+        },
+        "origin": {
+          "type": "string"
+        },
+        "solution": {
+          "type": "string"
+        },
+        "villain": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin",
+        "conflict",
+        "solution",
+        "hero",
+        "villain"
+      ],
+      "type": "object"
+    },
+    "BrandPersonality": {
+      "description": "Brand personality definition.",
+      "properties": {
+        "archetype": {
+          "$ref": "#/$defs/BrandArchetypeEnum"
+        },
+        "spectrum_axes": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/SpectrumAxis"
+          },
+          "type": "array"
+        },
+        "traits": {
+          "items": {
+            "$ref": "#/$defs/PersonalityTrait"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "archetype",
+        "traits"
+      ],
+      "type": "object"
+    },
+    "BrandPositioning": {
+      "description": "Brand positioning statement.",
+      "properties": {
+        "frame_of_reference": {
+          "type": "string"
+        },
+        "institutional_framing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "point_of_difference": {
+          "type": "string"
+        },
+        "reason_to_believe": {
+          "type": "string"
+        },
+        "target_audience": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "frame_of_reference",
+        "point_of_difference",
+        "reason_to_believe",
+        "target_audience"
+      ],
+      "type": "object"
+    },
+    "BrandValue": {
+      "description": "Core brand value with behavioral definition.",
+      "properties": {
+        "anti_pattern": {
+          "type": "string"
+        },
+        "behavioral_definition": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "priority_rank": {
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "behavioral_definition",
+        "anti_pattern",
+        "priority_rank"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PersonalityTrait": {
+      "description": "A named personality trait with intensity.",
+      "properties": {
+        "intensity": {
+          "format": "int64",
+          "maximum": 5,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "intensity"
+      ],
+      "type": "object"
+    },
+    "SpectrumAxis": {
+      "description": "Spectrum axis for brand personality positioning.",
+      "properties": {
+        "left_pole": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "format": "int64",
+          "maximum": 10,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "right_pole": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "left_pole",
+        "right_pole",
+        "position"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.11.0/brand-foundation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand foundation: purpose, values, personality, positioning.",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "narrative": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BrandNarrative"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional founding story and narrative arc (origin, conflict, solution,\nhero, villain). Useful for long-form content, pitch decks, and\nonboarding material; not required for brands that communicate purely\nthrough product and positioning."
+    },
+    "personality": {
+      "$ref": "#/$defs/BrandPersonality"
+    },
+    "positioning": {
+      "$ref": "#/$defs/BrandPositioning"
+    },
+    "promise": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "secondary_taglines": {
+      "description": "Additional brand taglines used in campaigns, launches, or context-specific\nsurfaces (e.g. `[\"Company as Code.\", \"AI runs operations. You run the business.\"]`).\nThe primary tagline belongs on the brand logo record; this array holds\nthe secondary set that markets alongside it.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "values": {
+      "items": {
+        "$ref": "#/$defs/BrandValue"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "purpose",
+    "values",
+    "personality",
+    "positioning",
+    "promise"
+  ],
+  "title": "BrandFoundation",
+  "type": "object"
+}

@@ -1,0 +1,222 @@
+{
+  "$defs": {
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "KeyResult": {
+      "description": "Key result within an objective.",
+      "properties": {
+        "confidence": {
+          "description": "Owner's subjective probability of hitting `target_value` by the end\nof the period, in the closed interval [0.0, 1.0]. 0.0 = no\nconfidence (certain miss), 1.0 = certain hit, 0.5 = coin flip.\nDistinct from progress: a KR can be 80 % progressed with 0.4\nconfidence (stalled) or 10 % progressed with 0.9 confidence (early\nbut on trajectory).",
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "current_value": {
+          "description": "Latest observed value. Negative values allowed — see `start_value`\nfor the rationale.",
+          "format": "double",
+          "type": "number"
+        },
+        "id": {
+          "description": "Slug identifier unique within the containing objective (e.g.\n`kr-1-1`). Lower-case alphanumerics and hyphens; no leading or\ntrailing hyphen and no consecutive hyphens.",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "metric": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional PathRef into `metrics/definitions/*` — links the key result\nto a metric definition (unit, formula, data source) so current/target\nvalues and the unit remain consistent with the metric catalogue."
+        },
+        "start_value": {
+          "description": "Baseline value at the start of the period. Negative values are\nallowed for decline metrics (e.g. churn reduction). The schema\nintentionally imposes no sign bound — units and semantics are\ndefined by `unit` and the linked metric.",
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "target_value": {
+          "description": "Goal value at the end of the period. Negative values allowed — see\n`start_value` for the rationale.",
+          "format": "double",
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        },
+        "unit": {
+          "$ref": "#/$defs/KrUnit"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "target_value",
+        "current_value",
+        "unit"
+      ],
+      "type": "object"
+    },
+    "KrUnit": {
+      "description": "Key result unit.",
+      "enum": [
+        "count",
+        "ratio",
+        "percentage",
+        "currency",
+        "days"
+      ],
+      "type": "string"
+    },
+    "Objective": {
+      "description": "Objective within an OKR set.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id": {
+          "description": "Slug identifier unique within the containing OKR set (e.g. `obj-1`).\nLower-case alphanumerics and hyphens; no leading or trailing hyphen\nand no consecutive hyphens.",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "type": "string"
+        },
+        "key_results": {
+          "items": {
+            "$ref": "#/$defs/KeyResult"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "$ref": "#/$defs/Priority"
+        },
+        "related_decisions": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "priority",
+        "key_results"
+      ],
+      "type": "object"
+    },
+    "OkrStatus": {
+      "description": "OKR status.",
+      "enum": [
+        "draft",
+        "active",
+        "closed",
+        "cancelled"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Period": {
+      "description": "A time period with start and end dates.",
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "type": {
+          "$ref": "#/$defs/PeriodType"
+        }
+      },
+      "required": [
+        "type",
+        "start"
+      ],
+      "type": "object"
+    },
+    "PeriodType": {
+      "description": "Period type discriminator.",
+      "enum": [
+        "instant",
+        "duration"
+      ],
+      "type": "string"
+    },
+    "Priority": {
+      "description": "Priority level.",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.11.0/okr.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Objectives and Key Results record for strategic planning.",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "objectives": {
+      "items": {
+        "$ref": "#/$defs/Objective"
+      },
+      "type": "array"
+    },
+    "owner": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "period": {
+      "$ref": "#/$defs/Period"
+    },
+    "status": {
+      "$ref": "#/$defs/OkrStatus"
+    }
+  },
+  "required": [
+    "id",
+    "period",
+    "status",
+    "owner",
+    "objectives"
+  ],
+  "title": "Okr",
+  "type": "object"
+}

@@ -1,0 +1,804 @@
+{
+  "$defs": {
+    "AccidentInsurance": {
+      "description": "Accident insurance registration (VBG).",
+      "properties": {
+        "kundennummer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unternehmensnummer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "BankingInfo": {
+      "description": "Banking information — primary operating bank account of the entity.\nTreated as sensitive data; exclude from publicly rendered reports unless\nthe entity has chosen to disclose it (typical for the Imprint / Handels-\nregister extract). An entity with multiple accounts should list the\nauthoritative operating account here.",
+      "properties": {
+        "account_number": {
+          "description": "Domestic account number. Used in jurisdictions where IBAN is not\ncanonical (e.g. US routing + account, UK sort code + account) or as\na convenience duplicate of the IBAN's trailing digits.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bank_name": {
+          "description": "Name of the bank or financial institution as it would appear on a\nstatement (e.g. \"Sparkasse Pforzheim Calw\", \"Mercury\", \"Qonto\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bic": {
+          "description": "Business Identifier Code (SWIFT/BIC, ISO 9362). 8 or 11 characters.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "blz": {
+          "description": "German Bankleitzahl — 8-digit bank sort code. Legacy identifier,\nsuperseded by BIC for SEPA but still printed on bank statements.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "iban": {
+          "description": "International Bank Account Number (ISO 13616). Stored in its\ncanonical printable form, with or without spaces; validators should\naccept both.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "CapitalFlow": {
+      "description": "Capital flow between entities — narrative description of where equity or\nworking capital originates and how it is deployed across the group\nstructure. Intended for human-readable disclosure (investor decks, tax\nfilings, due diligence), not for machine reconciliation. For\nmachine-reconcilable money movement, use the relevant finance pillar.",
+      "properties": {
+        "deployment": {
+          "description": "Deployment of the capital — where it is routed (which subsidiary,\nwhich purpose) and in what form on the receiving side. Free-form\nnarrative prose. TODO(corpospec): once a controlled vocabulary of\ndeployment categories stabilises across multiple companies,\nintroduce a `CapitalFlowDeployment` enum and split the narrative\ninto (category, note). Until then kept as String to preserve the\nexpressiveness observed in real-world YAML.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "description": "Additional commentary on timing, conditions, or caveats.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "description": "Origin of the capital — who contributes it, in what form (equity,\nKapitalrücklage, convertible loan, retained earnings), and for what\namount.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Contact": {
+      "description": "Contact information.",
+      "properties": {
+        "email": {
+          "description": "Publicly listed contact email for the entity (e.g. imprint / website /\ninvestor relations). Intended for external publication — do not put\ninternal-only addresses here. RFC 5322 syntax.",
+          "format": "email",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phone": {
+          "description": "Publicly listed contact phone number in E.164 format (e.g.\n`+4970839702820`). Intended for external publication.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EmployeeCount": {
+      "description": "Employee count snapshot.",
+      "properties": {
+        "as_of": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "value": {
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value",
+        "as_of"
+      ],
+      "type": "object"
+    },
+    "EntityClass": {
+      "description": "Classification of an entity's role in the group's brand / product\nhierarchy. Distinct from [`EntityType`] (legal vehicle).\nLayer 7 insights gate \"missing registration number / tax ids / …\"\nwarnings on this discriminator: a `Brand` is not expected to have a\nHandelsregister number.",
+      "enum": [
+        "legal-entity",
+        "brand",
+        "sub-brand",
+        "product-line",
+        "trade-name"
+      ],
+      "type": "string"
+    },
+    "EntityCustom": {
+      "description": "Typed extension fields for Entity.\nUnion of all jurisdiction-specific fields observed in .corpospec/ YAML data.",
+      "properties": {
+        "banking": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BankingInfo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Primary operating bank account. Sensitive — see `BankingInfo`\ndocs for disclosure guidance."
+        },
+        "capital_flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CapitalFlow"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Current capital-flow disclosure — where the entity's operating\ncapital originates and how it is deployed across the group."
+        },
+        "capital_flow_pre_pivot": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CapitalFlow"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Pre-pivot historical capital flow, retained for audit/narrative\ncontinuity after a strategic pivot. Distinct from the current\n`capital_flow`."
+        },
+        "geschaeftsfuehrer": {
+          "description": "Display-only list of managing directors (Geschäftsführer), as\nPathRefs into `people/**` (e.g. `people/team/maik`). This field is\na convenience surface for the entity record; the authoritative\nappointment data (appointment date, representation powers\nalleinvertretungsberechtigt / befreit von § 181 BGB, Handels-\nregister reference) lives in the jurisdiction-de pillar's\n`geschaeftsfuehrer` structured records. Keep both in sync.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "labor_registration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LaborRegistration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "German labour-registration identifiers (Betriebsnummer et al.)\nissued by the Bundesagentur für Arbeit once the entity employs\nstaff subject to social-insurance contributions."
+        },
+        "paid_in_before_filing_eur": {
+          "description": "Portion of the Stammkapital paid in before the Handelsregister\nfiling (in euros). For GmbH cash formation this is typically\n12 500 (half); for full payment this equals `stammkapital_eur`.",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "planned_reorganization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ReorganizationPlan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Planned corporate reorganisation (e.g. Delaware C-Corp flip,\nmerger, liquidation) with trigger, action, and commitment level."
+        },
+        "planned_subsidiaries": {
+          "description": "Planned subsidiaries not yet incorporated. Once a subsidiary is\nformed, move it into `Entity.subsidiaries` (PathRef list) and\ncreate its own entity record.",
+          "items": {
+            "$ref": "#/$defs/PlannedSubsidiary"
+          },
+          "type": "array"
+        },
+        "primary_role": {
+          "description": "Free-form label describing the entity's primary operational role\nwithin the group (e.g. \"Investment vehicle\", \"Operating company\",\n\"IP holding\"). Display-only — this is NOT a PathRef into the\n`roles/` pillar and must not be confused with the formal Role\nconcept used for governance assignments.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "registered_seat_rationale": {
+          "description": "Narrative rationale for the choice of registered seat (e.g.\ninvestor proximity, talent density, Gewerbesteuer Hebesatz). Used\nin diligence and internal governance records.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "relationship_to_unstarter": {
+          "description": "For sibling / parent entities of Unstarter GmbH: description of\nthe relationship to the main operating entity (sole shareholder,\nservice provider, holding vehicle, etc.). UNSTARTER-specific\ndisclosure field; safe to omit for unrelated companies.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sole_shareholder": {
+          "description": "PathRef of the sole shareholder when the entity has exactly one\n(Einpersonen-GmbH / Einpersonen-UG). Either a `people/**` or\n`entity/**` PathRef. Omit when there is more than one shareholder —\nuse the shareholders register (jurisdiction-de pillar) instead.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stammkapital_eur": {
+          "description": "Registered share capital (Stammkapital) in euros. GmbH minimum is\n25 000; UG minimum is 1. Matches the figure recorded in the\nHandelsregister.",
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "target_incorporation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IncorporationTimeline"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Planned milestone dates for an entity that is still in formation\nor pre-incorporation. Once the entity is fully registered, these\ntargets become historical and authoritative dates should live on\nthe main `Entity` record (`date_of_incorporation`) and in the\njurisdiction-de pillar."
+        },
+        "tax_structure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaxStructure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Tax-structure disclosure relevant at the entity level — e.g.\nparticipation exemption, double-taxation-agreement references,\neffective tax rates on exit."
+        },
+        "vbg_unfallversicherung": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AccidentInsurance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Statutory accident-insurance registration with the VBG\n(Verwaltungs-Berufsgenossenschaft) — the German employers'\nliability insurance for office-based employment."
+        }
+      },
+      "type": "object"
+    },
+    "EntityType": {
+      "description": "Entity type discriminator.",
+      "enum": [
+        "corporation",
+        "llc",
+        "partnership",
+        "sole-proprietorship",
+        "non-profit",
+        "cooperative",
+        "trust",
+        "foundation",
+        "lp",
+        "llp",
+        "joint-venture",
+        "association",
+        "reit",
+        "pbc"
+      ],
+      "type": "string"
+    },
+    "IncorporationTimeline": {
+      "description": "Incorporation timeline targets — planned milestones for bringing a\npre-incorporation entity to fully-registered and funding-ready status.\nAll dates are ISO 8601 (`YYYY-MM-DD`) and represent targets, not\nconfirmations. Move a target into the main `Entity` record (e.g.\n`date_of_incorporation`) once the milestone is achieved.",
+      "properties": {
+        "formation_deed_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target date of the notary formation deed (Gründungsurkunde /\nGesellschaftsvertrag signing). For German GmbH/UG this is day zero —\nthe entity exists \"in formation\" (`i.G.`) between this date and the\nHandelsregister entry."
+        },
+        "handelsregister_entry_target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target date for the entity's entry into the commercial register\n(Handelsregister eintragung / HRB number issuance). From this date the\nentity has full legal personhood and limited liability."
+        },
+        "note": {
+          "description": "Free-form narrative notes about the incorporation sequencing,\ndependencies, or rationale.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "steuernummer_target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target date for the tax identification number (Steuernummer) to be\nissued by the responsible Finanzamt. Required before the entity can\nlegally invoice or reclaim VAT."
+        },
+        "wandeldarlehen_ready_target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target date by which the entity is ready to sign convertible-loan\nagreements (Wandeldarlehen). Typically requires: Handelsregister entry\ncomplete, Steuernummer issued, bank account opened, Stammkapital paid\nin."
+        }
+      },
+      "type": "object"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "LaborRegistration": {
+      "description": "Labor registration details (German Betriebsnummer) — identifiers issued\nby the Bundesagentur für Arbeit when an entity first employs staff\nsubject to social-insurance contributions.",
+      "properties": {
+        "betriebsnummer": {
+          "description": "Eight-digit Betriebsnummer issued by the Bundesagentur für Arbeit.\nUniquely identifies the employer for social-insurance (DEÜV)\nreporting.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "kundennummer": {
+          "description": "Customer reference number (Kundennummer) assigned by the Agentur\nfür Arbeit / Betriebsnummern-Service for correspondence. Distinct\nfrom the Betriebsnummer itself.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wirtschaftsunterklasse": {
+          "description": "WZ 2008 Wirtschaftsunterklasse code assigned to the employer,\ne.g. `62103 (Entwicklung und Programmierung von Anwendungssoftware)`.\nDetermines the statistical industry classification used for labour-\nmarket reporting.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Lei": {
+      "description": "ISO 17442 Legal Entity Identifier (20-character alphanumeric).",
+      "pattern": "^[A-Z0-9]{18}[0-9]{2}$",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PlannedSubsidiary": {
+      "description": "Planned subsidiary entity.",
+      "properties": {
+        "capitalization_eur": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "formation_service": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formation_timing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ownership": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "purpose": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PostalAddress": {
+      "description": "Physical address aligned with schema.org PostalAddress.",
+      "properties": {
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "country": {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        "postal_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "street": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "country"
+      ],
+      "type": "object"
+    },
+    "ReorganizationPlan": {
+      "description": "Corporate reorganization plan.",
+      "properties": {
+        "action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commitment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "StatusActive": {
+      "description": "Lifecycle status for entities.",
+      "enum": [
+        "active",
+        "inactive",
+        "dissolved",
+        "pre-incorporation",
+        "planned"
+      ],
+      "type": "string"
+    },
+    "TaxId": {
+      "description": "Tax identification number with type discriminator.",
+      "properties": {
+        "country": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCountry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "id_type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id_type",
+        "value"
+      ],
+      "type": "object"
+    },
+    "TaxStructure": {
+      "description": "Tax structure configuration.",
+      "properties": {
+        "dba_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effective_exit_tax_rate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "participation_exemption": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.11.0/entity.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Company profile aligned with schema.org Organization and GLEIF LEI reference data.",
+  "properties": {
+    "address": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PostalAddress"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Primary operating address. May differ from `registered_seat` when\nthe entity operates from a different location than its legal\nseat. Structured per schema.org PostalAddress."
+    },
+    "company_purpose": {
+      "description": "Corporate purpose (Unternehmensgegenstand) — statutory object\nclause describing what the entity does. For German GmbH/UG this\nis the `Gegenstand des Unternehmens` recorded in the notary deed\nand Handelsregister; for US corporations it mirrors the\ncertificate of incorporation's purpose clause. Free-form prose.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "contact": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Contact"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Public contact endpoint (email / phone) for external parties."
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EntityCustom"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Jurisdiction-specific and entity-specific extension fields that\ndo not fit the canonical schema. Kept as a strongly typed union\nrather than `serde_json::Value` so report generators can consume\nthese fields without dynamic parsing."
+    },
+    "date_of_incorporation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ISO 8601 date on which the entity was legally formed. For German\nGmbH/UG this is the Handelsregister entry date, not the notary\ndeed date. Optional to accommodate entities in formation; once\nincorporation completes, this field should be populated and the\ncorresponding `target_incorporation` targets become historical."
+    },
+    "entity_class": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EntityClass"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "founders": {
+      "default": [],
+      "description": "PathRefs into `people/**` for the founder(s) of the entity.\nAuthoritative founder attribution lives on the person records;\nthis list provides the reverse index.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "functional_currency": {
+      "$ref": "#/$defs/IsoCurrency",
+      "description": "Functional (reporting) currency of the entity. ISO 4217. Canonical\ndefault for any monetary value elsewhere in the corpus that does not\ncarry its own currency declaration."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef identifier for this entity within the corpus, e.g.\n`entity/unstarter-gmbh`. Must be unique across the repository."
+    },
+    "jurisdiction": {
+      "$ref": "#/$defs/IsoCountry",
+      "description": "ISO 3166-1 alpha-2 country code of the jurisdiction under whose\nlaws the entity is incorporated."
+    },
+    "legal_form": {
+      "description": "Free-form legal-form designation as registered locally (e.g.\n\"GmbH (Gesellschaft mit beschränkter Haftung)\", \"UG\n(haftungsbeschränkt)\", \"C-Corp\", \"LLC\"). Complements the\ncoarse-grained `entity_type` enum with the precise local label\nused in official documents.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "legal_name": {
+      "description": "Full legal name as it appears in the commercial register\n(Handelsregister / Companies House / State filing), including the\nlegal-form suffix (e.g. \"Unstarter GmbH\", \"Beevelop UG\n(haftungsbeschränkt)\", \"Acme Corp, Inc.\").",
+      "type": "string"
+    },
+    "lei": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Lei"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Legal Entity Identifier (ISO 17442) — 20-character alphanumeric\ncode issued by a GLEIF-accredited LOU. Required for entities\nsubject to financial-market reporting (EMIR, MiFID II, Dodd-\nFrank); optional otherwise."
+    },
+    "number_of_employees": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EmployeeCount"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Current employee headcount with the date the snapshot was taken."
+    },
+    "parent_organization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of the parent organisation, when this entity is a wholly\nor majority owned subsidiary. For minority investments use the\nrelevant equity / cap-table pillar instead."
+    },
+    "registered_seat": {
+      "description": "Registered seat (Sitz der Gesellschaft) — the city or municipality\nrecorded in the commercial register as the entity's legal seat,\ne.g. \"Berlin\", \"Dobel, Germany\". Free-form by design: the seat is\noften just a municipality name, not a full postal address, and\ncan diverge from the operating address (`address`). For the\nstructured operating address use `address` instead.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "registration_authority": {
+      "description": "Name of the authority that maintains the registration (e.g.\n\"Amtsgericht Stuttgart\", \"Delaware Division of Corporations\",\n\"Companies House\"). Paired with `registration_number` to locate\nthe authoritative public record.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "registration_number": {
+      "description": "Identifier assigned by the registration authority — e.g. German\nHandelsregister `HRB 765497`, Delaware file number `7891234`,\nUK Companies House number `12345678`. Include the prefix where\nit is part of the canonical identifier (e.g. `HRB`).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/StatusActive",
+      "description": "Operational status of the entity (active / pre-incorporation /\ndissolved / ...). See `StatusActive` for the full enum."
+    },
+    "subsidiaries": {
+      "default": [],
+      "description": "PathRefs of subsidiary entities. Mirrors each subsidiary's\n`parent_organization` — both sides of the relation should be\nkept in sync.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "tax_ids": {
+      "default": [],
+      "description": "Tax identification numbers issued by various authorities, each\ntyped (`Steuernummer`, `USt-IdNr`, `EIN`, `DUNS`, etc.) and\noptionally scoped to a country.",
+      "items": {
+        "$ref": "#/$defs/TaxId"
+      },
+      "type": "array"
+    },
+    "trade_name": {
+      "description": "Operating / trade name used for branding and marketing, without\nthe legal-form suffix (e.g. \"Unstarter\", \"Acme\"). Omit when the\ntrade name equals the legal name.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "type": {
+      "$ref": "#/$defs/EntityType",
+      "description": "Legal form category — the kind of legal vehicle this entity is\n(corporation, LLC, partnership, etc.). Used for schema.org\nOrganization subtyping and downstream reporting."
+    },
+    "url": {
+      "description": "Primary public website of the entity (absolute URL).",
+      "format": "uri",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "legal_name",
+    "jurisdiction",
+    "functional_currency",
+    "status"
+  ],
+  "title": "Entity",
+  "type": "object"
+}

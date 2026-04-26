@@ -1,0 +1,229 @@
+{
+  "$defs": {
+    "AgeGate": {
+      "additionalProperties": false,
+      "description": "Age-gate rules applied at sign-up or first-use.",
+      "properties": {
+        "failure_behaviour": {
+          "description": "Behaviour when a user fails the gate (e.g.\n`\"redirect to parental-consent flow\"`, `\"disable in-app purchases\"`,\n`\"show restricted experience\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "gated_surfaces": {
+          "description": "Which product surfaces the age-gate guards (e.g.\n`[\"sign-up\", \"behavioural-ads\", \"social-feed\"]`).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "minimum_age": {
+          "description": "Minimum age required to use the unrestricted product experience.\nTypically 13 (US/COPPA), 16 (EU/GDPR-K), or the jurisdiction-specific\nminimum where the product targets children.",
+          "format": "int64",
+          "maximum": 21,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "verification": {
+          "$ref": "#/$defs/AgeVerificationMethod",
+          "description": "How the age is established."
+        }
+      },
+      "required": [
+        "minimum_age",
+        "verification"
+      ],
+      "type": "object"
+    },
+    "AgeVerificationMethod": {
+      "description": "Method used to gate users by age at sign-up.",
+      "oneOf": [
+        {
+          "description": "User is asked to enter a date of birth; input is not independently\nverified. Acceptable for COPPA-grade age-gating per FTC guidance\nwhen combined with a non-coercive, neutral flow.",
+          "properties": {
+            "kind": {
+              "const": "self-declared-dob",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Age range selection from a bucketed dropdown (e.g. 13-17, 18+).",
+          "properties": {
+            "kind": {
+              "const": "self-declared-age-range",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Third-party age estimation / verification (e.g. Yoti, Incode).\n`provider` is the service name.",
+          "properties": {
+            "kind": {
+              "const": "third-party-estimation",
+              "type": "string"
+            },
+            "provider": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "provider"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Government-ID verification (passport, national id). Required for\nsome regulated contexts (gambling-adjacent products, high-risk\nfintech).",
+          "properties": {
+            "kind": {
+              "const": "government-id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Parental consent flow (verified by a trusted proxy) per COPPA §\n312.5. `flow` is a short label (e.g. `\"verified-credit-card\"`,\n`\"signed-consent-form\"`, `\"video-conference-verification\"`).",
+          "properties": {
+            "flow": {
+              "type": "string"
+            },
+            "kind": {
+              "const": "parental-consent",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "flow"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.11.0/privacy-classification.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Privacy classification for a B2C product. Aggregates the regulatory flags\nand store-compliance signals that drive age-gate logic, ad-targeting\npolicy, and store-listing content ratings.\n\nScope: one per product (or per tenant for single-product shops). Lives\nat `legal/privacy-classification.yaml`.",
+  "properties": {
+    "admob_category_filter": {
+      "description": "Google AdMob content-filter category (e.g. `\"G\"`, `\"PG\"`, `\"T\"`,\n`\"MA\"`) or the strictest category when multiple surfaces are served.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "age_gate": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AgeGate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Structured age-gate configuration, when one is applied at sign-up.\n`None` means no age gate exists (e.g. B2B products where authors\nexplicitly declare the audience is adult-only by contract)."
+    },
+    "app_store_content_rating": {
+      "description": "App Store / Play Store content rating (e.g. `\"4+\"`, `\"12+\"`, `\"17+\"`,\n`\"Everyone\"`, `\"Teen\"`, `\"Mature\"`). Values depend on the store and\nrating body (ESRB, PEGI, USK, CERO).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "as_of": {
+      "$ref": "#/$defs/IsoDate",
+      "description": "Effective date of this classification."
+    },
+    "coppa": {
+      "description": "Whether the product is subject to COPPA (Children's Online Privacy\nProtection Act, US, 15 U.S.C. §§ 6501–6506). True iff the product\nis directed at children under 13 or has actual knowledge that it\ncollects personal information from children under 13.",
+      "type": "boolean"
+    },
+    "gdpr_k_minimum_age": {
+      "description": "Minimum age used for GDPR-K parental-consent branching. Default is\nthe strictest EU member-state threshold (16). Tenants operating in\nmember states with lower minimums may override.",
+      "format": "int64",
+      "maximum": 16,
+      "minimum": 13,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "gdpr_kids": {
+      "description": "Whether the product is subject to GDPR-K (Art. 8 GDPR — children's\ndata). Member-state minimum ages range 13–16; see `gdpr_k_minimum_age`.",
+      "type": "boolean"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (conventionally `legal/privacy-classification`)."
+    },
+    "notes": {
+      "description": "Free-form notes (e.g. \"COPPA-safe because behavioural targeting\ndisabled at the AdMob account level for the under-13 surface\").",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "policy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef to a `legal/policies/*.yaml` privacy / children policy that\nencodes the public-facing prose."
+    },
+    "product": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Product the classification applies to (PathRef to a `product/*.yaml`).\nOptional for single-product tenants where the mapping is implicit."
+    },
+    "related_decisions": {
+      "description": "PathRefs to BDRs that rationalise the classification\n(e.g. `governance/decisions/0011-coppa-posture`).",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "as_of",
+    "coppa",
+    "gdpr_kids"
+  ],
+  "title": "PrivacyClassification",
+  "type": "object"
+}
