@@ -1,0 +1,819 @@
+{
+  "$defs": {
+    "CompetitorCustom": {
+      "description": "Typed custom extension data for `Competitor`.",
+      "properties": {
+        "eu_data_residency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EuDataResidency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "CompetitorFunding": {
+      "additionalProperties": false,
+      "description": "Competitor funding information.",
+      "properties": {
+        "arr": {
+          "description": "Annualised recurring revenue as reported to investors at the last\nfunding round. Distinct from `CompetitorTraction.arr`, which\ncaptures current/public ARR figures. Load-bearing when set —\nalways pair with `arr_source`.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 4217 currency for `total_raised`, `valuation`, `arr`, and\n`last_round.amount`."
+        },
+        "funding_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "last_round": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompetitorFundingRound"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notable_investors": {
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stage": {
+          "description": "Current funding stage. Free-form because sources report\ninconsistently (`\"series-b\"`, `\"series-c (pre-shutdown)\"`,\n`\"late\"`, `\"public\"`, `\"growth\"`, `\"mature\"`, `\"unknown\"`,\n`\"private\"`). Prefer kebab-case where it applies (`pre-seed`,\n`seed`, `series-a`, `series-b`, `series-c`, `series-d-plus`,\n`late-stage`, `growth`, `ipo`, `exit`, `shutdown`).",
+          "type": "string"
+        },
+        "total_raised": {
+          "description": "Total capital raised to date, in `currency`. Non-negative.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valuation": {
+          "description": "Last known valuation, in `currency`. Non-negative.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "valuation_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "stage"
+      ],
+      "type": "object"
+    },
+    "CompetitorFundingRound": {
+      "additionalProperties": false,
+      "description": "Funding round details for a competitor.",
+      "properties": {
+        "amount": {
+          "description": "Round amount in the competitor's reporting currency (see\n`CompetitorFunding.currency`). Non-negative.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "date": {
+          "description": "Round close date. String because sources report at mixed precision\n(`\"2024\"`, `\"2024-10\"`, `\"2024-10-09\"`). Prefer full ISO 8601 where\nknown.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "description": "Source of the funding information (press release URL, Crunchbase,\nPitchBook, SEC filing).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "description": "Round type. Free-form because sources report inconsistently\n(`\"Series B\"`, `\"pre-seed\"`, `\"IPO\"`, `\"Direct Listing\"`,\n`\"convertible\"`, `\"grant\"`). Prefer kebab-case where possible\n(`pre-seed`, `seed`, `series-a` … `series-d-plus`, `ipo`, `debt`,\n`convertible`, `grant`, `crowdfunding`).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "CompetitorPricing": {
+      "additionalProperties": false,
+      "description": "Competitor pricing model.",
+      "properties": {
+        "includes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "description": "Pricing model description. Free-form because sources report\ninconsistently and often combine models (`\"Per-user subscription\nwith edition-based tiering\"`, `\"Freemium with hub-based tiered\npricing\"`, `\"House-edge margin on real-money wagers\"`). Prefer\nkebab-case slugs where the model is clean (`free`, `freemium`,\n`subscription`, `usage-based`, `transactional`, `one-time`,\n`hybrid`, `custom`, `opaque`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "planned_tier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompetitorPricingTier"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revenue_share": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "revenue_share_notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tiers": {
+          "items": {
+            "$ref": "#/$defs/CompetitorPricingTier"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CompetitorPricingTier": {
+      "additionalProperties": false,
+      "description": "A pricing tier in a competitor's pricing model.",
+      "properties": {
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "period": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "CompetitorProduct": {
+      "additionalProperties": false,
+      "description": "Competitor product information.",
+      "properties": {
+        "ai_features": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "architecture": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "distribution": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "feature_ratings": {
+          "additionalProperties": {
+            "format": "uint8",
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "launch_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "license": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "open_source": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "open_standard": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "stage": {
+          "description": "Product lifecycle stage. Free-form because real competitors\npublish mixed descriptors (`\"production\"`, `\"public alpha (v0.2.5)\"`,\n`\"invitation-only alpha\"`, `\"shutdown\"`, `\"mature\"`, `\"growth\"`).\nPrefer kebab-case where it fits (`concept`, `alpha`, `beta`, `ga`,\n`mature`, `sunset`, `discontinued`).",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stage"
+      ],
+      "type": "object"
+    },
+    "CompetitorRelationship": {
+      "description": "Relationship classification of a competitor.",
+      "oneOf": [
+        {
+          "enum": [
+            "direct-competitor",
+            "integration-partner",
+            "cautionary-reference",
+            "reference-company"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "category",
+          "description": "Shares a category with the company but does not compete directly\n(e.g. a distant incumbent that defines the category but targets a\ndifferent segment). Useful for anchoring positioning without\noverstating threat.",
+          "type": "string"
+        }
+      ]
+    },
+    "CompetitorTargetMarket": {
+      "additionalProperties": false,
+      "description": "Competitor target market.",
+      "properties": {
+        "company_size": {
+          "description": "Company-size focus. Free-form because sources use employee ranges,\nrevenue bands, or descriptive prose (`\"1-10\"`, `\"10-2,000 employees\"`,\n`\"solo to small teams\"`). Prefer employee ranges where known.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "focus": {
+          "description": "Prose description of what the competitor focuses on. Free-form\nbecause this captures the competitor's positioning in their own\nwords (`\"Fantasy roster management within the official tournament\nexperience\"`). Do not attempt to classify into categorical buckets\n— the nuance is the value.",
+          "type": "string"
+        },
+        "geography": {
+          "description": "Geographic coverage. Free-form (`\"Global, strongest in US and\nEurope\"`, `\"DACH primary, English markets secondary\"`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "segment": {
+          "description": "Primary segment the competitor targets (e.g. `\"SMB\"`, `\"prosumers\"`).",
+          "type": "string"
+        },
+        "use_case": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "segment",
+        "focus"
+      ],
+      "type": "object"
+    },
+    "CompetitorTraction": {
+      "additionalProperties": false,
+      "description": "Competitor traction metrics.",
+      "properties": {
+        "active_ad_campaigns": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr": {
+          "description": "Current or most-recently-reported public ARR. Distinct from\n`CompetitorFunding.arr`, which is the ARR reported to investors\nat the last funding round. Use `arr_date` and `arr_source` to\nqualify the figure.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "arr_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "arr_growth": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cash_flows_through_platform": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "combined_ad_spend_daily": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "companies_on_platform": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "discord": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "github_forks": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "github_stars": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "largest_customer_mrr": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "npm_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stars_timeframe": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "website_monthly_visits": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "website_traffic_source": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "website_visits_date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EuDataResidency": {
+      "description": "EU data residency offering details for a competitor.",
+      "properties": {
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "offering": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ThreatLevel": {
+      "description": "Threat level a competitor poses. Ordered from least to most urgent.",
+      "oneOf": [
+        {
+          "const": "none",
+          "description": "Not a meaningful threat (dormant, adjacent, strategically irrelevant).",
+          "type": "string"
+        },
+        {
+          "const": "low",
+          "description": "Known but not pressing (slow growth, small footprint).",
+          "type": "string"
+        },
+        {
+          "const": "medium",
+          "description": "Active competitor with overlapping wedge.",
+          "type": "string"
+        },
+        {
+          "const": "high",
+          "description": "Direct, well-funded, fast-moving.",
+          "type": "string"
+        },
+        {
+          "const": "existential",
+          "description": "Wedge is identical; a loss here is existential.",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.3/competitor.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Competitor profile.",
+  "properties": {
+    "acquirer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "as_of": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "category": {
+      "type": "string"
+    },
+    "category_representative": {
+      "description": "`true` when this competitor is the canonical representative of its\ncategory — the name an investor or customer reaches for first. At\nmost one competitor per category should set this to `true`.",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "competitive_advantages": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "core_features": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "founded": {
+      "description": "Year (or year-month) the company was founded. String rather than\n`IsoDate` because sources report at mixed precision (`\"2013\"`,\n`\"2026-02\"`, `\"2024-10-09\"`).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "funding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorFunding"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "github": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "headquarters": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "integration_opportunity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "layer": {
+      "description": "Competitive tier in this company's layered market model. A lower\nnumber denotes closer competition; `1` is typically the direct\nhead-to-head layer, `2` adjacent, `3` aspirational reference, etc.\nThe exact meaning is company-specific.",
+      "format": "int64",
+      "type": "integer"
+    },
+    "legal_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "planned_features": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorPricing"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "product": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorProduct"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "relationship": {
+      "$ref": "#/$defs/CompetitorRelationship"
+    },
+    "shutdown_date": {
+      "description": "Year-month (or full date) the company shut down, if applicable.\nString for the same mixed-precision reason as `founded`\n(e.g. `\"2024-12\"`).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "strategic_relevance": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "strengths": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "target_market": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorTargetMarket"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "team_notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "team_size": {
+      "format": "int64",
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "technology": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Technology stack — keys are layer names, values are descriptions.",
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "threat_level": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ThreatLevel"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "How severe a threat this competitor poses to the company's wedge.\nSeparate from `layer` (which measures closeness) because a distant\ncompetitor can still be highly threatening, and a close competitor\ncan be strategically irrelevant."
+    },
+    "traction": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompetitorTraction"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "weaknesses": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "website": {
+      "description": "Primary public website URL.",
+      "format": "uri",
+      "type": "string"
+    },
+    "why_we_win": {
+      "description": "Short statement of the structural reason the company wins against\nthis competitor. Contrast with `strategic_relevance` (which explains\n*why* we track them) and `competitive_advantages` (which is a\nfeature-level list). One sentence; pitch-ready.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "website",
+    "layer",
+    "category",
+    "relationship",
+    "as_of",
+    "description",
+    "sources"
+  ],
+  "title": "Competitor",
+  "type": "object"
+}

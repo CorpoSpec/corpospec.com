@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "IconGrid": {
+      "additionalProperties": false,
+      "description": "Keyline grid used to align icon shapes.",
+      "properties": {
+        "base_size_px": {
+          "description": "Base grid size in pixels (e.g. 24 for a 24×24 canvas).",
+          "format": "int64",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "keyline_shapes": {
+          "description": "Canonical keyline shapes (e.g. `[\"circle-18\", \"square-16\", \"rect-20x16\"]`).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "padding_px": {
+          "description": "Padding (safe area) from the edge of the canvas, in pixels.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "base_size_px"
+      ],
+      "type": "object"
+    },
+    "IconStyle": {
+      "description": "Icon style (visual treatment family).",
+      "enum": [
+        "outlined",
+        "filled",
+        "rounded",
+        "sharp",
+        "two-tone"
+      ],
+      "type": "string"
+    },
+    "IconVariant": {
+      "additionalProperties": false,
+      "description": "A single icon variant in the system (e.g. \"regular-outlined-24px\").",
+      "properties": {
+        "corner_radius_px": {
+          "description": "Corner radius in pixels (applies to rounded / sharp distinctions).",
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "name": {
+          "description": "Display name of the variant.",
+          "type": "string"
+        },
+        "slug": {
+          "description": "Short slug identifying the variant (e.g. `regular-outlined-24`).",
+          "type": "string"
+        },
+        "stroke_width_px": {
+          "description": "Stroke width in pixels at the base grid size (optional — filled variants\nmay omit).",
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "style": {
+          "$ref": "#/$defs/IconStyle"
+        },
+        "use_cases": {
+          "description": "Surfaces where this variant is used (navigation, list rows, empty\nstates, etc.).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "weight": {
+          "$ref": "#/$defs/IconWeight"
+        }
+      },
+      "required": [
+        "slug",
+        "name",
+        "weight",
+        "style"
+      ],
+      "type": "object"
+    },
+    "IconWeight": {
+      "description": "Icon weight (stroke thickness family).",
+      "enum": [
+        "thin",
+        "regular",
+        "bold",
+        "filled",
+        "duotone"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.3/brand-iconography.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand iconography system. Captures the systematic rules behind every icon\nthe brand ships — weights, styles, grids, and production sources —\nindependent of the individual assets enumerated in `AssetCatalog`.",
+  "properties": {
+    "anti_patterns": {
+      "description": "Anti-patterns — how icons must NOT be used (e.g. \"never rotate\",\n\"never apply drop shadows\").",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "color_usage": {
+      "description": "Conventions for applying colour to icons (fill rules, duotone pairs,\nsemantic-colour binding).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "grid": {
+      "$ref": "#/$defs/IconGrid",
+      "description": "The grid that icon shapes align to."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (conventionally `brand/iconography`)."
+    },
+    "name": {
+      "description": "Display name of the icon system (e.g. `\"Unstarter Duotone\"`,\n`\"KICKGEIST Sport\"`).",
+      "type": "string"
+    },
+    "source_files": {
+      "description": "PathRefs to production source files (SVG sets, Figma components,\nfont-icon glyph maps).",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "variants": {
+      "description": "Variants (weights × styles × sizes) shipped by this system.",
+      "items": {
+        "$ref": "#/$defs/IconVariant"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "grid"
+  ],
+  "title": "IconographySystem",
+  "type": "object"
+}

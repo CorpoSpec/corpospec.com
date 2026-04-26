@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "FlagFlip": {
+      "properties": {
+        "flag": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "to_value": {
+          "$ref": "#/$defs/FlagValue"
+        }
+      },
+      "required": [
+        "flag",
+        "to_value"
+      ],
+      "type": "object"
+    },
+    "FlagValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "format": "double",
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "IntegrationStatus": {
+      "description": "Integration lifecycle status.",
+      "enum": [
+        "draft",
+        "planned",
+        "development",
+        "testing",
+        "active",
+        "sunset",
+        "retired"
+      ],
+      "type": "string"
+    },
+    "IntegrationToggle": {
+      "properties": {
+        "integration": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "status": {
+          "$ref": "#/$defs/IntegrationStatus"
+        }
+      },
+      "required": [
+        "integration",
+        "status"
+      ],
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "LifecycleMilestone": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "flag_flips": {
+          "items": {
+            "$ref": "#/$defs/FlagFlip"
+          },
+          "type": "array"
+        },
+        "integration_toggles": {
+          "items": {
+            "$ref": "#/$defs/IntegrationToggle"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "date"
+      ],
+      "type": "object"
+    },
+    "LifecycleMode": {
+      "enum": [
+        "perpetual",
+        "time-bound"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.10.3/product-lifecycle.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of this record (conventionally `product/lifecycle`)."
+    },
+    "milestones": {
+      "items": {
+        "$ref": "#/$defs/LifecycleMilestone"
+      },
+      "type": "array"
+    },
+    "mode": {
+      "$ref": "#/$defs/LifecycleMode"
+    },
+    "wind_down_checklist": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "mode"
+  ],
+  "title": "Lifecycle",
+  "type": "object"
+}
