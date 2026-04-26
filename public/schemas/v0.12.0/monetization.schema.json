@@ -1,0 +1,631 @@
+{
+  "$defs": {
+    "AdFormat": {
+      "description": "Ad format type.",
+      "enum": [
+        "banner",
+        "interstitial",
+        "rewarded",
+        "native"
+      ],
+      "type": "string"
+    },
+    "AdPlacement": {
+      "additionalProperties": false,
+      "description": "Placement of an ad within the product.",
+      "properties": {
+        "format": {
+          "$ref": "#/$defs/AdFormat"
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "format"
+      ],
+      "type": "object"
+    },
+    "AdStrategy": {
+      "additionalProperties": false,
+      "description": "Ad monetization strategy.",
+      "properties": {
+        "cpm_target": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MonetaryAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Target CPM. Non-negative (the `amount` field of `MonetaryAmount`\nis not range-constrained at the schema level because\n`MonetaryAmount` is shared; rely on validator checks)."
+        },
+        "fill_rate_target": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "networks": {
+          "description": "Ad networks this strategy monetises through. Free-form because\nnetworks use publicly branded names (`\"Google AdMob\"`, `\"AppLovin\"`,\n`\"IronSource\"`, `\"Unity Ads\"`, `\"Meta Audience Network\"`,\n`\"Google AdSense\"`). Kebab-case slugs are also acceptable\n(`admob`, `applovin`, `ironsource`, `unity-ads`,\n`meta-audience`, `google-adsense`).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "placements": {
+          "items": {
+            "$ref": "#/$defs/AdPlacement"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DiscountProgram": {
+      "additionalProperties": false,
+      "description": "Discount program within pricing.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Pricing": {
+      "additionalProperties": false,
+      "description": "Pricing configuration.",
+      "properties": {
+        "base_price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "discount_programs": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/DiscountProgram"
+          },
+          "type": "array"
+        },
+        "free_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PricingModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "paid_tier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_direction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pricing_rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "structure": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_arr_per_customer": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tiers": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PricingTier"
+          },
+          "type": "array"
+        },
+        "usage_based_pricing": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UsageBasedPricing"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PricingModel": {
+      "description": "Pricing model type.",
+      "enum": [
+        "freemium",
+        "freemium-plus-usage",
+        "subscription",
+        "subscription-plus-usage",
+        "usage-based",
+        "enterprise",
+        "hybrid",
+        "retail",
+        "per-unit",
+        "project-based",
+        "licensing",
+        "hourly-rate",
+        "auction",
+        "cost-plus-pricing"
+      ],
+      "type": "string"
+    },
+    "PricingTier": {
+      "additionalProperties": false,
+      "description": "A single pricing tier.",
+      "properties": {
+        "cost_markup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employee_access": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "price_monthly": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "ReferralProgram": {
+      "additionalProperties": false,
+      "description": "Referral reward program configuration.",
+      "properties": {
+        "tiers": {
+          "items": {
+            "$ref": "#/$defs/ReferralTier"
+          },
+          "type": "array"
+        },
+        "tracking_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trigger": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ReferralTier": {
+      "additionalProperties": false,
+      "description": "A tier in a referral reward program.",
+      "properties": {
+        "reward": {
+          "$ref": "#/$defs/Reward",
+          "description": "Structured reward granted at this tier."
+        },
+        "threshold": {
+          "description": "Referral count at which this tier unlocks. Zero is permitted as the\nbaseline tier — the \"no referrals → standard ad experience\" row —\nbecause authors often want the baseline ad/paywall state captured\nalongside the earned tiers.",
+          "format": "int64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "threshold",
+        "reward"
+      ],
+      "type": "object"
+    },
+    "RevenueModel": {
+      "description": "Revenue model type.",
+      "enum": [
+        "ad-based",
+        "subscription",
+        "in-app-purchase",
+        "freemium",
+        "freemium-plus-usage",
+        "marketplace",
+        "transaction-fee",
+        "hybrid",
+        "professional-services",
+        "retainer",
+        "hourly",
+        "cost-plus",
+        "commission",
+        "royalty",
+        "franchise-fee",
+        "rental",
+        "donation-grant",
+        "management-fee"
+      ],
+      "type": "string"
+    },
+    "Reward": {
+      "description": "Typed reward grant. Replaces the earlier prose-only `reward: String` +\n`reward_days: i64` pair: structured so downstream consumers (analytics,\npayroll, legal review) can reason about the economic shape without\nparsing prose.",
+      "oneOf": [
+        {
+          "description": "N days without ads. Pair with `duration_days` on [`Reward`].",
+          "properties": {
+            "kind": {
+              "const": "ad-free-days",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Extension of a trial / premium period. Pair with `duration_days`.",
+          "properties": {
+            "kind": {
+              "const": "trial-extension",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Discount on a paid plan. `percent` is `[0.0, 100.0]`.",
+          "properties": {
+            "kind": {
+              "const": "discount",
+              "type": "string"
+            },
+            "percent": {
+              "format": "double",
+              "maximum": 100.0,
+              "minimum": 0.0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "percent"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Cash payout.",
+          "properties": {
+            "amount": {
+              "format": "double",
+              "minimum": 0.0,
+              "type": "number"
+            },
+            "currency": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "kind": {
+              "const": "cash",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "amount",
+            "currency"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "In-app credit / store credit.",
+          "properties": {
+            "amount": {
+              "format": "double",
+              "minimum": 0.0,
+              "type": "number"
+            },
+            "currency": {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "kind": {
+              "const": "credit",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "amount",
+            "currency"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Profile badge or achievement.",
+          "properties": {
+            "kind": {
+              "const": "badge",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Cosmetic unlock (skin, theme, avatar) with no gameplay impact.",
+          "properties": {
+            "kind": {
+              "const": "cosmetic",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Physical merchandise.",
+          "properties": {
+            "kind": {
+              "const": "physical-item",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Bespoke reward with a free-form label.",
+          "properties": {
+            "kind": {
+              "const": "other",
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "label"
+          ],
+          "type": "object"
+        }
+      ],
+      "properties": {
+        "description": {
+          "description": "Customer-facing description (e.g. `\"Three months ad-free\"`). Derived\nwhen possible, but authors may override for tone/localisation.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "duration_days": {
+          "description": "Duration in days (used with `AdFreeDays` and `TrialExtension`).",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "type": "object",
+      "unevaluatedProperties": false
+    },
+    "UsageBasedPricing": {
+      "additionalProperties": false,
+      "description": "Usage-based pricing configuration.",
+      "properties": {
+        "billing": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_strategy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "margin_target_longterm": {
+          "format": "double",
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.12.0/monetization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Monetization entity describing how a product generates revenue.",
+  "properties": {
+    "ad_strategy": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AdStrategy"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "model": {
+      "$ref": "#/$defs/RevenueModel",
+      "description": "Canonical revenue model (typed enum). Distinct from `Pricing.model`\n(`PricingModel`): `RevenueModel` classifies *how money is made*\nat the business-model level (ad-based, subscription, marketplace…),\nwhile `Pricing.model` describes *how the price is structured*\n(freemium, tiered, usage-based…). Both can coexist."
+    },
+    "name": {
+      "description": "Human-readable name. Recommended but optional for backward\ncompatibility.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Pricing"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Pricing configuration. Shares the same `Pricing` struct used by\n`GtmStrategy.pricing` — a monetization and its GTM must agree on\ntiers, prices, and usage-based unit."
+    },
+    "referral_program": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReferralProgram"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "related_decisions": {
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "model"
+  ],
+  "title": "Monetization",
+  "type": "object"
+}

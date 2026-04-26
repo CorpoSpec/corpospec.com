@@ -1,0 +1,465 @@
+{
+  "$defs": {
+    "DesignPrinciple": {
+      "description": "Design principle with anti-pattern.",
+      "properties": {
+        "anti_pattern": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "type": "object"
+    },
+    "DistributionChannel": {
+      "description": "Distribution channel for a product.",
+      "enum": [
+        "app-store",
+        "play-store",
+        "web-direct",
+        "enterprise",
+        "open-source",
+        "sideload",
+        "retail-store",
+        "wholesale",
+        "distributor",
+        "franchise-channel",
+        "direct-sales",
+        "dealer-network",
+        "broker",
+        "catalog"
+      ],
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "Localization": {
+      "additionalProperties": false,
+      "description": "Localization configuration.",
+      "properties": {
+        "default_language": {
+          "type": "string"
+        },
+        "languages": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "default_language"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Period": {
+      "description": "A time period with start and end dates.",
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "type": {
+          "$ref": "#/$defs/PeriodType"
+        }
+      },
+      "required": [
+        "type",
+        "start"
+      ],
+      "type": "object"
+    },
+    "PeriodType": {
+      "description": "Period type discriminator.",
+      "enum": [
+        "instant",
+        "duration"
+      ],
+      "type": "string"
+    },
+    "PhaseStatus": {
+      "description": "Phase status within a product roadmap.",
+      "enum": [
+        "planned",
+        "in-progress",
+        "complete",
+        "cancelled"
+      ],
+      "type": "string"
+    },
+    "Platform": {
+      "description": "Target platform for a product.",
+      "enum": [
+        "ios",
+        "android",
+        "web",
+        "desktop",
+        "cli",
+        "api",
+        "progressive-web-app",
+        "windows",
+        "macos",
+        "linux",
+        "physical-product",
+        "embedded-iot",
+        "service-delivery"
+      ],
+      "type": "string"
+    },
+    "PositioningChange": {
+      "description": "A positioning change event for the product.",
+      "properties": {
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "from": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "ProductCustom": {
+      "description": "Typed custom extension data for `Product`.\n\nUsed by both product/overview.yaml and product/roadmap.yaml. Fields from\nthe overview (positioning, data_sovereignty, etc.) and from the roadmap\n(phase_details) are merged into a single struct since both deserialize\nas `Product`.",
+      "properties": {
+        "corpospec_scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data_sovereignty": {
+          "description": "Data sovereignty posture and competitive context."
+        },
+        "marketecture": {
+          "description": "Marketecture diagram definition (stakeholders, capabilities, foundations)."
+        },
+        "phase_details": {
+          "description": "Roadmap phase details (used by product/roadmap.yaml).",
+          "items": {
+            "$ref": "#/$defs/RoadmapPhaseDetail"
+          },
+          "type": "array"
+        },
+        "positioning": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "positioning_change": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PositioningChange"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stage_value_shift": {
+          "description": "Value shift across product stages."
+        }
+      },
+      "type": "object"
+    },
+    "ProductPhase": {
+      "additionalProperties": false,
+      "description": "A phase in the product roadmap.",
+      "properties": {
+        "deliverables": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        },
+        "period": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Period"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/PhaseStatus"
+        }
+      },
+      "required": [
+        "name",
+        "status"
+      ],
+      "type": "object"
+    },
+    "ProductStage": {
+      "description": "Product development stage.",
+      "enum": [
+        "concept",
+        "prototype",
+        "mvp",
+        "pre-revenue",
+        "growth",
+        "mature",
+        "sunset"
+      ],
+      "type": "string"
+    },
+    "RoadmapPhaseDetail": {
+      "description": "Roadmap phase detail for a product roadmap custom field.",
+      "properties": {
+        "headcount": {
+          "format": "int64",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "icp_focus": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "key_metrics": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "phase": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "quarter": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "TargetCustomer": {
+      "description": "Target customer segment.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "icp_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "priority": {
+          "type": "string"
+        },
+        "segment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "priority",
+        "segment"
+      ],
+      "type": "object"
+    },
+    "ValueProposition": {
+      "description": "Value proposition definition.",
+      "properties": {
+        "measurement_gap": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "primary_pain": {
+          "type": "string"
+        },
+        "solution": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "primary_pain",
+        "solution"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.12.0/product.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Product or service overview.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProductCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "design_principles": {
+      "items": {
+        "$ref": "#/$defs/DesignPrinciple"
+      },
+      "type": "array"
+    },
+    "distribution": {
+      "items": {
+        "$ref": "#/$defs/DistributionChannel"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "localization": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Localization"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "phases": {
+      "items": {
+        "$ref": "#/$defs/ProductPhase"
+      },
+      "type": "array"
+    },
+    "platforms": {
+      "items": {
+        "$ref": "#/$defs/Platform"
+      },
+      "type": "array"
+    },
+    "stage": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProductStage"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tagline": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target_customers": {
+      "items": {
+        "$ref": "#/$defs/TargetCustomer"
+      },
+      "type": "array"
+    },
+    "technology_stack": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "url": {
+      "format": "uri",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "value_proposition": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ValueProposition"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "title": "Product",
+  "type": "object"
+}

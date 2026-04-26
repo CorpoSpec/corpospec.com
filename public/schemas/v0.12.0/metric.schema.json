@@ -1,0 +1,192 @@
+{
+  "$defs": {
+    "MetricDirection": {
+      "description": "Metric direction.",
+      "enum": [
+        "up",
+        "down",
+        "neutral"
+      ],
+      "type": "string"
+    },
+    "MetricFrequency": {
+      "description": "Metric frequency.",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "annually"
+      ],
+      "type": "string"
+    },
+    "MetricSource": {
+      "description": "Metric data source.",
+      "properties": {
+        "integration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "query": {
+          "description": "Query or expression used to retrieve the metric from `system`. The\ndialect is implied by `system` — e.g. SQL for `postgres`/`snowflake`/\n`bigquery`/`redshift`/`clickhouse`, the Stripe API surface for\n`stripe`, the product-analytics query language for `mixpanel`/\n`amplitude`/`posthog`, or a free-form expression for `manual`/`custom`.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "system": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricSourceSystem"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Upstream system that produces the metric value (e.g. `stripe`,\n`postgres`, `quickbooks`). Use `custom` for in-house systems."
+        }
+      },
+      "type": "object"
+    },
+    "MetricSourceSystem": {
+      "description": "Upstream system that produces the metric value.\n\nEnumerates the common systems UNSTARTER integrates with as a metric source.\nUse `Custom` for in-house systems, internal services, or anything not yet\nenumerated. `Other` is reserved as a forward-compatible escape hatch for\nsystems that are not yet part of the canonical list.",
+      "enum": [
+        "manual",
+        "postgres",
+        "snowflake",
+        "bigquery",
+        "redshift",
+        "clickhouse",
+        "mixpanel",
+        "amplitude",
+        "posthog",
+        "stripe",
+        "quickbooks",
+        "xero",
+        "datev",
+        "lexoffice",
+        "hubspot",
+        "salesforce",
+        "custom",
+        "other"
+      ],
+      "type": "string"
+    },
+    "MetricUnit": {
+      "description": "Metric unit type.",
+      "enum": [
+        "currency",
+        "count",
+        "ratio",
+        "percentage",
+        "days",
+        "months",
+        "hours",
+        "weight",
+        "volume",
+        "area",
+        "score",
+        "nps",
+        "units",
+        "bps"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.12.0/metric.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Metric definition with formula, source, and standards mapping.",
+  "properties": {
+    "abbreviation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "direction": {
+      "$ref": "#/$defs/MetricDirection"
+    },
+    "formula": {
+      "description": "Arithmetic formula used to compute the metric. Variable placeholders\nreference other metrics by PathRef and are written as `${metric_id}`\n(e.g. `${metrics/definitions/mrr} * 12`) or, for locally-scoped\nparameters, `{variable}` (e.g. `{revenue} - {cogs}`). Free-form\noperators (`+`, `-`, `*`, `/`, parentheses, common aggregations) are\npermitted; the formula is descriptive, not executable.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "frequency": {
+      "$ref": "#/$defs/MetricFrequency"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "iso_30414_mapping": {
+      "description": "Mapping to an ISO 30414 (Human Capital Reporting) section. Expected\nformat is a section reference like `ISO 30414 §4.1` or a registry URL\npointing at the section definition.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "related_metrics": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MetricSource"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tags": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "unit": {
+      "$ref": "#/$defs/MetricUnit"
+    },
+    "xbrl_mapping": {
+      "description": "Mapping to an XBRL taxonomy concept. Expected format is either a\nqualified concept name (e.g. `us-gaap:Revenues`, `ifrs-full:Revenue`)\nor a registry URL pointing at the concept definition (e.g.\n`https://xbrl.us/concepts/Revenues`).",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "unit",
+    "direction",
+    "frequency"
+  ],
+  "title": "MetricDefinition",
+  "type": "object"
+}
