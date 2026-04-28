@@ -1,0 +1,196 @@
+{
+  "$defs": {
+    "FeatureFlag": {
+      "properties": {
+        "backend": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FlagBackend"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consumers": {
+          "items": {
+            "$ref": "#/$defs/FlagConsumer"
+          },
+          "type": "array"
+        },
+        "current_value": {
+          "$ref": "#/$defs/FlagValue"
+        },
+        "default_value": {
+          "$ref": "#/$defs/FlagValue"
+        },
+        "description": {
+          "type": "string"
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "kill_switch_for": {
+          "items": {
+            "$ref": "#/$defs/PathRef"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "default_value",
+        "current_value"
+      ],
+      "type": "object"
+    },
+    "FlagBackend": {
+      "oneOf": [
+        {
+          "properties": {
+            "kind": {
+              "const": "supabase",
+              "type": "string"
+            },
+            "table": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "table"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "launch-darkly",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "config-cat",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "env-var",
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "kind": {
+              "const": "other",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "description"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "FlagConsumer": {
+      "enum": [
+        "app",
+        "edge-function",
+        "build-time",
+        "worker",
+        "other"
+      ],
+      "type": "string"
+    },
+    "FlagValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "format": "double",
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.0/product-feature-flags.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "flags": {
+      "items": {
+        "$ref": "#/$defs/FeatureFlag"
+      },
+      "type": "array"
+    },
+    "id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of this record (conventionally `product/feature-flags`).\nOptional for back-compat with draft-state payloads that omit the id;\nrequired once the registry is saved as a standalone pillar file."
+    }
+  },
+  "title": "FeatureFlagRegistry",
+  "type": "object"
+}

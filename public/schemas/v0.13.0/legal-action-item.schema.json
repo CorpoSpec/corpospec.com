@@ -1,0 +1,117 @@
+{
+  "$defs": {
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "LegalActionItemCustom": {
+      "description": "Typed custom extension data for `LegalActionItem`.",
+      "properties": {
+        "cost_estimate_eur": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "entity": {
+          "description": "Entity PathRef reference.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "jurisdiction": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "LegalActionItemPriority": {
+      "description": "Priority level for a legal action item.",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "type": "string"
+    },
+    "LegalActionItemStatus": {
+      "description": "Status of a legal action item.",
+      "enum": [
+        "pending",
+        "in-progress",
+        "done",
+        "deferred"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.0/legal-action-item.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A tracked legal action item.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LegalActionItemCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "due_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "item": {
+      "type": "string"
+    },
+    "note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "priority": {
+      "$ref": "#/$defs/LegalActionItemPriority"
+    },
+    "status": {
+      "$ref": "#/$defs/LegalActionItemStatus"
+    }
+  },
+  "required": [
+    "id",
+    "item",
+    "status",
+    "priority"
+  ],
+  "title": "LegalActionItem",
+  "type": "object"
+}

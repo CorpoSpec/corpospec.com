@@ -1,0 +1,410 @@
+{
+  "$defs": {
+    "BrandColor": {
+      "description": "A named brand color. Hex is the single source of truth.\nRGB/HSL/CMYK are derivable and excluded (D2).\nPantone is kept because it is a physical standard.",
+      "properties": {
+        "hex": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "pantone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "hex"
+      ],
+      "type": "object"
+    },
+    "ColorAccessibility": {
+      "description": "Color accessibility configuration.",
+      "properties": {
+        "pairs": {
+          "items": {
+            "$ref": "#/$defs/ContrastPair"
+          },
+          "type": "array"
+        },
+        "standard": {
+          "$ref": "#/$defs/WcagStandard"
+        }
+      },
+      "required": [
+        "standard",
+        "pairs"
+      ],
+      "type": "object"
+    },
+    "ColorMode": {
+      "description": "Color mode type.",
+      "enum": [
+        "light",
+        "dark",
+        "high-contrast"
+      ],
+      "type": "string"
+    },
+    "ContrastPair": {
+      "description": "Color contrast pair. Includes wcag_aa/wcag_aaa booleans (D2: non-derivable).",
+      "properties": {
+        "background": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": "string"
+        },
+        "contrast_ratio": {
+          "format": "double",
+          "type": "number"
+        },
+        "documented_exception": {
+          "description": "Short explanation of why a failing WCAG pair is intentionally retained\nin the palette (e.g. \"brand-orange on white fails — documented; never\nuse for text\"). When set, Layer 4 WCAG enforcement treats the pair as\nan acknowledged exception rather than a validation failure.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "foreground": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": "string"
+        },
+        "wcag_aa": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "wcag_aaa": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "foreground",
+        "background",
+        "contrast_ratio"
+      ],
+      "type": "object"
+    },
+    "DarkModeConfig": {
+      "description": "Dark mode configuration.",
+      "properties": {
+        "auto_follow_os": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "image_treatment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ImageTreatment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "user_override": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DataVizPalette": {
+      "description": "Data visualization color palette.",
+      "properties": {
+        "colorblind_safe": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "colors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "palette_type": {
+          "$ref": "#/$defs/DataVizType"
+        }
+      },
+      "required": [
+        "palette_type",
+        "colors"
+      ],
+      "type": "object"
+    },
+    "DataVizType": {
+      "description": "Data visualization palette type.",
+      "enum": [
+        "categorical",
+        "sequential",
+        "diverging"
+      ],
+      "type": "string"
+    },
+    "ImageTreatment": {
+      "description": "Image treatment in dark mode.",
+      "enum": [
+        "none",
+        "luminosity-adjusted",
+        "dim-overlay"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "SemanticColor": {
+      "description": "Semantic color token with light/dark variants.",
+      "properties": {
+        "dark_hex": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "default_hex": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": "string"
+        },
+        "light_hex": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "on_color_hex": {
+          "pattern": "^#[0-9A-Fa-f]{3,8}$",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "default_hex"
+      ],
+      "type": "object"
+    },
+    "SemanticColorTokens": {
+      "description": "Semantic color tokens for status indicators.",
+      "properties": {
+        "error": {
+          "$ref": "#/$defs/SemanticColor"
+        },
+        "info": {
+          "$ref": "#/$defs/SemanticColor"
+        },
+        "success": {
+          "$ref": "#/$defs/SemanticColor"
+        },
+        "warning": {
+          "$ref": "#/$defs/SemanticColor"
+        }
+      },
+      "required": [
+        "success",
+        "warning",
+        "error",
+        "info"
+      ],
+      "type": "object"
+    },
+    "UiColorTokens": {
+      "description": "UI color tokens for a specific mode.",
+      "properties": {
+        "background_primary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "background_secondary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "border_default": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "border_focused": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interactive_default": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interactive_disabled": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interactive_hover": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "interactive_pressed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mode": {
+          "$ref": "#/$defs/ColorMode"
+        },
+        "surface_elevated": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text_disabled": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text_primary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text_secondary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "type": "object"
+    },
+    "WcagStandard": {
+      "description": "WCAG accessibility standard.",
+      "enum": [
+        "wcag21-aa",
+        "wcag21-aaa",
+        "wcag30"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.0/brand-colors.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand color system.",
+  "properties": {
+    "accessibility": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ColorAccessibility"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dark_mode": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DarkModeConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "data_visualization": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DataVizPalette"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "neutral_palette": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/BrandColor"
+      },
+      "type": "array"
+    },
+    "primary_palette": {
+      "items": {
+        "$ref": "#/$defs/BrandColor"
+      },
+      "type": "array"
+    },
+    "secondary_palette": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/BrandColor"
+      },
+      "type": "array"
+    },
+    "semantic_palette": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/BrandColor"
+      },
+      "type": "array"
+    },
+    "semantic_tokens": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SemanticColorTokens"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ui_tokens": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/UiColorTokens"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "primary_palette"
+  ],
+  "title": "BrandColors",
+  "type": "object"
+}
