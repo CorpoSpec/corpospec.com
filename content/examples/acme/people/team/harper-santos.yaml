@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/person.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/person.schema.json
 id: people/team/harper-santos
 type: Person
 name:
@@ -8,7 +8,7 @@ name:
 email: "harper.santos@acmecorp.example.com"
 role: people/roles/data-analyst
 unit: operations
-employer: entity/acme
+employer: entity/acme-corp
 start_date: "2026-02-15"
 end_date: null
 status: active

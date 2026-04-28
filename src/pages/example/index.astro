@@ -2,9 +2,11 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { buildTree, readFileText, countFiles } from "../../lib/example.ts";
 import type { TreeNode } from "../../lib/example.ts";
+import { listVersions } from "../../lib/schemas.ts";
 
 const tree = buildTree();
 const { files, dirs } = countFiles();
+const latest = listVersions()[0] ?? "v0.13.1";
 
 // Highlight files — rendered inline below the tree. Kept short to stay scannable.
 const highlights: Array<{ title: string; path: string; note: string }> = [
@@ -25,7 +27,7 @@ const highlights: Array<{ title: string; path: string; note: string }> = [
   },
   {
     title: "Governance — decision record",
-    path: "governance/decisions/0001-entity-jurisdiction.md",
+    path: "governance/decisions/0001-entity-formation.md",
     note: "Architecture decision as a markdown file with YAML frontmatter.",
   },
   {
@@ -91,7 +93,7 @@ const displayTree = prune(tree, 4);
     </p>
     <div class="cta-row">
       <a class="btn btn--primary" href="/guide/">Follow the quickstart →</a>
-      <a class="btn btn--ghost" href="/schemas/v0.7.1/">Cross-reference the schemas</a>
+      <a class="btn btn--ghost" href={`/schemas/${latest}/`}>Cross-reference the schemas</a>
     </div>
   </section>
 
@@ -135,7 +137,7 @@ const displayTree = prune(tree, 4);
       <div class="card__title">Read the principles</div>
       <p class="card__desc">DRY, KISS, PathRef by default. A short set of rules.</p>
     </a>
-    <a class="card" href="/schemas/v0.7.1/">
+    <a class="card" href={`/schemas/${latest}/`}>
       <div class="card__eyebrow">Schemas</div>
       <div class="card__title">Browse every schema</div>
       <p class="card__desc">Pillar-grouped. Fields with types, required markers, descriptions.</p>

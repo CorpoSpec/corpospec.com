@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/product-feature.schema.json
 id: product/features/api
 name: "Developer API"
 description: "RESTful API for programmatic access to workflow management, execution, and monitoring. Enables custom integrations and third-party extensions."

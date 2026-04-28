@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/policy.schema.json
 id: legal/policies/remote-work
 name: Remote Work Policy
 description: Guidelines for remote and hybrid work arrangements.

@@ -1,5 +1,5 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/cohort.schema.json
-id: market/cohorts/early-adopters
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/cohort.schema.json
+id: metrics/cohorts/early-adopters
 name: Early Adopters — Beta Launch
 period: '2025-09-15'
 size: 247

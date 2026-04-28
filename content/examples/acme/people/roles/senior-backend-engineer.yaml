@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/role.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/role.schema.json
 id: people/roles/senior-backend-engineer
 title: "Senior Backend Engineer"
 abbreviation: "SBE"

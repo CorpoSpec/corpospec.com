@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/integration.schema.json
 id: integrations/sources/pipeflow-crm
 name: "PipeFlow CRM"
 system: "PipeFlow CRM"

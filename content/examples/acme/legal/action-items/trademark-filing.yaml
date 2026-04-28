@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/legal-action-item.schema.json
 id: legal/action-items/trademark-filing
 item: File USPTO trademark application for Acme Platform wordmark
 status: in-progress

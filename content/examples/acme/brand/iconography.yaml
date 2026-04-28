@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-iconography.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-iconography.schema.json
 id: brand/iconography
 name: "Acme System Icons"
 grid:

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/product-feature.schema.json
 id: product/features/templates
 name: "AI Templates"
 description: "AI-powered workflow templates that learn from usage patterns and adapt to each team's processes. Provides intelligent suggestions for workflow optimization."

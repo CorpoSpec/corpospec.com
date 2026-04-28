@@ -4,12 +4,18 @@ import { PILLARS, listVersions, listSlugsByPillar } from "../../lib/schemas.ts";
 
 const latest = listVersions()[0];
 const byPillar = latest ? listSlugsByPillar(latest) : [];
+
+// "Ten pillars" excludes the synthetic "root" group used for repository
+// metadata (only the manifest belongs there). The conceptual model is ten.
+const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
 ---
 
 <BaseLayout title="CorpoSpec Specification" active="spec">
   <section class="hero">
     <div class="hero__eyebrow">
-      <span class="badge">Draft</span>
+      {latest ? (
+        <span class="badge badge--version">{latest}</span>
+      ) : null}
       <span>The specification</span>
     </div>
     <h1>Specification</h1>
@@ -50,7 +56,7 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
     </div>
     <div class="principle">
       <h4>VERSIONED, IMMUTABLE</h4>
-      <p>Every <code>v0.7.1</code> schema URL serves the same bytes forever. Consumers pin once and never break.</p>
+      <p>Every <code>{latest ?? "v0.13.1"}</code> schema URL serves the same bytes forever. Consumers pin once and never break.</p>
     </div>
   </div>
 
@@ -60,11 +66,12 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
       A PathRef is a path relative to the <code>.corpospec/</code> root, without the leading
       slash and without a file extension. It identifies exactly one entity.
     </p>
-    <pre><code><span class="c"># In governance/decisions/0018-agent-network-architecture.md</span>
+    <pre><code><span class="c"># In governance/decisions/0042-pricing-model.md</span>
 <span class="k">decision_makers:</span>
   - <span class="s">people/team/alex</span>
   - <span class="s">people/team/jordan</span>
-<span class="k">supersedes:</span> <span class="s">governance/decisions/0005-observability</span>
+<span class="k">supersedes:</span>
+  - <span class="s">governance/decisions/0017-launch-pricing</span>
 </code></pre>
     <p>
       Validation tools resolve PathRefs to real files at validation time. Broken references
@@ -79,7 +86,7 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
   </p>
 
   <div class="legend">
-    {PILLARS.map((p) => (
+    {TEN_PILLARS.map((p) => (
       <span class="chip" style={`color: ${p.color};`}>
         <span class="pill-dot"></span>{p.label}
       </span>
@@ -107,10 +114,10 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
 
   <div class="tree">
 <pre style="background:none;border:0;padding:0;margin:0;color:inherit;">.corpospec/
-├── <span class="dir">manifest.yaml</span>                     <span class="c"># root · company_id, pillars, corpospec_version</span>
+├── <span class="dir">manifest.yaml</span>                     <span class="c"># manifest · spec version, company_id, pillars</span>
 ├── <span class="dir">entity/</span>
 │   ├── company.yaml                 <span class="c"># entity</span>
-│   ├── jurisdiction/de.yaml         <span class="c"># jurisdiction-de</span>
+│   ├── jurisdiction-de.yaml         <span class="c"># jurisdiction-de</span>
 │   └── equity/
 │       ├── stakeholders/*.yaml      <span class="c"># stakeholder</span>
 │       └── stock-classes/*.yaml     <span class="c"># stock-class</span>
@@ -119,22 +126,28 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
 │   ├── roles/*.yaml                 <span class="c"># role</span>
 │   └── org.yaml                     <span class="c"># org-structure</span>
 ├── <span class="dir">governance/</span>
-│   ├── decisions/*.md               <span class="c"># bdr</span>
+│   ├── decisions/*.md               <span class="c"># bdr · markdown w/ YAML frontmatter</span>
 │   ├── resolutions/*.yaml           <span class="c"># resolution</span>
 │   ├── strategy/okrs/*.yaml         <span class="c"># okr</span>
-│   ├── board/*.yaml                 <span class="c"># board</span>
-│   └── risk/*.yaml                  <span class="c"># risk-register</span>
+│   ├── board/members.yaml           <span class="c"># board</span>
+│   └── risk/register.yaml           <span class="c"># risk-register</span>
 ├── <span class="dir">financials/</span>
 │   ├── model.yaml                   <span class="c"># financial-model</span>
-│   ├── actuals/*.yaml
-│   ├── forecasts/*.yaml
-│   └── bank-accounts/*.yaml         <span class="c"># bank-account</span>
+│   ├── actuals/*.yaml               <span class="c"># financial-model</span>
+│   ├── forecasts/*.yaml             <span class="c"># financial-model</span>
+│   └── bank-accounts.yaml           <span class="c"># bank-account</span>
 ├── <span class="dir">metrics/</span>
-│   └── definitions/*.yaml           <span class="c"># metric</span>
+│   ├── definitions/*.yaml           <span class="c"># metric</span>
+│   └── cohorts/*.yaml               <span class="c"># cohort</span>
 ├── <span class="dir">product/</span>
 │   ├── overview.yaml                <span class="c"># product</span>
 │   ├── features/*.yaml              <span class="c"># product-feature</span>
-│   └── feature-matrix.yaml          <span class="c"># feature-matrix</span>
+│   ├── feature-matrix.yaml          <span class="c"># feature-matrix</span>
+│   ├── feature-flags.yaml           <span class="c"># product-feature-flags</span>
+│   ├── lifecycle.yaml               <span class="c"># product-lifecycle</span>
+│   ├── aso.yaml                     <span class="c"># product-aso</span>
+│   ├── localization.yaml            <span class="c"># product-localization</span>
+│   └── platform-config.yaml         <span class="c"># product-platform-config</span>
 ├── <span class="dir">market/</span>
 │   ├── tam-sam-som.yaml             <span class="c"># market-sizing</span>
 │   ├── gtm-strategy.yaml            <span class="c"># gtm-strategy</span>
@@ -144,19 +157,23 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
 │   ├── monetization/*.yaml          <span class="c"># monetization</span>
 │   └── services-pricing.yaml        <span class="c"># services-pricing</span>
 ├── <span class="dir">brand/</span>
-│   ├── foundation.yaml
-│   ├── voice.yaml
-│   ├── logo.yaml
-│   ├── colors.yaml
-│   ├── typography.yaml
-│   └── architecture.yaml
+│   ├── foundation.yaml              <span class="c"># brand-foundation</span>
+│   ├── voice.yaml                   <span class="c"># brand-voice</span>
+│   ├── logo.yaml                    <span class="c"># brand-logo</span>
+│   ├── colors.yaml                  <span class="c"># brand-colors</span>
+│   ├── typography.yaml              <span class="c"># brand-typography</span>
+│   ├── architecture.yaml            <span class="c"># brand-architecture</span>
+│   ├── asset-catalog.yaml           <span class="c"># brand-asset-catalog</span>
+│   ├── iconography.yaml             <span class="c"># brand-iconography</span>
+│   └── photography.yaml             <span class="c"># brand-photography</span>
 ├── <span class="dir">integrations/</span>
 │   └── sources/*.yaml               <span class="c"># integration</span>
 └── <span class="dir">legal/</span>
-    ├── contracts/agreements/*.yaml  <span class="c"># contract</span>
+    ├── contracts/*.yaml             <span class="c"># contract</span>
     ├── policies/*.yaml              <span class="c"># policy</span>
     ├── action-items/*.yaml          <span class="c"># legal-action-item</span>
-    └── regulatory/*.yaml            <span class="c"># control</span>
+    ├── compliance/*.yaml            <span class="c"># control · OSCAL-aligned</span>
+    └── privacy-classification.yaml  <span class="c"># privacy-classification</span>
 </pre>
   </div>
 

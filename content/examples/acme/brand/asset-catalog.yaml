@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-asset-catalog.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-asset-catalog.schema.json
 id: brand/asset-catalog
 assets:
   - slug: wordmark-primary-dark

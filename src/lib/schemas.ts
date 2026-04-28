@@ -8,13 +8,21 @@ const publicSchemasDir = path.resolve(process.cwd(), "public/schemas");
 const semverLike = /^v\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/i;
 
 // ─── Pillar taxonomy ────────────────────────────────────────────────────
+//
+// The canonical Pillar enum lives in `corpospec_types::common::Pillar` (Rust).
+// Every published schema (v0.13.1+) carries its pillar id directly via the
+// `x-corpospec-pillar` custom keyword stamped by `corpospec-validate`. This
+// site reads that keyword via `pillarForSlug()`. The `LEGACY_SLUG_TO_PILLAR`
+// table below is a fallback for older versions whose schemas pre-date the
+// metadata stamp; new pillars / slugs MUST be added to the Rust source of
+// truth, not here.
 
 export type PillarId =
   | "root"
   | "entity"
   | "people"
   | "governance"
-  | "financial"
+  | "financials"
   | "metrics"
   | "product"
   | "market"
@@ -34,72 +42,130 @@ export const PILLARS: PillarMeta[] = [
   { id: "entity",       label: "Entity",       blurb: "Legal entity, jurisdiction, equity",              color: "var(--pillar-entity)" },
   { id: "people",       label: "People",       blurb: "Team, roles, organisational structure",           color: "var(--pillar-people)" },
   { id: "governance",   label: "Governance",   blurb: "Decisions, resolutions, OKRs, risk, board",       color: "var(--pillar-governance)" },
-  { id: "financial",    label: "Financial",    blurb: "Model, actuals, forecasts, banking",              color: "var(--pillar-financial)" },
-  { id: "metrics",      label: "Metrics",      blurb: "Metric definitions and snapshots",                color: "var(--pillar-metrics)" },
-  { id: "product",      label: "Product",      blurb: "Product, features, roadmap",                      color: "var(--pillar-product)" },
+  { id: "financials",   label: "Financials",   blurb: "Model, actuals, forecasts, banking",              color: "var(--pillar-financials)" },
+  { id: "metrics",      label: "Metrics",      blurb: "Metric definitions, snapshots, cohorts",          color: "var(--pillar-metrics)" },
+  { id: "product",      label: "Product",      blurb: "Product, features, lifecycle, ASO, localization", color: "var(--pillar-product)" },
   { id: "market",       label: "Market",       blurb: "Sizing, GTM, ICP, competitors, monetization",     color: "var(--pillar-market)" },
-  { id: "brand",        label: "Brand",        blurb: "Foundation, voice, logo, colors, typography",     color: "var(--pillar-brand)" },
+  { id: "brand",        label: "Brand",        blurb: "Foundation, voice, logo, colors, typography, assets", color: "var(--pillar-brand)" },
   { id: "integrations", label: "Integrations", blurb: "External data sources and contracts",             color: "var(--pillar-integrations)" },
-  { id: "legal",        label: "Legal",        blurb: "Contracts, policies, regulatory controls",        color: "var(--pillar-legal)" },
+  { id: "legal",        label: "Legal",        blurb: "Contracts, policies, regulatory controls, privacy", color: "var(--pillar-legal)" },
 ];
 
-const SLUG_TO_PILLAR: Record<string, PillarId> = {
+/**
+ * Fallback slug → pillar map used when a schema file has no
+ * `x-corpospec-pillar` metadata (every release before v0.13.1).
+ *
+ * This map MUST cover every slug that has ever been published in any released
+ * schema set. It is append-only — entries cannot be removed even if a schema
+ * is later renamed, because older versions remain immutable on disk.
+ *
+ * For releases v0.13.1 onward the Rust generator stamps the pillar directly on
+ * each schema, so this map is not consulted.
+ */
+const LEGACY_SLUG_TO_PILLAR: Record<string, PillarId> = {
   // root
-  "manifest":             "root",
+  "manifest":                 "root",
   // entity
-  "entity":               "entity",
-  "stakeholder":          "entity",
-  "stock-class":          "entity",
-  "jurisdiction-de":      "entity",
+  "entity":                   "entity",
+  "stakeholder":              "entity",
+  "stock-class":              "entity",
+  "jurisdiction-de":          "entity",
   // people
-  "person":               "people",
-  "role":                 "people",
-  "org-structure":        "people",
+  "person":                   "people",
+  "role":                     "people",
+  "org-structure":            "people",
   // governance
-  "bdr":                  "governance",
-  "resolution":           "governance",
-  "okr":                  "governance",
-  "board":                "governance",
-  "risk-register":        "governance",
-  // financial
-  "financial-model":      "financial",
-  "bank-account":         "financial",
+  "bdr":                      "governance",
+  "resolution":               "governance",
+  "okr":                      "governance",
+  "board":                    "governance",
+  "risk-register":            "governance",
+  // financials (canonical plural — matches Rust Pillar enum and on-disk dir)
+  "financial-model":          "financials",
+  "bank-account":             "financials",
   // metrics
-  "metric":               "metrics",
+  "metric":                   "metrics",
+  "cohort":                   "metrics",
   // product
-  "product":              "product",
-  "product-feature":      "product",
-  "feature-matrix":       "product",
+  "product":                  "product",
+  "product-feature":          "product",
+  "feature-matrix":           "product",
+  "product-feature-flags":    "product",
+  "product-lifecycle":        "product",
+  "product-aso":              "product",
+  "product-localization":     "product",
+  "product-platform-config":  "product",
   // market
-  "market-sizing":        "market",
-  "gtm-strategy":         "market",
-  "campaign":             "market",
-  "competitor":           "market",
-  "icp":                  "market",
-  "services-pricing":     "market",
-  "monetization":         "market",
+  "market-sizing":            "market",
+  "gtm-strategy":             "market",
+  "campaign":                 "market",
+  "competitor":               "market",
+  "icp":                      "market",
+  "services-pricing":         "market",
+  "monetization":             "market",
   // brand
-  "brand-foundation":     "brand",
-  "brand-logo":           "brand",
-  "brand-colors":         "brand",
-  "brand-typography":     "brand",
-  "brand-voice":          "brand",
-  "brand-architecture":   "brand",
+  "brand-foundation":         "brand",
+  "brand-logo":               "brand",
+  "brand-colors":             "brand",
+  "brand-typography":         "brand",
+  "brand-voice":              "brand",
+  "brand-architecture":       "brand",
+  "brand-asset-catalog":      "brand",
+  "brand-iconography":        "brand",
+  "brand-photography":        "brand",
   // integrations
-  "integration":          "integrations",
+  "integration":              "integrations",
   // legal
-  "contract":             "legal",
-  "policy":               "legal",
-  "legal-action-item":    "legal",
-  "control":              "legal",
+  "contract":                 "legal",
+  "policy":                   "legal",
+  "legal-action-item":        "legal",
+  "control":                  "legal",
+  "privacy-classification":   "legal",
 };
 
-export function pillarForSlug(slug: string): PillarId {
-  return SLUG_TO_PILLAR[slug] ?? "root";
+const VALID_PILLAR_IDS: ReadonlySet<PillarId> = new Set(
+  PILLARS.map((p) => p.id),
+);
+
+/**
+ * Resolve the pillar for a slug at a given published version.
+ *
+ * Reads the schema file's `x-corpospec-pillar` keyword when present (every
+ * release stamped by the v0.13.1+ Rust generator). Falls back to the legacy
+ * hand-curated map for older versions. Throws when neither source provides a
+ * pillar — silently classifying as "root" hides bugs (this exact failure mode
+ * caused 9 schemas to render under "Root" on the v0.13.1 index until this
+ * function was hardened).
+ */
+export function pillarForSlug(version: string, slug: string): PillarId {
+  const stamped = readSchemaPillar(version, slug);
+  if (stamped) return stamped;
+  const legacy = LEGACY_SLUG_TO_PILLAR[slug];
+  if (legacy) return legacy;
+  throw new Error(
+    `pillarForSlug: slug '${slug}' (version ${version}) has no pillar mapping. ` +
+      `Either the schema is missing 'x-corpospec-pillar' metadata, or the slug ` +
+      `is new and needs an entry in LEGACY_SLUG_TO_PILLAR for legacy versions.`,
+  );
+}
+
+function readSchemaPillar(version: string, slug: string): PillarId | null {
+  const schema = readSchema(version, slug);
+  const value = schema?.["x-corpospec-pillar"];
+  if (typeof value !== "string") return null;
+  if (!VALID_PILLAR_IDS.has(value as PillarId)) {
+    throw new Error(
+      `Schema ${version}/${slug} declares pillar '${value}' which is not in the ` +
+        `canonical PILLARS list. Update PILLARS or fix the Rust generator.`,
+    );
+  }
+  return value as PillarId;
 }
 
 export function pillarMeta(id: PillarId): PillarMeta {
-  return PILLARS.find((p) => p.id === id) ?? PILLARS[0];
+  const meta = PILLARS.find((p) => p.id === id);
+  if (!meta) throw new Error(`pillarMeta: unknown pillar id '${id}'`);
+  return meta;
 }
 
 // ─── Version + slug listing ─────────────────────────────────────────────
@@ -131,7 +197,7 @@ export function listSlugsByPillar(version: string): Array<{ pillar: PillarMeta; 
   const all = listSlugs(version);
   const groups = new Map<PillarId, string[]>();
   for (const slug of all) {
-    const p = pillarForSlug(slug);
+    const p = pillarForSlug(version, slug);
     if (!groups.has(p)) groups.set(p, []);
     groups.get(p)!.push(slug);
   }
@@ -151,6 +217,7 @@ export interface SchemaFile {
   type?: string | string[];
   properties?: Record<string, JsonSchema>;
   required?: string[];
+  "x-corpospec-pillar"?: string;
   [k: string]: unknown;
 }
 
@@ -174,8 +241,12 @@ export function readSchema(version: string, slug: string): SchemaFile | null {
   if (!fs.existsSync(file)) return null;
   try {
     return JSON.parse(fs.readFileSync(file, "utf8")) as SchemaFile;
-  } catch {
-    return null;
+  } catch (err) {
+    // Surface a readable build-time error rather than silently returning
+    // empty — a malformed schema must fail loudly so it can be fixed.
+    throw new Error(
+      `readSchema: failed to parse ${version}/${slug}: ${(err as Error).message}`,
+    );
   }
 }
 
@@ -256,7 +327,7 @@ function describeType(prop: JsonSchema): string {
   }
   if (prop.type === "object" && prop.properties) return "object";
   if (prop.type) return String(prop.type);
-  return "any";
+  return "unknown";
 }
 
 function refToName(ref: string): string {
@@ -290,44 +361,74 @@ export const CURATED_EDGES: RelationEdge[] = [
   { from: "entity", to: "stakeholder", label: "equity" },
   { from: "entity", to: "jurisdiction-de", label: "jurisdiction" },
   { from: "entity", to: "bank-account", label: "banking" },
+  { from: "entity", to: "entity", label: "subsidiaries" },
   // people
   { from: "org-structure", to: "person", label: "members" },
   { from: "org-structure", to: "role", label: "roles" },
+  { from: "org-structure", to: "entity", label: "company" },
   { from: "person", to: "role", label: "role" },
+  { from: "role", to: "role", label: "reports_to" },
   // equity
   { from: "stakeholder", to: "stock-class", label: "class" },
   { from: "stakeholder", to: "person", label: "holder" },
   // governance
   { from: "bdr", to: "person", label: "decision_makers" },
+  { from: "bdr", to: "bdr", label: "supersedes" },
   { from: "resolution", to: "person", label: "signatories" },
   { from: "resolution", to: "bdr", label: "implements" },
+  { from: "resolution", to: "entity", label: "entity" },
+  { from: "resolution", to: "contract", label: "contracts" },
   { from: "okr", to: "person", label: "owner" },
+  { from: "okr", to: "bdr", label: "decisions" },
   { from: "board", to: "person", label: "members" },
+  { from: "board", to: "entity", label: "entity" },
   { from: "risk-register", to: "person", label: "owner" },
   { from: "risk-register", to: "control", label: "controls" },
   // financial
   { from: "financial-model", to: "metric", label: "metrics" },
   { from: "financial-model", to: "bank-account", label: "accounts" },
+  { from: "financial-model", to: "entity", label: "entity" },
   { from: "metric", to: "financial-model", label: "driver" },
+  { from: "metric", to: "metric", label: "related" },
+  { from: "cohort", to: "metric", label: "metric" },
   // product
   { from: "product", to: "product-feature", label: "features" },
   { from: "feature-matrix", to: "product-feature", label: "features" },
   { from: "feature-matrix", to: "competitor", label: "competitors" },
+  { from: "product-lifecycle", to: "product-feature-flags", label: "flips" },
+  { from: "product-aso", to: "product", label: "product" },
+  { from: "product-localization", to: "product", label: "product" },
+  { from: "product-platform-config", to: "product", label: "product" },
   // market
   { from: "gtm-strategy", to: "icp", label: "targets" },
+  { from: "gtm-strategy", to: "bdr", label: "decisions" },
   { from: "campaign", to: "icp", label: "targets" },
+  { from: "campaign", to: "bdr", label: "decisions" },
   { from: "monetization", to: "product", label: "product" },
+  { from: "monetization", to: "bdr", label: "decisions" },
   { from: "services-pricing", to: "product", label: "product" },
+  { from: "services-pricing", to: "bdr", label: "decisions" },
   { from: "competitor", to: "product", label: "vs." },
+  { from: "icp", to: "icp", label: "inherits_from" },
   // brand
   { from: "brand-architecture", to: "product", label: "products" },
+  { from: "brand-architecture", to: "bdr", label: "decisions" },
+  { from: "brand-foundation", to: "bdr", label: "decisions" },
+  { from: "brand-logo", to: "brand-asset-catalog", label: "asset" },
+  { from: "brand-typography", to: "brand-asset-catalog", label: "fonts" },
+  { from: "brand-iconography", to: "brand-asset-catalog", label: "icons" },
+  { from: "brand-photography", to: "brand-asset-catalog", label: "photos" },
   // legal
   { from: "contract", to: "person", label: "parties" },
   { from: "contract", to: "entity", label: "entity" },
+  { from: "contract", to: "bdr", label: "decisions" },
   { from: "policy", to: "control", label: "controls" },
+  { from: "policy", to: "bdr", label: "decisions" },
   { from: "legal-action-item", to: "person", label: "owner" },
+  { from: "privacy-classification", to: "product", label: "product" },
   // integrations
-  { from: "integration", to: "contract", label: "contract" },
+  { from: "integration", to: "person", label: "owner" },
+  { from: "integration", to: "metric", label: "outputs" },
   // root
   { from: "manifest", to: "entity", label: "company" },
 ];

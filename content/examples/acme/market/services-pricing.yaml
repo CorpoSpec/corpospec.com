@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/services-pricing.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/services-pricing.schema.json
 id: market/services-pricing
 name: "Acme Professional Services"
 description: >

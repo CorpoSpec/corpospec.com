@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/policy.schema.json
 id: legal/policies/data-retention
 name: Data Retention Policy
 description: Defines retention periods and deletion procedures for all company data categories.

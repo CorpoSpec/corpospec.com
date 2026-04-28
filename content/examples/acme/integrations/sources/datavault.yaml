@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/integration.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/integration.schema.json
 id: integrations/sources/datavault
 name: "DataVault"
 system: "DataVault"
@@ -9,7 +9,7 @@ input_port:
   name: "datavault-api"
   protocols:
     - kind: rest
-  authentication: api_key
+  authentication: api-key
 
 data_contract:
   owner: people/team/sarah-kim

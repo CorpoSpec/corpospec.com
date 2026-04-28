@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/feature-matrix.schema.json
 id: product/feature-matrix
 name: Competitive Feature Matrix
 description: Dimensions for evaluating TaskFlow Pro competitive positioning

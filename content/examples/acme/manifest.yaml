@@ -1,8 +1,8 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/manifest.schema.json
-corpospec_version: "0.1.1"
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/manifest.schema.json
+corpospec_version: "0.13.1"
 company_id: "acme-corp"
 created: "2025-06-15"
-schema_version: "0.1.1"
+schema_version: "0.13.1"
 pillars:
   - entity
   - financials

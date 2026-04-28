@@ -6,12 +6,18 @@ const versions = listVersions();
 const latest = versions[0];
 const byPillar = latest ? listSlugsByPillar(latest) : [];
 const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
+
+// Pillars excluding the synthetic "root" group used for repository metadata
+// (only the manifest belongs there). The conceptual model is ten pillars.
+const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
 ---
 
 <BaseLayout>
   <section class="hero">
     <div class="hero__eyebrow">
-      <span class="badge">Draft · v0.x</span>
+      {latest ? (
+        <span class="badge badge--version">{latest}</span>
+      ) : null}
       <span>Open standard</span>
     </div>
     <h1>
@@ -52,7 +58,7 @@ const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
       <p class="card__desc">Add <code>.corpospec/</code> to your repo in ten minutes. Includes editor wiring and validation.</p>
     </a>
     <a class="card" href="/example/">
-      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-financial);"></span>Example</div>
+      <div class="card__eyebrow"><span class="pill-dot" style="color: var(--pillar-financials);"></span>Example</div>
       <div class="card__title">ACME — a complete sample company</div>
       <p class="card__desc">All pillars populated. A reference for what a well-structured CorpoSpec repo looks like.</p>
     </a>
@@ -68,7 +74,7 @@ const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
     Every pillar maps to a directory under <code>.corpospec/</code>. Each file is a single entity or document validated against its JSON Schema. References between entities are PathRefs — <code>people/team/alex</code> — never copied attributes.
   </p>
   <div class="legend">
-    {PILLARS.map((p) => (
+    {TEN_PILLARS.map((p) => (
       <span class="chip" style={`color: ${p.color};`}>
         <span class="pill-dot"></span>{p.label}
       </span>
@@ -77,5 +83,5 @@ const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
 
   <h2>Pin a version in your YAML</h2>
   <p class="prose">Versioned URLs are immutable. Add this header to any CorpoSpec YAML file:</p>
-  <pre><code><span class="c"># yaml-language-server: $schema=</span><span class="s">https://corpospec.com/schemas/{latest ?? "v0.7.1"}/entity.schema.json</span></code></pre>
+  <pre><code><span class="c"># yaml-language-server: $schema=</span><span class="s">https://corpospec.com/schemas/{latest ?? "v0.13.1"}/entity.schema.json</span></code></pre>
 </BaseLayout>

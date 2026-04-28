@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/brand-foundation.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-foundation.schema.json
 id: brand/foundation
 name: "Acme Corp"
 purpose: "Empower growing teams to automate their workflows so they can focus on what matters most."

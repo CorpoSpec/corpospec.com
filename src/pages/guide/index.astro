@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { listVersions } from "../../lib/schemas.ts";
-const latest = listVersions()[0] ?? "v0.7.1";
+// Default to the most recently published version; fall back to v0.13.1 only
+// when the build runs without any schemas on disk (local dev / CI bootstrap).
+const latest = listVersions()[0] ?? "v0.13.1";
 ---
 
 <BaseLayout title="Use CorpoSpec in your own repo" active="guide">
@@ -43,14 +45,20 @@ mkdir -p .corpospec/<span class="k">&#123;</span>entity,people,governance/decisi
   <h2>3. Add your first entity</h2>
   <pre><code><span class="c"># .corpospec/entity/company.yaml</span>
 <span class="c"># yaml-language-server: $schema=https://corpospec.com/schemas/{latest}/entity.schema.json</span>
-<span class="k">legal_name:</span>  <span class="s">"ACME Corporation, Inc."</span>
-<span class="k">trade_name:</span>  <span class="s">"ACME"</span>
-<span class="k">url:</span>         <span class="s">"https://acme.example"</span>
-<span class="k">email:</span>       <span class="s">"hello@acme.example"</span>
+<span class="k">id:</span>                  <span class="s">entity/acme</span>
+<span class="k">type:</span>                <span class="s">Corporation</span>
+<span class="k">legal_name:</span>          <span class="s">"ACME Corporation, Inc."</span>
+<span class="k">trade_name:</span>          <span class="s">"ACME"</span>
+<span class="k">jurisdiction:</span>        <span class="s">"DE"</span>          <span class="c"># ISO 3166-1 alpha-2</span>
+<span class="k">functional_currency:</span> <span class="s">"EUR"</span>         <span class="c"># ISO 4217</span>
+<span class="k">status:</span>              <span class="s">active</span>
+<span class="k">url:</span>                 <span class="s">"https://acme.example"</span>
+<span class="k">contact:</span>
+  <span class="k">email:</span>             <span class="s">"hello@acme.example"</span>
 <span class="k">address:</span>
-  <span class="k">street:</span>   <span class="s">"1 Market Street"</span>
-  <span class="k">city:</span>     <span class="s">"Berlin"</span>
-  <span class="k">country:</span>  <span class="s">"DE"</span>
+  <span class="k">street:</span>            <span class="s">"1 Market Street"</span>
+  <span class="k">city:</span>              <span class="s">"Berlin"</span>
+  <span class="k">country:</span>           <span class="s">"DE"</span>
 </code></pre>
 
   <h2>4. Wire your editor</h2>
@@ -95,6 +103,7 @@ npx ajv validate \
   </p>
   <pre><code><span class="c"># .corpospec/governance/decisions/0001-adopt-corpospec.md</span>
 <span class="c"># yaml-language-server: $schema=https://corpospec.com/schemas/{latest}/bdr.schema.json</span>
+<span class="k">---</span>
 <span class="k">id:</span> <span class="s">governance/decisions/0001-adopt-corpospec</span>
 <span class="k">status:</span> <span class="s">accepted</span>
 <span class="k">date:</span> <span class="s">"2026-04-21"</span>
@@ -102,6 +111,12 @@ npx ajv validate \
   - <span class="s">people/team/alex</span>      <span class="c"># PathRef → people/team/alex.yaml</span>
 <span class="k">pillars:</span>
   - <span class="s">governance</span>
+<span class="k">risk_level:</span> <span class="s">low</span>
+<span class="k">---</span>
+
+<span class="c"># Adopt CorpoSpec</span>
+
+Context, options, decision, and consequences (extended MADR body).
 </code></pre>
 
   <h2>What to do next</h2>

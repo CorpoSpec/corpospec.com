@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/control.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/control.schema.json
 id: legal/compliance/gdpr
 control_id: "GDPR-DPA-001"
 catalog: gdpr

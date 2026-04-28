@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/campaign.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/campaign.schema.json
 id: market/campaigns/product-launch-q2
 name: "Acme Platform v2.0 Product Launch"
 type: product

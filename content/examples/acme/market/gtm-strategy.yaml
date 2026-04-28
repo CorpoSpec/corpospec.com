@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/gtm-strategy.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/gtm-strategy.schema.json
 id: market/gtm-strategy
 name: "Go-to-Market Strategy"
 description: "GTM approach for Acme Platform, focused on product-led growth with developer community distribution."

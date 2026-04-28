@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/monetization.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/monetization.schema.json
 id: market/monetization/monetization
 model: freemium-plus-usage
 name: "Acme Platform Monetization"

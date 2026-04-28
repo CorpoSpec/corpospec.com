@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/financial-model.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/financial-model.schema.json
 id: financials/model
 period:
   type: instant

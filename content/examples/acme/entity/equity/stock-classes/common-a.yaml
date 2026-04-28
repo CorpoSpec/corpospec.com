@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.7.1/stock-class.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/stock-class.schema.json
 id: entity/equity/stock-classes/common-a
 name: "Common Stock Class A"
 type: common

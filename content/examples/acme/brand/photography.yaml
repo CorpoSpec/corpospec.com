@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.9.2/brand-photography.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-photography.schema.json
 id: brand/photography
 name: "Acme Documentary"
 style: documentary

@@ -26,7 +26,7 @@ const pillarHex: Record<string, string> = {
   entity:       "#4a5ab8",
   people:       "#b57028",
   governance:   "#7149b8",
-  financial:    "#1f8262",
+  financials:   "#1f8262",
   metrics:      "#2774b8",
   product:      "#1b7aa1",
   market:       "#b64668",
@@ -61,7 +61,7 @@ for (const slug of slugs) {
   const meta = readSchemaMeta(version!, slug);
   entities[slug] = {
     slug,
-    pillar: pillarForSlug(slug),
+    pillar: pillarForSlug(version!, slug),
     title: meta.title ?? slug,
     description: meta.description ?? "",
     fields: readSchemaFields(version!, slug).map((f) => ({
@@ -85,7 +85,7 @@ for (const slug of slugs) fieldCounts[slug] = entities[slug].fields.length;
 // curated edge is a quadratic Bézier through the centre. Hover
 // highlighting + click-through is wired up client-side.
 const PILLAR_ORDER = [
-  "root", "entity", "people", "governance", "financial",
+  "root", "entity", "people", "governance", "financials",
   "metrics", "product", "market", "brand", "integrations", "legal",
 ];
 

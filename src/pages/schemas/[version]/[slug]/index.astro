@@ -24,7 +24,7 @@ if (!schema) {
 
 const fields = readSchemaFields(version!, slug!);
 const defs = readSchemaDefs(version!, slug!);
-const pillar = pillarMeta(pillarForSlug(slug!));
+const pillar = pillarMeta(pillarForSlug(version!, slug!));
 const rawUrl = `/schemas/${version}/${slug}.schema.json`;
 const canonicalId = schema.$id ?? `https://corpospec.com${rawUrl}`;
 ---

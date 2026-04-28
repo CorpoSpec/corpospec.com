@@ -21,7 +21,7 @@
   --pillar-entity:       #4a5ab8;
   --pillar-people:       #b57028;
   --pillar-governance:   #7149b8;
-  --pillar-financial:    #1f8262;
+  --pillar-financials:    #1f8262;
   --pillar-metrics:      #2774b8;
   --pillar-product:      #1b7aa1;
   --pillar-market:       #b64668;
@@ -272,7 +272,7 @@ hr {
 }
 
 .badge--draft   { color: var(--muted); }
-.badge--stable  { color: var(--pillar-financial); }
+.badge--stable  { color: var(--pillar-financials); }
 .badge--version { color: var(--accent-ink); font-variant-numeric: tabular-nums; }
 
 .pill-dot {
