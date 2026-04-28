@@ -1,0 +1,87 @@
+{
+  "$defs": {
+    "LocaleRow": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "completeness_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "native_name": {
+          "type": "string"
+        },
+        "rtl": {
+          "default": false,
+          "type": "boolean"
+        },
+        "scope": {
+          "$ref": "#/$defs/LocaleScope"
+        },
+        "script": {
+          "type": "string"
+        },
+        "source_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "native_name",
+        "script",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "LocaleScope": {
+      "enum": [
+        "app",
+        "landing",
+        "both"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/product-localization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "default_language": {
+      "type": "string"
+    },
+    "id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of this record (conventionally `product/localization`)."
+    },
+    "locales": {
+      "items": {
+        "$ref": "#/$defs/LocaleRow"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "default_language"
+  ],
+  "title": "LocalizationMatrix",
+  "type": "object"
+}

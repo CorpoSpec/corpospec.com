@@ -1,0 +1,917 @@
+{
+  "$defs": {
+    "CompensationBand": {
+      "description": "Compensation band.\n\nCallers are expected to ensure `min <= max`. JSON Schema cannot express\ncross-field numeric inequalities without `allOf`/`oneOf` gymnastics; the\ninvariant is documented here and enforced by `corpospec-validate`.",
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency",
+          "description": "ISO 4217 currency of `min` and `max`."
+        },
+        "equity_percentage": {
+          "description": "Equity component of total compensation. Prose because real records\ncarry single percentages (`\"60%\"`), ranges (`\"0.1-0.3%\"`), and\nannotated percentages (`\"100% (indirect via Beevelop UG)\"`). A\nstricter numeric type would truncate or reject every real record.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "max": {
+          "description": "Upper bound of the band, in currency units. Must be `>= min`.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "min": {
+          "description": "Lower bound of the band, in currency units.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "note": {
+          "description": "Prose annotation (midpoint guidance, market context, etc.).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "currency",
+        "min",
+        "max"
+      ],
+      "type": "object"
+    },
+    "CompensationSchedule": {
+      "description": "Compensation schedule for a role.\n\nEncodes a two-tier plan: an initial (`pre_pre_seed_*`) rate, followed by\na higher (`post_pre_seed_*`) rate that activates on a named trigger.",
+      "properties": {
+        "currency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCurrency"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 4217 currency of every monetary field below."
+        },
+        "post_pre_seed_eur": {
+          "description": "Annual gross compensation in the post-trigger period (currency units).",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "post_pre_seed_trigger": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompensationTrigger"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Event that activates the post-trigger tier (see `CompensationTrigger`)."
+        },
+        "pre_pre_seed_eur": {
+          "description": "Annual gross compensation in the pre-trigger period (currency units).",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pre_pre_seed_start_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO date on which the pre-trigger compensation tier starts to accrue."
+        }
+      },
+      "type": "object"
+    },
+    "CompensationTrigger": {
+      "description": "Event that triggers the post-pre-seed compensation tier to activate.\n\nStored as a machine-readable discriminator so downstream tooling can\nreason about compensation scenarios without parsing prose.",
+      "oneOf": [
+        {
+          "const": "pre-seed-close",
+          "description": "Closing of a pre-seed funding round.",
+          "type": "string"
+        },
+        {
+          "const": "seed-close",
+          "description": "Closing of a seed funding round.",
+          "type": "string"
+        },
+        {
+          "const": "revenue-threshold",
+          "description": "Achievement of a named revenue threshold.",
+          "type": "string"
+        },
+        {
+          "const": "formation",
+          "description": "Legal formation of the employing entity.",
+          "type": "string"
+        },
+        {
+          "const": "custom",
+          "description": "Any other trigger documented in prose on the role record.",
+          "type": "string"
+        }
+      ]
+    },
+    "EmployerContributions": {
+      "description": "Employer social-insurance contribution breakdown (German system).\n\nAll percentages are expressed as a fraction of gross salary, 0.0–100.0.\nThese are employer-side contributions; employee-side is mirrored via\ndeductions on the payslip.",
+      "properties": {
+        "arbeitslosenversicherung_pct": {
+          "description": "Employer share of unemployment insurance (Arbeitslosenversicherung),\npercent of gross salary. Scope: Germany (§ 346 SGB III).",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "krankenversicherung_pct": {
+          "description": "Employer share of statutory health insurance (Krankenversicherung),\npercent of gross salary. Scope: Germany (§ 249 SGB V).",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pflegeversicherung_pct": {
+          "description": "Employer share of long-term care insurance (Pflegeversicherung),\npercent of gross salary. Scope: Germany (§ 58 SGB XI).",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rentenversicherung_pct": {
+          "description": "Employer share of statutory pension insurance (Rentenversicherung),\npercent of gross salary. Scope: Germany (§§ 157–169 SGB VI).",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unfallversicherung_pct_estimate": {
+          "description": "Estimated employer accident-insurance contribution (Unfallversicherung),\npercent of gross salary. Scope: Germany (§ 150 SGB VII). Rate varies\nby Berufsgenossenschaft risk class — estimate only.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EmploymentType": {
+      "description": "Employment type enumerating the contractual relationship kinds observed\nacross UNSTARTER, ACME, and German-law companies modelled in CorpoSpec.\n\nIncludes the German-law specific values (`angestellte`, `geschaeftsfuehrer`,\n`minijob-520`, `werkstudent`) alongside internationally common categories.",
+      "oneOf": [
+        {
+          "const": "angestellte",
+          "description": "Standard German dependent employee (Arbeitsvertrag, § 611a BGB).",
+          "type": "string"
+        },
+        {
+          "const": "geschaeftsfuehrer",
+          "description": "Managing director of a GmbH (statutory organ under GmbHG).",
+          "type": "string"
+        },
+        {
+          "const": "full-time",
+          "description": "Full-time salaried employee (generic).",
+          "type": "string"
+        },
+        {
+          "const": "part-time",
+          "description": "Part-time salaried employee.",
+          "type": "string"
+        },
+        {
+          "const": "minijob-520",
+          "description": "German Minijob (geringfügige Beschäftigung up to €520 / month).",
+          "type": "string"
+        },
+        {
+          "const": "werkstudent",
+          "description": "German Werkstudent (tertiary-student employment status).",
+          "type": "string"
+        },
+        {
+          "const": "contractor",
+          "description": "Independent contractor (Werkvertrag / Dienstvertrag).",
+          "type": "string"
+        },
+        {
+          "const": "freelance",
+          "description": "Freelance worker (selbstständig, 1099-equivalent).",
+          "type": "string"
+        },
+        {
+          "const": "intern",
+          "description": "Internship (Praktikum).",
+          "type": "string"
+        },
+        {
+          "const": "advisor",
+          "description": "Advisor or board observer (non-employee).",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Fallback for contractual arrangements not covered above.",
+          "type": "string"
+        }
+      ]
+    },
+    "HeadcountPlan": {
+      "description": "Headcount plan for a role.",
+      "properties": {
+        "first_hire": {
+          "description": "Target date for the first hire into this role. Prose is accepted to\ncarry gating context (e.g. \"post pre-seed close\") that a pure date\nwould erase.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_count": {
+          "description": "Target count of filled positions at plan horizon. Prose is accepted\nto carry ranges (e.g. \"2-3 FDFs in first 12 months\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IpBoundaries": {
+      "description": "IP boundary definitions for a role.\n\nRelevant when the incumbent performs work for multiple legal entities\n(e.g. Forward-Deployed Founder operating a personal company in parallel).",
+      "properties": {
+        "own_company_work": {
+          "description": "Prose describing what IP remains with the role incumbent's own\ncompany.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "separation": {
+          "description": "Prose describing the separation mechanism (IP-separation clause,\nnon-compete exclusions, time-logging, etc.).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "template": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the contract template that encodes these boundaries\n(e.g. `legal/templates/fdf-arbeitsvertrag`)."
+        },
+        "unstarter_work": {
+          "description": "Prose describing what IP is assigned to the employing entity.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RoleCustom": {
+      "description": "Typed extension fields for Role.\n\nUnion of all role-specific custom fields observed in `.corpospec/` YAML\ndata across UNSTARTER, KICKGEIST and ACME.",
+      "properties": {
+        "bdr_reference": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the BDR that authorises this role (e.g.\n`governance/decisions/0021-forward-deployed-founder`)."
+        },
+        "benefits": {
+          "description": "Non-cash benefits attached to the role.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "compensation_midpoint_eur": {
+          "description": "Midpoint of the compensation band, in EUR.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_schedule": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CompensationSchedule"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Two-tier compensation schedule tied to a funding trigger."
+        },
+        "description": {
+          "description": "Free-form description of the role's remit.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employer_contributions_breakdown": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmployerContributions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Breakdown of employer-side contributions (German system)."
+        },
+        "employer_contributions_pct_estimate": {
+          "description": "Aggregate estimate of employer-side social-insurance contributions\nas a percentage of gross salary.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "employment_contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the legal template backing this contract."
+        },
+        "employment_entity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the legal entity that employs this role (e.g.\n`entity/unstarter-gmbh`)."
+        },
+        "employment_jurisdiction": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCountry"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 3166-1 alpha-2 country code of the employing jurisdiction."
+        },
+        "employment_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmploymentType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Contractual employment type (see `EmploymentType`)."
+        },
+        "headcount_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HeadcountPlan"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Multi-hire headcount plan."
+        },
+        "hiring_after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to another role that must be filled before this one (or to\na milestone under `governance/`). Observed values are role PathRefs."
+        },
+        "hiring_priority": {
+          "description": "Integer priority ordering within the hiring plan (`1` = highest).",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "hiring_start_target": {
+          "description": "Target start for hiring into this role.\n\nUnion type: may be a plain ISO date string, a date annotated with\ntrailing prose (e.g. `\"2026-09-01 (post pre-seed close)\"`), or a\nstructured object keying multiple slots (e.g.\n`{ fdf_1: \"2026-09-15\", fdf_2: \"2027-01-15\" }`). A stricter type\nwould truncate real annotations or reject the multi-slot shape."
+        },
+        "ip_assignment": {
+          "description": "Prose describing IP assignment terms.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ip_boundaries": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IpBoundaries"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "IP boundary rules for multi-entity work."
+        },
+        "minimum_wage_compliance": {
+          "description": "Prose note on compliance with the statutory minimum wage\n(§ 1 MiLoG, Germany — currently €12.82/hour).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "requirements": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RoleRequirements"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Role-specific requirements."
+        },
+        "scaling_note": {
+          "description": "Prose note on how the role scales as the company grows.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scheinselbstaendigkeit_safeguards": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScheinselbstaendigkeitSafeguards"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Scheinselbstaendigkeit risk safeguards (Germany-specific)."
+        },
+        "sozialversicherung_status": {
+          "description": "Statutory social-insurance status (see\n`PersonCustom.sozialversicherung_status` for rationale on the\nfree-form type).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RoleCustomStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Lifecycle state of the role (see `RoleCustomStatus`)."
+        },
+        "time_allocation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeAllocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Time-allocation plan (relevant where a role splits time across\nmultiple workstreams)."
+        },
+        "vesting_tie": {
+          "description": "Prose describing conditions tying vesting to continued service.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vsop_grant_range": {
+          "description": "Prose range of Virtual Stock Option Plan (VSOP) grants for this role.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "vsop_template": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the VSOP contract template."
+        },
+        "vsop_vesting": {
+          "description": "Prose describing the VSOP vesting schedule.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "RoleCustomStatus": {
+      "description": "Lifecycle status of a `Role` record.\n\nDistinct from `StatusActive` (which models entities such as companies or\nproducts): here we track the hiring lifecycle of an individual seat.",
+      "oneOf": [
+        {
+          "const": "planned",
+          "description": "Role exists on the plan but recruiting has not started.",
+          "type": "string"
+        },
+        {
+          "const": "open",
+          "description": "Role is actively recruiting.",
+          "type": "string"
+        },
+        {
+          "const": "on-hold",
+          "description": "Recruiting is temporarily paused.",
+          "type": "string"
+        },
+        {
+          "const": "filled",
+          "description": "Role is filled by at least one incumbent.",
+          "type": "string"
+        },
+        {
+          "const": "closed",
+          "description": "Role was cancelled before being filled.",
+          "type": "string"
+        },
+        {
+          "const": "archived",
+          "description": "Role was filled and later retired; kept for historical reference.",
+          "type": "string"
+        }
+      ]
+    },
+    "RoleLevel": {
+      "description": "Role level in the organization.",
+      "oneOf": [
+        {
+          "const": "c-suite",
+          "description": "Executive / C-level (CEO, CTO, CFO, Geschäftsführer).",
+          "type": "string"
+        },
+        {
+          "const": "vp",
+          "description": "Vice President.",
+          "type": "string"
+        },
+        {
+          "const": "director",
+          "description": "Director level — manages managers or a large function.",
+          "type": "string"
+        },
+        {
+          "const": "lead",
+          "description": "Lead — leads a small team or workstream without a formal management\ntitle.",
+          "type": "string"
+        },
+        {
+          "const": "ic",
+          "description": "Individual contributor.",
+          "type": "string"
+        },
+        {
+          "const": "partner",
+          "description": "Partner — professional-services or law-firm partnership rank.",
+          "type": "string"
+        },
+        {
+          "const": "associate",
+          "description": "Associate — early-career professional-services or legal role.",
+          "type": "string"
+        },
+        {
+          "const": "principal",
+          "description": "Principal — senior IC or senior consultant.",
+          "type": "string"
+        },
+        {
+          "const": "manager",
+          "description": "Manager — first-line people manager.",
+          "type": "string"
+        },
+        {
+          "const": "supervisor",
+          "description": "Supervisor — shift or small-team supervisor (blue-collar/ops).",
+          "type": "string"
+        },
+        {
+          "const": "foreman",
+          "description": "Foreman — site-level team lead (construction, trades).",
+          "type": "string"
+        },
+        {
+          "const": "technician",
+          "description": "Technician — skilled-trade IC.",
+          "type": "string"
+        },
+        {
+          "const": "fellow",
+          "description": "Fellow — research or academic appointment.",
+          "type": "string"
+        },
+        {
+          "const": "resident",
+          "description": "Resident — trainee clinical or research appointment.",
+          "type": "string"
+        }
+      ]
+    },
+    "RoleRequirements": {
+      "description": "Role requirements (must-have / nice-to-have skills and traits).",
+      "properties": {
+        "must_have": {
+          "description": "Requirements the incumbent must satisfy to qualify for the role.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "nice_to_have": {
+          "description": "Preferred but not required qualifications.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ScheinselbstaendigkeitSafeguards": {
+      "description": "Scheinselbstaendigkeit risk safeguards.\n\nUnder German law (§ 7 SGB IV), an apparently self-employed contractor may\nbe reclassified as a dependent employee if integration with the employer\nis too deep. This record documents the mitigation strategy.",
+      "properties": {
+        "legal_basis": {
+          "description": "Statutory basis cited (e.g. `§ 7 Abs. 4 SGB IV`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "required_mitigation": {
+          "description": "Concrete mitigation clauses — free-form prose because real\nmitigations combine legal requirements with operational commitments\n(e.g. attestation cadence, revenue-mix thresholds).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "risk_assessment": {
+          "description": "Prose describing the residual risk after mitigations apply.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "TimeAllocation": {
+      "description": "Time allocation plan for a role.",
+      "properties": {
+        "default": {
+          "description": "Default option from `options` (typically the `split` string).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeAllocationModel"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Allocation model (see `TimeAllocationModel`)."
+        },
+        "options": {
+          "description": "Permissible split configurations.",
+          "items": {
+            "$ref": "#/$defs/TimeAllocationOption"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeAllocationModel": {
+      "description": "Model governing how a role's time is allocated between competing work\nstreams.",
+      "oneOf": [
+        {
+          "const": "fdf-split",
+          "description": "Split between UNSTARTER product work and the incumbent's own company\n(Forward-Deployed Founder model).",
+          "type": "string"
+        },
+        {
+          "const": "time-based",
+          "description": "Fixed hours per week (e.g. standard 40h full-time).",
+          "type": "string"
+        },
+        {
+          "const": "project-based",
+          "description": "Allocation drifts with active projects.",
+          "type": "string"
+        },
+        {
+          "const": "negotiated",
+          "description": "Negotiated case-by-case between employer and role incumbent.",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Any other model documented in prose.",
+          "type": "string"
+        }
+      ]
+    },
+    "TimeAllocationOption": {
+      "description": "Time allocation option for a role (e.g. FDF split model).",
+      "properties": {
+        "description": {
+          "description": "Free-form description of when this split is appropriate.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "split": {
+          "description": "Split expressed as `X/Y` where `X` is the UNSTARTER share and `Y`\nis the own-company share (e.g. `70/30`).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/role.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Role definition aligned with W3C ORG Post and Role.",
+  "properties": {
+    "abbreviation": {
+      "description": "Short uppercase code used in diagrams and cap-table shorthand\n(e.g. `\"CTO\"`, `\"GF\"`, `\"FDF\"`). Optional — not every role has a\nstable abbreviation.",
+      "pattern": "^[A-Z][A-Za-z0-9-]{0,7}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "compensation_band": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompensationBand"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Compensation band for the role."
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/RoleCustom"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Typed custom extension fields (employment, benefits, hiring plan)."
+    },
+    "headcount": {
+      "description": "Approved headcount for this role. `0` means \"approved but unfilled\".",
+      "format": "int64",
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (e.g. `people/roles/cto`)."
+    },
+    "level": {
+      "$ref": "#/$defs/RoleLevel",
+      "description": "Seniority level (see `RoleLevel`)."
+    },
+    "reports_to": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of the role this role reports to. `None` only for the\ntop-of-hierarchy role (e.g. Geschäftsführer, CEO)."
+    },
+    "responsibilities": {
+      "description": "List of responsibilities owned by this role. Mirrors\n`OrgUnit.planned_roles`: a unit's planned roles are realised here.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "title": {
+      "description": "Human-readable title as it would appear on a business card\n(e.g. `\"Chief Technology Officer\"`).",
+      "type": "string"
+    },
+    "unit": {
+      "description": "Id of the `OrgUnit` this role lives in. Local identifier (not a\nPathRef) because the unit set is defined inline on `OrgStructure`.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "unit",
+    "level",
+    "responsibilities"
+  ],
+  "title": "Role",
+  "type": "object"
+}

@@ -1,0 +1,318 @@
+{
+  "$defs": {
+    "Berufsgenossenschaft": {
+      "description": "German statutory accident insurance (Berufsgenossenschaft) registration.",
+      "properties": {
+        "carrier": {
+          "type": "string"
+        },
+        "kundennummer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "unternehmensnummer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "carrier"
+      ],
+      "type": "object"
+    },
+    "Betriebsnummer": {
+      "description": "German employer registration number (Betriebsnummer).",
+      "properties": {
+        "kundennummer": {
+          "description": "Customer number assigned by the Bundesagentur fuer Arbeit for\nemployer communication.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "description": "German Federal Employment Agency 8-digit employer number\n(Bundesagentur fuer Arbeit).",
+          "pattern": "^[0-9]{8}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "number"
+      ],
+      "type": "object"
+    },
+    "Geschaeftsanteil": {
+      "description": "A single share in the registered capital (Geschaeftsanteil).",
+      "properties": {
+        "holder": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "nominal_value": {
+          "description": "Nominal value of the share in the Stammkapital currency (EUR for GmbH/UG).",
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "percentage": {
+          "description": "Share of total Stammkapital this Geschaeftsanteil represents, 0-100.",
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "holder",
+        "nominal_value",
+        "percentage"
+      ],
+      "type": "object"
+    },
+    "Geschaeftsfuehrer": {
+      "description": "German managing director (Geschaeftsfuehrer) entry.",
+      "properties": {
+        "appointed": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bgb_181_exempt": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "person": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "representation": {
+          "$ref": "#/$defs/RepresentationType"
+        }
+      },
+      "required": [
+        "person",
+        "representation"
+      ],
+      "type": "object"
+    },
+    "Handelsregister": {
+      "description": "German commercial register (Handelsregister) entry.",
+      "properties": {
+        "court": {
+          "type": "string"
+        },
+        "euid": {
+          "description": "European Unique Identifier (EUID) from the Business Registers\nInterconnection System (BRIS). Format: `DE.HRB<number>`-like.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "first_registration": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "number": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "court",
+        "number"
+      ],
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RepresentationType": {
+      "description": "Representation authority type for German managing directors.",
+      "enum": [
+        "sole",
+        "joint"
+      ],
+      "type": "string"
+    },
+    "RetentionPeriod": {
+      "description": "Document retention period per German commercial/tax law.",
+      "properties": {
+        "document_type": {
+          "type": "string"
+        },
+        "legal_basis": {
+          "description": "Statutory basis for the retention requirement (e.g. Paragraph 147 AO,\nParagraph 257 HGB).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "years": {
+          "format": "int64",
+          "maximum": 30,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "document_type",
+        "years"
+      ],
+      "type": "object"
+    },
+    "Stammkapital": {
+      "description": "Registered share capital (Stammkapital) of a German GmbH/UG.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "fully_paid": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "shares": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Geschaeftsanteil"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "Wirtschaftsunterklasse": {
+      "description": "German economic activity classification (Wirtschaftsunterklasse / WZ code).",
+      "properties": {
+        "code": {
+          "pattern": "^[0-9]{2}(?:\\.[0-9]{1,2}(?:\\.[0-9])?)?$",
+          "type": "string"
+        },
+        "description": {
+          "description": "Human-readable description of the WZ sub-class.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/jurisdiction-de.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "German UG/GmbH jurisdiction profile.",
+  "properties": {
+    "berufsgenossenschaft": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Berufsgenossenschaft"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "betriebsnummer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Betriebsnummer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "entity": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "geschaeftsfuehrer": {
+      "default": [],
+      "description": "Managing directors. Each entry is a Geschaeftsfuehrer record whose\n`person` field is a PathRef into `people/**`.",
+      "items": {
+        "$ref": "#/$defs/Geschaeftsfuehrer"
+      },
+      "type": "array"
+    },
+    "handelsregister": {
+      "$ref": "#/$defs/Handelsregister"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "retention_periods": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/RetentionPeriod"
+      },
+      "type": "array"
+    },
+    "stammkapital": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Stammkapital"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "wirtschaftsunterklasse": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Wirtschaftsunterklasse"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "entity",
+    "handelsregister"
+  ],
+  "title": "JurisdictionProfileDe",
+  "type": "object"
+}

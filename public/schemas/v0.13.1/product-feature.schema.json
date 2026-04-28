@@ -1,0 +1,118 @@
+{
+  "$defs": {
+    "FeatureStatus": {
+      "description": "Lifecycle status of a product feature.\n\nCovers the full path from idea to retirement. Authors pick one value that\nbest reflects the current state; no implicit ordering is enforced.",
+      "oneOf": [
+        {
+          "const": "proposed",
+          "description": "Idea captured, not yet committed to a roadmap.",
+          "type": "string"
+        },
+        {
+          "const": "planned",
+          "description": "Committed to a roadmap, not yet started.",
+          "type": "string"
+        },
+        {
+          "const": "in-progress",
+          "description": "Actively being built.",
+          "type": "string"
+        },
+        {
+          "const": "in-review",
+          "description": "Build complete, awaiting review or QA sign-off.",
+          "type": "string"
+        },
+        {
+          "const": "shipped",
+          "description": "Released to production but not yet generally available.",
+          "type": "string"
+        },
+        {
+          "const": "live",
+          "description": "Generally available to all users.",
+          "type": "string"
+        },
+        {
+          "const": "deprecated",
+          "description": "Still available, scheduled for removal.",
+          "type": "string"
+        },
+        {
+          "const": "sunset",
+          "description": "Removed from the product.",
+          "type": "string"
+        },
+        {
+          "const": "blocked",
+          "description": "Work halted by an unresolved dependency or decision.",
+          "type": "string"
+        }
+      ]
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ProductFeatureCustom": {
+      "description": "Typed extension fields for ProductFeature.\n\nEmpty scaffold mirroring `FeatureMatrixCustom`. Add typed fields here as\nfeature-specific custom data emerges. Unknown keys are preserved via the\nuntyped `extra` bag and can be promoted to typed fields later.",
+      "properties": {
+        "extra": {
+          "additionalProperties": true,
+          "description": "Free-form extension bag. Keys are custom field names, values are\narbitrary JSON. Promote frequently-used keys to typed fields on this\nstruct and remove them from the bag.",
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/product-feature.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A product feature definition.",
+  "properties": {
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProductFeatureCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FeatureStatus"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Current lifecycle state of the feature (proposed through sunset)."
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "title": "ProductFeature",
+  "type": "object"
+}

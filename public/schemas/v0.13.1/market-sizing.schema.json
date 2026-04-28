@@ -1,0 +1,423 @@
+{
+  "$defs": {
+    "ChangelogEntry": {
+      "description": "A changelog entry recording a dated change.",
+      "properties": {
+        "change": {
+          "description": "Free-form description of what changed and why.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 8601 date on which the change was recorded (YYYY-MM-DD)."
+        }
+      },
+      "type": "object"
+    },
+    "DualCurrencyPlan": {
+      "description": "Dual currency pricing plan.",
+      "properties": {
+        "activation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "alignment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "initial": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "FxAssumption": {
+      "description": "FX assumption used in market sizing calculations.",
+      "properties": {
+        "basis": {
+          "description": "Basis or source of the rate (e.g. \"ECB mid-market 2026-04-15\").",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rate": {
+          "description": "Exchange-rate multiplier applied to the source currency. Must be non-negative.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "rounding": {
+          "description": "Rounding convention applied to converted figures.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MarketSegment": {
+      "additionalProperties": false,
+      "description": "Market segment (TAM/SAM/SOM).",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "methodology": {
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MarketValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sized value of the segment. `None` means the segment exists\nconceptually (e.g. a planned expansion region) but is not yet sized;\nprefer `Some(MarketValue { amount: None, unit })` when the unit is\nknown and only the amount is undetermined."
+        }
+      },
+      "required": [
+        "methodology"
+      ],
+      "type": "object"
+    },
+    "MarketSizingCustom": {
+      "description": "Typed custom extension data for `MarketSizing`.",
+      "properties": {
+        "changelog": {
+          "items": {
+            "$ref": "#/$defs/ChangelogEntry"
+          },
+          "type": "array"
+        },
+        "dual_currency_plan": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DualCurrencyPlan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fx_assumption": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FxAssumption"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gdpr_moat_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "geography_breakdown": {
+          "additionalProperties": true,
+          "description": "Geography breakdown — keys are region slugs, values are region details.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "icp_alignment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "segment_breakdown": {
+          "additionalProperties": true,
+          "description": "Segment breakdown — keys are segment slugs, values are segment details.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "som_breakdown": {
+          "additionalProperties": true,
+          "description": "SOM breakdown — keys are segment slugs, values are { customers, avg_arr_eur, arr_eur }.",
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "value_stated": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ValueStated"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "MarketUnit": {
+      "description": "Unit in which a market segment is measured. Internally tagged on `kind`.\n\nMirrors the Cockpit `MarketUnit` discriminated union (see\n`cockpit/src/components/onboarding/steps/step-market.tsx`). Currency\nsegments carry an ISO 4217 code; headcount-style segments (users, DAU,\nMAU, viewers, impressions) carry no additional data; bespoke units use\n`other` with a free-form label.",
+      "oneOf": [
+        {
+          "description": "Revenue / market-spend in a specific currency.",
+          "properties": {
+            "code": {
+              "description": "ISO 4217 currency code (e.g. `EUR`, `USD`, `GBP`).",
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            "kind": {
+              "const": "currency",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "code"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Total addressable population (registered users or similar).",
+          "properties": {
+            "kind": {
+              "const": "users",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Daily Active Users.",
+          "properties": {
+            "kind": {
+              "const": "daily-active-users",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Monthly Active Users.",
+          "properties": {
+            "kind": {
+              "const": "monthly-active-users",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Ad impressions per reporting window.",
+          "properties": {
+            "kind": {
+              "const": "impressions",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Viewers (broadcast / streaming audience).",
+          "properties": {
+            "kind": {
+              "const": "viewers",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Bespoke unit with a free-form label\n(e.g. `\"households\"`, `\"clinics\"`, `\"teams\"`).",
+          "properties": {
+            "kind": {
+              "const": "other",
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "label"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "MarketValue": {
+      "additionalProperties": false,
+      "description": "Sized market value: an amount paired with its unit.\n\n`amount` is nullable to support the \"do-not-invent\" policy — when a\nsegment's size is genuinely unknown, authors set `amount: null` rather\nthan fabricate a figure. The `unit` is always required so consumers know\nwhat the (possibly-null) amount would be measured in.",
+      "properties": {
+        "amount": {
+          "description": "The measured size, or `null` when the segment is declared unknown.",
+          "format": "double",
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unit": {
+          "$ref": "#/$defs/MarketUnit",
+          "description": "The unit `amount` is measured in."
+        }
+      },
+      "required": [
+        "unit"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "ValueStated": {
+      "description": "Stated values for TAM/SAM/SOM before calculation.\n\nValues are strings because they often encode both a number and a unit\n(e.g. `\"€2.5B\"`, `\"$300M\"`). For pure numeric figures, use the\ncanonical `MarketSegment.value` with `currency` at the root.",
+      "properties": {
+        "sam": {
+          "description": "Serviceable Addressable Market as originally stated.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "som": {
+          "description": "Serviceable Obtainable Market as originally stated.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tam": {
+          "description": "Total Addressable Market as originally stated (number + optional unit).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/market-sizing.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "TAM/SAM/SOM market sizing model.",
+  "properties": {
+    "as_of": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "currency": {
+      "$ref": "#/$defs/IsoCurrency"
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MarketSizingCustom"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "description": "Human-readable name. Recommended but optional for backward\ncompatibility — some market-sizing files derive their title from\n`id` or a surrounding markdown file.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sam": {
+      "$ref": "#/$defs/MarketSegment"
+    },
+    "som": {
+      "$ref": "#/$defs/MarketSegment"
+    },
+    "tam": {
+      "$ref": "#/$defs/MarketSegment"
+    }
+  },
+  "required": [
+    "id",
+    "currency",
+    "tam",
+    "sam",
+    "som"
+  ],
+  "title": "MarketSizing",
+  "type": "object"
+}

@@ -1,0 +1,156 @@
+{
+  "$defs": {
+    "AndroidConfig": {
+      "properties": {
+        "adaptive_icons": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deep_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "splash_color": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "universal_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "url_scheme": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IosConfig": {
+      "properties": {
+        "adaptive_icons": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deep_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "splash_color": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "universal_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "url_scheme": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "WebConfig": {
+      "properties": {
+        "deep_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "splash_color": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "universal_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "url_scheme": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.1/product-platform-config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "android": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AndroidConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of this record (conventionally `product/platform-config`)."
+    },
+    "ios": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IosConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "web": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WebConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "title": "PlatformConfig",
+  "type": "object"
+}
