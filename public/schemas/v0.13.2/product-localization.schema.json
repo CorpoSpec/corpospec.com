@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "LocaleRow": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "completeness_pct": {
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "native_name": {
+          "type": "string"
+        },
+        "rtl": {
+          "default": false,
+          "type": "boolean"
+        },
+        "scope": {
+          "$ref": "#/$defs/LocaleScope"
+        },
+        "script": {
+          "type": "string"
+        },
+        "source_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "native_name",
+        "script",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "LocaleScope": {
+      "enum": [
+        "app",
+        "landing",
+        "both"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.2/product-localization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Locale coverage matrix for a product — the list of languages the product\nships in, with per-locale completeness, script, RTL flag, and the surfaces\n(`app`, `landing`, or both) the locale targets. The default language\nanchors the source-of-truth strings; every other locale is measured against\nit.\n\nScope: one per product. Lives at `product/localization.yaml`.",
+  "properties": {
+    "default_language": {
+      "type": "string"
+    },
+    "id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef of this record (conventionally `product/localization`)."
+    },
+    "locales": {
+      "items": {
+        "$ref": "#/$defs/LocaleRow"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "default_language"
+  ],
+  "title": "Product Localization Matrix",
+  "type": "object",
+  "x-corpospec-pillar": "product"
+}

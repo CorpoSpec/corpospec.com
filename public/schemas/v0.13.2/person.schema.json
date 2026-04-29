@@ -1,0 +1,441 @@
+{
+  "$defs": {
+    "DOInsurance": {
+      "description": "Directors & Officers (D&O) insurance details attached to a person.\n\nCaptures whether D&O coverage is contractually required, the coverage\nceiling, and an estimate of the annual premium so that compensation\nreporting can reason about total employer cost.",
+      "properties": {
+        "annual_premium_eur_estimate": {
+          "description": "Estimated annual premium in EUR.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "coverage_eur": {
+          "description": "Coverage ceiling in EUR (aggregate, annual).",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "required": {
+          "description": "Whether D&O insurance is contractually required for this person.\n\nField name retained for YAML compatibility; the adjacent JSON Schema\nkeyword `required` on object properties is unrelated.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "EmploymentType": {
+      "description": "Employment type enumerating the contractual relationship kinds observed\nacross UNSTARTER, ACME, and German-law companies modelled in CorpoSpec.\n\nIncludes the German-law specific values (`angestellte`, `geschaeftsfuehrer`,\n`minijob-520`, `werkstudent`) alongside internationally common categories.",
+      "oneOf": [
+        {
+          "const": "angestellte",
+          "description": "Standard German dependent employee (Arbeitsvertrag, § 611a BGB).",
+          "type": "string"
+        },
+        {
+          "const": "geschaeftsfuehrer",
+          "description": "Managing director of a GmbH (statutory organ under GmbHG).",
+          "type": "string"
+        },
+        {
+          "const": "full-time",
+          "description": "Full-time salaried employee (generic).",
+          "type": "string"
+        },
+        {
+          "const": "part-time",
+          "description": "Part-time salaried employee.",
+          "type": "string"
+        },
+        {
+          "const": "minijob-520",
+          "description": "German Minijob (geringfügige Beschäftigung up to €520 / month).",
+          "type": "string"
+        },
+        {
+          "const": "werkstudent",
+          "description": "German Werkstudent (tertiary-student employment status).",
+          "type": "string"
+        },
+        {
+          "const": "contractor",
+          "description": "Independent contractor (Werkvertrag / Dienstvertrag).",
+          "type": "string"
+        },
+        {
+          "const": "freelance",
+          "description": "Freelance worker (selbstständig, 1099-equivalent).",
+          "type": "string"
+        },
+        {
+          "const": "intern",
+          "description": "Internship (Praktikum).",
+          "type": "string"
+        },
+        {
+          "const": "advisor",
+          "description": "Advisor or board observer (non-employee).",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Fallback for contractual arrangements not covered above.",
+          "type": "string"
+        }
+      ]
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PersonCustom": {
+      "description": "Typed extension fields for Person.\n\nHolds per-person payroll, insurance, and compliance metadata that does not\nbelong on the W3C-aligned core `Person` record. Every field is optional —\ncompanies may omit any field not relevant to their jurisdiction.",
+      "properties": {
+        "compensation_post_pre_seed_eur": {
+          "description": "Annual gross compensation in EUR after the pre-seed trigger fires.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_pre_pre_seed_eur": {
+          "description": "Annual gross compensation in EUR before the pre-seed trigger fires.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "compensation_start_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Date on which compensation begins to accrue.\n\nMay differ from `Person.start_date`: a Geschäftsführer may assume the\nrole on day N but defer paid compensation until pre-seed close on\nday N+M. When both are present, `compensation_start_date` wins for\npayroll calculations."
+        },
+        "d_o_insurance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DOInsurance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Directors & Officers insurance attached to this person."
+        },
+        "employment_contract": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the legal template backing this person's contract\n(e.g. `legal/templates/geschaeftsfuehrer-anstellungsvertrag`)."
+        },
+        "employment_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EmploymentType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Contractual employment type (see `EmploymentType`)."
+        },
+        "health_insurance": {
+          "description": "Health insurance arrangement for this person (prose; German law\ndistinguishes gesetzliche vs. private Krankenversicherung, with\nelection rules for Geschäftsführer).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rentenversicherung": {
+          "description": "Statutory pension (Rentenversicherung) arrangement. Free-form prose\nbecause values range from `pflichtig` to \"voluntary (recommended for\nlong-term tax optimization)\" with supporting reasoning.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sozialversicherung_status": {
+          "description": "Statutory social-insurance (Sozialversicherung) status under German\nlaw. Free-form because real records mix single tokens (`pflichtig`,\n`exempt`) with explanatory prose citing § 7a SGB IV statusfeststellung\noutcomes.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_residency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoCountry"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ISO 3166-1 alpha-2 country code of the person's tax residency."
+        }
+      },
+      "type": "object"
+    },
+    "PersonName": {
+      "description": "Person name.\n\n`given` and `family` follow RFC 6350 vCard semantics. `full` is stored\nexplicitly rather than derived so that cultures with non-concatenative\nname formats (e.g. family-name-first, particles, patronymics) can\npresent the preferred display form without rule-based reconstruction.",
+      "properties": {
+        "family": {
+          "description": "Family (surname) name.",
+          "type": "string"
+        },
+        "full": {
+          "description": "Preferred display form of the full name.",
+          "type": "string"
+        },
+        "given": {
+          "description": "Given (first) name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "given",
+        "family",
+        "full"
+      ],
+      "type": "object"
+    },
+    "PersonStatus": {
+      "description": "Person employment status.",
+      "oneOf": [
+        {
+          "const": "active",
+          "description": "Actively employed.",
+          "type": "string"
+        },
+        {
+          "const": "departed",
+          "description": "No longer employed.",
+          "type": "string"
+        },
+        {
+          "const": "on-leave",
+          "description": "Employed but temporarily away (parental leave, sabbatical, etc.).",
+          "type": "string"
+        },
+        {
+          "const": "planned",
+          "description": "Offer accepted but start date is in the future.",
+          "type": "string"
+        }
+      ]
+    },
+    "PostalAddress": {
+      "description": "Physical address aligned with schema.org PostalAddress.",
+      "properties": {
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "country": {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        "postal_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "street": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "country"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.2/person.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Person record aligned with vCard/jCard (RFC 6350) and W3C ORG Membership.",
+  "properties": {
+    "bio": {
+      "description": "Short prose biography or summary.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "custom": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PersonCustom"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Typed custom extension fields (payroll, insurance, compliance)."
+    },
+    "date_of_birth": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Date of birth."
+    },
+    "email": {
+      "description": "Primary email address.",
+      "format": "email",
+      "type": "string"
+    },
+    "employer": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef to the legal entity that employs this person (e.g.\n`entity/unstarter-gmbh`, `entity/beevelop-ug`). Distinct from `unit`,\nwhich names the organisational unit within that entity. Cross-repo\naliases resolve when `Manifest.connected_repos` declares the alias."
+    },
+    "end_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Last day of employment. `null` while active."
+    },
+    "equity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef to this person's stakeholder record in the cap table (if any)."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "PathRef of this record (e.g. `people/team/maik`)."
+    },
+    "name": {
+      "$ref": "#/$defs/PersonName",
+      "description": "Person's name in RFC 6350 vCard form."
+    },
+    "personal_address": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PostalAddress"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Personal (non-work) postal address."
+    },
+    "phone": {
+      "description": "Primary phone number in E.164-compatible form.",
+      "pattern": "^\\+?[0-9 ()\\-.]{6,20}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "role": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "PathRef to the `Role` this person holds (if any)."
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "First day of employment (may precede `compensation_start_date` when\ninitial service is uncompensated)."
+    },
+    "status": {
+      "$ref": "#/$defs/PersonStatus",
+      "description": "Lifecycle status."
+    },
+    "type": {
+      "description": "W3C ORG / schema.org type discriminator. Currently always `\"Person\"`.",
+      "type": "string"
+    },
+    "unit": {
+      "description": "Organisational unit (id of an `OrgUnit` within `people/org`). This is\na local identifier, not a PathRef — the unit set is defined on\n`OrgStructure.units[].id`.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "name",
+    "email",
+    "status"
+  ],
+  "title": "Person",
+  "type": "object",
+  "x-corpospec-pillar": "people"
+}

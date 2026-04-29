@@ -1,0 +1,534 @@
+{
+  "$defs": {
+    "Amendment": {
+      "description": "Contract amendment.\n\nRecords a single post-execution change to the contract. Amendments are append-only —\ndo not mutate existing entries; record a new amendment that supersedes.",
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/IsoDate",
+          "description": "Date the amendment became effective."
+        },
+        "description": {
+          "description": "Human-readable summary of what the amendment changes.",
+          "type": "string"
+        },
+        "value_change": {
+          "description": "Net monetary delta introduced by the amendment, expressed in the contract's own\ncurrency (see `Contract.value.currency`). Positive values increase the contract\nvalue, negative values decrease it. For relative changes (e.g. a percentage uplift),\ncompute the delta and store it here; there is no separate percentage field.",
+          "format": "double",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "date",
+        "description"
+      ],
+      "type": "object"
+    },
+    "BaseSalary": {
+      "description": "Base salary component of compensation.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "minimum": 0.0,
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "frequency": {
+          "$ref": "#/$defs/PaymentFrequency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency",
+        "frequency"
+      ],
+      "type": "object"
+    },
+    "Benefit": {
+      "description": "A single employment benefit.",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "legal_basis": {
+          "description": "Statutory or collective-agreement basis for the benefit — reference the specific\nlaw, paragraph, or collective bargaining provision (e.g. `§ 3 Nr. 45 EStG`,\n`§ 40 Abs. 2 EStG`). Leave unset when the benefit is purely contractual.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tax_treatment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaxTreatment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type": {
+          "$ref": "#/$defs/BenefitType"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContractValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "description"
+      ],
+      "type": "object"
+    },
+    "BenefitType": {
+      "description": "Benefit type classification.",
+      "enum": [
+        "transport",
+        "equipment",
+        "internet",
+        "non-cash",
+        "health",
+        "recovery",
+        "meals",
+        "training",
+        "pension",
+        "other"
+      ],
+      "type": "string"
+    },
+    "Compensation": {
+      "description": "Structured compensation breakdown for employment contracts.",
+      "properties": {
+        "base_salary": {
+          "$ref": "#/$defs/BaseSalary"
+        },
+        "benefits": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Benefit"
+          },
+          "type": "array"
+        },
+        "variable": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VariableCompensation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "base_salary"
+      ],
+      "type": "object"
+    },
+    "ContractStatus": {
+      "description": "Contract status.",
+      "enum": [
+        "draft",
+        "active",
+        "expired",
+        "terminated",
+        "disputed"
+      ],
+      "type": "string"
+    },
+    "ContractSubtype": {
+      "description": "Employment contract subtype.",
+      "enum": [
+        "managing-director",
+        "employee",
+        "minijob",
+        "freelance"
+      ],
+      "type": "string"
+    },
+    "ContractType": {
+      "description": "Contract type.",
+      "enum": [
+        "customer-agreement",
+        "vendor",
+        "employment",
+        "nda",
+        "partnership",
+        "service",
+        "license",
+        "lease",
+        "loan",
+        "franchise",
+        "construction",
+        "consulting",
+        "government",
+        "insurance",
+        "supply",
+        "distribution"
+      ],
+      "type": "string"
+    },
+    "ContractValue": {
+      "description": "Contract monetary value.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        },
+        "frequency": {
+          "$ref": "#/$defs/PaymentFrequency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency",
+        "frequency"
+      ],
+      "type": "object"
+    },
+    "DisputeResolution": {
+      "description": "Mechanism agreed in the contract for resolving disputes between the parties.",
+      "oneOf": [
+        {
+          "const": "arbitration",
+          "description": "Binding arbitration (typically per ICC, LCIA, DIS, or AAA rules).",
+          "type": "string"
+        },
+        {
+          "const": "litigation",
+          "description": "Court litigation under the governing law.",
+          "type": "string"
+        },
+        {
+          "const": "mediation",
+          "description": "Non-binding mediation by a neutral third party.",
+          "type": "string"
+        },
+        {
+          "const": "expert-determination",
+          "description": "Binding expert determination on technical or valuation questions.",
+          "type": "string"
+        },
+        {
+          "const": "negotiation",
+          "description": "Good-faith negotiation between the parties as sole mechanism.",
+          "type": "string"
+        },
+        {
+          "const": "escalation-tree",
+          "description": "Tiered escalation: negotiation → mediation → arbitration or litigation.",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Mechanism not covered by a specific variant. Prefer a specific variant when possible.",
+          "type": "string"
+        }
+      ]
+    },
+    "DocumentRef": {
+      "description": "Contract document reference.",
+      "properties": {
+        "hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "type": "object"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PaymentFrequency": {
+      "description": "Payment frequency.",
+      "enum": [
+        "one-time",
+        "monthly",
+        "quarterly",
+        "annual",
+        "weekly",
+        "bi-weekly",
+        "hourly",
+        "per-milestone",
+        "net30",
+        "net60",
+        "net90"
+      ],
+      "type": "string"
+    },
+    "SocialInsuranceStatus": {
+      "description": "Social insurance obligation status.",
+      "enum": [
+        "mandatory",
+        "exempt",
+        "voluntary"
+      ],
+      "type": "string"
+    },
+    "TaxTreatment": {
+      "description": "Tax treatment of a benefit.",
+      "enum": [
+        "tax-free",
+        "flat-rate",
+        "taxable"
+      ],
+      "type": "string"
+    },
+    "VariableCompensation": {
+      "description": "Variable compensation component.",
+      "properties": {
+        "cap_percentage": {
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "percentage": {
+          "format": "double",
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.2/contract.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Contract record adapted from OCDS party/contract pattern.",
+  "properties": {
+    "amendments": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Amendment"
+      },
+      "type": "array"
+    },
+    "auto_renewal": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "compensation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Compensation"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contract_subtype": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ContractSubtype"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "counterparty": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "dispute_resolution": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DisputeResolution"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Mechanism agreed for resolving disputes between the parties."
+    },
+    "documents": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentRef"
+      },
+      "type": "array"
+    },
+    "effective_date": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "expiration_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "governing_law": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "key_terms": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "leave_days_per_year": {
+      "format": "int64",
+      "maximum": 60,
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "notice_period_days": {
+      "format": "int64",
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "probation_months": {
+      "format": "int64",
+      "minimum": 0,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "related_decisions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "renewal_term_months": {
+      "format": "int64",
+      "minimum": 1,
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "social_insurance_status": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SocialInsuranceStatus"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "$ref": "#/$defs/ContractStatus"
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/ContractType"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ContractValue"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "working_hours_per_week": {
+      "format": "double",
+      "minimum": 0.0,
+      "type": [
+        "number",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "title",
+    "counterparty",
+    "status",
+    "effective_date"
+  ],
+  "title": "Contract",
+  "type": "object",
+  "x-corpospec-pillar": "legal"
+}

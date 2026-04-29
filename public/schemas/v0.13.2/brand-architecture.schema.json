@@ -1,0 +1,302 @@
+{
+  "$defs": {
+    "ArchitectureModel": {
+      "description": "Brand architecture model.",
+      "oneOf": [
+        {
+          "enum": [
+            "branded-house",
+            "endorsed",
+            "house-of-brands",
+            "hybrid"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "monolithic",
+          "description": "Single brand with no sub-brands or product lines. The brand IS the\nproduct (KICKGEIST, most B2C apps). Distinct from `BrandedHouse`,\nwhich has sub-brands under a master brand.",
+          "type": "string"
+        }
+      ]
+    },
+    "BrandGovernance": {
+      "description": "Brand governance rules.",
+      "properties": {
+        "approval_process": {
+          "description": "Prose description of how approvals flow from request to decision\n(who reviews, in what order, with which artefacts). Optional for\ngradual adoption, but strongly recommended alongside `owner`:\nwithout it, `review_required_for` has no enforceable mechanism.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "owner": {
+          "$ref": "#/$defs/PathRef"
+        },
+        "review_required_for": {
+          "default": [],
+          "description": "Change types that trigger formal review before publication. Typical\nentries: `logo-modifications`, `primary-palette-changes`,\n`naming-new-sub-brand`, `co-branding-agreements`. Keep entries\nimperative and specific so AI agents and humans agree on scope.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "owner"
+      ],
+      "type": "object"
+    },
+    "BrandVersionEntry": {
+      "description": "Brand version history entry.",
+      "properties": {
+        "approved_by": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "PathRef to the person or role who formally approved this version.\nOptional because early versions and solo-founder brands may lack a\nseparate approver; populate as soon as governance exists so the audit\ntrail is complete."
+        },
+        "changes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "date": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version",
+        "date",
+        "changes"
+      ],
+      "type": "object"
+    },
+    "CoBrandingRules": {
+      "description": "Co-branding rules.",
+      "properties": {
+        "approved_arrangements": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "max_size_ratio": {
+          "description": "Maximum size ratio of the partner mark relative to this brand's mark.\n1.0 = equal size (endorsement-parity). >1.0 allows the partner to be\nvisually larger (e.g. co-sponsored event where the partner is primary).\nCapped at 5.0 because anything beyond that effectively hides this brand.",
+          "format": "double",
+          "maximum": 5.0,
+          "minimum": 0.0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "min_clear_space_px": {
+          "description": "Minimum clear space between the two marks in pixels. Non-negative.",
+          "format": "int64",
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "prohibited_contexts": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "separator_style": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "NamingConvention": {
+      "description": "Naming convention rules. Includes examples (D2: non-derivable).",
+      "properties": {
+        "examples": {
+          "default": [],
+          "description": "Concrete examples of names that satisfy `pattern`. Kept explicit\nbecause examples cannot be derived from the pattern alone (D2).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "max_characters": {
+          "description": "Optional upper bound on full product/sub-brand name length in\ncharacters. Drives UI truncation decisions and trademark screening.",
+          "format": "int64",
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pattern": {
+          "description": "Human-readable naming pattern for sub-brands and products. May be a\nregex, a template like `{Master} {ProductNoun}`, or a prose rule.\nConsumed by reviewers and AI assistants during naming decisions.",
+          "type": "string"
+        },
+        "prohibited_patterns": {
+          "default": [],
+          "description": "Patterns that must NOT be used (e.g. trademarked terms, reserved\nprefixes, competitor names, abbreviations with negative connotations).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "pattern"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "SubBrand": {
+      "description": "Sub-brand within the architecture.",
+      "properties": {
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "product_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PathRef"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "relationship_type": {
+          "$ref": "#/$defs/SubBrandRelationship"
+        },
+        "visual_independence_level": {
+          "description": "Visual independence from the master brand on a 1-5 scale.\n1 = identical visual system (branded house, e.g. Google Maps).\n3 = shared core with distinct treatment (endorsed).\n5 = fully independent visual identity (house of brands).\nOmit when the architecture model alone adequately describes the\nrelationship and a numeric score would be noise.",
+          "format": "int64",
+          "maximum": 5,
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "relationship_type"
+      ],
+      "type": "object"
+    },
+    "SubBrandRelationship": {
+      "description": "Sub-brand relationship type.",
+      "enum": [
+        "primary",
+        "endorsed",
+        "independent",
+        "feature"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.2/brand-architecture.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Brand architecture definition.",
+  "properties": {
+    "co_branding": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CoBrandingRules"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "governance": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BrandGovernance"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "master_brand": {
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ArchitectureModel"
+    },
+    "naming_convention": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/NamingConvention"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sub_brands": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/SubBrand"
+      },
+      "type": "array"
+    },
+    "version_history": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/BrandVersionEntry"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "model",
+    "master_brand"
+  ],
+  "title": "BrandArchitecture",
+  "type": "object",
+  "x-corpospec-pillar": "brand"
+}

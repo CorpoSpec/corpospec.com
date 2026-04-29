@@ -1,0 +1,76 @@
+{
+  "$defs": {
+    "CohortPeriod": {
+      "additionalProperties": false,
+      "description": "Retention data for a single period within a cohort.",
+      "properties": {
+        "period_offset": {
+          "format": "uint32",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "retained": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "retention_rate": {
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "period_offset",
+        "retained",
+        "retention_rate"
+      ],
+      "type": "object"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.13.2/cohort.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Retention cohort — a group of users acquired in a specific period, tracked\nthrough their lifecycle. Each row in `retention` records how many of the\noriginal cohort were still active at a given period offset (month 0, 1,\n2, …) and the implied retention rate. Used to build retention curves and\nderive metrics like net dollar retention.\n\nScope: many per company, one file per cohort. Lives at\n`metrics/cohorts/<slug>.yaml`.",
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "name": {
+      "type": "string"
+    },
+    "period": {
+      "$ref": "#/$defs/IsoDate"
+    },
+    "retention": {
+      "items": {
+        "$ref": "#/$defs/CohortPeriod"
+      },
+      "type": "array"
+    },
+    "size": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "period",
+    "size",
+    "retention"
+  ],
+  "title": "Cohort",
+  "type": "object",
+  "x-corpospec-pillar": "metrics"
+}
