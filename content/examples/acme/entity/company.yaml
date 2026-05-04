@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/entity.schema.json
 id: entity/acme-corp
 type: corporation
+business_type: b2b_software
 legal_name: "Acme Corp, Inc."
 trade_name: "Acme"
 legal_form: "C-Corp"
