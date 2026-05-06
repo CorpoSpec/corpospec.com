@@ -1,0 +1,77 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-colors.schema.json
+id: brand/colors
+primary_palette:
+  - name: Studio Black
+    hex: "#0A0A0A"
+  - name: Signal Cyan
+    hex: "#1ABCB7"
+  - name: Paper White
+    hex: "#F2F2F0"
+secondary_palette:
+  - name: Slate
+    hex: "#2A2D33"
+  - name: Stone
+    hex: "#7B7E85"
+  - name: Mist
+    hex: "#D4D6D8"
+  - name: Moss
+    hex: "#3FAA76"
+  - name: Honey
+    hex: "#D49A35"
+  - name: Ember
+    hex: "#C24A4A"
+neutral_palette:
+  - name: Ink
+    hex: "#1A1B1F"
+  - name: Steel
+    hex: "#3F4248"
+  - name: Silver
+    hex: "#A6A8AC"
+  - name: Cloud
+    hex: "#E8E9EB"
+  - name: White
+    hex: "#FFFFFF"
+semantic_tokens:
+  success:
+    default_hex: "#3FAA76"
+    light_hex: "#D4F0E1"
+    dark_hex: "#1F5C40"
+    on_color_hex: "#FFFFFF"
+  warning:
+    default_hex: "#D49A35"
+    light_hex: "#F8E8C7"
+    dark_hex: "#7A5616"
+    on_color_hex: "#1A1B1F"
+  error:
+    default_hex: "#C24A4A"
+    light_hex: "#F4D6D6"
+    dark_hex: "#702424"
+    on_color_hex: "#FFFFFF"
+  info:
+    default_hex: "#1ABCB7"
+    light_hex: "#C5EEEC"
+    dark_hex: "#0F706C"
+    on_color_hex: "#FFFFFF"
+accessibility:
+  standard: wcag21-aa
+  pairs:
+    - foreground: "#FFFFFF"
+      background: "#0A0A0A"
+      contrast_ratio: 19.53
+      wcag_aa: true
+      wcag_aaa: true
+    - foreground: "#0A0A0A"
+      background: "#F2F2F0"
+      contrast_ratio: 17.95
+      wcag_aa: true
+      wcag_aaa: true
+    - foreground: "#FFFFFF"
+      background: "#1ABCB7"
+      contrast_ratio: 2.42
+      wcag_aa: false
+      wcag_aaa: false
+      documented_exception: >
+        Cyan on white fails AA for body text but is retained as an
+        accent on dark surfaces (Studio Black or Ink), where contrast
+        rises above 7:1. Never use this pair on a light background for
+        text content.

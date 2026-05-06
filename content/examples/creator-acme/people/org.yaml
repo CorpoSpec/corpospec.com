@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/org-structure.schema.json
+id: people/org
+type: FormalOrganization
+name: "Creator Acme, Inc."
+entity: entity/creator-acme
+units:
+  - id: executive
+    type: OrganizationalUnit
+    name: "Founder Office"
+    head: people/roles/creator-founder
+    members:
+      - people/team/jamie-lee
+    site: hybrid
+  - id: production
+    type: OrganizationalUnit
+    name: "Production"
+    head: people/roles/video-producer
+    members:
+      - people/team/morgan-okafor
+    site: hybrid
+  - id: community
+    type: OrganizationalUnit
+    name: "Community"
+    head: people/roles/community-lead
+    members:
+      - people/team/priya-venkat
+    site: remote
+  - id: operations
+    type: OrganizationalUnit
+    name: "Operations"
+    head: people/roles/operations-lead
+    members:
+      - people/team/sam-rivera
+    site: remote

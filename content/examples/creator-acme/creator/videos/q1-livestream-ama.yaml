@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/video.schema.json
+id: creator/videos/q1-livestream-ama
+channel: creator/channels/main-channel
+content_series: creator/content-series/weekly-deepdive
+platform_video_id: "Q1ama03xLIVE"
+title: "Q1 Livestream AMA — devtool roadmap and a sponsor conversation with TechBrand"
+description: "Two-hour livestream Q&A covering the Q1 roadmap, the engineering team behind it, and a sponsored segment with TechBrand on developer-experience instrumentation. Disclosure: this stream contains a paid product integration with TechBrand."
+kind: livestream_vod
+published_at: "2026-03-29T20:30:00Z"
+duration_seconds: 7392
+broadcast_state: none
+definition: hd
+privacy_status: public
+upload_status: processed
+license: platform_default
+embeddable: true
+made_for_kids: false
+contains_synthetic_media: false
+caption_available: true
+has_paid_product_placement: true
+default_language: "en"
+default_audio_language: "en"
+category_id: "28"
+livestream_scheduled_for: "2026-03-29T20:00:00Z"
+livestream_started_at: "2026-03-29T20:01:14Z"
+livestream_ended_at: "2026-03-29T22:04:26Z"
+tags:
+  - "AMA"
+  - "live"
+  - "devtools"
+  - "sponsorship disclosure"
+topic_categories:
+  - "https://en.wikipedia.org/wiki/Technology"
+thumbnail_default_url: "https://i.ytimg.com/vi/Q1ama03xLIVE/default.jpg"
+thumbnail_high_url: "https://i.ytimg.com/vi/Q1ama03xLIVE/hqdefault.jpg"
+statistics:
+  view_count: 24780
+  like_count: 1582
+  comment_count: 624
+provenance:
+  synced_at: "2026-04-30T03:14:00Z"
+  data_class: metadata
+  retention_tier: thirty_day_strict
+  source_attribution: platform_data_api

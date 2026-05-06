@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/role.schema.json
+id: people/roles/community-lead
+title: "Community Lead"
+abbreviation: "Comm"
+unit: community
+reports_to: people/roles/creator-founder
+level: lead
+responsibilities:
+  - "Cohort student-success management"
+  - "Channel-membership programme and member-only content"
+  - "Audience research and editorial-input loops"
+  - "Comment and DM triage on YouTube and email"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 85000
+  max: 105000
+  note: "Full-time salary."

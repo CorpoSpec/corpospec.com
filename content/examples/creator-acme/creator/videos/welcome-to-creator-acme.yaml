@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/video.schema.json
+id: creator/videos/welcome-to-creator-acme
+channel: creator/channels/main-channel
+platform_video_id: "WLshort02x"
+title: "Welcome to Creator Acme — what to expect"
+description: "Sixty-second channel trailer. The pitch, the cadence, and where the Wednesday deep-dive lands."
+kind: short
+published_at: "2025-04-20T17:00:00Z"
+duration_seconds: 58
+broadcast_state: none
+definition: hd
+privacy_status: public
+upload_status: processed
+license: platform_default
+embeddable: true
+made_for_kids: false
+contains_synthetic_media: false
+caption_available: true
+has_paid_product_placement: false
+default_language: "en"
+default_audio_language: "en"
+category_id: "28"
+tags:
+  - "channel trailer"
+  - "creator economy"
+topic_categories:
+  - "https://en.wikipedia.org/wiki/Technology"
+thumbnail_default_url: "https://i.ytimg.com/vi/WLshort02x/default.jpg"
+thumbnail_high_url: "https://i.ytimg.com/vi/WLshort02x/hqdefault.jpg"
+statistics:
+  view_count: 215800
+  like_count: 9420
+  comment_count: 412
+provenance:
+  synced_at: "2026-04-30T03:14:00Z"
+  data_class: metadata
+  retention_tier: thirty_day_strict
+  source_attribution: platform_data_api

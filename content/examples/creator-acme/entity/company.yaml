@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/entity.schema.json
+id: entity/creator-acme
+type: corporation
+business_type: creator_business
+legal_name: "Creator Acme, Inc."
+trade_name: "Creator Acme"
+legal_form: "C-Corp"
+jurisdiction: "US"
+functional_currency: "USD"
+registration_number: "8042199"
+registration_authority: "Delaware Division of Corporations"
+date_of_incorporation: "2025-04-12"
+address:
+  street: "300 Mission Street, Suite 1100"
+  city: "San Francisco"
+  postal_code: "94105"
+  state: "CA"
+  country: "US"
+founders:
+  - people/team/jamie-lee
+url: "https://creator-acme.example.com"
+company_purpose: "To produce and distribute educational technology content for early-stage operators, monetised through audience-aligned sponsorships, memberships, courses, and digital products."
+tax_ids:
+  - id_type: "EIN"
+    value: "92-1487632"
+    country: "US"
+    description: "Federal Employer Identification Number"
+contact:
+  email: "hello@creator-acme.example.com"
+  phone: "+1-415-555-0188"
+number_of_employees:
+  value: 4
+  as_of: "2026-04-01"
+status: active

@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/product.schema.json
+id: product/overview
+name: "Creator Acme Studio"
+tagline: "Long-form clarity for operators who build."
+description: >
+  The Creator Acme product is a content programme — the weekly long-form
+  deep-dive, the monthly livestream AMA, and the Agentic OS cohort —
+  delivered through YouTube, the companion newsletter, and the cohort
+  platform. The product surface for the audience is the channel; the
+  product surface for the team is the editorial calendar, the production
+  pipeline, and the cohort delivery toolkit.
+stage: growth
+url: "https://www.youtube.com/@creator-acme"
+distribution:
+  - web-direct
+  - direct-sales
+localization:
+  default_language: "en"
+  languages:
+    - "en"
+platforms:
+  - web
+target_customers:
+  - priority: primary
+    segment: "Founders, technical leads, and senior operators at pre-seed to Series B companies"
+    description: "Operators making technology decisions under time pressure."
+    icp_reference: market/icp/early-stage-operator
+value_proposition:
+  primary_pain: "High-stakes architectural decisions made with low-signal information."
+  solution: "Calm, system-level breakdowns of operator-relevant technology, with the reasoning chain visible."
+design_principles:
+  - name: "One Excellent Thing Per Week"
+    description: >
+      Cadence is fixed at one long-form deep-dive per week and one
+      livestream per month. The bar moves up; the volume does not.
+    anti_pattern: >
+      Shipping more videos to chase the algorithm. Splitting attention
+      across too many formats and losing depth in any of them.
+  - name: "Reasoning Is the Product"
+    description: >
+      Every video shows the inputs, the trade-offs, and the failure modes
+      alongside the conclusion. The cohort publishes the source materials
+      and rejected alternatives the founder considered.
+    anti_pattern: >
+      Conclusions presented without the chain. Polished outputs with the
+      work hidden.
+custom:
+  phase_descriptions:
+    foundation: "Channel launch, first 50 deep-dive episodes, first cohort intake."
+    growth: "Second cohort track, expanded sponsorship pipeline, monthly livestream programming."
+    scale: "International audience expansion, second creator on the channel, owned-platform cohort delivery."

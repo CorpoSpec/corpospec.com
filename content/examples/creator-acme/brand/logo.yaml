@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-logo.schema.json
+id: brand/logo
+primary:
+  composition: horizontal
+  minimum_size_px: 120
+  minimum_size_mm: 30.0
+variants:
+  - id: symbol
+    name: Studio Mark
+    composition: symbol-only
+    use_case: Favicon, channel avatar, small UI surfaces.
+    contexts_approved:
+      - YouTube channel avatar
+      - Social media avatar
+      - Browser favicon
+    contexts_prohibited:
+      - Print below 24px height
+      - Animated overlays during livestreams
+clear_space:
+  formula: "0.5 × symbol height"
+  reference_element: Studio Mark
+  minimum_px: 12
+usage_rules:
+  prohibited:
+    - Do not rotate, skew, or scale non-uniformly.
+    - Do not recolour outside the approved Studio Black / Signal Cyan / Paper White palette.
+    - Do not animate the wordmark on screen (motion is reserved for sting transitions).
+  approved_background_contrast_minimum: 4.5
+sizing_tiers:
+  - name: Standard
+    min_px: 96
+    required_variant: horizontal
+  - name: Compact
+    min_px: 32
+    max_px: 95
+    required_variant: symbol
+color_expressions:
+  - id: on-paper
+    background_type: white
+    foreground_colors:
+      - "#0A0A0A"
+      - "#1ABCB7"
+  - id: on-studio
+    background_type: black
+    foreground_colors:
+      - "#F2F2F0"
+      - "#1ABCB7"

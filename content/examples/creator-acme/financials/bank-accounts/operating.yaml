@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/bank-account.schema.json
+id: financials/bank-accounts/operating
+entity: entity/creator-acme
+accounts:
+- name: Primary Operating Account
+  bank: Mercury
+  currency: USD
+  type: operating
+  status: active
+  iban_last4: "8421"
+  opened: "2025-04-25"
+  closed: null
+- name: Tax Reserve
+  bank: Mercury
+  currency: USD
+  type: tax-reserve
+  status: active
+  iban_last4: "9034"
+  opened: "2025-12-01"
+  closed: null

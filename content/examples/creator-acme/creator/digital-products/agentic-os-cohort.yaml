@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/digital-product.schema.json
+id: creator/digital-products/agentic-os-cohort
+entity_id: entity/creator-acme
+name: "Agentic OS Cohort"
+slug: "agentic-os-cohort"
+kind: cohort
+description: "A six-week cohort-based course covering agent architecture, evaluation, and operational deployment for early-stage operators. Cohort opens twice a year, capped at 80 seats per intake."
+price:
+  amount: 1750.00
+  currency: USD
+launch_date: "2026-03-01"
+status: launched
+associated_revenue_streams:
+  - creator/revenue-streams/course-revenue

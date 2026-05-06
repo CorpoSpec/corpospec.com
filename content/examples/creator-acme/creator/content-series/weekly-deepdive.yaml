@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/content-series.schema.json
+id: creator/content-series/weekly-deepdive
+channel: creator/channels/main-channel
+title: "Weekly Deep-Dive"
+slug: "weekly-deepdive"
+description: "One long-form breakdown per week of an operator-relevant technology, framework, or workflow. Released every Wednesday at 09:00 PT."
+publication_cadence: weekly
+status: active
+episodes:
+  - creator/videos/agentic-ai-cohort-launch
+  - creator/videos/q1-livestream-ama

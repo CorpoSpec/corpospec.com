@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/role.schema.json
+id: people/roles/creator-founder
+title: "Founder, Lead Creator, and Editorial Owner"
+abbreviation: "Founder"
+unit: executive
+reports_to: null
+level: c-suite
+responsibilities:
+  - "Editorial direction and audience trust"
+  - "On-camera talent for the weekly deep-dive series"
+  - "Sponsorship-deal sign-off and brand-fit veto"
+  - "Cohort curriculum and instructor-of-record"
+  - "Company strategy, fundraising, and capital allocation"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 110000
+  max: 150000
+  equity_percentage: "100%"
+  note: "Founder takes a below-market draw plus full equity ownership through the early-revenue stage."

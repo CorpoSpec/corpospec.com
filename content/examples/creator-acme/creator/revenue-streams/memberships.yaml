@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/revenue-stream.schema.json
+id: creator/revenue-streams/memberships
+name: "YouTube Channel Memberships"
+kind: membership
+channel: creator/channels/main-channel
+currency: USD
+monthly_amounts:
+  - month: "2026-02-01"
+    amount:
+      amount: 1820.00
+      currency: USD
+  - month: "2026-03-01"
+    amount:
+      amount: 2245.00
+      currency: USD
+  - month: "2026-04-01"
+    amount:
+      amount: 2640.00
+      currency: USD

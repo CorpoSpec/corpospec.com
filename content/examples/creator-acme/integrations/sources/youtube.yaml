@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/integration.schema.json
+id: integrations/sources/youtube
+name: "YouTube Data + Analytics APIs"
+system: "YouTube"
+type: source
+status: active
+
+input_port:
+  name: "youtube-channel-sync"
+  protocols:
+    - kind: rest
+  authentication: oauth2
+
+data_contract:
+  owner: people/team/sam-rivera
+  freshness:
+    schedule: "daily 03:00 UTC"
+    max_staleness_minutes: 1560
+  schema:
+    fields:
+      - name: channel.id
+        type: string
+        required: true
+      - name: channel.statistics.subscriber_count
+        type: integer
+        required: true
+      - name: channel.statistics.view_count_lifetime
+        type: integer
+        required: true
+      - name: video.platform_video_id
+        type: string
+        required: true
+
+outputs: []

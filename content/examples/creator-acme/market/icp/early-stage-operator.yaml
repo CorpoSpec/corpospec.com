@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/icp.schema.json
+id: market/icp/early-stage-operator
+name: "Early-Stage Operator"
+priority: primary
+as_of: "2026-04-01"
+status: active
+description: >
+  Founders, CTOs, and senior product/engineering operators at companies
+  between pre-seed and Series B. They face shipping decisions where the
+  marginal cost of getting the architecture wrong is high; they are
+  short on time and long on questions. They prefer one long-form deep-
+  dive that earns their trust over a feed of short-form content.
+stage_range:
+  start: pre-seed
+  end: series-b
+geography:
+  primary: "US"
+  secondary: "EU"
+pain_point:
+  primary: "High-stakes architectural decisions made under time pressure with low-signal information."
+  description: >
+    Operators describe a recurring pattern: the team has to pick between
+    two stacks, two patterns, or two vendors; the literature is mostly
+    marketing copy or hot-takes; the cost of choosing wrong compounds
+    over months. They want a calm, system-level breakdown they can trust.
+vertical:
+  phase_1: "B2B SaaS and developer tools"
+  phase_1_rationale: "Largest concentration of audience in the early data; sharpest fit for the editorial focus."
+  phase_2: "Adjacent technical verticals"
+  phase_2_rationale: "Operators in fintech, devtools, and AI infrastructure share the same decision patterns."
+buying_behavior:
+  decision_maker: "Self — viewer subscribes, joins membership, or buys cohort seat directly."
+  decision_process: "Watches multiple deep-dives over weeks; converts on cohort intake or membership tier when the editorial trust is established."

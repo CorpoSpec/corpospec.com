@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/market-sizing.schema.json
+id: market/tam-sam-som
+name: "Operator Education Market Sizing"
+description: "Addressable revenue across the creator-economy operator-education segment Creator Acme participates in."
+as_of: "2026-04-01"
+currency: USD
+tam:
+  description: "Global creator-economy revenue across the educational-content vertical."
+  value:
+    amount: 8400000000
+    unit:
+      kind: currency
+      code: USD
+  methodology: >
+    Top-down from creator-economy reports for 2026 estimating global
+    creator revenue at roughly $250B, of which roughly 3.4% is
+    attributable to the educational-content vertical. 0.034 × $250B ≈ $8.4B.
+sam:
+  description: "Operator-education revenue across English-speaking long-form video and cohort programmes."
+  value:
+    amount: 1200000000
+    unit:
+      kind: currency
+      code: USD
+  methodology: >
+    Bottom-up from observable peers in the long-form operator-education
+    segment, ~600 active programmes globally with average annual revenue
+    of $2M (sponsorship, memberships, courses combined). 600 × $2M = $1.2B.
+som:
+  description: "Achievable revenue within 18 months across English-speaking long-form operator audience."
+  value:
+    amount: 2400000
+    unit:
+      kind: currency
+      code: USD
+  methodology: >
+    Bottom-up from delivery capacity:
+    sponsorships ~$600K/year at sustained pipeline,
+    memberships ~$240K/year at 1500 paying members,
+    cohort revenue ~$840K/year at two intakes × 80 seats × $1,750,
+    merch + affiliate ~$120K/year. Total 12-month ARR target ~$1.8M;
+    18-month run-rate to $2.4M with second cohort track and a single
+    additional sponsor slot.

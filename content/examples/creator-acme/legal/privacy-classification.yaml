@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/privacy-classification.schema.json
+id: legal/privacy-classification
+as_of: "2026-04-15"
+coppa: false
+gdpr_kids: false
+notes: >
+  Creator Acme content is targeted at adult professional operators.
+  Channel `made_for_kids` flag is `false` on YouTube. Newsletter
+  signup is gated behind a self-declared 16+ confirmation. Content
+  contains no themes targeted at audiences under 16 and is not flagged
+  for COPPA or GDPR-K compliance obligations.

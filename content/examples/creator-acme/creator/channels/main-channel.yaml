@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/channel.schema.json
+id: creator/channels/main-channel
+entity_id: entity/creator-acme
+platform: youtube
+platform_channel_id: "UCcreatorAcmeMain00000A"
+platform_uploads_id: "UUcreatorAcmeMain00000A"
+title: "Creator Acme"
+description: "Educational technology breakdowns for operators who build and ship — weekly deep-dives, occasional shorts, monthly livestream Q&A."
+custom_url: "@creator-acme"
+country: "US"
+default_language: "en"
+keywords: "tech founders agentic-ai operators saas devtools creator economy"
+made_for_kids: false
+privacy_status: public
+published_at: "2025-04-20T16:30:00Z"
+topic_categories:
+  - "https://en.wikipedia.org/wiki/Technology"
+  - "https://en.wikipedia.org/wiki/Knowledge"
+unsubscribed_trailer_video_id: "creator/videos/welcome-to-creator-acme"
+thumbnail_default_url: "https://yt3.ggpht.com/ytc/creator-acme-default.jpg"
+thumbnail_medium_url: "https://yt3.ggpht.com/ytc/creator-acme-medium.jpg"
+thumbnail_high_url: "https://yt3.ggpht.com/ytc/creator-acme-high.jpg"
+statistics:
+  view_count_lifetime: 1284600
+  subscriber_count: 48200
+  subscriber_count_hidden: false
+  video_count_public: 87
+first_synced_at: "2025-05-04"
+provenance:
+  synced_at: "2026-04-30T03:14:00Z"
+  data_class: metadata
+  retention_tier: thirty_day_strict
+  source_attribution: platform_data_api

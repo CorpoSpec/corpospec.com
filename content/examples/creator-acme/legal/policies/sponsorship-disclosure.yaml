@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/policy.schema.json
+id: legal/policies/sponsorship-disclosure
+name: Sponsorship Disclosure Policy
+description: Defines when and how Creator Acme discloses paid sponsorships in video content, descriptions, and the companion newsletter.
+status: active
+scope: All on-camera and on-newsletter sponsorship integrations
+effective_date: "2025-09-01"
+review_date: "2026-09-01"
+owner: people/team/sam-rivera
+provisions:
+  - "Every paid sponsorship is disclosed verbally before the segment begins."
+  - "Every video with a paid integration sets `paidProductPlacementDetails.hasPaidProductPlacement` to true on the YouTube upload."
+  - "Disclosure language is reviewed by the founder before each segment is recorded."
+  - "Affiliate links are disclosed in the video description and the on-screen overlay."
+  - "Sponsorship language must comply with FTC 16 CFR §255 and equivalent guidance in EU member states."
+related_decisions:
+  - governance/decisions/0003-sponsor-fit-veto

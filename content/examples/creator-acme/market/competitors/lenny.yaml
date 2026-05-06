@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/competitor.schema.json
+id: market/competitors/lenny
+name: "Lenny's Newsletter and Podcast"
+website: "https://www.lennysnewsletter.com"
+layer: 1
+category: "Operator Education Content"
+relationship: direct-competitor
+threat_level: high
+category_representative: true
+why_we_win: >
+  Creator Acme ships long-form video deep-dives with the underlying
+  reasoning visible — Lenny's strength is short essays and conversational
+  podcasts. Different formats, overlapping audience.
+as_of: "2026-04-01"
+description: >
+  Operator-focused newsletter and podcast covering product, growth, and
+  career development. Strong audience overlap with Creator Acme's
+  early-stage operators. Sponsorship revenue is the dominant model;
+  cohort programmes overlap with the Agentic OS cohort.
+founded: "2020"
+headquarters: "United States"
+strengths:
+  - "Established audience and high open rates on newsletter"
+  - "Podcast network with high-profile guests"
+  - "Strong sponsorship pipeline"
+weaknesses:
+  - "Format limited to text and audio; no long-form video"
+  - "Founder-bottlenecked; growth tied to one publisher"
+sources:
+  - "lennysnewsletter.com (accessed 2026-04-01)"

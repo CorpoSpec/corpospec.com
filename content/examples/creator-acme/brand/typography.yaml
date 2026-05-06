@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-typography.schema.json
+id: brand/typography
+families:
+  - name: GT Walsheim
+    source: custom
+    license: commercial
+    roles:
+      - display
+    fallback_stack:
+      - Inter
+      - system-ui
+      - sans-serif
+    variable_font: false
+  - name: Inter
+    source: google-fonts
+    license: ofl
+    roles:
+      - body
+      - ui
+    fallback_stack:
+      - system-ui
+      - -apple-system
+      - sans-serif
+    variable_font: true
+  - name: JetBrains Mono
+    source: google-fonts
+    license: ofl
+    roles:
+      - mono
+    fallback_stack:
+      - Fira Code
+      - Consolas
+      - monospace
+    variable_font: true
+type_scale:
+  - name: display-xl
+    size_px: 64
+    size_rem: 4.0
+    line_height: 1.05
+    letter_spacing_em: -0.02
+  - name: display-lg
+    size_px: 48
+    size_rem: 3.0
+    line_height: 1.1
+    letter_spacing_em: -0.015
+  - name: heading-md
+    size_px: 24
+    size_rem: 1.5
+    line_height: 1.3
+  - name: body-md
+    size_px: 16
+    size_rem: 1.0
+    line_height: 1.6
+  - name: caption
+    size_px: 12
+    size_rem: 0.75
+    line_height: 1.4

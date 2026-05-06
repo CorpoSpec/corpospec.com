@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/resolution.schema.json
+id: governance/resolutions/001-incorporation
+entity: entity/creator-acme
+date: "2025-04-12"
+procedure: written-circular
+legal_basis: "Delaware General Corporation Law, Title 8, Chapter 1"
+decision_makers:
+  - people/team/jamie-lee
+items:
+  - number: 1
+    subject: "Approval of incorporation of Creator Acme, Inc. as a Delaware C-Corporation"
+    outcome: approved
+    notes: "Sole-incorporator written consent to form Creator Acme, Inc. under the laws of the State of Delaware."
+  - number: 2
+    subject: "Authorization of 10,000,000 shares of Common Stock at $0.0001 par value"
+    outcome: approved
+    notes: "Authorised share capital of 10,000,000 Common Stock, par $0.0001. 8,500,000 issued to founder; 1,500,000 reserved for future grants."
+  - number: 3
+    subject: "Appointment of Jamie Lee as sole officer (President, Treasurer, Secretary)"
+    outcome: approved
+    notes: "Appointed as sole officer until the first board meeting."
+related_decisions:
+  - governance/decisions/0001-entity-formation
+retention_years: 99

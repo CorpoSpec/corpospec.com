@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/person.schema.json
+id: people/team/sam-rivera
+type: Person
+name:
+  given: "Sam"
+  family: "Rivera"
+  full: "Sam Rivera"
+email: "sam@creator-acme.example.com"
+role: people/roles/operations-lead
+unit: operations
+employer: entity/creator-acme
+start_date: "2026-01-15"
+end_date: null
+status: active
+bio: "Operations and finance lead. Owns sponsorship pipeline, contracts, and the books. Bookkeeper-friendly summaries land in the founder's inbox every Monday."

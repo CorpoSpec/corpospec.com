@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/gtm-strategy.schema.json
+id: market/gtm-strategy
+name: "Audience-First Go-to-Market"
+description: "Editorial-led growth via the weekly long-form deep-dive on YouTube, with conversion through cohort intake and channel memberships."
+as_of: "2026-04-01"
+model: content-led
+primary_channels:
+  - youtube
+  - newsletter
+secondary_channels:
+  - guest-podcast-appearances
+  - cohort-alumni-referral
+target_segment:
+  description: >
+    Founders and senior operators at companies pre-seed through Series B
+    making technology decisions under time pressure. Reached primarily
+    through long-form video and the companion newsletter.
+  geography: "US, EU, English-speaking APAC"
+  company_stage: "pre-seed to series-b"
+  vertical_phase_1: "developer-tools and operator-led B2B SaaS"
+  vertical_phase_2: "adjacent technical verticals after first cohort cycles"
+  icp_reference: market/icp/early-stage-operator
+funnel:
+  stages:
+    - name: "Discovery"
+      description: "Viewer finds a deep-dive episode via YouTube search or recommendation."
+      conversion_target: 0.18
+    - name: "Subscribe"
+      description: "Viewer subscribes after watching one or more long-form episodes."
+      conversion_target: 0.04
+    - name: "Newsletter"
+      description: "Subscriber joins the email list for the weekly companion read."
+      conversion_target: 0.08
+    - name: "Membership"
+      description: "Newsletter subscriber upgrades to channel membership for community access."
+      conversion_target: 0.012
+    - name: "Cohort"
+      description: "Membership or list audience converts on a cohort intake."
+      conversion_target: 0.025
+discovery_channels:
+  model: "audience-first long-form video with newsletter pull"
+  content:
+    - "Weekly long-form deep-dive on YouTube"
+    - "Monthly livestream AMA"
+    - "Weekly companion newsletter"
+  community:
+    - "Channel-membership Discord"
+    - "Cohort alumni community"
+pricing:
+  model: hybrid
+  structure: "Free public episodes + paid memberships and cohorts."
+  paid_tier: "Membership $9/month; Cohort intake $1,750."
+custom:
+  content_strategy: "One long-form episode per week. One livestream per month. No paid distribution; growth from organic search, recommendations, and newsletter cross-promotion."
+  partnership_approach: "Selective sponsorships (≤2 active deals) with sponsor-fit veto from the founder. No affiliate-only distribution."

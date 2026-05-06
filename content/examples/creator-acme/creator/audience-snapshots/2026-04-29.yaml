@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/audience-snapshot.schema.json
+id: creator/audience-snapshots/2026-04-29
+channel: creator/channels/main-channel
+date: "2026-04-29"
+views: 28412
+engaged_views: 19871
+estimated_minutes_watched: 184230
+average_view_duration_seconds: 389
+average_view_percentage: 41.5
+likes: 1245
+dislikes: 18
+comments: 184
+shares: 312
+subscribers_gained: 412
+subscribers_lost: 38
+videos_added_to_playlists: 71
+videos_removed_from_playlists: 4
+thumbnail_impressions: 642100
+thumbnail_impressions_ctr: 4.42
+provenance:
+  synced_at: "2026-04-30T03:14:00Z"
+  data_class: aggregate
+  retention_tier: auth_lifetime
+  source_attribution: platform_analytics_api

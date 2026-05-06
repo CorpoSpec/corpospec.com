@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/risk-register.schema.json
+id: governance/risk/register
+as_of: "2026-04-15"
+risks:
+  - id: "RISK-001"
+    name: "Founder concentration risk"
+    description: "On-camera presence is the founder; production, editorial, and sponsorship judgement all sit on a single point of failure. Extended absence would interrupt the publishing schedule and signal instability to the audience."
+    likelihood: medium
+    impact: high
+    status: open
+    mitigation: "Build evergreen content reserve of 6 deep-dives at all times. Document the editorial-fit checklist so any future co-host or guest contributor can apply it. Begin guest-host trials in Q3 2026."
+    owner: people/team/jamie-lee
+    review_date: "2026-07-15"
+
+  - id: "RISK-002"
+    name: "Audience-trust degradation from sponsor saturation"
+    description: "Each additional active sponsorship deal incrementally erodes the editorial trust that sustains cohort and membership conversion. The two-deal cap mitigates this but remains a soft policy."
+    likelihood: low
+    impact: high
+    status: mitigated
+    mitigation: "Founder-held veto on every deal (BDR 0003). Hard cap of two active sponsorships. Quarterly review of audience comments and unsubscribe reasons for sponsorship-attribution signals."
+    owner: people/team/jamie-lee
+    review_date: "2026-09-01"
+
+  - id: "RISK-003"
+    name: "YouTube platform-policy or algorithm change"
+    description: "Channel discovery, recommendation surfaces, and monetisation policies are entirely governed by the host platform. A policy update or algorithmic shift could compress reach or revenue without notice."
+    likelihood: medium
+    impact: high
+    status: accepted
+    mitigation: "Newsletter list as the platform-independent owned channel. Cohort and membership revenue do not depend on YouTube's recommendation surface. Monitor YouTube Creator Insider channel and policy changelog monthly."
+    owner: people/team/sam-rivera
+    review_date: "2026-10-01"
+
+  - id: "RISK-004"
+    name: "Cohort delivery quality drift"
+    description: "Cohort intakes scale faster than the team's ability to maintain student-success quality. One under-delivered intake damages future cohort sales and audience trust."
+    likelihood: low
+    impact: medium
+    status: mitigated
+    mitigation: "Hard cap at 80 seats per intake. Community lead owns student success with weekly check-ins. NPS survey at week 3 and post-cohort. Cap not raised without two consecutive intakes scoring NPS ≥ 60."
+    owner: people/team/priya-venkat
+    review_date: "2026-08-01"

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/revenue-stream.schema.json
+id: creator/revenue-streams/merch
+name: "Merch store revenue"
+kind: merch
+currency: USD
+monthly_amounts:
+  - month: "2026-02-01"
+    amount:
+      amount: 412.50
+      currency: USD
+  - month: "2026-03-01"
+    amount:
+      amount: 720.00
+      currency: USD
+  - month: "2026-04-01"
+    amount:
+      amount: 968.75
+      currency: USD

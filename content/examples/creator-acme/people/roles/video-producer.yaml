@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/role.schema.json
+id: people/roles/video-producer
+title: "Video Producer"
+abbreviation: "Producer"
+unit: production
+reports_to: people/roles/creator-founder
+level: lead
+responsibilities:
+  - "Pre-production planning and shoot logistics"
+  - "Edit and post-production for the weekly deep-dive and monthly livestream"
+  - "Thumbnail, title, and metadata package on every upload"
+  - "Studio kit, gear inventory, and on-camera audio quality"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 95000
+  max: 120000
+  note: "Full-time salary, no equity at hire; equity grant under review for the next vesting cycle."

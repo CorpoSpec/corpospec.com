@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/metric.schema.json
+id: metrics/definitions/subscriber-count
+name: Channel Subscriber Count
+abbreviation: SUBS
+description: Public subscriber count of the main channel as reported by the YouTube Data API.
+formula: channel.statistics.subscriber_count
+unit: count
+direction: up
+frequency: daily
+source:
+  system: custom
+  query: "channel.list(part=statistics, id=main-channel)"
+  integration: integrations/sources/youtube
+tags:
+  - creator
+  - audience

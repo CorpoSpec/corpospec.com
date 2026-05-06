@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/financial-model.schema.json
+id: financials/model
+period:
+  type: instant
+  start: "2026-04-01"
+entity: entity/creator-acme
+currency: USD
+
+income_statement:
+  revenue: 58270
+  cost_of_revenue: 11200
+  gross_profit: 47070
+  operating_expenses:
+    research_and_development: 0
+    sales_and_marketing: 4800
+    general_and_administrative: 32400
+  operating_income: 9870
+  net_income: 9870
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 312000
+    accounts_receivable: 24000
+    total_assets: 336000
+  liabilities:
+    accounts_payable: 6800
+    total_liabilities: 6800
+  equity:
+    total_equity: 329200
+
+cash_flow:
+  operating: 9870
+  investing: -2400
+  financing: 0
+  net_change: 7470
+
+custom:
+  description: >
+    Instant snapshot as of 2026-04-01. Creator Acme is a self-funded
+    educational-content business that crossed cash-flow positive in
+    Q1 2026 on the back of the Agentic OS cohort launch. April revenue
+    splits roughly: ad $5.9K, memberships $2.6K, sponsorship $12K,
+    course $36.8K, merch $1K.
+  stage: bootstrapped
+  monthly_recurring_expenses:
+    - name: Studio rent
+      amount: 1800
+    - name: Editing software (Descript, Final Cut, etc.)
+      amount: 220
+    - name: Email + newsletter platform
+      amount: 180
+    - name: Cohort platform
+      amount: 350
+    - name: Founder draw
+      amount: 9500
+    - name: Producer salary
+      amount: 8200
+    - name: Community lead salary
+      amount: 7100
+    - name: Operations lead salary
+      amount: 7700
+  assumptions:
+    - id: asm-fin-001
+      description: "Audience subscriber count grows ~2.5K/month organically."
+      evidence: "Audience-snapshot history Feb-April 2026 shows 2,300-2,800 net subscribers/month."
+      invalidation_condition: "Net subscriber growth drops below 1,000/month for two consecutive months."
+    - id: asm-fin-002
+      description: "Cohort intake fills to capacity within 14 days of opening."
+      evidence: "March 2026 intake (80 seats) sold out in 9 days; April waitlist >120."
+      invalidation_condition: "Future intake fails to fill within 30 days."
+    - id: asm-fin-003
+      description: "Sponsorship pipeline sustains at ≥$25K/quarter under the brand-fit veto."
+      evidence: "Q1 2026 closed $24K (TechBrand); Q2 in-flight $18.5K (PipelineCo)."
+      invalidation_condition: "Two consecutive quarters under $15K closed sponsorship revenue."

@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-voice.schema.json
+id: brand/voice
+dimensions:
+  - name: Calm
+    definition: Steady tone regardless of urgency. No exclamation marks, no hype.
+    sounds_like:
+      - "Here's the trade-off."
+      - "Two things changed since last week. The first is the bigger one."
+    does_not_sound_like:
+      - "Massive update!! You won't believe this."
+      - "BREAKING:"
+  - name: Analytical
+    definition: Observation, inference, conclusion — in that order. The reasoning chain is visible.
+    sounds_like:
+      - "We tried A, hit a wall, switched to B for these three reasons."
+      - "The benchmark is misleading because it ignores the cold-start cost."
+    does_not_sound_like:
+      - "Trust me on this one."
+      - "Honestly it just feels right."
+  - name: Direct
+    definition: Conclusion first, supporting detail after. No throat-clearing.
+    sounds_like:
+      - "Don't ship this pattern. Here's why."
+      - "Use Postgres until you have a measured reason not to."
+    does_not_sound_like:
+      - "Well, it depends on a lot of factors, but…"
+      - "We hope you find this useful in your journey."
+tone_matrix:
+  - situation: Sponsorship disclosure
+    tone_adjustments:
+      - Lead with the disclosure, not the read
+      - Explain why this sponsor cleared the brand-fit veto
+    examples:
+      - "This segment is sponsored by TechBrand. We took the deal because the integration matters to the audience we serve. Here's the integration."
+  - situation: Audience pushback
+    tone_adjustments:
+      - Acknowledge first
+      - Reason out loud, then update or decline
+    examples:
+      - "You're right that I dropped the trade-off in last week's video. I'm posting a follow-up. Two minutes, no excuses."
+writing_principles:
+  active_voice_required: true
+  max_sentence_words: 22
+  max_paragraph_sentences: 4
+  target_reading_level: "Grade 9-11"
+  contractions_allowed: true
+  humor_level: subtle
+terminology:
+  - preferred: deep-dive
+    prohibited:
+      - explainer
+      - breakdown content
+    definition: A long-form video that walks through a system from inputs to conclusion.
+    usage_context: Channel programming, episode titles, internal references.
+  - preferred: cohort
+    prohibited:
+      - course
+      - bootcamp
+    definition: A time-bound, group-based learning programme with a defined intake and end.
+    usage_context: Product naming, marketing copy, audience comms.
+style_guide:
+  primary_guide: AP Stylebook
+  date_format: "MMM D, YYYY"
+  number_format: "1,000.00"
+  currency_format: "$1,000.00"
+ui_copy_guidelines:
+  button_labels: "Use action verbs in sentence case. Maximum 3 words."
+  error_messages: "State what happened and the next step. No blame, no jargon."
+  empty_states: "Describe what belongs here and the single action that fills it."
+  tooltips: "One sentence, clarify purpose. Never repeat the label."

@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/person.schema.json
+id: people/team/priya-venkat
+type: Person
+name:
+  given: "Priya"
+  family: "Venkatraman"
+  full: "Priya Venkatraman"
+email: "priya@creator-acme.example.com"
+role: people/roles/community-lead
+unit: community
+employer: entity/creator-acme
+start_date: "2025-11-01"
+end_date: null
+status: active
+bio: "Community lead. Owns the cohort experience, the membership program, and the audience research feeding the editorial calendar."

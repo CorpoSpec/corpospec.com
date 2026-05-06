@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/video.schema.json
+id: creator/videos/agentic-ai-cohort-launch
+channel: creator/channels/main-channel
+content_series: creator/content-series/weekly-deepdive
+platform_video_id: "AGcohort01x"
+title: "How we built an agentic onboarding loop in seven days"
+description: "Walking through the architecture, the trade-offs, and the early failure modes of an agent-driven onboarding loop. References the Agentic OS cohort opening for May."
+kind: regular_vod
+published_at: "2026-04-22T16:00:00Z"
+duration_seconds: 1488
+broadcast_state: none
+definition: hd
+privacy_status: public
+upload_status: processed
+license: platform_default
+embeddable: true
+made_for_kids: false
+contains_synthetic_media: false
+caption_available: true
+has_paid_product_placement: false
+default_language: "en"
+default_audio_language: "en"
+category_id: "28"
+tags:
+  - "agentic AI"
+  - "operator tooling"
+  - "founder tools"
+  - "onboarding"
+topic_categories:
+  - "https://en.wikipedia.org/wiki/Technology"
+thumbnail_default_url: "https://i.ytimg.com/vi/AGcohort01x/default.jpg"
+thumbnail_high_url: "https://i.ytimg.com/vi/AGcohort01x/hqdefault.jpg"
+thumbnail_maxres_url: "https://i.ytimg.com/vi/AGcohort01x/maxresdefault.jpg"
+statistics:
+  view_count: 38420
+  like_count: 2104
+  comment_count: 187
+provenance:
+  synced_at: "2026-04-30T03:14:00Z"
+  data_class: metadata
+  retention_tier: thirty_day_strict
+  source_attribution: platform_data_api

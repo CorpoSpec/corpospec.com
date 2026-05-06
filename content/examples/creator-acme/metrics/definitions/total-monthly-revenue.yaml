@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/metric.schema.json
+id: metrics/definitions/total-monthly-revenue
+name: Total Monthly Revenue
+abbreviation: TMR
+description: Sum of all monthly amounts across every active creator revenue stream — ad, membership, sponsorship, course, merch.
+formula: sum(creator/revenue-streams/*.monthly_amounts.where(month=current).amount)
+unit: currency
+direction: up
+frequency: monthly
+source:
+  system: custom
+  query: "aggregate(creator/revenue-streams)"
+tags:
+  - creator
+  - revenue

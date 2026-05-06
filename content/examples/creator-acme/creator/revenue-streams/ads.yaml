@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/revenue-stream.schema.json
+id: creator/revenue-streams/ads
+name: "YouTube Ad Revenue"
+kind: ad
+channel: creator/channels/main-channel
+currency: USD
+monthly_amounts:
+  - month: "2026-02-01"
+    amount:
+      amount: 4180.42
+      currency: USD
+  - month: "2026-03-01"
+    amount:
+      amount: 5120.18
+      currency: USD
+  - month: "2026-04-01"
+    amount:
+      amount: 5862.75
+      currency: USD

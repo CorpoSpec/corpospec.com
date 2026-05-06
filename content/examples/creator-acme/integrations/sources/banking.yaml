@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/integration.schema.json
+id: integrations/sources/banking
+name: "Mercury banking sync"
+system: "Mercury"
+type: source
+status: active
+
+input_port:
+  name: "mercury-statements"
+  protocols:
+    - kind: rest
+  authentication: api-key
+
+data_contract:
+  owner: people/team/sam-rivera
+  freshness:
+    schedule: "daily 07:00 PT"
+    max_staleness_minutes: 1560
+  schema:
+    fields:
+      - name: account.balance
+        type: number
+        required: true
+      - name: transaction.id
+        type: string
+        required: true
+      - name: transaction.amount
+        type: number
+        required: true
+
+outputs: []

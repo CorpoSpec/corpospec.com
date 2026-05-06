@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/competitor.schema.json
+id: market/competitors/fireship
+name: "Fireship"
+website: "https://fireship.io"
+layer: 2
+category: "Technical Video Education"
+relationship: category
+threat_level: medium
+why_we_win: >
+  Fireship excels at high-density short-form. Creator Acme is
+  long-form and operator-focused; the audience overlap is partial.
+as_of: "2026-04-01"
+description: >
+  YouTube channel and learning-platform pairing focused on technical
+  shorts, framework-of-the-week reviews, and a paid learning platform.
+  Different audience composition than Creator Acme but a recognisable
+  reference point for "video-first technical education".
+founded: "2018"
+headquarters: "United States"
+strengths:
+  - "Strong YouTube SEO and short-form fluency"
+  - "Recognised brand voice"
+weaknesses:
+  - "Limited long-form depth"
+  - "Less alignment with operator decision-making content"
+sources:
+  - "fireship.io (accessed 2026-04-01)"

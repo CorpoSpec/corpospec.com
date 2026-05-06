@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/person.schema.json
+id: people/team/jamie-lee
+type: Person
+name:
+  given: "Jamie"
+  family: "Lee"
+  full: "Jamie Lee"
+email: "jamie@creator-acme.example.com"
+role: people/roles/creator-founder
+unit: executive
+employer: entity/creator-acme
+start_date: "2025-04-12"
+end_date: null
+status: active
+bio: "Founder, lead creator, and editorial owner of Creator Acme. Previously product at a developer-tools company; now writing and shipping a weekly long-form deep-dive plus the Agentic OS cohort."

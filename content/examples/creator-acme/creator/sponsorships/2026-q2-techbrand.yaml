@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/sponsorship.schema.json
+id: creator/sponsorships/2026-q2-techbrand
+channel: creator/channels/main-channel
+title: "Q2 2026 TechBrand devtool integration"
+sponsor:
+  kind: external
+  name: "TechBrand Devtools, Inc."
+  contact_email: "creator-partnerships@techbrand.example.com"
+deal_value:
+  amount: 24000
+  currency: USD
+deliverables: "One sponsored AMA segment (90 seconds, mid-roll integration) plus pinned comment with affiliate link. Disclosure language confirmed by counsel before record."
+payment_terms: "50% on contract signature, 50% within 30 days of delivery."
+period:
+  type: duration
+  start: "2026-03-15"
+  end: "2026-04-15"
+status: signed
+associated_videos:
+  - creator/videos/q1-livestream-ama
+associated_revenue_stream: creator/revenue-streams/sponsorships-q2
+contract: null

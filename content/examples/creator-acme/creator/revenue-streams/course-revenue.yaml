@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/revenue-stream.schema.json
+id: creator/revenue-streams/course-revenue
+name: "Agentic OS Cohort revenue"
+kind: course
+digital_product: creator/digital-products/agentic-os-cohort
+currency: USD
+monthly_amounts:
+  - month: "2026-02-01"
+    amount:
+      amount: 0.00
+      currency: USD
+  - month: "2026-03-01"
+    amount:
+      amount: 18900.00
+      currency: USD
+  - month: "2026-04-01"
+    amount:
+      amount: 36750.00
+      currency: USD

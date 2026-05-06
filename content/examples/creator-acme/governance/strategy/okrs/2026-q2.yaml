@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/okr.schema.json
+id: governance/strategy/okrs/2026-q2
+period:
+  type: duration
+  start: "2026-04-01"
+  end: "2026-06-30"
+status: active
+owner: people/team/jamie-lee
+objectives:
+  - id: obj-audience
+    title: "Cross 60K subscribers and 8K newsletter list"
+    description: "Sustain organic growth from the long-form deep-dive series and convert 7-day-watch viewers onto the newsletter."
+    priority: high
+    key_results:
+      - id: kr-aud-1
+        title: "Subscriber count reaches 60,000"
+        start_value: 48200
+        target_value: 60000
+        current_value: 51840
+        unit: count
+        confidence: 0.7
+      - id: kr-aud-2
+        title: "Newsletter subscribers reach 8,000"
+        start_value: 5840
+        target_value: 8000
+        current_value: 6420
+        unit: count
+        confidence: 0.6
+  - id: obj-monetisation
+    title: "Reach $80K Q2 revenue across creator pillars"
+    description: "Diversify monetisation: keep sponsorship at one signed deal, scale memberships and the second cohort intake."
+    priority: high
+    key_results:
+      - id: kr-rev-1
+        title: "Q2 total revenue ≥ $80,000"
+        start_value: 0
+        target_value: 80000
+        current_value: 58270
+        unit: currency
+        metric: metrics/definitions/total-monthly-revenue
+        confidence: 0.8
+      - id: kr-rev-2
+        title: "Cohort June intake fills to 80 seats"
+        start_value: 0
+        target_value: 80
+        current_value: 41
+        unit: count
+        confidence: 0.65
+    related_decisions:
+      - governance/decisions/0003-sponsor-fit-veto
+  - id: obj-quality
+    title: "No miss-week on the Wednesday cadence and one livestream per month"
+    description: "Editorial discipline first; growth follows trust."
+    priority: high
+    key_results:
+      - id: kr-qual-1
+        title: "13 of 13 Wednesday deep-dives ship on schedule"
+        start_value: 0
+        target_value: 13
+        current_value: 5
+        unit: count
+        confidence: 0.85
+      - id: kr-qual-2
+        title: "Three monthly livestreams shipped"
+        start_value: 0
+        target_value: 3
+        current_value: 1
+        unit: count
+        confidence: 0.85
+    related_decisions:
+      - governance/decisions/0002-publishing-cadence

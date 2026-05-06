@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/brand-foundation.schema.json
+id: brand/foundation
+name: "Creator Acme"
+purpose: "Help operators ship better software by breaking down the systems, frameworks, and trade-offs that actually matter."
+values:
+  - name: Audience First
+    description: "Decisions answer to the audience, not the algorithm."
+    behavioral_definition: "Every editorial choice and sponsorship decision is checked against: does this respect the time and trust of the people who watch? If not, redesign or decline."
+    anti_pattern: "Click-bait titles, dishonest thumbnails, or sponsorship reads that misalign with audience interests."
+    priority_rank: 1
+  - name: Show Your Work
+    description: "Reasoning is the product. Hide nothing important."
+    behavioral_definition: "Each deep-dive includes the inputs, the trade-offs, and the failure modes alongside the conclusion. Cohort lessons publish the source materials and the rejected alternatives."
+    anti_pattern: "Conclusions presented without the reasoning chain. Polished outputs with the work hidden."
+    priority_rank: 2
+  - name: Quietly Ambitious
+    description: "Ship one excellent thing per week instead of three mediocre ones."
+    behavioral_definition: "Editorial calendar is one long-form per week, one livestream per month, one cohort per half. No more. The bar moves up, the pace stays even."
+    anti_pattern: "Shipping more videos for the sake of volume. Sponsorship-driven cadence increases."
+    priority_rank: 3
+personality:
+  archetype: sage
+  traits:
+    - name: Calm
+      intensity: 5
+    - name: Analytical
+      intensity: 5
+    - name: Direct
+      intensity: 5
+    - name: Curious
+      intensity: 4
+    - name: Wry
+      intensity: 3
+  spectrum_axes:
+    - name: Communication Style
+      left_pole: Verbose
+      right_pole: Terse
+      position: 6
+    - name: Emotional Tone
+      left_pole: Warm
+      right_pole: Clinical
+      position: 5
+    - name: Decision Making
+      left_pole: Intuitive
+      right_pole: Data-Driven
+      position: 7
+    - name: Pace
+      left_pole: Deliberate
+      right_pole: Rapid
+      position: 4
+related_decisions:
+  - governance/decisions/0001-entity-formation
+positioning:
+  frame_of_reference: "Long-form educational technology channel for early-stage operators."
+  point_of_difference: "Calm, system-level breakdowns of agentic AI and devtool architecture, with a parallel cohort that turns viewers into builders."
+  reason_to_believe: "Founder ships every video personally; editorial calendar is published a quarter ahead; cohort outcomes are publicly tracked."
+  target_audience: "Founders, technical leads, and senior operators at companies between pre-seed and Series B."
+  institutional_framing: "Creator Acme operates a single audience-first channel and a paired cohort programme. Audience first, monetisation second, cadence third."
+promise: "Long-form clarity for operators who build."
+secondary_taglines:
+  - "Calm, system-level breakdowns. Every Wednesday."
+  - "Show your work."
+narrative:
+  origin: "Jamie left a devtools product role after watching teams spend more time recovering from bad architectural calls than shipping the feature that mattered. Creator Acme is the explainer she wished her past self had subscribed to."
+  conflict: "Operators are surrounded by hot-takes, hand-waves, and growth-marketing dressed up as engineering content. The signal-to-noise ratio collapses under volume."
+  solution: "One long-form deep-dive per week, with the inputs and reasoning visible. A cohort that converts the explanation into hands-on practice."
+  hero: "The senior operator who wants to understand a system before they bet on it."
+  villain: "Empty-calorie content cycles, inflated promises, and audience-extractive monetisation."
+  analogy: "Creator Acme is to operator content what a long-running technical podcast is to a daily news clip — slower, more useful, less disposable."

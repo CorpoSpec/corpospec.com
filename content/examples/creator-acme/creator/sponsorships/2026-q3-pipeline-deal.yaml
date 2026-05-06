@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/sponsorship.schema.json
+id: creator/sponsorships/2026-q3-pipeline-deal
+channel: creator/channels/main-channel
+title: "Q3 2026 PipelineCo pre-roll campaign"
+sponsor:
+  kind: external
+  name: "PipelineCo Analytics"
+  contact_email: "partnerships@pipelineco.example.com"
+deal_value:
+  amount: 18500
+  currency: USD
+deliverables: "Three pre-roll integrations across the Wednesday deep-dive series. Pre-roll script approved by sponsor; final cuts approved by Creator Acme."
+payment_terms: "Full payment within 45 days of last delivery."
+period:
+  type: duration
+  start: "2026-07-01"
+  end: "2026-09-30"
+status: in_flight
+associated_videos: []
+associated_revenue_stream: null
+contract: null

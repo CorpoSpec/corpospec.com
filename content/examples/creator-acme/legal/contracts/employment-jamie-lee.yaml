@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/contract.schema.json
+id: legal/contracts/employment-jamie-lee
+type: employment
+title: "Employment Agreement - Jamie Lee"
+counterparty: people/team/jamie-lee
+status: active
+effective_date: "2025-04-12"
+expiration_date: null
+governing_law: "US"
+contract_subtype: employee
+compensation:
+  base_salary:
+    amount: 114000
+    currency: USD
+    frequency: annual
+  benefits:
+    - type: health
+      description: "Comprehensive health insurance (medical, dental, vision)"
+    - type: equipment
+      description: "Studio kit, on-camera equipment, and home office stipend"
+key_terms:
+  - "At-will employment"
+  - "On-camera personality and editorial role; departure terminates the channel scaffolding."
+  - "Invention and IP-assignment agreement"
+  - "Confidentiality obligations covering audience-research and sponsor-pipeline data"
+notice_period_days: 30
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0001-entity-formation
