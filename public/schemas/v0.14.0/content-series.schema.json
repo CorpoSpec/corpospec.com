@@ -1,0 +1,87 @@
+{
+  "$defs": {
+    "ContentSeriesStatus": {
+      "description": "Lifecycle status of a content series.",
+      "enum": [
+        "active",
+        "archived",
+        "planned"
+      ],
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PublicationCadence": {
+      "description": "Publication cadence of a content series.",
+      "oneOf": [
+        {
+          "enum": [
+            "daily",
+            "weekly",
+            "biweekly",
+            "monthly",
+            "quarterly"
+          ],
+          "type": "string"
+        },
+        {
+          "const": "irregular",
+          "description": "No fixed cadence — episodes ship when the creator decides.",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.14.0/content-series.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A creator-authored editorial bucket grouping videos that share a theme.",
+  "properties": {
+    "channel": {
+      "$ref": "#/$defs/PathRef",
+      "description": "Channel this series runs on."
+    },
+    "description": {
+      "type": "string"
+    },
+    "episodes": {
+      "description": "Episodes in publication order; PathRef list to `creator/videos/`.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/content-series/weekly-deepdive`)."
+    },
+    "publication_cadence": {
+      "$ref": "#/$defs/PublicationCadence"
+    },
+    "slug": {
+      "description": "URL-friendly slug used in the path key. Stable across renames.",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/ContentSeriesStatus"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "channel",
+    "title",
+    "slug",
+    "description",
+    "publication_cadence",
+    "status"
+  ],
+  "title": "ContentSeries",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}
