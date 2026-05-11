@@ -1,0 +1,209 @@
+{
+  "$defs": {
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "Period": {
+      "description": "A time period with start and end dates.",
+      "properties": {
+        "end": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IsoDate"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start": {
+          "$ref": "#/$defs/IsoDate"
+        },
+        "type": {
+          "$ref": "#/$defs/PeriodType"
+        }
+      },
+      "required": [
+        "type",
+        "start"
+      ],
+      "type": "object"
+    },
+    "PeriodType": {
+      "description": "Period type discriminator.",
+      "enum": [
+        "instant",
+        "duration"
+      ],
+      "type": "string"
+    },
+    "Sponsor": {
+      "description": "Identifier of the sponsoring counterparty.\n\n`entity_ref` covers the case where the sponsor is itself an `Entity` in\nthe tenant's CorpoSpec (e.g. a parent company sponsoring a subsidiary's\nchannel); `external` covers the common case of a third-party brand that\nis not part of the tenant's CorpoSpec.",
+      "oneOf": [
+        {
+          "description": "Sponsor is an `Entity` in the same tenant's CorpoSpec.",
+          "properties": {
+            "entity_id": {
+              "$ref": "#/$defs/PathRef"
+            },
+            "kind": {
+              "const": "entity_ref",
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "entity_id"
+          ],
+          "type": "object"
+        },
+        {
+          "description": "Sponsor is an external brand not represented in CorpoSpec.",
+          "properties": {
+            "contact_email": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "kind": {
+              "const": "external",
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "name"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "SponsorshipStatus": {
+      "description": "Lifecycle status of a sponsorship deal.",
+      "enum": [
+        "negotiating",
+        "signed",
+        "in_flight",
+        "delivered",
+        "closed",
+        "cancelled"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.14.1/sponsorship.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A creator-authored sponsorship deal record.",
+  "properties": {
+    "associated_revenue_stream": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional revenue-stream record this sponsorship credits."
+    },
+    "associated_videos": {
+      "description": "Videos delivered under this sponsorship; PathRef list to\n`creator/videos/`. Cross-checks against `Video.has_paid_product_placement`.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "channel": {
+      "$ref": "#/$defs/PathRef",
+      "description": "Channel the sponsorship runs on."
+    },
+    "contract": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional contract record under `legal/contracts/` for the signed\nagreement."
+    },
+    "deal_value": {
+      "$ref": "#/$defs/MonetaryAmount"
+    },
+    "deliverables": {
+      "description": "Free-text description of what the creator owes the sponsor\n(integrations, dedicated videos, story embeds, etc.).",
+      "type": "string"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/sponsorships/2026-q2-acme-deal`)."
+    },
+    "payment_terms": {
+      "description": "Free-text payment-terms summary (e.g. \"50% on signature, 50% on\ndelivery\"). Detailed contract resides in the legal pillar.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "period": {
+      "$ref": "#/$defs/Period"
+    },
+    "sponsor": {
+      "$ref": "#/$defs/Sponsor"
+    },
+    "status": {
+      "$ref": "#/$defs/SponsorshipStatus"
+    },
+    "title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "channel",
+    "title",
+    "sponsor",
+    "deal_value",
+    "period",
+    "deliverables",
+    "status"
+  ],
+  "title": "Sponsorship",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}
