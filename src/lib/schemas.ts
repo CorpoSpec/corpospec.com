@@ -28,7 +28,8 @@ export type PillarId =
   | "market"
   | "brand"
   | "integrations"
-  | "legal";
+  | "legal"
+  | "creator";
 
 export interface PillarMeta {
   id: PillarId;
@@ -49,6 +50,7 @@ export const PILLARS: PillarMeta[] = [
   { id: "brand",        label: "Brand",        blurb: "Foundation, voice, logo, colors, typography, assets", color: "var(--pillar-brand)" },
   { id: "integrations", label: "Integrations", blurb: "External data sources and contracts",             color: "var(--pillar-integrations)" },
   { id: "legal",        label: "Legal",        blurb: "Contracts, policies, regulatory controls, privacy", color: "var(--pillar-legal)" },
+  { id: "creator",      label: "Creator",      blurb: "Channels, audience, content, sponsorships, digital products", color: "var(--pillar-creator)" },
 ];
 
 /**

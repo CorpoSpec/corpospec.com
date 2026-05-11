@@ -5,9 +5,11 @@ import { PILLARS, listVersions, listSlugsByPillar } from "../../lib/schemas.ts";
 const latest = listVersions()[0];
 const byPillar = latest ? listSlugsByPillar(latest) : [];
 
-// "Ten pillars" excludes the synthetic "root" group used for repository
-// metadata (only the manifest belongs there). The conceptual model is ten.
-const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
+// Named pillars exclude the synthetic "root" group used for repository
+// metadata (only the manifest belongs there). The `creator` pillar is
+// conditional — it activates only when an entity declares
+// `business_type: creator_business` (BDR 0053/0054/0055).
+const NAMED_PILLARS = PILLARS.filter((p) => p.id !== "root");
 ---
 
 <BaseLayout title="CorpoSpec Specification" active="spec">
@@ -81,12 +83,15 @@ const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
 
   <h2>Pillars</h2>
   <p class="prose">
-    Ten pillars. Every YAML file in a CorpoSpec repository belongs to exactly one.
-    Pillar directories organise files; schemas define their shape.
+    Ten pillars cover every B2B company. An eleventh — <em>creator</em> — activates
+    when an entity declares <code>business_type: creator_business</code>, adding
+    channels, audience, content, sponsorships, and digital products. Every YAML
+    file in a CorpoSpec repository belongs to exactly one pillar. Pillar
+    directories organise files; schemas define their shape.
   </p>
 
   <div class="legend">
-    {TEN_PILLARS.map((p) => (
+    {NAMED_PILLARS.map((p) => (
       <span class="chip" style={`color: ${p.color};`}>
         <span class="pill-dot"></span>{p.label}
       </span>
@@ -168,12 +173,20 @@ const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
 │   └── photography.yaml             <span class="c"># brand-photography</span>
 ├── <span class="dir">integrations/</span>
 │   └── sources/*.yaml               <span class="c"># integration</span>
-└── <span class="dir">legal/</span>
-    ├── contracts/*.yaml             <span class="c"># contract</span>
-    ├── policies/*.yaml              <span class="c"># policy</span>
-    ├── action-items/*.yaml          <span class="c"># legal-action-item</span>
-    ├── compliance/*.yaml            <span class="c"># control · OSCAL-aligned</span>
-    └── privacy-classification.yaml  <span class="c"># privacy-classification</span>
+├── <span class="dir">legal/</span>
+│   ├── contracts/*.yaml             <span class="c"># contract</span>
+│   ├── policies/*.yaml              <span class="c"># policy</span>
+│   ├── action-items/*.yaml          <span class="c"># legal-action-item</span>
+│   ├── compliance/*.yaml            <span class="c"># control · OSCAL-aligned</span>
+│   └── privacy-classification.yaml  <span class="c"># privacy-classification</span>
+└── <span class="dir">creator/</span>                       <span class="c"># conditional · entity.business_type = creator_business</span>
+    ├── channels/*.yaml              <span class="c"># channel</span>
+    ├── audience-snapshots/*.yaml    <span class="c"># audience-snapshot</span>
+    ├── content-series/*.yaml        <span class="c"># content-series</span>
+    ├── videos/*.yaml                <span class="c"># video</span>
+    ├── sponsorships/*.yaml          <span class="c"># sponsorship</span>
+    ├── revenue-streams/*.yaml       <span class="c"># revenue-stream</span>
+    └── digital-products/*.yaml      <span class="c"># digital-product</span>
 </pre>
   </div>
 

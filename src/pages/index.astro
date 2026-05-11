@@ -8,8 +8,10 @@ const byPillar = latest ? listSlugsByPillar(latest) : [];
 const totalSlugs = byPillar.reduce((n, g) => n + g.slugs.length, 0);
 
 // Pillars excluding the synthetic "root" group used for repository metadata
-// (only the manifest belongs there). The conceptual model is ten pillars.
-const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
+// (only the manifest belongs there). The conceptual model is the named
+// pillars. `creator` is conditional — it activates only when an entity
+// declares `business_type: creator_business` (BDR 0053/0054/0055).
+const NAMED_PILLARS = PILLARS.filter((p) => p.id !== "root");
 ---
 
 <BaseLayout>
@@ -26,7 +28,7 @@ const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
     <p class="lead">
       CorpoSpec defines a machine-readable schema for every load-bearing fact about a
       company — entity, people, governance, strategy, finance, product, market, brand,
-      integrations, legal. AI agents and humans read the same source of truth.
+      integrations, legal, and creator. AI agents and humans read the same source of truth.
     </p>
     <div class="cta-row">
       <a class="btn btn--primary" href="/guide/">Add it to your repo →</a>
@@ -69,12 +71,12 @@ const TEN_PILLARS = PILLARS.filter((p) => p.id !== "root");
     </a>
   </div>
 
-  <h2>Ten pillars, one company</h2>
+  <h2>Pillars, one company</h2>
   <p class="prose">
-    Every pillar maps to a directory under <code>.corpospec/</code>. Each file is a single entity or document validated against its JSON Schema. References between entities are PathRefs — <code>people/team/alex</code> — never copied attributes.
+    Every pillar maps to a directory under <code>.corpospec/</code>. Each file is a single entity or document validated against its JSON Schema. References between entities are PathRefs — <code>people/team/alex</code> — never copied attributes. The <em>creator</em> pillar activates only when an entity declares <code>business_type: creator_business</code>.
   </p>
   <div class="legend">
-    {TEN_PILLARS.map((p) => (
+    {NAMED_PILLARS.map((p) => (
       <span class="chip" style={`color: ${p.color};`}>
         <span class="pill-dot"></span>{p.label}
       </span>
