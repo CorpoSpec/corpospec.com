@@ -1,0 +1,150 @@
+{
+  "$defs": {
+    "DigitalProductKind": {
+      "description": "Type of digital product.",
+      "oneOf": [
+        {
+          "const": "course",
+          "description": "On-demand recorded course.",
+          "type": "string"
+        },
+        {
+          "const": "cohort",
+          "description": "Cohort-based course with a defined start and end.",
+          "type": "string"
+        },
+        {
+          "const": "template",
+          "description": "Reusable downloadable template (notion, figma, etc.).",
+          "type": "string"
+        },
+        {
+          "const": "ebook",
+          "description": "PDF or e-reader-format book.",
+          "type": "string"
+        },
+        {
+          "const": "saas",
+          "description": "Self-serve software product.",
+          "type": "string"
+        },
+        {
+          "const": "community",
+          "description": "Paid community / membership not sold through the host\nplatform's native membership product.",
+          "type": "string"
+        },
+        {
+          "const": "other",
+          "description": "Catch-all for digital products not covered by the named variants.",
+          "type": "string"
+        }
+      ]
+    },
+    "DigitalProductStatus": {
+      "description": "Lifecycle status of a digital product.",
+      "enum": [
+        "planned",
+        "in_development",
+        "launched",
+        "sunset"
+      ],
+      "type": "string"
+    },
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.14.2/digital-product.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A creator-built digital product sold to the audience.",
+  "properties": {
+    "associated_revenue_streams": {
+      "description": "Revenue-stream records that credit this product. PathRef list to\n`creator/revenue-streams/`.",
+      "items": {
+        "$ref": "#/$defs/PathRef"
+      },
+      "type": "array"
+    },
+    "description": {
+      "type": "string"
+    },
+    "entity_id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "Owning legal entity that sells this product."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/digital-products/agentic-os-course`)."
+    },
+    "kind": {
+      "$ref": "#/$defs/DigitalProductKind"
+    },
+    "launch_date": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoDate"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "First public availability date. Optional for products still in\ndevelopment."
+    },
+    "name": {
+      "type": "string"
+    },
+    "price": {
+      "$ref": "#/$defs/MonetaryAmount"
+    },
+    "slug": {
+      "description": "URL-friendly slug used in the path key.",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/DigitalProductStatus"
+    }
+  },
+  "required": [
+    "id",
+    "entity_id",
+    "name",
+    "slug",
+    "kind",
+    "description",
+    "price",
+    "status"
+  ],
+  "title": "DigitalProduct",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}

@@ -1,0 +1,54 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "org": "http://www.w3.org/ns/org#",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "xbrl": "http://www.xbrl.org/2003/instance#",
+    "gleif": "https://www.gleif.org/ontology/",
+    "ocf": "https://opencaptablecoalition.com/schema/",
+    "oscal": "https://pages.nist.gov/OSCAL/concepts/layer/",
+    "spdx": "https://spdx.org/rdf/terms#",
+
+    "legal_name": "schema:legalName",
+    "trade_name": "schema:name",
+    "url": "schema:url",
+    "address": "schema:address",
+    "street": "schema:streetAddress",
+    "city": "schema:addressLocality",
+    "postal_code": "schema:postalCode",
+    "country": "schema:addressCountry",
+    "founders": "schema:founder",
+    "parent_organization": "schema:parentOrganization",
+    "subsidiaries": "schema:subOrganization",
+    "number_of_employees": "schema:numberOfEmployees",
+    "email": "schema:email",
+    "phone": "schema:telephone",
+
+    "unit": "org:OrganizationalUnit",
+    "head": "org:headOf",
+    "members": "org:hasMember",
+    "role": "org:role",
+    "reports_to": "org:reportsTo",
+
+    "given": "vcard:given-name",
+    "family": "vcard:family-name",
+    "full": "vcard:fn",
+
+    "revenue": "xbrl:us-gaap:Revenues",
+    "cost_of_revenue": "xbrl:us-gaap:CostOfRevenue",
+    "gross_profit": "xbrl:us-gaap:GrossProfit",
+    "operating_income": "xbrl:us-gaap:OperatingIncomeLoss",
+    "net_income": "xbrl:us-gaap:NetIncomeLoss",
+    "cash_and_equivalents": "xbrl:us-gaap:CashAndCashEquivalentsAtCarryingValue",
+    "accounts_receivable": "xbrl:us-gaap:AccountsReceivableNet",
+    "total_assets": "xbrl:us-gaap:Assets",
+    "accounts_payable": "xbrl:us-gaap:AccountsPayableCurrent",
+    "total_liabilities": "xbrl:us-gaap:Liabilities",
+    "total_equity": "xbrl:us-gaap:StockholdersEquity",
+
+    "lei": "gleif:hasLEI",
+    "legal_form": "gleif:hasEntityLegalForm",
+    "jurisdiction": "gleif:hasJurisdiction"
+  }
+}

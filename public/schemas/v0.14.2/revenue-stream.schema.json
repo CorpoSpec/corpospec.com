@@ -1,0 +1,162 @@
+{
+  "$defs": {
+    "IsoCurrency": {
+      "description": "ISO 4217 currency code.",
+      "pattern": "^[A-Z]{3}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "MonetaryAmount": {
+      "description": "A monetary value with currency.",
+      "properties": {
+        "amount": {
+          "format": "double",
+          "type": "number"
+        },
+        "currency": {
+          "$ref": "#/$defs/IsoCurrency"
+        }
+      },
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "MonthlyAmount": {
+      "description": "Monthly amount entry on a revenue-stream history.",
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/MonetaryAmount"
+        },
+        "month": {
+          "$ref": "#/$defs/IsoDate",
+          "description": "First day of the month being reported."
+        }
+      },
+      "required": [
+        "month",
+        "amount"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RevenueStreamKind": {
+      "description": "Monetisation kind enumerated for the creator-business cohort. Each\nvariant covers the conceptual bucket regardless of host platform —\n`ad` covers YouTube AdSense, Twitch ad revenue, Substack ads, and\nany future ad surface. The platform attribution lives on the parent\nchannel (`RevenueStream.channel`) and on the per-row provenance,\nnot in the kind.",
+      "oneOf": [
+        {
+          "const": "ad",
+          "description": "Platform advertising revenue.",
+          "type": "string"
+        },
+        {
+          "const": "membership",
+          "description": "Platform-native channel-membership revenue.",
+          "type": "string"
+        },
+        {
+          "const": "sponsorship",
+          "description": "Brand sponsorship revenue. Cross-references `Sponsorship`.",
+          "type": "string"
+        },
+        {
+          "const": "product",
+          "description": "Generic product sales (e.g. SaaS subscription, ebook sales).",
+          "type": "string"
+        },
+        {
+          "const": "course",
+          "description": "Course or cohort revenue.",
+          "type": "string"
+        },
+        {
+          "const": "affiliate",
+          "description": "Affiliate-link commissions.",
+          "type": "string"
+        },
+        {
+          "const": "merch",
+          "description": "Physical merchandise revenue.",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.14.2/revenue-stream.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A typed monetisation bucket.",
+  "properties": {
+    "channel": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional channel reference for platform-derived streams (`ad`,\n`membership`)."
+    },
+    "currency": {
+      "$ref": "#/$defs/IsoCurrency",
+      "description": "Reporting currency for `monthly_amounts`."
+    },
+    "digital_product": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional digital-product reference for product / course revenue."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/revenue-streams/youtube-ads`)."
+    },
+    "kind": {
+      "$ref": "#/$defs/RevenueStreamKind"
+    },
+    "monthly_amounts": {
+      "description": "Monthly revenue history. Entries are creator-authored or synced\nfrom a host-platform monetary integration where one is available.\nEmpty for newly-declared streams.",
+      "items": {
+        "$ref": "#/$defs/MonthlyAmount"
+      },
+      "type": "array"
+    },
+    "name": {
+      "type": "string"
+    },
+    "sponsorship": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional sponsorship reference for sponsorship revenue."
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "kind",
+    "currency"
+  ],
+  "title": "RevenueStream",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}
