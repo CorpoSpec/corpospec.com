@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-sentry
+type: vendor
+title: "Data Processing Agreement — Functional Software, Inc. dba Sentry"
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2025-10-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+key_terms:
+  - "Sentry DPA v1.4 (GDPR)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Data category: error telemetry, stack traces (may contain user IDs — scrubbed at SDK)"
+  - "Retention: 90 days for events; configurable per Sentry project settings"
+  - "EU-to-US transfer: SCCs Module 2"
+  - "Sentry EU region (eu.sentry.io) enabled for EU customer error data"
+  - "Data scrubbing: personally identifiable data masked before transmission via Sentry SDK config"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework
+  - governance/decisions/0027-compliance-gdpr

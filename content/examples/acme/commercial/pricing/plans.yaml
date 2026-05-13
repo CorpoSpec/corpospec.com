@@ -1,0 +1,143 @@
+id: commercial/pricing/plans
+kind: pricing_plans
+effective_date: "2026-01-01"
+currency: USD
+billing_cadences: [monthly, annual]
+annual_discount_pct: 20
+
+plans:
+  - id: starter
+    name: "Starter"
+    target_segment: SMB
+    price_monthly_usd: 99
+    price_annual_monthly_usd: 79.20
+    price_annual_total_usd: 950.40
+    billing_unit: workspace
+    seats_included: 5
+    seat_overage_usd_per_seat_per_month: 15
+    seat_overage_billed: monthly
+    workflow_runs_included_per_month: 2500
+    run_overage_usd: 0.015
+    active_workflows_limit: 25
+    integration_limit: 10
+    lock_in_months_monthly: 0
+    lock_in_months_annual: 12
+    annual_escalation_pct: 5
+    support_tier: email
+    sla_uptime_pct: 99.5
+    key_features:
+      - "All core workflow types"
+      - "Email support (48h SLA)"
+      - "Basic analytics dashboard"
+      - "Standard API access"
+      - "10 integrations"
+    not_included:
+      - "SSO/SAML"
+      - "Audit log export"
+      - "Custom SLA"
+      - "Dedicated CSM"
+      - "EU data residency"
+
+  - id: growth
+    name: "Growth"
+    target_segment: SMB_midmarket
+    price_monthly_usd: 499
+    price_annual_monthly_usd: 399.20
+    price_annual_total_usd: 4790.40
+    billing_unit: workspace
+    seats_included: 20
+    seat_overage_usd_per_seat_per_month: 18
+    seat_overage_billed: monthly
+    workflow_runs_included_per_month: 15000
+    run_overage_usd: 0.012
+    active_workflows_limit: 200
+    integration_limit: 50
+    lock_in_months_monthly: 0
+    lock_in_months_annual: 12
+    annual_escalation_pct: 5
+    support_tier: priority_email_and_chat
+    sla_uptime_pct: 99.7
+    key_features:
+      - "Everything in Starter"
+      - "Priority email + chat support (8h SLA)"
+      - "Advanced analytics and cohort reports"
+      - "AI workflow recommendations"
+      - "50 integrations"
+      - "Custom workflow templates"
+      - "Webhook support"
+    not_included:
+      - "SSO/SAML"
+      - "Audit log export"
+      - "Custom SLA"
+      - "Dedicated CSM"
+      - "EU data residency"
+
+  - id: business
+    name: "Business"
+    target_segment: midmarket
+    price_monthly_usd: 2000
+    price_annual_monthly_usd: 1600
+    price_annual_total_usd: 19200
+    billing_unit: workspace
+    seats_included: 75
+    seat_overage_usd_per_seat_per_month: 20
+    seat_overage_billed: monthly
+    workflow_runs_included_per_month: 75000
+    run_overage_usd: 0.010
+    active_workflows_limit: 1000
+    integration_limit: null
+    lock_in_months_monthly: 0
+    lock_in_months_annual: 12
+    annual_escalation_pct: 5
+    support_tier: dedicated_slack
+    sla_uptime_pct: 99.9
+    key_features:
+      - "Everything in Growth"
+      - "SSO/SAML (Okta, Azure AD)"
+      - "Audit log export (90-day retention)"
+      - "Dedicated Slack channel + success check-ins"
+      - "All integrations (unlimited)"
+      - "AI trigger inference (beta)"
+      - "Quarterly business reviews"
+    not_included:
+      - "Custom SLA above 99.9%"
+      - "Dedicated CSM (account manager only)"
+      - "EU data residency"
+      - "SCIM provisioning"
+
+  - id: enterprise
+    name: "Enterprise"
+    target_segment: enterprise
+    price_monthly_usd: null
+    price_annual_monthly_usd: null
+    price_annual_total_usd: null
+    pricing_model: custom_acv
+    minimum_acv_usd: 24000
+    billing_unit: custom
+    seats_included: unlimited
+    seat_overage_usd_per_seat_per_month: null
+    workflow_runs_included_per_month: unlimited
+    run_overage_usd: null
+    active_workflows_limit: unlimited
+    integration_limit: null
+    lock_in_months_annual: 12
+    lock_in_months_multi_year: 24
+    annual_escalation_pct: 4
+    support_tier: dedicated_csm
+    sla_uptime_pct: 99.95
+    key_features:
+      - "Everything in Business"
+      - "Dedicated CSM"
+      - "Custom SLA (up to 99.95%)"
+      - "EU data residency (eu-west-1)"
+      - "SCIM provisioning"
+      - "Custom audit log retention (up to 7 years)"
+      - "Priority escalation path (2h P1 SLA)"
+      - "Executive sponsor (CEO/CTO quarterly)"
+      - "Custom contract terms"
+      - "MSA + DPA"
+    pricing_process:
+      - "AE qualifies deal (ICP fit + budget)"
+      - "VP Sales approves discount level"
+      - "CEO signs ENT MSA"
+      - "CSM assigned at contract execution"

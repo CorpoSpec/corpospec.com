@@ -1,0 +1,19 @@
+id: security/audit_evidence/2026-ac1-mfa-config
+entity: entity/acme-corp
+audit_id: security/audit_evidence/soc2-type2-2026
+audit_kind: soc2_type2
+control: security/controls/access-management
+kind: config_snapshot
+artefact_ref: security/audit_evidence/artefacts/2026-ac1-okta-mfa-policy.json
+collected_on: '2026-04-10'
+collected_by: people/team/maria-rodriguez
+valid_from: '2026-01-01'
+valid_to: '2026-06-30'
+review_status: auditor_accepted
+reviewed_by: kpmg-llp@kpmg.com
+reviewed_on: '2026-05-20'
+reviewer_notes: >
+  Snapshot confirms FIDO2 MFA enforced org-wide via Okta security policy.
+  Includes JSON export of Okta MFA policy and screenshot of authenticator
+  enrollment report showing 100% coverage across 52 active users.
+confidentiality: restricted

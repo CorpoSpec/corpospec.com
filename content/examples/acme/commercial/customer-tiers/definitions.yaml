@@ -1,0 +1,73 @@
+id: commercial/customer-tiers/definitions
+kind: customer_tier_definitions
+as_of: "2026-03-01"
+maintained_by: "Quinn Murphy (VP Revenue)"
+
+description: >
+  Customer segmentation model defining SMB, Mid-Market, and Enterprise tiers.
+  Used by Sales (qualification, routing), CSM (coverage model), Finance (ARR
+  reporting), and Product (roadmap prioritization). Segments are evaluated at
+  deal qualification and re-evaluated annually for existing customers.
+
+tiers:
+  - id: smb
+    name: "SMB"
+    full_name: "Small and Medium Business"
+    criteria:
+      company_size_employees_max: 100
+      arr_per_customer_usd_max: 11999
+      typical_plan: [starter, growth]
+    sales_motion: "Product-led growth (self-serve) + SDR-assisted"
+    csm_coverage: "Pooled CSM (1 CSM per 80 accounts)"
+    onboarding: "Automated + async self-serve"
+    support_tier: "Standard (email + chat)"
+    typical_sales_cycle_days: 7
+    deal_qualification: "No AE required; deals >$2k ACV flagged for AE review."
+    health_monitoring: "Automated usage-based health score in Attio; red alert triggers CSM outreach."
+    expansion_motion: "In-app upsell nudges + monthly digest email showing value metrics."
+    churn_prevention: "Automated NPS survey at Day 30; CSM outreach if NPS < 7."
+
+  - id: midmarket
+    name: "Mid-Market"
+    full_name: "Mid-Market"
+    criteria:
+      company_size_employees_min: 101
+      company_size_employees_max: 1000
+      arr_per_customer_usd_min: 12000
+      arr_per_customer_usd_max: 49999
+      typical_plan: [growth, business]
+    sales_motion: "AE-led with SDR qualification"
+    csm_coverage: "Named CSM (1 CSM per 25 accounts)"
+    onboarding: "Structured 5-week onboarding program with CSM"
+    support_tier: "Priority email + chat + Slack"
+    typical_sales_cycle_days: 30
+    deal_qualification: "Requires AE involvement for all opportunities."
+    health_monitoring: "Weekly health score review by named CSM; QBRs."
+    expansion_motion: "CSM-led expansion conversations at QBRs; seat overage proactive upgrade conversations."
+    churn_prevention: "At-risk flag if: >20% drop in usage, no login for 14 days, or NPS < 6."
+
+  - id: enterprise
+    name: "Enterprise"
+    full_name: "Enterprise"
+    criteria:
+      company_size_employees_min: 1001
+      arr_per_customer_usd_min: 50000
+      typical_plan: [enterprise]
+    sales_motion: "AE + SE + Solutions Consulting; multi-threaded deal management"
+    csm_coverage: "Dedicated CSM (1 CSM per 8 accounts)"
+    onboarding: "Customized onboarding plan; CSM + SE-led; up to 90 days"
+    support_tier: "Dedicated CSM + custom SLA + executive sponsor"
+    typical_sales_cycle_days: 90
+    deal_qualification: "CEO and VP Sales involved in all ENT qualification calls."
+    health_monitoring: "Bi-weekly health reviews; executive sponsor checks in quarterly."
+    expansion_motion: "Annual contract renewal + expansion planning; land-and-expand motion across departments."
+    churn_prevention: "Proactive 90-day renewal engagement; CTO involved in technical health reviews."
+
+routing_rules:
+  - "Inbound leads with company size >1000 employees or deal value >$50k ACV: route to ENT AE within 4 hours."
+  - "Inbound leads 101–1000 employees or $12k–$50k ACV: route to MM AE within 8 hours."
+  - "All other inbound: self-serve or SDR outreach within 24 hours."
+
+re_evaluation_cadence:
+  - "Annual review of all accounts against tier criteria."
+  - "Immediate re-evaluation triggered by: acquisition, funding round, or 50% headcount change."

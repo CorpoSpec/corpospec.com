@@ -1,0 +1,31 @@
+id: vendors/gusto
+legal_name: "Gusto, Inc."
+display_name: "Gusto"
+jurisdiction: US
+category: payroll_hr
+relationship: vendor_only
+status: active
+registered_address:
+  street: "525 20th St"
+  city: "San Francisco"
+  state: CA
+  postal_code: "94107"
+  country: US
+primary_contact: "support@gusto.com"
+master_agreement: null
+dpa_ref: "legal/contracts/gusto-dpa-2026"
+gdpr_role: processor
+processing_record_refs:
+  - "legal/privacy-classification"
+internal_owner: people/team/jordan-lee
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 24000
+onboarded_at: "2025-08-15"
+terminated_at: null
+certifications:
+  - soc2_type2
+notes: >
+  US payroll processing for all US-based employees. Handles federal and
+  state tax filings, W-2 generation, direct deposit. SSO + MFA enforced.
+  Sensitive HR data — access restricted to HR admin + CFO.

@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/vp-engineering
+title: "VP Engineering"
+abbreviation: "VPE"
+unit: engineering
+reports_to: people/roles/cto
+level: vp
+responsibilities:
+  - "Engineering org design — hiring, leveling, performance"
+  - "Technical roadmap execution and delivery velocity"
+  - "Platform reliability, on-call rotation, and SLA ownership"
+  - "EU engineering team build-out (Berlin hub, 2026 H2)"
+  - "Engineering budget — headcount, tooling, infrastructure"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 200000
+  max: 250000
+  equity_percentage: "0.25-0.5%"
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "10+ years engineering, 4+ years managing managers"
+      - "SaaS B2B platform scaling experience"
+      - "Strong TypeScript and cloud-native architecture fluency"
+    nice_to_have:
+      - "Rust or high-performance systems background"
+      - "Multi-region / EU infrastructure experience"

@@ -1,0 +1,78 @@
+id: knowledge/architecture/system-context
+kind: architecture_artefact
+type: system_context
+title: "Acme Platform — System Context Overview"
+version: "1.2"
+as_of: "2026-03-01"
+authors:
+  - "Sarah Kim (CTO)"
+  - "Blake Nguyen (Head of Engineering)"
+
+description: >
+  High-level view of the Acme workflow automation platform, its primary actors,
+  and its external system dependencies. Intended audience: new engineers,
+  investors, enterprise procurement teams.
+
+actors:
+  - id: user_business
+    label: "Business User"
+    description: "Non-technical team member who creates, monitors, and receives workflow outputs."
+  - id: user_admin
+    label: "Workspace Admin"
+    description: "Manages team members, billing, integrations, and security settings."
+  - id: user_developer
+    label: "Developer / API Consumer"
+    description: "Builds custom integrations and automation using the Acme REST API or MCP interface."
+
+system_boundary: "Acme Platform"
+
+internal_components:
+  - name: "Workflow Engine"
+    technology: "Rust (Axum, Tokio)"
+    responsibility: "Executes workflow definitions; manages state, retries, and event routing."
+  - name: "API Layer"
+    technology: "Rust (Axum), REST + WebSocket"
+    responsibility: "Authenticates requests; exposes REST and WebSocket surfaces for all clients."
+  - name: "MCP Server"
+    technology: "Rust (MCP SDK)"
+    responsibility: "Exposes workflow management tools to AI agents over Model Context Protocol."
+  - name: "Web Application"
+    technology: "TypeScript (Next.js, React)"
+    responsibility: "Primary browser-based interface for workflow authoring, monitoring, and reporting."
+  - name: "AI Recommendation Service"
+    technology: "Python (FastAPI), PyTorch"
+    responsibility: "Serves workflow template recommendations and trigger inference predictions."
+  - name: "Data Store"
+    technology: "PostgreSQL (primary), Redis (cache/queue)"
+    responsibility: "Stores workflow definitions, run history, and user/account state."
+  - name: "Observability Stack"
+    technology: "OpenTelemetry, Grafana, Sentry"
+    responsibility: "Distributed tracing, metrics, and error reporting across all services."
+
+external_dependencies:
+  - name: "Auth0"
+    category: identity
+    purpose: "OIDC/OAuth2 authentication for all user sessions."
+  - name: "Stripe"
+    category: billing
+    purpose: "Subscription management, usage metering, invoicing."
+  - name: "AWS S3"
+    category: storage
+    purpose: "Workflow artifact and execution log object storage."
+  - name: "SendGrid"
+    category: notifications
+    purpose: "Transactional email: onboarding sequences, workflow completion notifications."
+  - name: "Customer SaaS Systems"
+    category: integration_targets
+    purpose: "Salesforce, HubSpot, Slack, SAP, and 100+ other systems connected via integrations."
+  - name: "GitHub"
+    category: ci_cd
+    purpose: "Source control, CI/CD pipelines via GitHub Actions."
+
+deployment_topology:
+  primary_cloud: AWS
+  regions:
+    - us-east-1
+    - eu-west-1
+  containerization: Docker + Kubernetes (EKS)
+  cdn: Cloudflare

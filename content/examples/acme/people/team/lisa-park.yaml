@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/lisa-park
+type: Person
+name:
+  given: "Lisa"
+  family: "Park"
+  full: "Lisa Park"
+email: "lisa.park@acme-corp.example.com"
+role: people/roles/cfo
+unit: finance
+employer: entity/acme-corp
+start_date: "2025-09-01"
+end_date: null
+status: active
+bio: "CFO. Previously VP Finance at Rippling. Wharton MBA. Led Series A financial close and 409A."
+custom:
+  employment_type: full-time
+  tax_residency: US

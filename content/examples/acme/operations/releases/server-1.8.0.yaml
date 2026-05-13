@@ -1,0 +1,43 @@
+id: operations/releases/server-1.8.0
+product: product/overview
+version: 1.8.0
+channel: stable
+release_status: released
+released_at: '2026-04-28'
+release_manager: people/team/raj-patel
+changelog:
+  - change_kind: added
+    summary: Composite index on workflow_runs(tenant_id, created_at DESC) (post-incident CR 2026-04-001)
+    source_ref: operations/change_requests/cr-2026-04-001-postgres-index
+    breaking: false
+    migration_note: null
+  - change_kind: added
+    summary: Rate limiting on POST /v1/auth/reset-password — 10 req/min per IP (H1-ACM-002)
+    source_ref: security/pentests/2026-hackerone-vdp-report
+    breaking: false
+    migration_note: null
+  - change_kind: added
+    summary: Input sanitization in embedding-worker for prompt-injection patterns (CVE-2026-12345 mitigation)
+    source_ref: security/vulnerabilities/cve-2026-12345
+    breaking: false
+    migration_note: null
+  - change_kind: added
+    summary: Server-Sent Events endpoint GET /v1/runs/{id}/events for real-time status push
+    source_ref: null
+    breaking: false
+    migration_note: null
+  - change_kind: changed
+    summary: 'EXPLAIN ANALYZE CI gate added for all schema migrations (post-incident corrective action)'
+    source_ref: operations/incidents/2026-04-015-api-degradation
+    breaking: false
+    migration_note: null
+artefact_ref: 'docker.io/acme-corp/server:1.8.0@sha256:f4a1b2c3d5e678901234567890abcdef1234567890abcdef1234567890abcdef12'
+sbom_ref: security/sboms/server-1.8.0
+bdr_refs: []
+security_review_status: passed
+security_review_ref: security/pentests/2026-q2-web-app
+migration_required: true
+migration_runbook: operations/runbooks/postgres-failover
+rollback_runbook: operations/runbooks/postgres-failover
+git_ref: server-v1.8.0
+signature_ref: security/signing/cosign-key-2026

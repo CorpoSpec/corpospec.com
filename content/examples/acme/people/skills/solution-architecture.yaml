@@ -1,0 +1,9 @@
+id: people/skills/solution-architecture
+entity: entity/acme-corp
+skill_family: sales
+name: Solution architecture
+description: >
+  Technical pre-sales scoping, API integration design, POC
+  environment setup, RFP security questionnaire response,
+  and enterprise architecture review facilitation.
+training_refs: []

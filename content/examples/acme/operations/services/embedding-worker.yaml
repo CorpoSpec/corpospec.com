@@ -1,0 +1,35 @@
+id: operations/services/embedding-worker
+entity: entity/acme-corp
+name: Embedding worker
+description: >
+  Async worker that generates vector embeddings for workflow templates and run
+  outputs using Anthropic and OpenAI APIs. Results stored in pgvector extension
+  on Postgres replica. Powers semantic search, suggested automations, and the
+  AI-assist feature. Stateless — processes SQS messages from the API service.
+tier: internal
+service_status: ga
+criticality: tier2
+deployment_posture: single_region_multi_az
+owner: people/team/raj-patel
+on_call_rotation_ref: null
+sla_ref: null
+dr_plan_ref: null
+bcp_ref: null
+depends_on:
+  - operations/services/api
+dependents: []
+api_endpoints: []
+asset_refs: []
+documentation_ref: null
+pii_class: personal
+tech_stack:
+  - nodejs
+  - typescript
+  - aws_ecs_fargate
+  - aws_sqs
+  - anthropic
+  - openai
+  - pgvector
+provisioned_on: '2026-01-15'
+deprecated_on: null
+decommission_on: null

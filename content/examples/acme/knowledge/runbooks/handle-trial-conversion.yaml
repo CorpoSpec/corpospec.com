@@ -1,0 +1,60 @@
+id: knowledge/runbooks/handle-trial-conversion
+kind: runbook
+title: "Handle Trial-to-Paid Conversion"
+category: revenue_operations
+severity_if_skipped: medium
+last_reviewed: "2026-03-01"
+reviewed_by: "Quinn Murphy (VP Revenue)"
+
+description: >
+  End-to-end process for converting a trial workspace to a paid plan. Covers
+  both self-serve (Stripe checkout) and sales-assisted (quote-to-close) paths.
+
+triggers:
+  - "Trial end date reached (automated)"
+  - "Customer requests upgrade during trial (sales-assisted)"
+  - "CSM identifies expansion opportunity in trial account"
+
+self_serve_path:
+  steps:
+    - step: 1
+      action: "Customer clicks 'Upgrade' in-app or follows expiry email link."
+      system: "Product (Next.js billing flow)"
+      notes: "Automated. No manual action required unless customer reports issues."
+    - step: 2
+      action: "Stripe Checkout session created; customer enters card details."
+      system: "Stripe"
+    - step: 3
+      action: "Stripe webhook `checkout.session.completed` fires."
+      system: "Acme API (Stripe webhook handler)"
+      notes: "Verifies signature; upgrades workspace tier in DB; sends welcome email."
+    - step: 4
+      action: "CSM reviews new paid account within 24 hours for ENT-size accounts."
+      criteria: "Seat count >= 20 OR ACV >= $2,000/month triggers CSM outreach."
+
+sales_assisted_path:
+  steps:
+    - step: 1
+      action: "AE qualifies trial account and identifies expansion intent."
+      crm_stage: "Trial → Discovery"
+    - step: 2
+      action: "AE generates quote in CRM using standard pricing from commercial/pricing/plans.yaml"
+      notes: "Any discount >15% requires VP Sales approval."
+    - step: 3
+      action: "Customer signs order form (DocuSign)."
+    - step: 4
+      action: "RevOps provisions paid workspace tier in admin console."
+      command: "acme-admin workspace upgrade --workspace-id <id> --plan <plan> --seats <n>"
+    - step: 5
+      action: "CSM sends onboarding kit and schedules kickoff call."
+      sla: "Within 4 business hours of close."
+    - step: 6
+      action: "Deal logged in CRM; commission trigger fired."
+
+failure_scenarios:
+  - scenario: "Stripe webhook fails"
+    detection: "Sentry alert on `stripe.webhook.failed` event"
+    resolution: "Replay webhook from Stripe dashboard; verify idempotency key"
+  - scenario: "Customer card declined at conversion"
+    detection: "Email to customer from Stripe; alert to CSM queue"
+    resolution: "CSM contacts customer within 2 business hours to resolve"

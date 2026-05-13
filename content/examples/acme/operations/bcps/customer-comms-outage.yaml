@@ -1,0 +1,45 @@
+id: operations/bcps/customer-comms-outage
+entity: entity/acme-corp
+business_process: operations/processes/incident-response-drill
+criticality: high
+mtpd_hours: 4
+rto_hours: 1
+mbco: >
+  Minimum: status page updated within 15 minutes of incident declaration;
+  enterprise customers with active SLA notified within 30 minutes via direct
+  email from account executive or CEO. No dependency on internal tooling for
+  customer communication — falls back to personal email.
+owner: people/team/erin-foster
+crisis_team:
+  - people/team/erin-foster
+  - people/team/alex-chen
+  - people/team/raj-patel
+dependencies:
+  - kind: system
+    ref_path: operations/services/api
+    backup_available: true
+    backup_arrangement: >
+      Status page hosted on independent infrastructure (Statuspage.io on AWS
+      us-west-2); updateable even when primary API is down. Manual status
+      update procedure documented in operations/sops/handle-data-breach.
+  - kind: vendor
+    ref_path: integrations/sources/communication
+    backup_available: true
+    backup_arrangement: >
+      Slack unavailable: personal SMS tree activated. Customer email via
+      direct Gmail accounts for enterprise tier. Statuspage.io subscriber
+      alerts bypass Slack dependency entirely.
+runbook_ref: null
+tests:
+  - test_kind: tabletop
+    conducted_on: '2026-04-08'
+    conducted_by: people/team/erin-foster
+    objectives_met: true
+    findings:
+      - SMS tree contact list was missing two new enterprise AEs hired in Q1 — updated
+      - No documented template for partial-outage customer update vs. full-outage — gap addressed
+    report_ref: null
+bcp_status: approved
+effective_from: '2026-01-01'
+next_review_due: '2027-01-01'
+control_basis: 'ISO 22301:2019 Cl. 8.2; SOC 2 CC7.4 (communication of incidents)'

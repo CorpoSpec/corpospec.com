@@ -1,0 +1,21 @@
+id: security/audit_evidence/2026-iso27001-stage1
+entity: entity/acme-corp
+audit_id: security/audit_evidence/iso27001-stage1-2026
+audit_kind: iso27001_stage1
+control: security/controls/access-management
+kind: document
+artefact_ref: security/audit_evidence/artefacts/2026-iso27001-stage1-report.pdf
+collected_on: '2026-05-05'
+collected_by: people/team/maria-rodriguez
+valid_from: '2026-05-05'
+valid_to: '2026-11-05'
+review_status: auditor_accepted
+reviewed_by: kpmg-llp@kpmg.com
+reviewed_on: '2026-05-05'
+reviewer_notes: >
+  ISO 27001:2022 Stage 1 (documentation review) completed 2026-05-05 by KPMG.
+  ISMS scope documented for SaaS workflow platform. All Annex A controls
+  documented with statement of applicability. 3 minor nonconformities raised
+  around asset-inventory completeness (resolved 2026-05-12). Stage 2
+  (on-site audit) scheduled 2026-09-15.
+confidentiality: restricted

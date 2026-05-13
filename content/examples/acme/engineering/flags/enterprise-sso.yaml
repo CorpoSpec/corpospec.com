@@ -1,0 +1,27 @@
+id: engineering/flags/enterprise-sso
+key: enterprise_sso_enabled
+kind: permission
+state: active
+description: >
+  Gates SAML/OIDC SSO configuration screens and enforcement logic to
+  enterprise-plan accounts only. Always-on for enterprise tier;
+  always-off for starter and pro. Not subject to ramp or expiry.
+product: product/overview
+owner: people/team/raj-patel
+rollout_pct: null
+targeting_rules:
+  - label: enterprise_plan
+    condition: "account.plan == 'enterprise'"
+    on_treatment: true
+    rollout_pct: 100.0
+  - label: all_other_plans
+    condition: "account.plan != 'enterprise'"
+    on_treatment: false
+    rollout_pct: 0.0
+created_at: "2025-11-01"
+shipped_at: null
+archived_at: null
+experiment_ref: null
+decision_ref: governance/decisions/0018-security-framework
+platform: growthbook
+expires_at: null

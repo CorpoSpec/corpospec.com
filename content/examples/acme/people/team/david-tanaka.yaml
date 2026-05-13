@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/david-tanaka
+type: Person
+name:
+  given: "David"
+  family: "Tanaka"
+  full: "David Tanaka"
+email: "david.tanaka@acme-corp.example.com"
+role: people/roles/general-counsel
+unit: legal
+employer: entity/acme-corp
+start_date: "2025-12-01"
+end_date: null
+status: active
+bio: "General Counsel. JD Stanford Law '14. Previously Associate GC at Okta. Owns IP, data privacy, commercial contracts."
+custom:
+  employment_type: full-time
+  tax_residency: US

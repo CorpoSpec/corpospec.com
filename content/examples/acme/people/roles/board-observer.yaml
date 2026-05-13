@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/board-observer
+title: "Board Observer"
+unit: executive
+reports_to: null
+level: c-suite
+responsibilities:
+  - "Attend board meetings without voting rights"
+  - "Provide strategic input from investor portfolio perspective"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 0
+  max: 0
+  note: "Observer; no cash compensation."
+custom:
+  status: filled
+  employment_type: advisor

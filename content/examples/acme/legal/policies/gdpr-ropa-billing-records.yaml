@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-ropa-billing-records
+name: "GDPR ROPA — Billing Records"
+description: >
+  Record of Processing Activity (Art. 30 GDPR) for personal data contained
+  in billing and invoicing records. Covers customer billing contacts, payment
+  tokens, and transaction history for Acme's subscription billing.
+status: active
+scope: "Billing contacts of Acme's customers, including EU/EEA data subjects"
+owner: people/team/lisa-park
+effective_date: "2025-07-01"
+review_date: "2026-07-01"
+provisions:
+  - "Controller: Acme Corp, Inc."
+  - "Legal basis: Art. 6(1)(b) GDPR — contract; Art. 6(1)(c) — legal obligation (tax records)"
+  - "Data categories: billing name, billing email, billing address, payment token (no raw card data)"
+  - "Retention: 7 years per IRS/tax requirements; card tokens indefinite per Stripe"
+  - "Raw card data: never stored on Acme systems — Stripe tokenization only (PCI-SAQ-A)"
+  - "Recipients: Stripe (payment processing), KPMG (audit)"
+  - "Third-country transfers: Stripe — US via SCCs"
+custom:
+  processors:
+    - name: "Stripe"
+      service: "Payment processing and subscription billing"
+      dpa_status: signed
+      hosting_region: "US (SCCs for EU billing contacts)"
+      data_categories: ["billing name", "billing email", "payment tokens"]
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr

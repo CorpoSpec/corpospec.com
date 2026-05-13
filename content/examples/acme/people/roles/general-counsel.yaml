@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/general-counsel
+title: "General Counsel"
+abbreviation: "GC"
+unit: legal
+reports_to: people/roles/ceo
+level: c-suite
+responsibilities:
+  - "IP portfolio strategy — patents, trademarks, trade secrets"
+  - "Commercial contract review and negotiation"
+  - "Employment law compliance US + DE"
+  - "Data privacy program (CCPA, GDPR Art. 27 representative)"
+  - "Corporate governance — board resolutions, cap table integrity"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 200000
+  max: 240000
+  equity_percentage: "0.2-0.4%"
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "JD from accredited US law school; active bar admission"
+      - "5+ years in-house or SaaS startup experience"
+      - "IP and commercial contracts fluency"
+    nice_to_have:
+      - "German or EU law familiarity"
+      - "Series A+ financing and equity experience"

@@ -1,0 +1,95 @@
+id: operations/processes/incident-response-drill
+entity: entity/acme-corp
+name: Quarterly incident response drill
+description: >
+  Tabletop or live-simulation exercise covering detection, triage, containment,
+  and post-mortem for a realistic breach or outage scenario. Tests BCP
+  dependencies and validates runbook currency. Required by SOC 2 CC7.3
+  and ISO 27001:2022 A.5.24.
+process_status: approved
+owner: people/team/maria-rodriguez
+version: 1.0.0
+lanes:
+  - id: ciso
+    label: CISO
+    process_role: people/team/maria-rodriguez
+  - id: on-call
+    label: On-call Engineer
+    process_role: people/team/raj-patel
+  - id: exec
+    label: Executive Sponsor
+    process_role: people/team/alex-chen
+nodes:
+  - id: start
+    bpmn_kind: start_event
+    label: Drill scheduled (quarterly calendar)
+    lane: ciso
+    procedure_ref: null
+  - id: scenario-brief
+    bpmn_kind: user_task
+    label: CISO prepares scenario and injects
+    lane: ciso
+    procedure_ref: operations/sops/handle-data-breach
+  - id: detection
+    bpmn_kind: user_task
+    label: On-call detects and declares incident
+    lane: on-call
+    procedure_ref: null
+  - id: response
+    bpmn_kind: user_task
+    label: Incident response per SOP
+    lane: on-call
+    procedure_ref: operations/sops/handle-data-breach
+  - id: exec-brief
+    bpmn_kind: user_task
+    label: Executive briefed; comms template drafted
+    lane: exec
+    procedure_ref: null
+  - id: debrief
+    bpmn_kind: user_task
+    label: Debrief; findings logged; runbooks updated
+    lane: ciso
+    procedure_ref: null
+  - id: end
+    bpmn_kind: end_event
+    label: Drill complete; evidence logged for SOC 2 auditor
+    lane: ciso
+    procedure_ref: null
+flows:
+  - id: f1
+    from: start
+    to: scenario-brief
+    condition: null
+    is_message_flow: false
+  - id: f2
+    from: scenario-brief
+    to: detection
+    condition: null
+    is_message_flow: false
+  - id: f3
+    from: detection
+    to: response
+    condition: null
+    is_message_flow: false
+  - id: f4
+    from: response
+    to: exec-brief
+    condition: null
+    is_message_flow: false
+  - id: f5
+    from: exec-brief
+    to: debrief
+    condition: null
+    is_message_flow: false
+  - id: f6
+    from: debrief
+    to: end
+    condition: null
+    is_message_flow: false
+bpmn_xml_ref: null
+diagram_ref: null
+sop_refs:
+  - operations/sops/handle-data-breach
+control_basis: 'ISO 27001:2022 A.5.24 + A.5.25; SOC 2 CC7.3; NIST CSF RS.MA-1'
+last_modeled_on: '2026-01-15'
+next_review_due: '2027-01-15'

@@ -1,0 +1,51 @@
+id: operations/runbooks/postgres-failover
+entity: entity/acme-corp
+system: security/assets/postgres-prod
+name: Postgres primary failover
+version: 1.2.0
+trigger: alert
+trigger_summary: 'Datadog alert: RDS primary unreachable or replication lag > 60s for > 2 min'
+owner: people/team/raj-patel
+steps:
+  - ordinal: 1
+    kind: diagnose
+    action: Confirm primary is unreachable from API service
+    command: 'aws rds describe-db-instances --db-instance-identifier acme-prod-primary --query "DBInstances[0].DBInstanceStatus"'
+    expected_observable: '"failed"  or  "incompatible-restore"'
+    rollback: null
+  - ordinal: 2
+    kind: diagnose
+    action: Check RDS event logs for root cause
+    command: 'aws rds describe-events --source-identifier acme-prod-primary --duration 60'
+    expected_observable: Event log shows storage/network failure or OS crash
+    rollback: null
+  - ordinal: 3
+    kind: fix
+    action: Initiate manual failover to Multi-AZ standby
+    command: 'aws rds reboot-db-instance --db-instance-identifier acme-prod-primary --force-failover'
+    expected_observable: RDS console shows standby promoted; DNS endpoint resolves to new primary within 60s
+    rollback: 'Failover back: aws rds reboot-db-instance --db-instance-identifier acme-prod-primary --force-failover'
+  - ordinal: 4
+    kind: verify
+    action: Verify API service reconnects and latency returns to baseline
+    command: null
+    expected_observable: 5xx error rate drops below 0.1% within 90s; p99 < 500ms
+    rollback: null
+  - ordinal: 5
+    kind: communicate
+    action: Post status page update and Slack #incidents notification
+    command: null
+    expected_observable: Status page updated to "Investigating"; #incidents channel notified with incident commander
+    rollback: null
+parent_sop: operations/sops/handle-data-breach
+dashboard_ref: null
+status: approved
+recent_executions:
+  - executed_at: '2026-04-01'
+    executed_by: people/team/raj-patel
+    successful: true
+    incident_ref: null
+    mttr_minutes: 4.5
+    notes: Quarterly DR drill — automated Multi-AZ failover completed in 52 seconds.
+last_drilled: '2026-04-01'
+next_drill_due: '2026-07-01'

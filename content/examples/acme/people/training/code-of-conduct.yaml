@@ -1,0 +1,17 @@
+id: people/training/modules/code-of-conduct
+entity: entity/acme-corp
+category: compliance
+name: Code of Conduct attestation
+description: >
+  Annual attestation covering Acme's Code of Conduct: professional
+  conduct standards, conflicts of interest, insider trading policy,
+  social media, and confidentiality obligations.
+delivery_mode: attestation
+duration_minutes: 20
+mandatory: true
+mandatory_for_roles: []
+recertification_months: 12
+statutory_basis: null
+builds_skills: []
+effective_from: "2026-01-01"
+effective_to: null

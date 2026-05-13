@@ -1,0 +1,24 @@
+id: ip/copyrights/platform-ui-design
+kind: copyright
+title: "Acme Workflow Automation Platform — UI Design and Visual Assets"
+status: registered
+jurisdiction: US
+registry: US_COPYRIGHT_OFFICE
+registration_number: "VA0002401187"
+registration_date: "2026-01-20"
+creation_date: "2025-10-01"
+publication_date: "2025-10-15"
+work_type: visual_art
+description: >
+  Complete UI design system and visual assets for the Acme workflow automation
+  platform, including screen layouts, icon set, color palette implementation,
+  component library visuals, and marketing site graphics.
+authors:
+  - name: "Acme Corp, Inc."
+    contribution: "Work made for hire — all design contributions by employees and contractors"
+owner_entity: entity/acme-corp
+assignment_recorded: true
+assignment_date: "2025-10-01"
+license: all_rights_reserved
+deposit_type: "electronic deposit via eCO"
+note: "Registration covers the complete design system as of platform v1.0 launch. Future major design revisions should trigger a supplementary registration."

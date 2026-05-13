@@ -1,0 +1,9 @@
+id: people/skills/enterprise-sales
+entity: entity/acme-corp
+skill_family: sales
+name: Enterprise sales
+description: >
+  MEDDPICC qualification, multi-stakeholder deal management,
+  economic buyer identification, champion development, deal review,
+  and forecast accuracy in $50k-$500k ACV deals.
+training_refs: []

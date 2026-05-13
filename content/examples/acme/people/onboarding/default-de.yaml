@@ -1,0 +1,70 @@
+id: people/onboarding/plans/default-de
+entity: entity/acme-eu-gmbh
+name: Default DE onboarding (≤90 days)
+applies_to_roles: []
+tasks:
+  - key: gdpr-awareness
+    title: GDPR awareness training
+    onboarding_category: compliance
+    default_owner: people/team/jordan-lee
+    due_offset_days: 7
+    mandatory: true
+    description: "GDPR Art. 39(1)(b) staff awareness — annual recertification thereafter."
+  - key: code-of-conduct-attest
+    title: Code of Conduct attestation
+    onboarding_category: compliance
+    default_owner: people/team/jordan-lee
+    due_offset_days: 3
+    mandatory: true
+    description: "Read and e-sign the Code of Conduct."
+  - key: laptop-access
+    title: Laptop + SSO + MFA provisioned
+    onboarding_category: access_setup
+    default_owner: people/team/raj-patel
+    due_offset_days: 0
+    mandatory: true
+    description: "Hardware + Okta SSO + MFA configured before day 1."
+  - key: payroll-setup
+    title: Payroll + Lohnsteuermerkmale submission
+    onboarding_category: admin_paperwork
+    default_owner: people/team/jordan-lee
+    due_offset_days: 5
+    mandatory: true
+    description: "Lohnsteuermerkmale retrieved from Elster and submitted to payroll provider."
+  - key: bav-enrollment
+    title: BAV Direktversicherung enrollment
+    onboarding_category: benefits
+    default_owner: people/team/jordan-lee
+    due_offset_days: 14
+    mandatory: false
+    description: "Salary-sacrifice BAV via Direktversicherung (§1a BetrAVG). Employer cap €284/month."
+  - key: security-awareness
+    title: Security awareness training (annual)
+    onboarding_category: compliance
+    default_owner: people/team/maria-rodriguez
+    due_offset_days: 7
+    mandatory: true
+    description: "KnowBe4 module; annual recertification."
+  - key: anti-bribery
+    title: Anti-bribery and corruption training
+    onboarding_category: compliance
+    default_owner: people/team/david-tanaka
+    due_offset_days: 14
+    mandatory: true
+    description: "§299 StGB + UK Bribery Act 2010 (for UK-touching roles). Annual recertification."
+  - key: 30-day-check-in
+    title: 30-day milestone check-in
+    onboarding_category: milestone
+    default_owner: people/team/jordan-lee
+    due_offset_days: 30
+    mandatory: true
+    description: "Manager 1:1 — calibrate trajectory and early blockers."
+  - key: probezeit-review
+    title: Probezeit (probation) end review
+    onboarding_category: milestone
+    default_owner: people/team/jordan-lee
+    due_offset_days: 90
+    mandatory: true
+    description: "Formal review at end of 3-month Probezeit per § 622 Abs. 3 BGB. Confirms continuation."
+effective_from: "2026-05-01"
+effective_to: null

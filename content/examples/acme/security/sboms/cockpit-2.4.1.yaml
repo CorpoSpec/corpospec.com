@@ -1,0 +1,67 @@
+id: security/sboms/cockpit-2.4.1
+format: cyclonedx15
+subject: product/overview
+subject_version: 2.4.1
+generator: syft@1.2.0
+generated_at: '2026-04-28'
+components:
+  - name: next
+    version: 15.3.1
+    supplier: Vercel
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/next@15.3.1
+    license: MIT
+    hashes:
+      - algorithm: sha256
+        value: 'a7c3e891f2d4b55c8f01234567890abcdef1234567890abcdef1234567890ab'
+    depends_on: []
+    vulnerability_refs: []
+  - name: react
+    version: 19.1.0
+    supplier: Meta Platforms
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/react@19.1.0
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+  - name: "@supabase/supabase-js"
+    version: 2.49.4
+    supplier: Supabase
+    author: null
+    identifiers:
+      - kind: purl
+        value: "pkg:npm/%40supabase%2Fsupabase-js@2.49.4"
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+  - name: "@anthropic-ai/sdk"
+    version: 0.39.0
+    supplier: Anthropic
+    author: null
+    identifiers:
+      - kind: purl
+        value: "pkg:npm/%40anthropic-ai%2Fsdk@0.39.0"
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+  - name: stripe
+    version: 17.7.0
+    supplier: Stripe
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/stripe@17.7.0
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+artefact_ref: security/sboms/cockpit-2.4.1.cdx.json
+signed: true
+signing_cert_ref: security/signing/cosign-key-2026

@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/data-scientist
+title: "Data Scientist"
+abbreviation: "DS"
+unit: engineering
+reports_to: people/roles/vp-engineering
+level: ic
+responsibilities:
+  - "Product analytics — funnel analysis, cohort retention, feature impact"
+  - "Customer health scoring and churn prediction models"
+  - "A/B test design, analysis, and significance reporting"
+  - "Self-serve analytics infrastructure (dbt, Metabase)"
+  - "Data-driven input to roadmap and pricing decisions"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 155000
+  max: 195000
+  equity_percentage: "0.08-0.2%"
+custom:
+  status: open
+  employment_type: full-time
+  hiring_start_target: "2026-Q4"
+  requirements:
+    must_have:
+      - "4+ years applied data science or analytics engineering"
+      - "Python (pandas, scikit-learn) and SQL fluency"
+      - "Statistical modeling and A/B test methodology"
+    nice_to_have:
+      - "SaaS product analytics experience"
+      - "dbt, Snowflake, or BigQuery experience"

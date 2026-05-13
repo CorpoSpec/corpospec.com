@@ -1,0 +1,61 @@
+id: knowledge/playbooks/sales-objection-handling
+kind: playbook
+title: "Sales Objection Handling Guide"
+audience: "Account Executives, Sales Development Representatives"
+version: "1.3"
+last_updated: "2026-02-20"
+maintained_by: "Taylor Brooks (VP Sales)"
+
+description: >
+  Standard objection responses for Acme AEs. Each objection includes
+  the root cause, the recommended response framework, and a sample reframe.
+  Supplement with deal-specific context; never recite verbatim.
+
+objections:
+  - id: obj-001
+    trigger: "We already use Zapier / Make."
+    root_cause: "Prospect is not aware of Acme's differentiated positioning on ENT workflow complexity and AI trigger inference."
+    response_framework:
+      - acknowledge: "Zapier and Make are excellent for simple automations."
+      - pivot: "Where Acme is different is when your workflows involve conditional branching based on real-time data, or when you need audit trails for SOC 2. Let me show you a workflow our customer Meridian Logistics built that Zapier couldn't handle."
+      - proof_point: "Meridian reduced workflow build time by 72% and now has full audit logging required for their insurance compliance."
+      - close: "What does a workflow like this look like in your environment?"
+    call_to_action: "Book a technical deep-dive with a solutions engineer."
+
+  - id: obj-002
+    trigger: "It's too expensive."
+    root_cause: "Price objection usually signals unclear ROI or wrong-tier pricing. Qualify budget vs. perceived value."
+    response_framework:
+      - acknowledge: "I understand cost is a real factor."
+      - qualify: "Before we talk price, help me understand — what does your team spend today on manual work in this process? Our typical customer saves 8–12 hours per team member per week."
+      - reframe: "At $499/month for the Growth plan, that's about $1 per saved hour if your team is 5 people. What's the cost of one hour of your ops team's time?"
+      - alternative: "If budget is the constraint right now, I can walk you through our Starter plan at $99/month as an entry point."
+    notes: "Never discount without VP Sales approval. If they push hard, offer annual billing for 20% discount."
+
+  - id: obj-003
+    trigger: "We need SOC 2 / ISO 27001 compliance."
+    root_cause: "Enterprise security requirement. Closing depends on clear security posture communication."
+    response_framework:
+      - acknowledge: "Compliance is a hard requirement for you — understood."
+      - current_state: "We have SOC 2 Type I completed and Type II audit in progress, expected June 2026. We also have a detailed security overview we can share under NDA."
+      - bridge: "Many of our ENT customers have moved forward on a conditional basis: we commit to SOC 2 Type II in the MSA as a contractual deliverable by a specific date."
+      - action: "Can I connect you with our CTO for a security review call? She handles ENT security evaluations directly."
+    escalation_path: "Loop in Sarah Kim (CTO) for all ENT security reviews."
+
+  - id: obj-004
+    trigger: "We need to build this in-house / our engineering team can handle it."
+    root_cause: "Classic build vs. buy. Engage on cost-of-ownership and opportunity cost."
+    response_framework:
+      - acknowledge: "Building in-house gives you full control — that's a legitimate option."
+      - cost_of_ownership: "Our typical customer tells us that internal tooling needs ongoing maintenance, especially when their workflow requirements change. What's the realistic engineering cost to build and maintain this for 2 years?"
+      - pivot: "The question isn't whether your team *can* build it — they clearly can. It's whether your team *should* be building infrastructure vs. the product your customers are paying for."
+      - proof: "Cascade Systems built their own automation layer in 2024 and migrated to Acme in 2025 after the maintenance burden grew to 1 FTE."
+
+  - id: obj-005
+    trigger: "We need to involve procurement / legal / IT security."
+    root_cause: "Good signal — serious intent. Process objection, not a real objection."
+    response_framework:
+      - normalize: "Totally expected at this stage. Most of our ENT customers go through the same process."
+      - action: "Let's map out the process together — who needs to be involved and what's their specific approval criteria? I want to make sure we give each stakeholder exactly what they need to move fast."
+      - materials_available: "We have: security questionnaire responses, standard MSA, DPA template, SOC 2 report (NDA required), penetration test summary."
+    notes: "Enterprise procurement typically adds 4–6 weeks. Compress by pre-populating their questionnaires and connecting their IT team with our CTO."

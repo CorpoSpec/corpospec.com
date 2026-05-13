@@ -1,0 +1,63 @@
+id: operations/sops/onboard-new-vendor
+entity: entity/acme-corp
+category: procurement
+name: Onboard new vendor
+version: 1.1.0
+objective: >
+  Add a new third-party vendor while satisfying TPRM, GDPR Art. 28 + Art. 30
+  obligations, and ISO 27001:2022 A.5.19 supplier-relationship controls.
+triggers:
+  - Engineering, Finance, or a department lead requests a new external service.
+preconditions:
+  - Vendor addresses a specific business need not covered by existing tools.
+  - Internal sponsor identified.
+steps:
+  - ordinal: 1
+    action: >
+      Security review — request SOC 2 Type II report, ISO 27001 certificate, or
+      equivalent evidence. Assign risk tier (critical / high / medium / low).
+    acceptance_criterion: Evidence reviewed by CISO; risk tier assigned; decision documented.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: responsible
+      - role: people/roles/ceo
+        raci: consulted
+    sla_duration: P5D
+    tool_refs: []
+  - ordinal: 2
+    action: >
+      If vendor processes EU personal data: execute GDPR Art. 28 DPA; update
+      ROPA entry; add to public sub-processor catalogue.
+    acceptance_criterion: >
+      Signed DPA stored in legal/contracts/; ROPA entry created with processing
+      purpose and data categories; sub-processor catalogue updated.
+    assignments:
+      - role: people/roles/ceo
+        raci: accountable
+      - role: people/roles/sales-lead
+        raci: responsible
+    sla_duration: P10D
+    tool_refs: []
+  - ordinal: 3
+    action: Add vendor to integrations/ pillar; complete vendor risk assessment record.
+    acceptance_criterion: >
+      Vendor integration record exists; risk assessment closed with outcome.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: accountable
+      - role: people/roles/data-analyst
+        raci: consulted
+    sla_duration: P5D
+    tool_refs: []
+postconditions:
+  - Vendor integration record exists in integrations/sources/.
+  - DPA and ROPA entry linked from vendor record (if EU personal data involved).
+  - Risk assessment closed.
+  - Access provisioned with least-privilege scope and documented.
+control_basis: 'ISO 27001:2022 A.5.19 + A.5.20 + A.5.21; GDPR Art. 28 + 30; SOC 2 CC9.2'
+owner: people/team/maria-rodriguez
+artefact_ref: null
+status: approved
+effective_from: '2026-01-01'
+review_cadence: P12M
+next_review_due: '2027-01-01'

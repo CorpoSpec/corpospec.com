@@ -1,0 +1,70 @@
+id: knowledge/playbooks/enterprise-procurement-readiness
+kind: playbook
+title: "Enterprise Procurement Readiness Playbook"
+audience: "Account Executives, CTO (security reviews), Legal"
+version: "1.0"
+last_updated: "2026-02-28"
+maintained_by: "Taylor Brooks (VP Sales)"
+
+description: >
+  Structured guide for navigating enterprise procurement cycles for deals >$20k ACV.
+  Reduces time-in-procurement by pre-populating common requirements and
+  routing the right internal stakeholder to each workstream.
+
+procurement_workstreams:
+  - name: Legal / MSA Review
+    typical_duration_weeks: 2
+    acme_owner: "Alex Chen (CEO) + external counsel (Cooley LLP)"
+    standard_assets:
+      - "Acme Standard MSA (editable Word version)"
+      - "DPA template (GDPR + US privacy law)"
+    common_redlines:
+      - "Liability cap: customers often request 12× MCV; Acme position is 12× ACV."
+      - "Data residency: EU customers request EU-only storage; roadmap item Q3-2026."
+      - "SLA: standard 99.9% uptime; ENT customers often request 99.95%."
+    escalation: "Redlines that deviate from standard playbook go to CEO for approval."
+
+  - name: Security Review
+    typical_duration_weeks: 3
+    acme_owner: "Sarah Kim (CTO)"
+    standard_assets:
+      - "SOC 2 Type I report (under NDA)"
+      - "Security questionnaire responses (pre-populated CAIQ / HECVAT)"
+      - "Penetration test executive summary (Cobalt.io, Q4-2025)"
+      - "Vulnerability disclosure policy"
+      - "Data processing and retention overview"
+    common_requirements:
+      - "SOC 2: Type I available; Type II expected June 2026."
+      - "SSO/SAML: available on Business and Enterprise tiers."
+      - "MFA enforcement: configurable at workspace level."
+      - "Audit log export: available on Enterprise tier."
+
+  - name: IT / Infrastructure Review
+    typical_duration_weeks: 1
+    acme_owner: "Blake Nguyen (Head of Engineering)"
+    standard_assets:
+      - "Architecture overview (non-sensitive)"
+      - "Uptime history (past 12 months: 99.7% availability)"
+      - "Incident response policy"
+    common_questions:
+      - "Cloud provider: AWS (us-east-1 primary, eu-west-1 DR)"
+      - "Data encryption: AES-256 at rest, TLS 1.3 in transit"
+      - "API authentication: Bearer JWT, RS256, 1-hour TTL"
+
+  - name: Procurement / Vendor Management
+    typical_duration_weeks: 1
+    acme_owner: "Quinn Murphy (VP Revenue)"
+    standard_assets:
+      - "W-9 form"
+      - "Certificate of Insurance (COI)"
+      - "ACH payment details"
+    notes: "Most procurement portals require vendor registration. Complete within 2 business days of request."
+
+timeline_guidance:
+  - "Typical ENT procurement: 4–8 weeks from signed NDA to executed MSA."
+  - "Compress by: pre-populating questionnaires, scheduling security review within 48h of request, and ensuring legal redlines are reviewed within 5 business days."
+
+red_flags:
+  - "Prospect has not yet involved IT or Legal by Week 3 of evaluation — deal may not be real."
+  - "Legal requests unlimited liability — non-starter; escalate to CEO immediately."
+  - "Security questionnaire requires on-premise deployment — not on roadmap; document and escalate."

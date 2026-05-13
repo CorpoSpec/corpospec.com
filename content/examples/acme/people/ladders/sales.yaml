@@ -1,0 +1,38 @@
+id: people/ladders/sales
+entity: entity/acme-corp
+name: Sales ladder
+skill_family_ref: null
+levels:
+  - ordinal: 1
+    title: Account Executive
+    scope: Full-cycle SMB/mid-market. Manages own pipeline. $50k-$200k ACV.
+    required_skills:
+      - skill: people/skills/enterprise-sales
+        minimum: competent
+    typical_yir: 2.0
+    comp_band_ref: people/roles/account-executive
+  - ordinal: 2
+    title: Senior Account Executive
+    scope: Enterprise deals $200k-$1M ACV. Multi-stakeholder. May mentor junior AEs.
+    required_skills:
+      - skill: people/skills/enterprise-sales
+        minimum: proficient
+    typical_yir: 3.0
+    comp_band_ref: people/roles/vp-sales
+    promotion_criteria:
+      - "Closed $500k+ enterprise deal independently"
+      - "Maintained >80% forecast accuracy for 2 consecutive quarters"
+      - "Demonstrated champion-building in 3+ winning deals"
+  - ordinal: 3
+    title: VP Sales
+    scope: Team leadership; territory design; EMEA motion ownership.
+    required_skills:
+      - skill: people/skills/enterprise-sales
+        minimum: expert
+    typical_yir: null
+    comp_band_ref: people/roles/vp-sales
+    promotion_criteria:
+      - "Built and led a team of 3+ AEs to quota attainment"
+      - "Designed repeatable sales process adopted across the team"
+effective_from: "2026-01-15"
+effective_to: null

@@ -1,0 +1,51 @@
+id: operations/runbooks/billing-reconciliation
+entity: entity/acme-corp
+system: operations/services/billing-worker
+name: Billing reconciliation and Stripe sync recovery
+version: 1.0.0
+trigger: alert
+trigger_summary: 'Datadog alert: billing-worker SQS queue depth > 500 for > 10 min, or Stripe webhook failure rate > 5%'
+owner: people/team/raj-patel
+steps:
+  - ordinal: 1
+    kind: diagnose
+    action: Check billing-worker ECS task health and SQS dead-letter queue depth
+    command: 'aws sqs get-queue-attributes --queue-url $BILLING_DLQ_URL --attribute-names ApproximateNumberOfMessages'
+    expected_observable: DLQ count > 0 indicates failed messages requiring investigation
+    rollback: null
+  - ordinal: 2
+    kind: diagnose
+    action: Inspect failed message payload in DLQ for error pattern
+    command: 'aws sqs receive-message --queue-url $BILLING_DLQ_URL --max-number-of-messages 1'
+    expected_observable: JSON payload shows Stripe API error code or Postgres connection error
+    rollback: null
+  - ordinal: 3
+    kind: fix
+    action: If Stripe API error — check Stripe status page; redrive DLQ after resolution
+    command: 'aws sqs start-message-move-task --source-arn $BILLING_DLQ_ARN --destination-arn $BILLING_QUEUE_ARN'
+    expected_observable: Messages move from DLQ to main queue; worker processes successfully
+    rollback: null
+  - ordinal: 4
+    kind: fix
+    action: If Postgres connection error — restart billing-worker ECS service after DB recovery
+    command: 'aws ecs update-service --cluster acme-prod --service billing-worker --force-new-deployment'
+    expected_observable: New task starts; queue depth decreases; no new DLQ messages
+    rollback: null
+  - ordinal: 5
+    kind: verify
+    action: Confirm Stripe subscription statuses match Postgres billing records
+    command: null
+    expected_observable: Reconciliation script reports zero discrepancies (run operations/sops/billing-reconciliation.sh)
+    rollback: null
+  - ordinal: 6
+    kind: communicate
+    action: Notify finance team if any invoices affected; update incident log
+    command: null
+    expected_observable: Lisa Park (CFO) notified if invoice generation delay > 24h
+    rollback: null
+parent_sop: null
+dashboard_ref: null
+status: approved
+recent_executions: []
+last_drilled: null
+next_drill_due: '2026-07-01'

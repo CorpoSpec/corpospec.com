@@ -1,0 +1,21 @@
+id: people/benefits/plans/us-equity-refresh-policy-2026
+entity: entity/acme-corp
+category: equity
+name: Equity Refresh Grant Policy 2026
+carrier: null
+funding: stock_options
+employer_share_pct: null
+employer_cap_per_period: null
+period_currency: USD
+waiting_period_months: 12
+statutory_basis: "IRC §§422, 83(b)"
+jurisdiction: US
+plan_document: null
+effective_from: "2026-01-15"
+effective_to: null
+notes: >
+  Annual refresh grants awarded at H2 performance review cycle completion
+  (October target). Eligible employees: active, 12+ months tenure, meets
+  or exceeds rating. Grant size: 25-100% of initial grant, pro-rated by
+  level and rating. 4-year vest, no cliff on refresh grants. Approved by
+  Board Compensation Committee. Administered via Carta.

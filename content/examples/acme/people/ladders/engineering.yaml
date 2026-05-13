@@ -1,0 +1,43 @@
+id: people/ladders/engineering
+entity: entity/acme-corp
+name: Engineering ladder
+skill_family_ref: null
+levels:
+  - ordinal: 1
+    title: Engineer
+    scope: Owns small features end-to-end. Mentored by Senior. On-call secondary.
+    required_skills:
+      - skill: people/skills/typescript
+        minimum: competent
+    typical_yir: 2.0
+    comp_band_ref: people/roles/engineer
+  - ordinal: 2
+    title: Senior Engineer
+    scope: Owns systems; mentors Engineers; participates in design reviews. On-call primary.
+    required_skills:
+      - skill: people/skills/typescript
+        minimum: proficient
+      - skill: people/skills/aws
+        minimum: competent
+    typical_yir: 3.0
+    comp_band_ref: people/roles/senior-engineer
+    promotion_criteria:
+      - "Independently designed and shipped a product system"
+      - "Mentored at least one Engineer to independent delivery"
+      - "Demonstrated production ownership through at least one major incident"
+  - ordinal: 3
+    title: Staff Engineer
+    scope: Multi-system architectural scope; cross-team impact; sets technical strategy.
+    required_skills:
+      - skill: people/skills/typescript
+        minimum: expert
+      - skill: people/skills/aws
+        minimum: proficient
+    typical_yir: 4.0
+    comp_band_ref: people/roles/staff-engineer
+    promotion_criteria:
+      - "Drove an architectural decision with org-wide impact"
+      - "Authored and won adoption for an engineering RFC"
+      - "Established a technical practice or standard (testing, security, tooling)"
+effective_from: "2026-01-15"
+effective_to: null

@@ -1,0 +1,18 @@
+id: people/stakeholders/marcus-osei
+type: advisor
+name: "Marcus Osei"
+email: "marcus.osei@acme-advisors.example.com"
+role_description: "GTM Advisor — enterprise SaaS go-to-market and channel partnerships"
+engagement_start: "2026-03-01"
+compensation:
+  type: equity
+  equity_pct: "0.075"
+  cliff_months: 12
+  vest_years: 2
+  note: "0.075% over 2 years, 1-year cliff."
+expertise:
+  - "Enterprise SaaS GTM at Salesforce and HubSpot"
+  - "Partner channel and reseller ecosystem development"
+  - "EMEA market entry strategy"
+engagement_cadence: "Bi-weekly 30-minute session with VP Sales"
+contract_ref: people/contracts/templates/us-independent-contractor

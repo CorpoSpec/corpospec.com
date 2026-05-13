@@ -1,0 +1,27 @@
+id: security/assets/datadog-tenant
+entity: entity/acme-corp
+asset_kind: saas_application
+name: Datadog tenant (acme-prod)
+description: >
+  Observability platform ingesting metrics, traces, and logs from all
+  production services. Contains operational PII in log streams (user IDs,
+  IP addresses). SSO via Okta; RBAC configured with read-only access for
+  most engineers; admin access restricted to on-call SRE and CISO.
+canonical_ref: operations/services/api
+owner: people/team/maria-rodriguez
+custodian: people/team/raj-patel
+confidentiality: restricted
+pii_class: personal
+criticality: tier2
+location: Datadog US1 (AWS us-east-1)
+retention_policy: >
+  Metrics retained 15 months; logs retained 15 days hot + 30 days archive
+  per Datadog plan; traces retained 15 days. Review retention against GDPR
+  data-minimisation obligations annually.
+disposal_method: logical_deletion
+regulatory_implications: 'GDPR Art. 5(1)(e) data-minimisation; SOC 2 CC7.1'
+lifecycle: active
+provisioned_on: '2025-10-01'
+retired_on: null
+last_reviewed: '2026-04-10'
+next_review_due: '2026-10-10'

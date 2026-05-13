@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/stakeholder.schema.json
+id: entity/equity/stakeholders/sequoia-capital
+person: people/team/alex-chen
+type: investor
+relationship_status: active
+stock_holdings:
+  - stock_class: entity/equity/stock-classes/series-a-preferred
+    quantity: 2250000
+    acquisition_date: "2026-01-15"
+    vesting: null
+options: []
+convertibles: []

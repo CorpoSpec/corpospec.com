@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/jordan-lee
+type: Person
+name:
+  given: "Jordan"
+  family: "Lee"
+  full: "Jordan Lee"
+email: "jordan.lee@acme-corp.example.com"
+role: people/roles/vp-people
+unit: people
+employer: entity/acme-corp
+start_date: "2026-01-06"
+end_date: null
+status: active
+bio: "VP People. Previously Head of People at Linear. Owns recruiting, compensation, culture, and DE hiring ramp."
+custom:
+  employment_type: full-time
+  tax_residency: US

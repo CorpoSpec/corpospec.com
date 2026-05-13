@@ -1,0 +1,12 @@
+id: people/statutory/us-fica-medicare-2026
+jurisdiction: US
+kind: us_medicare
+effective_year: 2026
+rate_pct: 2.9
+employer_share_pct: 1.45
+bearer: shared
+annual_cap: null
+lower_threshold: null
+assessment_currency: USD
+statutory_basis: "FICA 26 U.S.C. § 3101(b) (employee) + § 3111(b) (employer); Additional Medicare Tax 0.9% on wages >$200k (single filer) employer does not match"
+regulation_ref: null

@@ -1,0 +1,16 @@
+id: people/stakeholders/sofia-eriksson
+type: advisor
+name: "Sofia Eriksson"
+email: "sofia.eriksson@acme-advisors.example.com"
+role_description: "Legal/Regulatory Advisor — EU data law, German startup law, Works Council readiness"
+engagement_start: "2026-05-01"
+compensation:
+  type: cash
+  monthly_retainer_eur: 2000.0
+  note: "EUR 2,000/month retainer; billed via freelance invoice. Subject to CA AB 5 / DE §611a review."
+expertise:
+  - "GDPR Art. 27 EU representative obligations"
+  - "German GmbH formation and Works Council (Betriebsrat) law"
+  - "EU employment law (AT, DE, NL)"
+engagement_cadence: "Weekly 30-minute async + monthly structured call with General Counsel"
+contract_ref: people/contracts/templates/us-independent-contractor

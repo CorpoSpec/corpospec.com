@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/legal-action-item.schema.json
+id: legal/action-items/de-gmbh-anmeldung
+item: "File Acme Corp GmbH Anmeldung at Amtsgericht Charlottenburg"
+status: in-progress
+priority: high
+due_date: "2026-04-15"
+note: >
+  Notary deed signed 2026-03-01 (Hengeler Mueller, Notar Dr. Stefan Müller,
+  Berlin). Stammkapital EUR 12,500 paid into escrow account. Handelsregister
+  application submitted 2026-03-05. Amtsgericht Charlottenburg processing time
+  est. 4-6 weeks. HRB number expected by 2026-04-15.
+custom:
+  jurisdiction: "DE"
+  entity: entity/acme-eu-gmbh
+  dependencies:
+    - "Stammkapital EUR 12,500 paid into notary escrow — done 2026-02-28"
+    - "Gesellschaftsvertrag signed — done 2026-03-01"

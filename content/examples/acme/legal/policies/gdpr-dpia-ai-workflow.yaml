@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-dpia-ai-workflow
+name: "GDPR DPIA — AI-Assisted Workflow Suggestions Feature"
+description: >
+  Data Protection Impact Assessment (Art. 35 GDPR) for the AI-assisted workflow
+  suggestion feature. The feature sends pseudonymised workflow metadata and
+  user intent signals to an LLM provider (Anthropic Claude API) to generate
+  workflow automation recommendations. Assessment identifies residual risk as
+  LOW after mitigations are applied.
+status: active
+scope: "Acme Cockpit users who opt into the AI workflow assistant (default: off; explicit opt-in required)"
+owner: people/team/david-tanaka
+effective_date: "2026-02-01"
+review_date: "2027-02-01"
+provisions:
+  - "Processing necessity: feature provides material product value (time-to-automation reduction); no less-intrusive alternative identified"
+  - "Risk identified: user-authored workflow names may contain personal data (e.g. 'Review invoice from John Smith')"
+  - "Mitigation 1: workflow names and descriptions pseudonymised at the application edge before transmission to LLM API"
+  - "Mitigation 2: zero-data-retention API mode enabled on both OpenAI and Anthropic — no prompt storage or model training"
+  - "Mitigation 3: explicit opt-in consent gate per user; consent stored in user preferences table with timestamp"
+  - "Residual risk: LOW — EU AI Act Article 6 assessment: not high-risk (no decisions with legal effect; workflow suggestions are advisory)"
+  - "DPA consultation: not required (residual risk LOW after mitigations)"
+  - "Review trigger: material change to LLM providers, data categories, or feature scope"
+custom:
+  processors:
+    - name: "Anthropic"
+      service: "Claude API for workflow suggestion generation"
+      dpa_status: signed
+      hosting_region: "US (SCCs Module 2)"
+      data_categories: ["pseudonymised workflow metadata", "user intent signals (no personal identifiers)"]
+    - name: "OpenAI"
+      service: "GPT-4 API for fallback workflow suggestion"
+      dpa_status: signed
+      hosting_region: "US (SCCs Module 2)"
+      data_categories: ["pseudonymised workflow metadata"]
+related_decisions:
+  - governance/decisions/0021-ai-integration
+  - governance/decisions/0027-compliance-gdpr

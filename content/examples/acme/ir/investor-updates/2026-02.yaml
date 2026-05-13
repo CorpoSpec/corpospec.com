@@ -1,0 +1,59 @@
+id: ir/investor-updates/2026-02
+kind: investor_update
+period: "2026-02"
+sent_date: "2026-03-04"
+author: "Alex Chen, CEO"
+distribution:
+  - "Morgan Lee, Sequoia Capital (Board)"
+  - "Jordan Park (Independent Director)"
+  - "Series A investors"
+
+headline: "February: 11 new logos, VP Sales hired, EU beta at 8 design partners."
+
+kpis:
+  arr_end:
+    value: 5460000
+    currency: USD
+    mom_growth_pct: 8.3
+  mrr_end:
+    value: 455000
+    currency: USD
+  new_logos:
+    value: 11
+  churned_logos:
+    value: 1
+  nrr_ltm_pct: 114
+  cac:
+    value: 4050
+    currency: USD
+  ltv:
+    value: 40500
+    currency: USD
+  ltv_cac_ratio: 10.0
+  payback_months: 10
+  burn_net:
+    value: 340000
+    currency: USD
+  runway_months: 20
+  headcount: 41
+
+wins:
+  - "Hired Taylor Brooks as VP Sales — 8 years B2B SaaS, previously at Workato."
+  - "Closed 3 ENT deals totaling $196k ACV in final days of month."
+  - "EU beta: 8 of 10 design partners onboarded; first DACH customer live."
+  - "NPS reached 61 (up from 54 in Q4-2025) — highest since founding."
+
+losses:
+  - "Missed February ARR target of $5.6M by $140k; 2 ENT deals slipped to March."
+  - "One churn: TechBridge ($2,400 ARR) migrated to in-house solution."
+
+key_focuses_next_month:
+  - "Close slipped ENT deals; Q1 board pack preparation."
+  - "Ship ERP connector (SAP Business One) — 6 ENT prospects blocked on this."
+  - "SOC 2 Type I audit kickoff with Vanta."
+
+asks:
+  - ask: "Intro to Head of Procurement at Oakridge Manufacturing — $150k deal opportunity in pipeline."
+    contact: "Morgan Lee"
+  - ask: "Referral for a proven EMEA expansion advisor with SaaS B2B background."
+    contact: "Jordan Park"

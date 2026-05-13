@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/staff-engineer
+title: "Staff Software Engineer"
+abbreviation: "STE"
+unit: engineering
+reports_to: people/roles/vp-engineering
+level: ic
+responsibilities:
+  - "Cross-team technical strategy and architectural direction"
+  - "Platform-level design decisions with multi-year horizon"
+  - "Engineering org-wide technical standards and RFCs"
+  - "Partner with Product and VPE on roadmap sequencing"
+  - "External technical evangelism (conferences, OSS)"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 210000
+  max: 260000
+  equity_percentage: "0.25-0.5%"
+custom:
+  status: open
+  employment_type: full-time
+  hiring_start_target: "2026-Q3"
+  requirements:
+    must_have:
+      - "8+ years software engineering with staff-level scope"
+      - "Track record of cross-team architectural impact"
+      - "Strong written technical communication"
+    nice_to_have:
+      - "Open-source project leadership"
+      - "Distributed systems depth (consensus, partitioning)"

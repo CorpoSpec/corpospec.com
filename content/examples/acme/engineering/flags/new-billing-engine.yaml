@@ -1,0 +1,31 @@
+id: engineering/flags/new-billing-engine
+key: new_billing_engine
+kind: release
+state: partial
+description: >
+  Migrates subscription management from legacy Stripe webhook handler to
+  new event-driven billing engine with idempotency keys and retry logic.
+  Rolling out by cohort: internal accounts first, then new signups,
+  then existing paying customers.
+product: product/overview
+owner: people/team/lisa-park
+rollout_pct: 20.0
+targeting_rules:
+  - label: internal_accounts
+    condition: "account.tags contains 'internal'"
+    on_treatment: true
+    rollout_pct: 100.0
+  - label: new_paying_accounts
+    condition: "account.created_at >= '2026-03-01' AND account.plan != 'free'"
+    on_treatment: true
+    rollout_pct: 100.0
+created_at: "2026-03-15"
+shipped_at: null
+archived_at: null
+experiment_ref: null
+decision_ref: governance/decisions/0004-pricing-model
+platform: growthbook
+expires_at: "2026-07-01"
+max_age_warning_days: 60
+kill_switch_for:
+  - vendors/stripe

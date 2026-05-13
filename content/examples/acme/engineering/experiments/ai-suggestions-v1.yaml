@@ -1,0 +1,61 @@
+id: engineering/experiments/ai-suggestions-v1
+name: "AI Workflow Suggestions — Inline Prompt"
+status: running
+hypothesis: >
+  Showing contextual AI-generated workflow suggestions inline within the
+  canvas editor increases the rate of workflow creation within 7 days of
+  account activation by at least 15%.
+entity: entity/acme-corp
+owner: people/team/sarah-kim
+start_date: "2026-04-01"
+end_date: null
+variants:
+  - key: control
+    description: "No inline suggestions; user discovers templates via sidebar"
+    allocation_pct: 50.0
+  - key: treatment
+    description: "Inline AI suggestions panel triggered on empty canvas open"
+    allocation_pct: 50.0
+metrics:
+  - key: workflow_created_7d
+    primary: true
+    guardrail: false
+    direction: increase
+    minimum_detectable_effect_pct: 15.0
+    observed_lift_pct: null
+    p_value: null
+    ci_lower_pct: null
+    ci_upper_pct: null
+  - key: session_duration_minutes
+    primary: false
+    guardrail: false
+    direction: increase
+    minimum_detectable_effect_pct: 10.0
+    observed_lift_pct: null
+    p_value: null
+    ci_lower_pct: null
+    ci_upper_pct: null
+  - key: llm_cost_usd_per_dau
+    primary: false
+    guardrail: true
+    direction: track
+    minimum_detectable_effect_pct: 20.0
+    observed_lift_pct: null
+    p_value: null
+    ci_lower_pct: null
+    ci_upper_pct: null
+target_sample_size_per_variant: 2000
+observed_sample_size_per_variant: 847
+alpha: 0.05
+power: 0.80
+analysis_plan: >
+  Two-arm test, new account activations only (cohort 2026-04-01 onward).
+  Primary metric: workflow created within 7 days (binary). Guardrail:
+  LLM cost per daily active user must not increase by more than 20%.
+  Interim read at 50% target sample — no alpha-spend, informational only.
+feature_flag_ref: engineering/flags/ai-suggestions-inline
+decision: null
+decision_ref: null
+notes: >
+  Powered by vendors/anthropic (claude-3-5-haiku). Cost guardrail
+  references real-time spend from vendors/anthropic integration.

@@ -1,0 +1,27 @@
+id: security/assets/postgres-prod
+entity: entity/acme-corp
+asset_kind: cloud_resource
+name: Production PostgreSQL RDS cluster
+description: >
+  Primary OLTP store for all customer tenant data, workflow definitions, run
+  history, and user records. RDS PostgreSQL 16 in Multi-AZ configuration with
+  automated failover. Volume encrypted at rest via AWS KMS. Continuous backup
+  to S3 with cross-region replication to eu-central-1.
+canonical_ref: operations/services/api
+owner: people/team/sarah-kim
+custodian: people/team/raj-patel
+confidentiality: restricted
+pii_class: personal
+criticality: mission_critical
+location: AWS us-east-1 (Multi-AZ)
+retention_policy: >
+  Customer data retained per customer DPA; default 7 years post-contract-
+  termination. Backups encrypted at rest; access to production credentials
+  requires break-glass request with MFA re-auth and audit trail.
+disposal_method: crypto_erase
+regulatory_implications: 'GDPR Art. 5 + 25 + 32; SOC 2 CC6; ISO 27001 A.5.34; PCI DSS 3.5'
+lifecycle: active
+provisioned_on: '2025-08-15'
+retired_on: null
+last_reviewed: '2026-04-10'
+next_review_due: '2026-10-10'

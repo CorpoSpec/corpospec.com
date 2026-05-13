@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/snapshots/2026-01
+period:
+  type: instant
+  start: "2026-01-31"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 375000
+  cost_of_revenue: 75000
+  gross_profit: 300000
+  operating_expenses:
+    research_and_development: 500000
+    sales_and_marketing: 250000
+    general_and_administrative: 150000
+  operating_income: -600000
+  net_income: -600000
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 9200000
+    accounts_receivable: 380000
+    total_assets: 9580000
+  liabilities:
+    accounts_payable: 95000
+    total_liabilities: 95000
+  equity:
+    total_equity: 9485000
+
+cash_flow:
+  operating: -900000
+  investing: -35000
+  financing: 8000000
+  net_change: 7065000
+
+custom:
+  description: >
+    January 2026 snapshot. Series A closed 2026-01-15: $8M raised at $32M
+    pre-money (Sequoia lead, Index co). ARR run-rate $4.5M at month open.
+    Post-close cash balance $9.2M including Series A proceeds.
+    Burn rate ~$900K/month; runway ~10 months on current trajectory.
+  stage: series-a
+  assumptions:
+    - id: asm-snap-jan-001
+      description: "Series A closed 2026-01-15 at $8M / $32M pre. Cash includes full Series A proceeds net of Wilson Sonsini legal fees ($85K)."
+      evidence: "Wire confirmation from SVB + JPMC accounts 2026-01-17."
+      invalidation_condition: "Escrow release fails or wire reversal."
+    - id: asm-snap-jan-002
+      description: "ARR $4.5M at January open, growing to $5M by month-end (Stripe MRR dashboard)."
+      evidence: "Stripe revenue recognition report 2026-01-31."
+      invalidation_condition: "Churn event of > 2 enterprise customers in January."
+    - id: asm-snap-jan-003
+      description: "Headcount 38 at month-start; 6 Series A hires onboarding in Jan/Feb."
+      evidence: "Rippling headcount report 2026-01-01."
+      invalidation_condition: "Offer declines reduce January new-hire count below 3."

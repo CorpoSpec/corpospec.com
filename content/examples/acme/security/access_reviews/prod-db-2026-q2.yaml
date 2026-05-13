@@ -1,0 +1,50 @@
+id: security/access_reviews/prod-db-2026-q2
+entity: entity/acme-corp
+system: security/assets/postgres-prod
+cadence: quarterly
+status: closed
+period_start: '2026-04-01'
+period_end: '2026-06-30'
+due_date: '2026-07-10'
+reviewer: people/team/maria-rodriguez
+second_reviewer: people/team/raj-patel
+grants_reviewed: 7
+decisions:
+  - person: people/team/raj-patel
+    role: admin
+    decision: retain
+    justification: Active DBA and on-call; admin access required for incident response.
+    effective_at: null
+  - person: people/team/sarah-kim
+    role: admin
+    decision: retain
+    justification: CTO; break-glass access for production incidents.
+    effective_at: null
+  - person: people/team/devon-hayes
+    role: read_write
+    decision: retain
+    justification: Backend engineer with active migration duties; access scoped to own tenant.
+    effective_at: null
+  - person: people/team/blake-nguyen
+    role: read_write
+    decision: retain
+    justification: Backend engineer; active feature development requiring schema changes.
+    effective_at: null
+  - person: api-svc-account
+    role: read_write
+    decision: retain
+    justification: Application service account; least-privilege row-level security applied.
+    effective_at: null
+  - person: billing-worker-svc
+    role: read_write
+    decision: retain
+    justification: Billing worker service account; access scoped to billing schema.
+    effective_at: null
+  - person: embed-worker-svc
+    role: read_only
+    decision: revoke
+    justification: Embedding worker migrated to read-only replica; direct prod access no longer needed.
+    effective_at: '2026-07-05'
+completed_at: '2026-07-05'
+evidence_ref: security/access_reviews/prod-db-2026-q2-signed.pdf
+control_basis: 'ISO 27001:2022 A.5.18 + A.8.2; SOC 2 CC6.2; GDPR Art. 32(1)(b)'

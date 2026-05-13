@@ -1,0 +1,24 @@
+id: people/year_end/2025/template-de-lohnsteuerbescheinigung
+person: null
+entity: entity/acme-eu-gmbh
+form_kind: de_lohnsteuerbescheinigung
+tax_year: 2025
+jurisdiction: DE
+currency: EUR
+gross_taxable: null
+income_tax_withheld: null
+social_contributions_withheld: null
+other_withholdings: null
+document_ref: null
+payroll_runs: []
+form_status: draft
+issued_on: null
+statutory_due_date: "2026-02-28"
+retention_until: "2036-02-28"
+pii_class: special_category
+notes: >
+  Template record — entity in formation for 2025; first live
+  Lohnsteuerbescheinigung will be issued for tax year 2026 once
+  GmbH payroll begins. Structure held for DE compliance readiness.
+  Fields: Bruttolohn (box 3), Lohnsteuer einbehalten (box 4),
+  Solidaritätszuschlag (box 5), SV-Abzüge (box 22-25).

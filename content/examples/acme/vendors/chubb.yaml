@@ -1,0 +1,30 @@
+id: vendors/chubb
+legal_name: "Chubb Limited"
+display_name: "Chubb"
+jurisdiction: CH
+category: insurance
+relationship: vendor_only
+status: active
+registered_address:
+  street: "Bärengasse 32"
+  city: "Zurich"
+  postal_code: "8001"
+  country: CH
+primary_contact: "techinsurance@chubb.com"
+master_agreement: null
+dpa_ref: null
+gdpr_role: controller
+processing_record_refs: []
+internal_owner: people/team/lisa-park
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 18000
+onboarded_at: "2026-02-01"
+terminated_at: null
+certifications: []
+notes: >
+  Professional liability (E&O) insurance ($2M limit) and commercial
+  general liability ($1M per occurrence). Covers professional services
+  errors in the workflow automation platform. Annual renewal.
+  EU subsidiary entity/acme-eu-gmbh will require separate EU-policy
+  addendum before first EU commercial customer delivery.

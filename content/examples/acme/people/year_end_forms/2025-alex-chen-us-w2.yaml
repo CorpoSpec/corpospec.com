@@ -1,0 +1,21 @@
+id: people/year_end/2025/alex-chen-us-w2
+person: people/team/alex-chen
+entity: entity/acme-corp
+form_kind: us_w2
+tax_year: 2025
+jurisdiction: US
+currency: USD
+gross_taxable: 60000.0
+income_tax_withheld: 8200.0
+social_contributions_withheld: 4590.0
+other_withholdings: 0.0
+document_ref: null
+payroll_runs: []
+form_status: issued
+issued_on: "2026-01-31"
+statutory_due_date: "2026-01-31"
+retention_until: "2031-04-15"
+pii_class: special_category
+notes: >
+  Partial year 2025 (June 15 – December 31). Founder salary below market.
+  Amounts are illustrative; authoritative record held in Gusto.

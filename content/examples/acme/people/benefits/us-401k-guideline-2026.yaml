@@ -1,0 +1,19 @@
+id: people/benefits/plans/us-401k-guideline-2026
+entity: entity/acme-corp
+category: pension
+name: 401(k) Retirement Plan — Guideline 2026
+carrier: Guideline
+funding: traditional_401k
+employer_share_pct: 4.0
+employer_cap_per_period: null
+period_currency: USD
+waiting_period_months: 0
+statutory_basis: "IRC §401(k); SECURE 2.0 Act 2022"
+jurisdiction: US
+plan_document: null
+effective_from: "2026-01-15"
+effective_to: null
+notes: >
+  4% employer match on employee contributions up to 4% of gross salary.
+  Vesting: immediate (safe harbor match). Eligible from day 1.
+  Annual limit 2026: $23,000 employee ($30,500 if 50+); $69,000 combined.

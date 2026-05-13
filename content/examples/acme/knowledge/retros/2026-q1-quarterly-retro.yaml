@@ -1,0 +1,62 @@
+id: knowledge/retros/2026-q1-quarterly-retro
+kind: retrospective
+type: quarterly
+period: "2026-Q1"
+date: "2026-04-04"
+facilitator: "Alex Chen"
+participants:
+  - "Alex Chen (CEO)"
+  - "Sarah Kim (CTO)"
+  - "Blake Nguyen (Head of Engineering)"
+  - "Devon Hayes (Head of Customer Success)"
+  - "Taylor Brooks (VP Sales)"
+  - "Quinn Murphy (VP Revenue)"
+
+what_went_well:
+  - item: "Meridian Logistics deal"
+    detail: "Closed our largest deal ($84k ACV) by mapping directly to their audit logging requirement — a use case we'd never pitched before. Adds a new sales motion."
+  - item: "EU launch"
+    detail: "3 paying DACH customers within 6 weeks of enabling EU infrastructure. Faster than planned."
+  - item: "Taylor Brooks hire"
+    detail: "New VP Sales ramped faster than expected. First 3 deals closed in month 1. Strong cultural fit."
+  - item: "Engineering reliability"
+    detail: "97.4% uptime, 0 P1 incidents. Trust from ENT prospects visibly improving."
+  - item: "NPS improvement"
+    detail: "NPS rose from 54 to 61 — direct result of proactive CSM outreach program launched in January."
+
+what_did_not_go_well:
+  - item: "Q1 ARR miss (plan: $6.2M, actual: $5.9M)"
+    root_cause: "Two ENT deals slipped to Q2. Both cited security review delay as the blocker."
+    action: "Pre-populate security questionnaires proactively — see enterprise-procurement-readiness playbook."
+    owner: "Sarah Kim"
+    due: "2026-04-30"
+
+  - item: "Hiring velocity"
+    root_cause: "3 open engineering roles unfilled by Q1 close. Offer rejection rate 40% — primarily on compensation vs. FAANG."
+    action: "Revisit comp bands; get external benchmarking from Radford survey. Propose Q2 adjustments to board."
+    owner: "Alex Chen"
+    due: "2026-05-10"
+
+  - item: "Zapier price cut response"
+    root_cause: "Zapier cut SMB pricing in February. Lost 2 Starter deals directly attributed to price comparison."
+    action: "Add AI feature differentiation to positioning; do not match on price. Update battle card."
+    owner: "Taylor Brooks"
+    due: "2026-04-15"
+
+  - item: "Post-mortem on Cascade Systems churn"
+    root_cause: "Cascade was acquired; platform consolidation forced churn. Not a product failure."
+    action: "Add M&A risk flag to ENT accounts >$15k ACV in CRM. Quarterly check on acquisition risk."
+    owner: "Devon Hayes"
+    due: "2026-04-20"
+
+experiments_for_q2:
+  - "Pilot: Sales Engineer dedicated to top-5 ENT pipeline deals — measure win rate delta."
+  - "Pilot: Self-serve SOC 2 questionnaire auto-fill from security portal — target 3-day reduction in review cycle."
+  - "Test: Annual contract push at Starter tier — offer 20% upfront for annual billing; measure conversion rate."
+
+team_health:
+  overall_sentiment: positive
+  concerns:
+    - "Engineering team reports context-switching fatigue from security review requests interfering with roadmap delivery."
+  actions:
+    - "Dedicate one engineer to security/compliance work Q2 so others are not context-switched."

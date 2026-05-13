@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/recruiter
+title: "Technical Recruiter"
+abbreviation: "REC"
+unit: people
+reports_to: people/roles/vp-people
+level: ic
+responsibilities:
+  - "Full-cycle technical recruiting for engineering and product roles"
+  - "Sourcing via LinkedIn, GitHub, and referral networks"
+  - "Scheduling, offer delivery, and candidate experience ownership"
+  - "ATS (Greenhouse) hygiene and pipeline metrics reporting"
+  - "DE talent market sourcing for Berlin hub"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 90000
+  max: 120000
+  equity_percentage: "0.03-0.08%"
+custom:
+  status: planned
+  employment_type: full-time
+  hiring_start_target: "2026-Q4"
+  requirements:
+    must_have:
+      - "3+ years technical recruiting at a fast-scaling startup"
+      - "ATS proficiency (Greenhouse or Lever)"
+      - "Engineering role leveling fluency"
+    nice_to_have:
+      - "German-language recruiting experience"
+      - "Compensation benchmarking (Levels.fyi, Radford)"

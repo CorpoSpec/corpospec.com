@@ -1,0 +1,30 @@
+id: vendors/contracts/aws-enterprise-discount-2026
+title: "AWS Enterprise Discount Program Agreement 2026"
+vendor: vendors/aws
+type: software_subscription
+status: active
+effective_date: "2026-01-15"
+expiration_date: "2027-01-14"
+auto_renews: false
+governing_law: "US-WA"
+counterparty_signer: "Amazon Web Services, Inc. — Enterprise Sales"
+acme_signer: people/team/raj-patel
+reviewed_by: vendors/wilson-sonsini
+scope:
+  - description: "AWS compute, storage, database, and managed services — Enterprise Discount Program"
+    deliverable: "15% discount on listed pricing for committed $400k/yr baseline spend"
+    fee_usd: 400000
+    completion_target: "2027-01-14"
+payment_terms: "Monthly billing against actual consumption; commit satisfied annually"
+total_fee_usd: 400000
+commitment_usd: 400000
+discount_pct: 15
+key_terms:
+  - "Minimum annual spend commitment: $400,000 USD"
+  - "15% discount across EC2, RDS, S3, ECS, and associated services"
+  - "Discount applies to on-demand; does not stack with Reserved Instance pricing"
+  - "Data residency: us-east-1 (primary) + eu-central-1 (EU tenants)"
+  - "AWS DPA (GDPR) incorporated by reference"
+  - "AWS Business Support included in commitment tier"
+related_decisions:
+  - governance/decisions/0005-tech-stack

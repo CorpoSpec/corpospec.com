@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-stripe
+type: vendor
+title: "Data Processing Agreement — Stripe, Inc."
+counterparty: people/team/lisa-park
+status: active
+effective_date: "2025-07-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+key_terms:
+  - "Stripe Services Agreement + Data Processing Addendum (GDPR)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Data category: billing contact details, payment card tokens (PCI-DSS L1)"
+  - "Stripe does not store raw card data on Acme systems — tokenization only"
+  - "Transfer mechanism: SCCs for EU customer billing data"
+  - "PCI-DSS Level 1 certified; Acme scope reduced to SAQ-A"
+  - "Deletion: within 30 days of account termination request"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr

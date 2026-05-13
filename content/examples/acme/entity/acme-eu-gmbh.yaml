@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/entity.schema.json
+id: entity/acme-eu-gmbh
+type: corporation
+legal_form: "GmbH (Gesellschaft mit beschränkter Haftung)"
+legal_name: "Acme Corp GmbH"
+trade_name: "Acme"
+jurisdiction: "DE"
+functional_currency: "EUR"
+status: pre-incorporation
+registered_seat: "Berlin"
+registration_authority: "Amtsgericht Charlottenburg"
+registration_number: null
+date_of_incorporation: null
+address:
+  street: "Unter den Linden 10"
+  city: "Berlin"
+  postal_code: "10117"
+  state: null
+  country: "DE"
+parent_organization: entity/acme-corp
+founders:
+  - people/team/alex-chen
+  - people/team/sarah-kim
+company_purpose: >
+  Entwicklung und Vertrieb von Software und Software-as-a-Service-Lösungen
+  zur Workflow-Automatisierung für Unternehmen.
+tax_ids: []
+contact:
+  email: "hello@acme-corp.example.com"
+  phone: "+49-30-555-01420"
+number_of_employees:
+  value: 0
+  as_of: "2026-01-15"
+custom:
+  sole_shareholder: entity/acme-corp
+  stammkapital_eur: 25000
+  paid_in_before_filing_eur: 12500
+  primary_role: "European operating subsidiary"
+  registered_seat_rationale: >
+    Berlin chosen for talent density in B2B SaaS engineering, proximity
+    to EU institutional investors, and alignment with DE/EU go-to-market.
+  target_incorporation:
+    formation_deed_date: "2026-03-01"
+    handelsregister_entry_target: "2026-04-15"
+    steuernummer_target: "2026-05-01"
+    wandeldarlehen_ready_target: "2026-05-15"
+    note: >
+      Formation handled by Hengeler Mueller. Stammkapital EUR 25,000;
+      EUR 12,500 paid in at notarization, remainder callable.
+      HRB number pending Amtsgericht Charlottenburg.

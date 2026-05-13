@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/scenarios/2026-downside
+period:
+  type: duration
+  start: "2026-01-01"
+  end: "2026-12-31"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 4500000
+  cost_of_revenue: 900000
+  gross_profit: 3600000
+  operating_expenses:
+    research_and_development: 5500000
+    sales_and_marketing: 2200000
+    general_and_administrative: 1600000
+  operating_income: -5700000
+  net_income: -5700000
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 800000
+    accounts_receivable: 420000
+    total_assets: 1220000
+  liabilities:
+    accounts_payable: 140000
+    total_liabilities: 140000
+  equity:
+    total_equity: 1080000
+
+cash_flow:
+  operating: -8400000
+  investing: -300000
+  financing: 0
+  net_change: -8700000
+
+custom:
+  description: >
+    2026 downside scenario. ARR grows from $5M to $6M (20% YoY).
+    Macro softness causes enterprise pipeline compression; two churns
+    in Q2 offset new bookings. Headcount frozen at 55 in Q2 to preserve
+    runway; EU GmbH deferred. Bridge round required by Q4 2026.
+  stage: series-a
+  assumptions:
+    - id: asm-2026-dn-001
+      description: "ARR reaches only $6M by Dec 2026 (20% YoY growth)."
+      evidence: "Assumes 2 mid-market churns ($250K ACV each) and 30% pipeline slip."
+      invalidation_condition: "Net revenue retention stays above 105% (annualized)."
+    - id: asm-2026-dn-002
+      description: "Hiring freeze from Q2; headcount stays at 55."
+      evidence: "Board trigger: if ARR growth < 30% at Q1 close, freeze hiring."
+      invalidation_condition: "Growth rate recovers above 30% by Q2 close."
+    - id: asm-2026-dn-003
+      description: "Bridge round $2M required by Oct 2026 to fund Series B process."
+      evidence: "$9.2M opening cash - $8.7M net burn = $0.5M; bridge needed by month 10."
+      invalidation_condition: "Revenue acceleration or expense reduction extends runway past Oct."

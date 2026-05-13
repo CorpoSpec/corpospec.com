@@ -1,0 +1,72 @@
+id: commercial/pricing/discount-policy
+kind: discount_policy
+effective_date: "2026-01-01"
+version: "1.2"
+approved_by: "Alex Chen (CEO), Quinn Murphy (VP Revenue)"
+
+standard_discounts:
+  - name: "Annual Billing"
+    type: automatic
+    amount_pct: 20
+    applies_to_plans: [starter, growth, business]
+    conditions: "Customer pays 12-month term upfront."
+    stackable: false
+    note: "Displayed in pricing page as 'Save 20%' toggle."
+
+  - name: "Startup Program"
+    type: application_required
+    amount_pct: 50
+    duration_months: 12
+    applies_to_plans: [starter, growth]
+    conditions:
+      - "Company founded within the past 3 years"
+      - "Total funding raised < $5M USD"
+      - "Fewer than 20 full-time employees"
+    application_url: "https://acme-corp.example.com/startup-program"
+    renewal: "Not renewable. One-time benefit."
+
+  - name: "Non-Profit"
+    type: application_required
+    amount_pct: 30
+    duration_months: null
+    applies_to_plans: [starter, growth, business]
+    conditions:
+      - "Registered 501(c)(3) in the US, or equivalent internationally"
+      - "Documentation of charitable status required"
+    renewal: "Annual verification required."
+
+  - name: "Volume Commitment (multi-year)"
+    type: negotiated
+    amount_pct: 10
+    applies_to_plans: [business, enterprise]
+    conditions: "2-year or longer contract signed."
+    stackable: true
+    note: "Stackable with annual billing discount on Business tier."
+
+approval_thresholds:
+  - discount_range: "0–15%"
+    approver: "Account Executive (self-serve within deal)"
+    notes: "AE may offer up to 15% without additional approval."
+  - discount_range: "15–25%"
+    approver: "VP Sales"
+    process: "Email approval from VP Sales required before presenting to prospect."
+  - discount_range: "25–40%"
+    approver: "CEO"
+    process: "Written approval from CEO. Must include deal context and ARR impact."
+  - discount_range: ">40%"
+    approver: "Board-level"
+    process: "Not permitted without board resolution. Contact CFO."
+
+prohibited_discounts:
+  - "Discounts on the Enterprise minimum ACV of $24,000 unless CEO-approved."
+  - "Lifetime discounts above 30% without CEO approval."
+  - "Discounts that bring any plan below the cost of the tier below it."
+
+dunning_policy:
+  payment_failure_day_1: "Automatic retry + email notification to billing contact."
+  payment_failure_day_3: "Second retry + Slack notification to CSM for accounts >$1k MRR."
+  payment_failure_day_7: "Workspace access restricted to read-only. CSM outreach required."
+  payment_failure_day_14: "Workspace suspended. Data retained for 30 days."
+  payment_failure_day_44: "Data deletion warning. Customer has 7 days to respond."
+  payment_failure_day_51: "Data deletion initiated (per data retention policy)."
+  exceptions: "ENT accounts: CSM must be notified at Day 1; suspension requires VP Sales approval."

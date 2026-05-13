@@ -1,0 +1,31 @@
+id: vendors/linear
+legal_name: "Linear Orbit, Inc."
+display_name: "Linear"
+jurisdiction: US
+category: project_management
+relationship: vendor_only
+status: active
+registered_address:
+  street: "548 Market St"
+  city: "San Francisco"
+  state: CA
+  postal_code: "94104"
+  country: US
+primary_contact: "support@linear.app"
+master_agreement: null
+dpa_ref: null
+gdpr_role: controller
+processing_record_refs: []
+internal_owner: people/team/raj-patel
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 9600
+onboarded_at: "2025-07-01"
+terminated_at: null
+certifications:
+  - soc2_type2
+notes: >
+  Engineering issue tracking and sprint planning. 40 seats on Plus plan.
+  Note: also listed as a competitor in market/competitors/linear.yaml for
+  the workflow category; Acme uses Linear internally but competes with
+  Linear in the project management workflow segment.

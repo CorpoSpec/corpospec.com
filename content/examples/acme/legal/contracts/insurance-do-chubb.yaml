@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/insurance-do-chubb
+type: insurance
+title: "Directors & Officers Liability Insurance — Chubb (Policy CHB-DO-2026-AC-9017)"
+counterparty: people/team/lisa-park
+status: active
+effective_date: "2026-01-15"
+expiration_date: "2027-01-14"
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+value:
+  amount: 62000
+  currency: USD
+  frequency: annual
+key_terms:
+  - "Policy number: CHB-DO-2026-AC-9017"
+  - "Coverage limit: $5,000,000 Side A/B/C"
+  - "Retroactive date: 2025-06-15"
+  - "Insured persons: directors, officers, and key employees"
+  - "Entity coverage: securities claims and corporate governance"
+  - "Deductible: $25,000 per claim (Side B/C); $0 Side A"
+  - "Carrier: Chubb Group of Insurance Companies"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework

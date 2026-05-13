@@ -1,0 +1,72 @@
+id: knowledge/training/security-awareness
+kind: training_module
+title: "Security Awareness Training"
+audience: "All Employees"
+duration_hours: 2
+cadence: annual
+version: "1.1"
+last_updated: "2026-01-10"
+maintained_by: "Sarah Kim (CTO)"
+soc2_control: "CC1.4 — Security awareness and training"
+
+objectives:
+  - "Recognize and respond appropriately to phishing attempts."
+  - "Apply secure password and credential management practices."
+  - "Understand Acme's data classification and handling requirements."
+  - "Know the incident reporting procedure and response expectations."
+
+modules:
+  - module: 1
+    title: "Phishing and Social Engineering"
+    duration_minutes: 30
+    format: "Interactive e-learning with simulated phishing scenarios"
+    topics:
+      - "Identifying phishing emails: sender spoofing, urgency signals, suspicious links"
+      - "Spear phishing: targeted attacks using personal information"
+      - "Vishing and smishing: phone and SMS-based social engineering"
+      - "What to do: report to security@acme-corp.example.com immediately"
+    assessment: "Simulated phishing email — pass rate required: 100% identification"
+
+  - module: 2
+    title: "Credential and Access Management"
+    duration_minutes: 25
+    format: "Video + quiz"
+    topics:
+      - "1Password vault usage — mandatory for all credentials"
+      - "Password policy: minimum 16 characters, unique per service"
+      - "MFA: required for all production system access"
+      - "Sharing credentials: prohibited — use shared vault entries"
+      - "Offboarding: immediate revocation responsibility"
+    assessment: "10-question quiz, ≥80% pass"
+
+  - module: 3
+    title: "Data Classification and Handling"
+    duration_minutes: 25
+    format: "Reference guide + quiz"
+    topics:
+      - "Classification tiers: Public, Internal, Confidential, Highly Confidential"
+      - "Customer data: never sent over personal email, Slack DMs, or unencrypted channels"
+      - "Laptop security: full-disk encryption required, no customer data on local storage"
+      - "Screen sharing: verify audience before sharing screens containing customer data"
+    assessment: "Scenario-based quiz, ≥80% pass"
+
+  - module: 4
+    title: "Incident Reporting"
+    duration_minutes: 20
+    format: "Walkthrough + acknowledgment"
+    topics:
+      - "What constitutes a security incident: unauthorized access, data exposure, lost device"
+      - "Reporting: contact security@acme-corp.example.com immediately (24h SLA)"
+      - "No-blame culture: report incidents without fear of punishment"
+      - "Containment first: disconnect device, change credentials if compromised"
+    assessment: "Scenario acknowledgment — no wrong answers, reinforces reporting behavior"
+
+completion_requirement:
+  passing_score_pct: 80
+  deadline_days_from_start: 7
+  remediation: "Failed modules must be retaken within 3 business days."
+  certification_validity_months: 12
+
+tracking:
+  system: "Vanta (via integration)"
+  reporting: "Monthly completion report to CTO; non-completion escalated to direct manager"

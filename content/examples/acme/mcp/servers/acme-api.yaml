@@ -1,0 +1,62 @@
+id: mcp/servers/acme-api
+kind: mcp_server
+name: "Acme Workflow MCP Server"
+version: "1.0"
+status: production
+description: >
+  Acme's Model Context Protocol server exposes workflow management
+  capabilities to AI agents and LLM-powered applications. Enables
+  agents to query, create, and manage workflow runs on behalf of
+  authenticated users without requiring direct API integration.
+
+deployment:
+  protocol: "MCP Streamable HTTP (stateful)"
+  base_url: "https://mcp.acme-corp.example.com/v1"
+  port: 443
+  tls: "TLS 1.3 (Cloudflare termination)"
+  session_management: "server-side session with JWT handshake"
+
+authentication:
+  method: "Bearer JWT (same as REST API)"
+  scope_model: "Role-based; scopes enforced per-tool (see tool catalog)"
+  token_endpoint: "https://api.acme-corp.example.com/v2/auth/token"
+
+rate_limits:
+  default_rpm: 120
+  engineering_rpm: 600
+  leadership_rpm: 120
+  burst_multiplier: 2
+
+audit_logging:
+  all_tool_calls: true
+  retention_days: 365
+  log_destination: "AWS CloudWatch Logs (mcp-audit group)"
+  fields_logged:
+    - session_id
+    - user_id
+    - workspace_id
+    - tool_name
+    - input_hash
+    - outcome
+    - latency_ms
+    - timestamp_utc
+
+tools:
+  - "mcp/tools/query-workflow-runs"
+  - "mcp/tools/create-run"
+  - "mcp/tools/cancel-run"
+  - "mcp/tools/query-billing-usage"
+  - "mcp/tools/register-webhook"
+  - "mcp/tools/list-integrations"
+
+observability:
+  health_endpoint: "GET /health"
+  health_response: '{"status":"ok","version":"<semver>"}'
+  sentry_dsn_env: "MCP_SENTRY_DSN"
+  metrics_port: 9090
+  tracing: "OpenTelemetry (Jaeger exporter)"
+
+incident_classification:
+  p0: "Complete MCP server unavailability"
+  p1: "Tool errors affecting >1% of requests"
+  p2: "Single-tool degradation; other tools healthy"

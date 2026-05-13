@@ -1,0 +1,92 @@
+id: sustainability/emissions/2026
+name: "GHG Inventory 2026 — Acme Corp, Inc."
+entity: entity/acme-corp
+reporting_period_start: "2026-01-01"
+reporting_period_end: "2026-12-31"
+organisational_boundary: operational_control
+methodology: >
+  GHG Protocol Corporate Standard (Scope 1 + 2) and Scope 3 Standard
+  (categories 1 and 6). Emission factors: EPA 2024 (US electricity),
+  DEFRA 2025 (business travel). Scope 2 dual-reporting: location-based
+  (EPA eGRID us-east-1 region) and market-based (AWS renewable energy
+  commitment). Scope 3 cat. 1 uses spend-based method (ENCORE proxy).
+base_year: "2025"
+assurance_provider: vendors/kpmg-llp
+assurance_level: limited
+assurance_opinion_ref: "legal/contracts/kpmg-audit-2026"
+lines:
+  - scope: scope1
+    category: null
+    activity: "Natural gas — San Francisco HQ heating"
+    activity_quantity: 0.0
+    activity_unit: therms
+    emission_factor_kg_co2e: 5.3
+    tco2e: 0.0
+    factor_source: "EPA 2024 — CH4/N2O included"
+    note: "Building landlord supplies heat; HQ lease excludes direct gas billing. Scope 1 is zero."
+  - scope: scope2
+    scope2_method: location_based
+    activity: "Office electricity (location-based) — 100 Market St, SF"
+    activity_quantity: 42000.0
+    activity_unit: kWh
+    emission_factor_kg_co2e: 0.257
+    tco2e: 10.794
+    factor_source: "EPA eGRID CAMX 2023"
+  - scope: scope2
+    scope2_method: market_based
+    activity: "Office electricity (market-based) — PG&E CleanChoice EAC"
+    activity_quantity: 42000.0
+    activity_unit: kWh
+    emission_factor_kg_co2e: 0.0
+    tco2e: 0.0
+    factor_source: "PG&E EAC certificate — 100% renewable"
+  - scope: scope3
+    scope3_category: purchased_goods_services
+    activity: "Cloud infrastructure (AWS) — spend-based proxy"
+    activity_quantity: 400000.0
+    activity_unit: USD-spend
+    emission_factor_kg_co2e: 0.000185
+    tco2e: 74.0
+    factor_source: "ENCORE spend-based proxy v2024"
+    note: "AWS us-east-1 + eu-central-1. AWS publishes 100% renewable commitment for both regions; market-based adjustment pending verification."
+    vendor_ref: vendors/aws
+  - scope: scope3
+    scope3_category: purchased_goods_services
+    activity: "SaaS tools (all vendors excl. AWS) — spend-based proxy"
+    activity_quantity: 710000.0
+    activity_unit: USD-spend
+    emission_factor_kg_co2e: 0.000185
+    tco2e: 131.35
+    factor_source: "ENCORE spend-based proxy v2024"
+    note: "Covers OpenAI, Anthropic, Datadog, Linear, Gusto, Rippling, Guideline, Stripe, Sentry, KPMG, Wilson Sonsini, AIG, Chubb."
+  - scope: scope3
+    scope3_category: business_travel
+    activity: "Air travel — economy + business class"
+    activity_quantity: 380000.0
+    activity_unit: passenger-km
+    emission_factor_kg_co2e: 0.158
+    tco2e: 60.04
+    factor_source: "DEFRA 2025 — economy UK domestic equivalent"
+    note: "Estimated from Concur travel data. Series A fundraise trips (3 trans-Atlantic) account for 65% of total."
+  - scope: scope3
+    scope3_category: business_travel
+    activity: "Ground transport — employee commute (remote-first; HQ visits only)"
+    activity_quantity: 8500.0
+    activity_unit: passenger-km
+    emission_factor_kg_co2e: 0.171
+    tco2e: 1.454
+    factor_source: "DEFRA 2025 — average car"
+totals:
+  scope1_tco2e: 0.0
+  scope2_location_based_tco2e: 10.794
+  scope2_market_based_tco2e: 0.0
+  scope3_tco2e: 266.844
+  total_location_based_tco2e: 277.638
+  total_market_based_tco2e: 266.844
+intensity_metric:
+  value: 53.37
+  unit: tco2e_per_million_usd_arr
+  basis: "Total location-based / ARR $5.2M (Q4 2026 annualized)"
+published_report: null
+created_at: "2026-03-15"
+status: draft

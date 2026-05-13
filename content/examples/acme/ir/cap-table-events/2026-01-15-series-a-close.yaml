@@ -1,0 +1,68 @@
+id: ir/cap-table-events/2026-01-15-series-a-close
+kind: cap_table_event
+event_type: priced_round
+name: "Series A Financing Close"
+event_date: "2026-01-15"
+entity: entity/acme-corp
+
+round_details:
+  series: "Series A Preferred"
+  amount_raised_usd: 9000000
+  pre_money_valuation_usd: 32000000
+  post_money_valuation_usd: 41000000
+  price_per_share_usd: 2.80
+  shares_issued: 3214286
+  share_class: "Preferred A"
+  liquidation_preference: "1x non-participating"
+  anti_dilution: "broad-based weighted average"
+  pro_rata_rights: true
+  information_rights: true
+  board_seat_granted: true
+
+participants:
+  - name: "Sequoia Capital"
+    lead: true
+    investment_usd: 7000000
+    shares_purchased: 2500000
+    board_seat: true
+    board_representative: "Morgan Lee"
+
+  - name: "Index Ventures"
+    lead: false
+    investment_usd: 1000000
+    shares_purchased: 357143
+    board_seat: false
+
+  - name: "Jordan Park"
+    lead: false
+    investment_usd: 1000000
+    shares_purchased: 357143
+    board_seat: false
+    note: "Existing angel investor from seed round. Converted $500k note plus $500k fresh cash."
+
+legal_counsel:
+  company: "Cooley LLP"
+  investors: "Wilson Sonsini Goodrich & Rosati"
+
+closing_conditions_met:
+  - "Delaware certificate of incorporation amendment filed"
+  - "Investor Rights Agreement executed"
+  - "Co-Sale Agreement executed"
+  - "Voting Agreement executed"
+  - "Series A Preferred Stock Purchase Agreement executed"
+  - "Legal opinion delivered by Cooley LLP"
+
+wire_received_date: "2026-01-15"
+escrow_released_date: "2026-01-15"
+
+pre_money_cap_table_summary:
+  common_founders_pct: 85.7
+  seed_preferred_pct: 8.6
+  option_pool_pct: 5.7
+
+post_money_cap_table_summary:
+  common_founders_pct: 73.4
+  series_a_preferred_pct: 22.5
+  seed_preferred_pct: null
+  option_pool_pct: 15.2
+  note: "Seed preferred converted to Series A on 1:1 basis at close."

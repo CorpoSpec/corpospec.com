@@ -1,0 +1,83 @@
+id: operations/processes/release-train
+entity: entity/acme-corp
+name: Bi-weekly release train
+description: >
+  Acme ships on a bi-weekly cadence. Every second Monday is cut-off; staging
+  deploys Tuesday; production Wednesday. Security review required for releases
+  touching auth, billing, or data-access code paths.
+process_status: approved
+owner: people/team/raj-patel
+version: 1.0.0
+lanes:
+  - id: engineering
+    label: Engineering
+    process_role: people/team/raj-patel
+  - id: security
+    label: Security
+    process_role: people/team/maria-rodriguez
+  - id: release-manager
+    label: Release Manager
+    process_role: people/team/raj-patel
+nodes:
+  - id: start
+    bpmn_kind: start_event
+    label: Sprint ends (Monday)
+    lane: engineering
+    procedure_ref: null
+  - id: branch-cut
+    bpmn_kind: user_task
+    label: Cut release branch; run full test suite
+    lane: engineering
+    procedure_ref: null
+  - id: security-review
+    bpmn_kind: business_rule_task
+    label: Security review (if auth/billing/data path touched)
+    lane: security
+    procedure_ref: null
+  - id: staging-deploy
+    bpmn_kind: user_task
+    label: Deploy to staging; smoke test
+    lane: release-manager
+    procedure_ref: null
+  - id: prod-deploy
+    bpmn_kind: user_task
+    label: Deploy to production; verify SLO
+    lane: release-manager
+    procedure_ref: null
+  - id: end
+    bpmn_kind: end_event
+    label: Release published; SBOM + changelog committed
+    lane: release-manager
+    procedure_ref: null
+flows:
+  - id: f1
+    from: start
+    to: branch-cut
+    condition: null
+    is_message_flow: false
+  - id: f2
+    from: branch-cut
+    to: security-review
+    condition: null
+    is_message_flow: false
+  - id: f3
+    from: security-review
+    to: staging-deploy
+    condition: null
+    is_message_flow: false
+  - id: f4
+    from: staging-deploy
+    to: prod-deploy
+    condition: null
+    is_message_flow: false
+  - id: f5
+    from: prod-deploy
+    to: end
+    condition: null
+    is_message_flow: false
+bpmn_xml_ref: null
+diagram_ref: null
+sop_refs: []
+control_basis: 'ISO 27001:2022 A.8.32; SOC 2 CC8.1; NIST CSF PR.IP-3'
+last_modeled_on: '2026-01-15'
+next_review_due: '2027-01-15'

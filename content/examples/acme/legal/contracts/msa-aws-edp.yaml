@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/msa-aws-edp
+type: vendor
+title: "Master Services Agreement — AWS Enterprise Discount Program (EDP)"
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2026-02-01"
+expiration_date: "2029-01-31"
+governing_law: "US"
+auto_renewal: false
+dispute_resolution: arbitration
+value:
+  amount: 600000
+  currency: USD
+  frequency: annual
+key_terms:
+  - "3-year EDP commit: $1.8M total; $600K/year minimum"
+  - "Discount: 18% off standard on-demand pricing across EC2, RDS, S3, Lambda"
+  - "Elastic Compute Units (ECUs) for flexibility across services"
+  - "Committed usage review annually; overage billed at standard rates"
+  - "Credits do not roll over; use-it-or-lose-it per calendar year"
+  - "Governed by AWS Customer Agreement + AWS Service Terms"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework
+  - governance/decisions/0005-tech-stack

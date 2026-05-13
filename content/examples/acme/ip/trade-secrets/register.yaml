@@ -1,0 +1,83 @@
+id: ip/trade-secrets/register
+kind: trade_secret_register
+as_of: "2026-03-31"
+owner_entity: entity/acme-corp
+custodian: "Sarah Kim, CTO"
+review_cadence: quarterly
+secrets:
+  - id: ts-001
+    category: ml_training_pipeline
+    name: "Workflow Recommendation Model Training Pipeline"
+    description: >
+      End-to-end training pipeline for the AI model that recommends workflow
+      templates to new users based on job title, industry, and onboarding
+      signals. Includes feature engineering, labeling heuristics, and
+      hyperparameter search configuration.
+    value_basis: "Primary driver of activation rate (47% improvement vs. rule-based baseline)."
+    protection_measures:
+      - access_control: "Restricted to ML team only; no contractor access"
+      - storage: "Encrypted at rest in isolated S3 bucket with no public-read ACL"
+      - disclosure_control: "NDA required; disclosed only to full-time ML engineers"
+    classification: highly_confidential
+    last_reviewed: "2026-03-01"
+
+  - id: ts-002
+    category: customer_icp_heuristics
+    name: "ICP Scoring Heuristics and Firmographic Signals"
+    description: >
+      Proprietary scoring algorithm that assigns an ideal-customer-profile fit
+      score to inbound leads using firmographic signals, product usage patterns,
+      and historical conversion data. Drives sales prioritization and outbound
+      targeting.
+    value_basis: "Reduces sales-cycle length by 23% by surfacing high-fit accounts."
+    protection_measures:
+      - access_control: "Restricted to Sales Ops and RevOps leads"
+      - storage: "Embedded in internal CRM configuration; not exported to integrations"
+      - disclosure_control: "Never disclosed in marketing materials or competitive intelligence reports"
+    classification: confidential
+    last_reviewed: "2026-02-01"
+
+  - id: ts-003
+    category: pricing_elasticity_data
+    name: "Pricing Elasticity Model and Churn Prediction Parameters"
+    description: >
+      Statistical model predicting customer churn probability as a function of
+      plan tier, seat count, usage velocity, and support touchpoints. Used to
+      calibrate annual discount thresholds and proactive CSM outreach triggers.
+    value_basis: "Powers NRR optimization; contributed to 112% NRR in Q1-2026."
+    protection_measures:
+      - access_control: "CEO, CFO, and VP Revenue only"
+      - storage: "Maintained in encrypted spreadsheet; not in production systems"
+      - disclosure_control: "Board-level only; not shared with investors outside board meetings"
+    classification: highly_confidential
+    last_reviewed: "2026-03-01"
+
+  - id: ts-004
+    category: integration_mapping_library
+    name: "Third-Party Integration Mapping Library"
+    description: >
+      Internal library of field mappings, authentication quirks, and rate-limit
+      workarounds for 120+ SaaS integrations. Represents 18 months of
+      engineering effort reverse-engineering undocumented API behaviors.
+    value_basis: "Enables 3x faster integration delivery vs. building from scratch; key competitive moat."
+    protection_measures:
+      - access_control: "Engineering team only; no external access"
+      - storage: "Private GitHub repository with branch protection and required reviews"
+      - disclosure_control: "No public disclosure; referenced in patents only at high abstraction level"
+    classification: confidential
+    last_reviewed: "2026-01-15"
+
+  - id: ts-005
+    category: customer_behavioral_data
+    name: "Aggregate Customer Behavioral Fingerprints"
+    description: >
+      Anonymized but customer-identifiable behavioral fingerprints derived from
+      workflow execution patterns. Used to train the recommendation model and
+      identify power-user patterns for product roadmap decisions.
+    value_basis: "Core training signal for all ML features; cannot be reconstructed from public data."
+    protection_measures:
+      - access_control: "ML team and Head of Data only"
+      - storage: "Encrypted S3, access via IAM roles with MFA requirement"
+      - disclosure_control: "Governed by customer DPAs; used for service improvement only per ToS Section 7"
+    classification: highly_confidential
+    last_reviewed: "2026-02-15"

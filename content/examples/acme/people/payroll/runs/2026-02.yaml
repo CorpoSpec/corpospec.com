@@ -1,0 +1,23 @@
+id: people/payroll/runs/2026-02
+entity: entity/acme-corp
+period_start: "2026-02-01"
+period_end: "2026-02-28"
+pay_date: "2026-02-28"
+pay_cycle: monthly
+payroll_status: paid
+currency: USD
+employee_count: 42
+total_gross: 692000.0
+total_net: 0.0
+total_employer_cost: 764000.0
+total_employer_contributions: 72000.0
+employees: []
+journal_ref: financial/journals/2026-02-payroll
+filing_ref: null
+preparer: vendors/gusto
+retention_until: "2036-02-28"
+pii_class: special_category
+notes: >
+  4 new hires started 2026-02-03 (2 Senior Engineers, 1 CSM, 1 AE).
+  Employer contributions include FICA employer share + CA SUI + benefits.
+  Pseudonymised per PII-minimisation policy.

@@ -1,0 +1,55 @@
+id: knowledge/runbooks/rotate-aws-keys
+kind: runbook
+title: "Rotate AWS IAM Access Keys"
+category: security
+severity_if_skipped: critical
+last_reviewed: "2026-01-20"
+reviewed_by: "Sarah Kim"
+cadence: "Every 90 days or immediately on suspected compromise"
+
+prerequisites:
+  - "AWS console access with IAMFullAccess policy"
+  - "Access to 1Password vault `acme-infra`"
+  - "Slack #security-ops channel access for notification"
+
+steps:
+  - step: 1
+    action: "Identify keys due for rotation."
+    command: "aws iam list-access-keys --user-name acme-ci-deploy"
+    expected_output: "List of keys with CreateDate. Rotate any key older than 90 days."
+
+  - step: 2
+    action: "Create a new access key pair."
+    command: "aws iam create-access-key --user-name acme-ci-deploy"
+    notes: "Store the new SecretAccessKey immediately in 1Password vault — it is only shown once."
+
+  - step: 3
+    action: "Update GitHub Actions secrets with new key pair."
+    url: "https://github.com/acme-corp/platform/settings/secrets/actions"
+    items:
+      - "AWS_ACCESS_KEY_ID → new key ID"
+      - "AWS_SECRET_ACCESS_KEY → new secret"
+
+  - step: 4
+    action: "Trigger a CI workflow to validate new credentials."
+    command: "gh workflow run ci.yml --ref main"
+    expected_outcome: "CI completes successfully using new credentials."
+
+  - step: 5
+    action: "Deactivate the old key."
+    command: "aws iam update-access-key --user-name acme-ci-deploy --access-key-id <OLD_KEY_ID> --status Inactive"
+
+  - step: 6
+    action: "Wait 24 hours, verify no failures, then delete the old key."
+    command: "aws iam delete-access-key --user-name acme-ci-deploy --access-key-id <OLD_KEY_ID>"
+
+  - step: 7
+    action: "Record rotation in the security log."
+    template: "AWS key rotation completed for `acme-ci-deploy` — old key <OLD_KEY_ID> deleted."
+
+rollback:
+  procedure: "Reactivate the old key if step 4 fails."
+  command: "aws iam update-access-key --user-name acme-ci-deploy --access-key-id <OLD_KEY_ID> --status Active"
+  note: "Only possible before step 6. After deletion, a new key must be created."
+
+soc2_control: "CC6.1 — Logical Access Controls"

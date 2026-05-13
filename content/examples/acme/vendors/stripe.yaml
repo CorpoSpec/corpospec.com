@@ -1,0 +1,35 @@
+id: vendors/stripe
+legal_name: "Stripe, Inc."
+display_name: "Stripe"
+jurisdiction: US
+category: payment_processing
+relationship: vendor_only
+status: active
+registered_address:
+  street: "354 Oyster Point Blvd"
+  city: "South San Francisco"
+  state: CA
+  postal_code: "94080"
+  country: US
+primary_contact: "enterprise@stripe.com"
+master_agreement: null
+dpa_ref: "legal/contracts/stripe-dpa-2026"
+gdpr_role: processor
+processing_record_refs:
+  - "legal/privacy-classification"
+internal_owner: people/team/lisa-park
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 0
+spend_note: "Revenue share only (2.9% + $0.30 per transaction); no fixed annual fee."
+onboarded_at: "2025-07-01"
+terminated_at: null
+certifications:
+  - pci_dss_level1
+  - soc2_type2
+  - gdpr_dpa
+notes: >
+  Payment processing for subscription billing. Acme has no PAN access;
+  all cardholder data handled by Stripe. Webhooks processed by
+  engineering/flags/new-billing-engine handler. Active migration from
+  legacy sync handler (see engineering/tech-debt/legacy-webhook-handler).

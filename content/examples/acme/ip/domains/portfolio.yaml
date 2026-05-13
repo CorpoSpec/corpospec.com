@@ -1,0 +1,65 @@
+id: ip/domains/portfolio
+kind: domain_portfolio
+as_of: "2026-03-31"
+owner_entity: entity/acme-corp
+registrar_primary: "Cloudflare Registrar"
+domains:
+  - domain: "acme-corp.example.com"
+    role: primary
+    status: active
+    registered_date: "2025-06-20"
+    expiry_date: "2027-06-20"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    ssl_provider: "Let's Encrypt (auto-renew via Cloudflare)"
+    note: "Primary product and marketing domain."
+
+  - domain: "acme.example.com"
+    role: defensive
+    status: active
+    registered_date: "2025-06-20"
+    expiry_date: "2027-06-20"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    redirect_to: "acme-corp.example.com"
+    note: "Defensive registration. Redirects to primary."
+
+  - domain: "acmecorp.example.com"
+    role: defensive
+    status: active
+    registered_date: "2025-06-20"
+    expiry_date: "2027-06-20"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    redirect_to: "acme-corp.example.com"
+    note: "Defensive registration. Redirects to primary."
+
+  - domain: "acme-hq.example.com"
+    role: defensive
+    status: active
+    registered_date: "2025-06-20"
+    expiry_date: "2027-06-20"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    redirect_to: "acme-corp.example.com"
+    note: "Defensive registration. Redirects to primary."
+
+  - domain: "useacme.example.com"
+    role: marketing
+    status: active
+    registered_date: "2025-10-01"
+    expiry_date: "2027-10-01"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    redirect_to: "acme-corp.example.com"
+    note: "Short-form marketing URL used in ad campaigns."
+
+  - domain: "getacme.example.com"
+    role: marketing
+    status: active
+    registered_date: "2025-10-01"
+    expiry_date: "2027-10-01"
+    auto_renew: true
+    dns_provider: "Cloudflare"
+    redirect_to: "acme-corp.example.com"
+    note: "Alternative marketing URL."

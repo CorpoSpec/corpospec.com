@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-anthropic
+type: vendor
+title: "Data Processing Agreement — Anthropic, PBC"
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2026-01-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: false
+dispute_resolution: arbitration
+key_terms:
+  - "Anthropic Commercial DPA (GDPR/CCPA aligned)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Claude API: zero data retention; prompts and completions not used for training"
+  - "Data category: workflow metadata and user instructions (pseudonymised)"
+  - "Transfer mechanism: SCCs Module 2 for EU-to-US transfers"
+  - "Security: SOC 2 Type II; encryption in transit and at rest"
+  - "Sub-processors: disclosed at anthropic.com/legal/sub-processors"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0021-ai-integration
+  - governance/decisions/0027-compliance-gdpr

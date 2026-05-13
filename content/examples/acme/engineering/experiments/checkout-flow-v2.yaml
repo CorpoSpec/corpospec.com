@@ -1,0 +1,62 @@
+id: engineering/experiments/checkout-flow-v2
+name: "Checkout Flow v2 — Streamlined Two-Step"
+status: concluded
+hypothesis: >
+  Replacing the four-step checkout flow with a two-step modal reduces
+  checkout abandonment by at least 10% with no degradation in payment
+  failure rate.
+entity: entity/acme-corp
+owner: people/team/raj-patel
+start_date: "2026-01-15"
+end_date: "2026-02-28"
+variants:
+  - key: control
+    description: "Existing four-step checkout wizard"
+    allocation_pct: 50.0
+  - key: treatment
+    description: "Two-step streamlined checkout modal"
+    allocation_pct: 50.0
+metrics:
+  - key: checkout_completion_rate
+    primary: true
+    guardrail: false
+    direction: increase
+    minimum_detectable_effect_pct: 10.0
+    observed_lift_pct: 12.3
+    p_value: 0.008
+    ci_lower_pct: 4.1
+    ci_upper_pct: 20.5
+  - key: payment_failure_rate
+    primary: false
+    guardrail: true
+    direction: track
+    minimum_detectable_effect_pct: 2.0
+    observed_lift_pct: -0.3
+    p_value: 0.72
+    ci_lower_pct: -2.1
+    ci_upper_pct: 1.5
+  - key: time_to_complete_checkout_seconds
+    primary: false
+    guardrail: false
+    direction: decrease
+    minimum_detectable_effect_pct: 15.0
+    observed_lift_pct: -22.1
+    p_value: 0.001
+    ci_lower_pct: -30.4
+    ci_upper_pct: -13.8
+target_sample_size_per_variant: 4000
+observed_sample_size_per_variant: 4183
+alpha: 0.05
+power: 0.80
+analysis_plan: >
+  Two-arm test, 50/50 split. Primary metric: checkout completion rate
+  (binary, z-test for proportions). Guardrail: payment failure rate.
+  Sample sized for 10% MDE at alpha=0.05, power=0.80. Sequential
+  testing with alpha-spending (O'Brien-Fleming) for optional early stop.
+  Segmented analysis by plan tier (starter / pro / enterprise) post-hoc.
+feature_flag_ref: engineering/flags/checkout-flow-v2
+decision: ship_treatment
+decision_ref: governance/decisions/0025-onboarding-flow
+notes: >
+  Enterprise-tier segment showed 18% lift vs 9% for starter tier.
+  Recommend separate follow-up experiment for starter onboarding path.

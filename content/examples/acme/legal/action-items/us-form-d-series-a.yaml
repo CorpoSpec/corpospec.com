@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/legal-action-item.schema.json
+id: legal/action-items/us-form-d-series-a
+item: "File SEC Form D for Series A close"
+status: done
+priority: high
+due_date: "2026-02-14"
+note: >
+  SEC Form D filed 2026-02-10 via EDGAR (15 days within first sale 2026-01-15).
+  Filing ID: 0001234567-26-000042. Rule 506(b) exemption. Total offering amount
+  $8,000,000. Investors: Sequoia Capital, Index Ventures. Wilson Sonsini
+  coordinated state notice filings in CA, DE, and NY (blue sky).
+custom:
+  jurisdiction: "US"
+  entity: entity/acme-corp
+  dependencies: []

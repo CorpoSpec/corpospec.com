@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-datadog
+type: vendor
+title: "Data Processing Agreement — Datadog, Inc."
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2025-09-15"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+key_terms:
+  - "Datadog DPA v2.3 (GDPR/CCPA)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Data category: application telemetry, logs, traces (may contain pseudonymised user IDs)"
+  - "Retention: 15 months rolling for metrics, 30 days for logs"
+  - "EU-to-US transfer: SCCs Module 2"
+  - "Sub-processors: disclosed at datadoghq.com/legal/sub-processors"
+  - "Security: SOC 2 Type II, ISO 27001"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework
+  - governance/decisions/0027-compliance-gdpr

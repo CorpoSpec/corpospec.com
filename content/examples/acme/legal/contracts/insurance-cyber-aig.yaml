@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/insurance-cyber-aig
+type: insurance
+title: "Cyber Liability Insurance — AIG (Policy AIG-CY-2026-AC-00412)"
+counterparty: people/team/lisa-park
+status: active
+effective_date: "2026-01-15"
+expiration_date: "2027-01-14"
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+value:
+  amount: 48000
+  currency: USD
+  frequency: annual
+key_terms:
+  - "Policy number: AIG-CY-2026-AC-00412"
+  - "Coverage limit: $5,000,000 per occurrence and in aggregate"
+  - "Retroactive date: 2025-06-15"
+  - "Coverage: data breach response, business interruption, ransomware, regulatory defense"
+  - "Sublimit for PCI-DSS fines: $1,000,000"
+  - "Insured retains $50,000 deductible per claim"
+  - "Carrier: AIG (American International Group)"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework
+  - governance/decisions/0027-compliance-gdpr

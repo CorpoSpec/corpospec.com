@@ -1,0 +1,65 @@
+id: people/pay_equity/2026-baseline
+entity: entity/acme-corp
+reporting_period_start: "2026-01-01"
+reporting_period_end: "2026-12-31"
+headcount_fte: 38
+jurisdiction: US
+measurements:
+  - dimension: gender
+    group_a: men
+    group_b: women
+    group_a_median_base: 175000.0
+    group_b_median_base: 172000.0
+    unadjusted_gap_pct: 1.7
+    adjusted_gap_pct: 0.4
+    methodology: "Radford-matched role-level regression controlling for level, tenure, and geo"
+    statistically_significant: false
+    n_group_a: 22
+    n_group_b: 16
+  - dimension: tenure
+    group_a: "0-12 months"
+    group_b: "12+ months"
+    group_a_median_base: 162000.0
+    group_b_median_base: 178000.0
+    unadjusted_gap_pct: -9.9
+    adjusted_gap_pct: 1.1
+    methodology: "Level-controlled; new hires at lower band midpoint — expected and structurally consistent"
+    statistically_significant: false
+    n_group_a: 18
+    n_group_b: 20
+quartiles:
+  - quartile: Q1
+    female_pct: 47.4
+    male_pct: 52.6
+  - quartile: Q2
+    female_pct: 42.1
+    male_pct: 57.9
+  - quartile: Q3
+    female_pct: 36.8
+    male_pct: 63.2
+  - quartile: Q4
+    female_pct: 33.3
+    male_pct: 66.7
+job_category_breakdown:
+  - category: engineering
+    headcount: 24
+    female_pct: 29.2
+    male_pct: 70.8
+  - category: gtm
+    headcount: 8
+    female_pct: 62.5
+    male_pct: 37.5
+  - category: g_and_a
+    headcount: 6
+    female_pct: 66.7
+    male_pct: 33.3
+triggers_art10_joint_assessment: false
+joint_assessment_ref: null
+corrective_plan: >
+  Q4 representation in engineering is 33.3% female — below target. VP People
+  owns sourcing diversification plan through 2026 H2 hiring cycle. Targeted
+  outreach to Latinas in Tech, Black Girls Code, and Out in Tech communities.
+pay_audit_status: final
+filed_at: "2026-03-31"
+published_report: null
+retention_until: "2036-12-31"

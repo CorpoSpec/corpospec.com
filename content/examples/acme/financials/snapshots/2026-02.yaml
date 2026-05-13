@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/snapshots/2026-02
+period:
+  type: instant
+  start: "2026-02-28"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 416667
+  cost_of_revenue: 83334
+  gross_profit: 333333
+  operating_expenses:
+    research_and_development: 530000
+    sales_and_marketing: 270000
+    general_and_administrative: 160000
+  operating_income: -626667
+  net_income: -626667
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 8250000
+    accounts_receivable: 415000
+    total_assets: 8665000
+  liabilities:
+    accounts_payable: 110000
+    total_liabilities: 110000
+  equity:
+    total_equity: 8555000
+
+cash_flow:
+  operating: -950000
+  investing: -40000
+  financing: 0
+  net_change: -990000
+
+custom:
+  description: >
+    February 2026 snapshot. ARR $5.0M (MRR $416,667). 44 employees post
+    Series A hiring wave. Burn rate ~$990K/month. Runway ~8.3 months
+    from current cash. Series A deployment into product/sales hiring.
+  stage: series-a
+  assumptions:
+    - id: asm-snap-feb-001
+      description: "ARR $5M at February close. MRR $416,667. 200 paying customers."
+      evidence: "Stripe MRR dashboard 2026-02-28."
+      invalidation_condition: "Net MRR growth < 5% month-over-month."
+    - id: asm-snap-feb-002
+      description: "Burn increase driven by 6 new hires onboarded in Jan-Feb."
+      evidence: "Gusto payroll run 2026-02-15 and 2026-02-28."
+      invalidation_condition: "Payroll reconciliation discrepancy > $10K."

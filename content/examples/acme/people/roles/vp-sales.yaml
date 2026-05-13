@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/vp-sales
+title: "VP Sales"
+abbreviation: "VPS"
+unit: sales
+reports_to: people/roles/ceo
+level: vp
+responsibilities:
+  - "US enterprise and mid-market AE team leadership"
+  - "Sales process, CRM hygiene, and forecasting accuracy"
+  - "Quota design and territory planning"
+  - "EMEA sales motion setup for 2026 H2"
+  - "Sales enablement and partner channel strategy"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 160000
+  max: 200000
+  equity_percentage: "0.2-0.4%"
+  note: "Base. OTE ~2x base with uncapped commission above 100% quota attainment."
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "8+ years SaaS sales, 3+ years managing AE teams"
+      - "Track record closing $50k-$500k ACV enterprise deals"
+      - "MEDDPICC or equivalent enterprise sales methodology"
+    nice_to_have:
+      - "EMEA market experience"
+      - "PLG motion to enterprise conversion experience"

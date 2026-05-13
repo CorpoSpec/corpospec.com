@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/priya-nair
+type: Person
+name:
+  given: "Priya"
+  family: "Nair"
+  full: "Priya Nair"
+email: "priya.nair@acme-board.example.com"
+role: people/roles/board-director
+unit: executive
+employer: null
+start_date: "2026-01-15"
+end_date: null
+status: active
+bio: "General Partner at Lightspeed. Series A lead investor board seat. Former operator — VP Product at Zendesk."
+custom:
+  employment_type: advisor
+  d_o_insurance:
+    required: true
+    coverage_eur: null
+    annual_premium_eur_estimate: null

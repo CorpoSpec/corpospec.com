@@ -1,0 +1,24 @@
+id: engineering/tech-debt/n-plus-one-workflow-queries
+title: "N+1 Queries in Workflow List API"
+category: performance
+severity: medium
+status: open
+owner: people/team/sarah-kim
+identified_at: "2026-02-10"
+target_resolved_by: "2026-06-30"
+description: >
+  The GET /api/v1/workflows endpoint executes one SQL query per workflow
+  row to load associated trigger and action counts. For accounts with
+  >200 workflows (15% of pro-plan accounts), p95 response time exceeds
+  3000ms. Identified via Datadog APM trace analysis.
+impact:
+  - "p95 latency 3200ms for large-account workflow list (target: <500ms)"
+  - "Excessive RDS CPU usage during peak hours (8-10am PST)"
+  - "Customer complaints: 3 enterprise accounts reported slow list views"
+resolution_approach: >
+  Refactor to single JOIN query with aggregated trigger/action counts.
+  Add composite index on (account_id, created_at DESC). Validate with
+  Datadog APM before and after. Expected p95 improvement to <200ms.
+related_vendor: vendors/datadog
+estimated_effort_days: 3
+adr_ref: null

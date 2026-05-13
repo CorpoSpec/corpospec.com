@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/maria-rodriguez
+type: Person
+name:
+  given: "Maria"
+  family: "Rodriguez"
+  full: "Maria Rodriguez"
+email: "maria.rodriguez@acme-corp.example.com"
+role: people/roles/ciso
+unit: security
+employer: entity/acme-corp
+start_date: "2025-11-03"
+end_date: null
+status: active
+bio: "CISSP. Previously Security Engineering Manager at Cloudflare. Owns SOC 2 Type II program and security roadmap."
+custom:
+  employment_type: full-time
+  tax_residency: US

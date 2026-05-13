@@ -1,0 +1,150 @@
+id: commercial/pricing/feature-matrix
+kind: commercial_feature_matrix
+as_of: "2026-03-01"
+linked_plans: commercial/pricing/plans
+
+features:
+  - category: "Workflow Automation"
+    items:
+      - feature: "Core workflow types (trigger + action + condition)"
+        starter: true
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "Active workflow limit"
+        starter: "25"
+        growth: "200"
+        business: "1,000"
+        enterprise: "Unlimited"
+      - feature: "Workflow run history retention"
+        starter: "30 days"
+        growth: "90 days"
+        business: "1 year"
+        enterprise: "Configurable (up to 7 years)"
+      - feature: "AI workflow recommendations"
+        starter: false
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "AI trigger inference (natural-language triggers)"
+        starter: false
+        growth: false
+        business: "Beta"
+        enterprise: "GA"
+
+  - category: "Integrations"
+    items:
+      - feature: "Number of available integrations"
+        starter: "10"
+        growth: "50"
+        business: "All 120+"
+        enterprise: "All 120+ + custom"
+      - feature: "Webhook outbound"
+        starter: "1"
+        growth: "10"
+        business: "50"
+        enterprise: "Unlimited"
+      - feature: "REST API access"
+        starter: true
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "MCP server access"
+        starter: false
+        growth: true
+        business: true
+        enterprise: true
+
+  - category: "Security & Compliance"
+    items:
+      - feature: "SOC 2 Type I"
+        starter: true
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "SOC 2 Type II (on completion Q2-2026)"
+        starter: true
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "SSO/SAML (Okta, Azure AD)"
+        starter: false
+        growth: false
+        business: true
+        enterprise: true
+      - feature: "SCIM provisioning"
+        starter: false
+        growth: false
+        business: false
+        enterprise: true
+      - feature: "Audit log export"
+        starter: false
+        growth: false
+        business: "90 days"
+        enterprise: "Configurable"
+      - feature: "EU data residency"
+        starter: false
+        growth: false
+        business: false
+        enterprise: true
+      - feature: "Custom DPA"
+        starter: false
+        growth: false
+        business: "Standard DPA"
+        enterprise: "Custom DPA"
+
+  - category: "Analytics"
+    items:
+      - feature: "Basic run analytics"
+        starter: true
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "Advanced analytics + cohort reports"
+        starter: false
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "Custom reporting exports"
+        starter: false
+        growth: false
+        business: true
+        enterprise: true
+
+  - category: "Support"
+    items:
+      - feature: "Email support"
+        starter: "48h SLA"
+        growth: "8h SLA"
+        business: "4h SLA"
+        enterprise: "2h SLA (P1)"
+      - feature: "Live chat"
+        starter: false
+        growth: true
+        business: true
+        enterprise: true
+      - feature: "Dedicated Slack channel"
+        starter: false
+        growth: false
+        business: true
+        enterprise: true
+      - feature: "Dedicated Customer Success Manager"
+        starter: false
+        growth: false
+        business: false
+        enterprise: true
+      - feature: "Quarterly business reviews"
+        starter: false
+        growth: false
+        business: true
+        enterprise: true
+      - feature: "Executive sponsor (CEO/CTO)"
+        starter: false
+        growth: false
+        business: false
+        enterprise: true
+      - feature: "Custom SLA"
+        starter: false
+        growth: false
+        business: false
+        enterprise: true

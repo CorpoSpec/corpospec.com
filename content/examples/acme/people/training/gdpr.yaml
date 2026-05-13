@@ -1,0 +1,17 @@
+id: people/training/modules/gdpr-awareness
+entity: entity/acme-corp
+category: data_protection
+name: GDPR awareness 2026
+description: >
+  Lawful bases, data-subject rights (Art. 15-22), breach response
+  (Art. 33-34), retention, cross-border transfer fundamentals (SCCs,
+  adequacy decisions). Mandatory for all workforce.
+delivery_mode: elearning
+duration_minutes: 45
+mandatory: true
+mandatory_for_roles: []
+recertification_months: 12
+statutory_basis: "GDPR Art. 39(1)(b) + CCPA § 1798.100"
+builds_skills: []
+effective_from: "2026-01-01"
+effective_to: null

@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/msa-wilson-sonsini
+type: service
+title: "Master Services Agreement — Wilson Sonsini Goodrich & Rosati (US Counsel)"
+counterparty: people/team/david-tanaka
+status: active
+effective_date: "2025-06-15"
+expiration_date: null
+governing_law: "US"
+auto_renewal: false
+dispute_resolution: litigation
+value:
+  amount: 95000
+  currency: USD
+  frequency: annual
+key_terms:
+  - "General corporate counsel: incorporation, equity, commercial contracts"
+  - "Series A transaction counsel — closed 2026-01-15"
+  - "Hourly billing at standard rates; cap per project as agreed"
+  - "Attorney-client privilege preserved across all engagements"
+  - "Conflict-of-interest waiver for Series A co-investor representation"
+amendments:
+  - date: "2026-01-15"
+    description: "Series A transaction scope addendum; $85,000 flat fee for Series A close."
+    value_change: 85000
+documents: []
+related_decisions:
+  - governance/decisions/0001-entity-formation
+  - governance/decisions/0002-initial-funding

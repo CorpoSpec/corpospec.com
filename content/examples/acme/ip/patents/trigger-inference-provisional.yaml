@@ -1,0 +1,23 @@
+id: ip/patents/trigger-inference-provisional
+kind: patent
+title: "Probabilistic Trigger Inference for Event-Driven Workflow Automation"
+status: pending
+type: provisional
+jurisdiction: US
+registry: USPTO
+application_number: "63/598,012"
+filing_date: "2026-03-15"
+priority_date: "2026-03-15"
+expiry_date: "2027-03-15"
+abstract: >
+  A probabilistic system for inferring workflow trigger conditions from unstructured
+  data streams including email, calendar, and API event logs, enabling
+  zero-configuration workflow activation without explicit rule authoring by end users.
+inventors:
+  - name: "Sarah Kim"
+    role: primary_inventor
+  - name: "Riley Chen"
+    role: co_inventor
+owner_entity: entity/acme-corp
+ip_counsel: "Cooley LLP"
+note: "Provisional filing preserves 12-month priority window. Non-provisional application planned Q1-2027 with full claim set."

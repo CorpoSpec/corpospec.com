@@ -1,0 +1,23 @@
+id: ip/trademarks/acme-word-mark-eu
+kind: trademark
+name: "ACME"
+mark_type: word
+status: pending
+jurisdiction: EU
+registry: EUIPO
+serial_number: "018745623"
+filing_date: "2026-02-01"
+registration_date: null
+renewal_date: null
+international_classes:
+  - class: 9
+    description: "Downloadable software for workflow automation; SaaS platform software"
+  - class: 42
+    description: "Software as a service (SaaS) for workflow automation; cloud computing services"
+goods_services: "Downloadable software and SaaS platform enabling automated business workflow management via AI."
+owner_entity: entity/acme-corp
+expected_registration_date: "2026-08-01"
+attorneys:
+  - name: "Bird & Bird LLP"
+    role: european_trademark_counsel
+note: "Filed in anticipation of EU market entry. Formality examination passed 2026-02-15. Publication for opposition expected 2026-05-01."

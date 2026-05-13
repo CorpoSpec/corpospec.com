@@ -1,0 +1,34 @@
+id: vendors/datadog
+legal_name: "Datadog, Inc."
+display_name: "Datadog"
+jurisdiction: US
+category: observability
+relationship: vendor_only
+status: active
+registered_address:
+  street: "620 8th Ave 45th Floor"
+  city: "New York"
+  state: NY
+  postal_code: "10018"
+  country: US
+primary_contact: "sales@datadoghq.com"
+master_agreement: vendors/contracts/datadog-pro-2026
+dpa_ref: "legal/contracts/datadog-dpa-2026"
+gdpr_role: processor
+processing_record_refs:
+  - "legal/privacy-classification"
+internal_owner: people/team/raj-patel
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 80000
+onboarded_at: "2025-09-01"
+terminated_at: null
+certifications:
+  - soc2_type2
+  - iso_27001
+  - gdpr_dpa
+notes: >
+  APM, infrastructure metrics, log management, and synthetic monitoring.
+  EU data residency enabled for eu-central-1 data. PII scrubbing pipeline
+  rules configured. Source for engineering/metrics/dora.yaml DORA metrics.
+  Pro plan contract with 20% volume discount negotiated.

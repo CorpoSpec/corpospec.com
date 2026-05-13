@@ -1,0 +1,32 @@
+id: vendors/openai
+legal_name: "OpenAI, L.L.C."
+display_name: "OpenAI"
+jurisdiction: US
+category: ai_model
+relationship: vendor_only
+status: active
+registered_address:
+  street: "3180 18th St"
+  city: "San Francisco"
+  state: CA
+  postal_code: "94110"
+  country: US
+primary_contact: "enterprise@openai.com"
+master_agreement: null
+dpa_ref: "legal/contracts/openai-dpa-2026"
+gdpr_role: processor
+processing_record_refs:
+  - "legal/privacy-classification"
+internal_owner: people/team/sarah-kim
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 120000
+onboarded_at: "2025-08-01"
+terminated_at: null
+certifications:
+  - soc2_type2
+  - gdpr_dpa
+notes: >
+  GPT-4o used for workflow suggestion generation and natural-language
+  trigger parsing. Zero-data-retention API endpoint enforced for all
+  production inference. Spend estimate based on Q1 2026 actuals annualized.

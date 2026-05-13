@@ -1,0 +1,17 @@
+id: people/training/modules/security-awareness
+entity: entity/acme-corp
+category: security
+name: Security awareness training 2026
+description: >
+  Phishing recognition, password hygiene, MFA enforcement, social
+  engineering, incident reporting, and acceptable use policy.
+  Delivered via KnowBe4. SOC 2 CC1.4 evidence.
+delivery_mode: elearning
+duration_minutes: 60
+mandatory: true
+mandatory_for_roles: []
+recertification_months: 12
+statutory_basis: null
+builds_skills: []
+effective_from: "2026-01-01"
+effective_to: null

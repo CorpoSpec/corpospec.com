@@ -1,0 +1,26 @@
+id: people/leave/ledger/erin-foster-2026
+person: people/team/erin-foster
+policy: people/leave/policy/us-unlimited-pto
+balance_days: null
+entries:
+  - date: "2026-01-01"
+    leave_type: vacation
+    days: 1.0
+    leave_status: taken
+    document: null
+  - date: "2026-02-14"
+    leave_type: sick
+    days: 1.0
+    leave_status: taken
+    document: null
+  - date: "2026-07-06"
+    leave_type: vacation
+    days: 5.0
+    leave_status: approved
+    document: null
+  - date: "2026-10-12"
+    leave_type: parental
+    days: 60.0
+    leave_status: requested
+    document: null
+    notes: "California PDL + CFRA. Parental leave commencing ~2026-10-12. 60 working days."

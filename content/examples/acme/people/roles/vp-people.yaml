@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/vp-people
+title: "VP People"
+abbreviation: "VPP"
+unit: people
+reports_to: people/roles/ceo
+level: vp
+responsibilities:
+  - "Full-cycle recruiting — engineering, GTM, G&A"
+  - "Compensation philosophy and band management"
+  - "Performance review cadence design and calibration"
+  - "DE hiring infrastructure — entity, payroll, benefits setup"
+  - "Culture, engagement surveys, and eNPS program"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 170000
+  max: 210000
+  equity_percentage: "0.15-0.3%"
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "8+ years progressive HR/People experience"
+      - "Scaling from 30 to 200 employees in a SaaS company"
+      - "US employment law (CA-specific) and benefits expertise"
+    nice_to_have:
+      - "DE/EU employment law and Works Council experience"
+      - "Compensation benchmarking tool experience (Radford, Option Impact)"

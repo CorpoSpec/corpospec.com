@@ -1,0 +1,35 @@
+id: people/comp_history/lisa-park
+person: people/team/lisa-park
+entity: entity/acme-corp
+events:
+  - effective_date: "2025-09-01"
+    reason: hire
+    component: base_salary
+    currency: USD
+    prior_value: null
+    new_value: 190000.0
+    approver: people/team/alex-chen
+    decision_ref: null
+    notes: "Hired as CFO. Seed-stage CFO market rate; standard 4-year vest equity grant."
+  - effective_date: "2026-01-15"
+    reason: annual_review
+    component: base_salary
+    currency: USD
+    prior_value: 190000.0
+    new_value: 200000.0
+    approver: people/team/priya-nair
+    decision_ref: null
+    notes: >
+      Series A close merit increase. Led financial close, 409A, and
+      Series A data room. Board comp committee approved.
+  - effective_date: "2026-01-15"
+    reason: equity_refresh
+    component: equity_grant
+    currency: USD
+    prior_value: null
+    new_value: null
+    approver: people/team/priya-nair
+    decision_ref: null
+    notes: "Performance-based refresh grant at Series A. Amounts held in Carta; pseudonymised."
+retention_until: "2036-09-01"
+pii_class: special_category

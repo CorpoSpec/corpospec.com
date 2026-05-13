@@ -1,0 +1,27 @@
+id: engineering/tech-debt/legacy-webhook-handler
+title: "Legacy Stripe Webhook Handler — Synchronous, No Idempotency"
+category: reliability
+severity: high
+status: in_progress
+owner: people/team/raj-patel
+identified_at: "2025-12-01"
+target_resolved_by: "2026-07-01"
+description: >
+  The original Stripe webhook handler processes events synchronously in
+  the HTTP handler path. It has no idempotency key enforcement, no dead-
+  letter queue, and no retry budget. Under high load (>50 rps Stripe
+  events), it causes 5xx responses that Stripe retries, creating
+  duplicate subscription state mutations.
+impact:
+  - "Duplicate subscription activations for ~0.3% of new signups"
+  - "Revenue reconciliation errors requiring manual correction"
+  - "On-call alert noise: 2-3 PagerDuty pages per week"
+resolution_approach: >
+  Replace with event-driven billing engine behind new-billing-engine
+  feature flag (engineering/flags/new-billing-engine). New handler uses
+  idempotency keys keyed on Stripe event ID, async processing via job
+  queue, and dead-letter queue with alerting.
+related_flag: engineering/flags/new-billing-engine
+related_vendor: vendors/stripe
+estimated_effort_days: 15
+adr_ref: engineering/adr/0003-billing-engine-redesign

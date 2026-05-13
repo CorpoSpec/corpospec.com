@@ -1,0 +1,28 @@
+id: ip/trademarks/acme-word-mark-us
+kind: trademark
+name: "ACME"
+mark_type: word
+status: registered
+jurisdiction: US
+registry: USPTO
+registration_number: "6847321"
+serial_number: "97214856"
+filing_date: "2025-07-01"
+registration_date: "2026-01-15"
+renewal_date: "2036-01-15"
+international_classes:
+  - class: 9
+    description: "Downloadable software for workflow automation; SaaS platform software"
+  - class: 42
+    description: "Software as a service (SaaS) for workflow automation; cloud computing services"
+goods_services: "Downloadable software and SaaS platform enabling automated business workflow management via AI."
+owner_entity: entity/acme-corp
+use_in_commerce: true
+first_use_date: "2025-09-01"
+attorneys:
+  - name: "Cooley LLP"
+    role: prosecution_counsel
+watch_services:
+  - provider: "CompuMark"
+    scope: "US + EUTM classes 9 and 42"
+note: "Primary US word mark. Opposition period cleared 2025-12-10. Certificate issued 2026-01-15."

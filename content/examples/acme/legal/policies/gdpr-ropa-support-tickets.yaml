@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-ropa-support-tickets
+name: "GDPR ROPA — Customer Support Tickets"
+description: >
+  Record of Processing Activity (Art. 30 GDPR) for personal data contained
+  in customer support interactions, bug reports, and feature requests submitted
+  by Acme customers. Data may include EU/EEA data subjects who are end-users
+  of Acme's customers.
+status: active
+scope: "Customer support contacts and end-users who submit support requests"
+owner: people/team/david-tanaka
+effective_date: "2025-09-01"
+review_date: "2026-09-01"
+provisions:
+  - "Controller: Acme Corp, Inc."
+  - "Legal basis: Art. 6(1)(b) GDPR — performance of contract; Art. 6(1)(f) — legitimate interest (quality improvement)"
+  - "Data categories: name, email, account ID, workflow data shared in tickets, session metadata"
+  - "Retention: 3 years for resolved tickets; 7 years for tickets involving legal disputes"
+  - "Recipients: Linear (issue tracker), internal support team"
+  - "Data minimization: support agents instructed not to request sensitive personal data"
+  - "Third-country transfers: Linear — US via SCCs"
+custom:
+  processors:
+    - name: "Linear"
+      service: "Issue tracking and project management"
+      dpa_status: signed
+      hosting_region: "US (SCCs)"
+      data_categories: ["name", "email", "account ID", "support ticket content"]
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr
+  - governance/decisions/0026-support-model

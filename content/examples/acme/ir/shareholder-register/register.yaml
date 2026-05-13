@@ -1,0 +1,116 @@
+id: ir/shareholder-register/register
+kind: shareholder_register
+as_of: "2026-03-31"
+entity: entity/acme-corp
+total_shares_outstanding: 14250000
+total_fully_diluted: 16800000
+option_pool_authorized: 2550000
+option_pool_issued: 1620000
+option_pool_available: 930000
+
+shareholders:
+  - name: "Alex Chen"
+    pathref: people/team/alex-chen
+    type: founder
+    share_class: "Common A"
+    shares: 6000000
+    ownership_pct_basic: 42.1
+    ownership_pct_diluted: 35.7
+    vesting_status: "18 of 48 months vested"
+
+  - name: "Sarah Kim"
+    pathref: people/team/sarah-kim
+    type: founder
+    share_class: "Common A"
+    shares: 5000000
+    ownership_pct_basic: 35.1
+    ownership_pct_diluted: 29.8
+    vesting_status: "18 of 48 months vested"
+
+  - name: "Sequoia Capital (Series A)"
+    type: institutional_investor
+    share_class: "Preferred A"
+    shares: 2500000
+    ownership_pct_basic: 17.5
+    ownership_pct_diluted: 14.9
+    investment_date: "2026-01-15"
+    investment_amount_usd: 7000000
+    price_per_share_usd: 2.80
+
+  - name: "Index Ventures (Series A)"
+    type: institutional_investor
+    share_class: "Preferred A"
+    shares: 357143
+    ownership_pct_basic: 2.5
+    ownership_pct_diluted: 2.1
+    investment_date: "2026-01-15"
+    investment_amount_usd: 1000000
+    price_per_share_usd: 2.80
+
+  - name: "Jordan Park (Angel)"
+    pathref: people/team/jordan-park
+    type: angel
+    share_class: "Preferred A"
+    shares: 357143
+    ownership_pct_basic: 2.5
+    ownership_pct_diluted: 2.1
+    investment_date: "2026-01-15"
+    investment_amount_usd: 1000000
+    price_per_share_usd: 2.80
+
+option_grants:
+  - granted_to: "people/team/blake-nguyen"
+    shares: 320000
+    type: ISO
+    strike_price_usd: 0.42
+    grant_date: "2025-08-01"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/casey-lin"
+    shares: 200000
+    type: ISO
+    strike_price_usd: 0.42
+    grant_date: "2025-09-01"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/avery-patel"
+    shares: 180000
+    type: ISO
+    strike_price_usd: 0.65
+    grant_date: "2025-11-15"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/harper-santos"
+    shares: 160000
+    type: ISO
+    strike_price_usd: 0.65
+    grant_date: "2025-12-01"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/quinn-murphy"
+    shares: 240000
+    type: ISO
+    strike_price_usd: 0.85
+    grant_date: "2026-01-20"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/morgan-reeves"
+    shares: 280000
+    type: ISO
+    strike_price_usd: 0.85
+    grant_date: "2026-02-01"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active
+
+  - granted_to: "people/team/taylor-brooks"
+    shares: 240000
+    type: ISO
+    strike_price_usd: 0.85
+    grant_date: "2026-02-15"
+    vesting: "4-year monthly, 12-month cliff"
+    status: active

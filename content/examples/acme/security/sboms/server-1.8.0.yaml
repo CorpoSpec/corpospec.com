@@ -1,0 +1,68 @@
+id: security/sboms/server-1.8.0
+format: cyclonedx15
+subject: product/overview
+subject_version: 1.8.0
+generator: syft@1.2.0
+generated_at: '2026-04-28'
+components:
+  - name: express
+    version: 4.21.2
+    supplier: OpenJS Foundation
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/express@4.21.2
+    license: MIT
+    hashes:
+      - algorithm: sha256
+        value: 'b8d2f134a5e7c89012345678901234abcdef5678901234abcdef5678901234ab'
+    depends_on: []
+    vulnerability_refs: []
+  - name: pg
+    version: 8.13.3
+    supplier: Brian Carlson
+    author: Brian Carlson
+    identifiers:
+      - kind: purl
+        value: pkg:npm/pg@8.13.3
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+  - name: zod
+    version: 3.24.2
+    supplier: Colin McDonnell
+    author: Colin McDonnell
+    identifiers:
+      - kind: purl
+        value: pkg:npm/zod@3.24.2
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+  - name: openai
+    version: 4.96.0
+    supplier: OpenAI
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/openai@4.96.0
+    license: Apache-2.0
+    hashes: []
+    depends_on: []
+    vulnerability_refs:
+      - security/vulnerabilities/cve-2026-12345
+  - name: jsonwebtoken
+    version: 9.0.2
+    supplier: Auth0
+    author: null
+    identifiers:
+      - kind: purl
+        value: pkg:npm/jsonwebtoken@9.0.2
+    license: MIT
+    hashes: []
+    depends_on: []
+    vulnerability_refs: []
+artefact_ref: security/sboms/server-1.8.0.cdx.json
+signed: true
+signing_cert_ref: security/signing/cosign-key-2026

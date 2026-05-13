@@ -1,0 +1,26 @@
+id: operations/dr_plans/postgres-prod
+entity: entity/acme-corp
+system: security/assets/postgres-prod
+bcp_ref: operations/bcps/payroll-vendor-backup
+rto_target_hours: 4.0
+rpo_target_minutes: 15.0
+standby_strategy: active_passive_auto
+backup_cadence: every_fifteen_minutes
+standby_locations:
+  - AWS us-east-1 (Multi-AZ standby)
+  - AWS eu-central-1 (cross-region snapshot for catastrophic failure)
+failover_runbook: operations/runbooks/postgres-failover
+owner: people/team/raj-patel
+tests:
+  - conducted_on: '2026-04-01'
+    measured_rto_hours: 1.2
+    measured_rpo_minutes: 7.0
+    outcome: passed_with_observations
+    findings:
+      - DNS TTL for RDS endpoint reduced from 300s to 60s after test
+      - PgBouncer reconnect timeout reduced from 30s to 10s after test
+    report_ref: security/dr/tests/2026-04-postgres.pdf
+dr_status: approved
+effective_from: '2026-01-01'
+next_review_due: '2027-01-01'
+control_basis: 'ISO 27031 Cl. 7.4; NIST SP 800-34 Rev. 1; SOC 2 A1.2; ISO 22301:2019 Cl. 8.4'

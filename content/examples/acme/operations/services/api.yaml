@@ -1,0 +1,43 @@
+id: operations/services/api
+entity: entity/acme-corp
+name: Acme API (core backend)
+description: >
+  Core REST API powering workflow creation, execution, and management. Node.js
+  with Express, deployed on ECS Fargate in us-east-1 with eu-central-1 replica.
+  Connects to RDS Postgres, Sentry (error reporting), Datadog (metrics/traces),
+  and Stripe (billing). Primary data controller for customer PII.
+tier: customer_facing
+service_status: ga
+criticality: tier1
+deployment_posture: multi_region_active_active
+owner: people/team/raj-patel
+on_call_rotation_ref: null
+sla_ref: operations/slas/enterprise-2026
+dr_plan_ref: operations/dr_plans/postgres-prod
+bcp_ref: null
+depends_on: []
+dependents:
+  - operations/services/web-app
+  - operations/services/billing-worker
+  - operations/services/embedding-worker
+api_endpoints:
+  - operations/api_endpoints/post-runs
+  - operations/api_endpoints/get-workflow
+  - operations/api_endpoints/list-workflows
+  - operations/api_endpoints/patch-workflow
+  - operations/api_endpoints/get-run-status
+asset_refs:
+  - security/assets/postgres-prod
+documentation_ref: null
+pii_class: personal
+tech_stack:
+  - nodejs
+  - express
+  - typescript
+  - postgres
+  - aws_ecs_fargate
+  - sentry
+  - datadog
+provisioned_on: '2025-08-15'
+deprecated_on: null
+decommission_on: null

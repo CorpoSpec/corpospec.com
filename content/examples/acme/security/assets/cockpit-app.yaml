@@ -1,0 +1,25 @@
+id: security/assets/cockpit-app
+entity: entity/acme-corp
+asset_kind: web_application
+name: Acme Cockpit web application
+description: >
+  Customer-facing SPA served from CloudFront + S3. Processes workflow
+  configurations, user authentication flows, and real-time run status.
+  Handles PII from enterprise customers' employees and end users.
+canonical_ref: product/overview
+owner: people/team/sarah-kim
+custodian: people/team/raj-patel
+confidentiality: restricted
+pii_class: personal
+criticality: mission_critical
+location: AWS us-east-1 (CloudFront global edge)
+retention_policy: >
+  Application logs retained 90 days in CloudWatch; error traces in Sentry
+  retained 30 days; static assets ephemeral per deployment.
+disposal_method: crypto_erase
+regulatory_implications: 'GDPR Art. 5 + 25 + 32; SOC 2 CC6; ISO 27001 A.8.24'
+lifecycle: active
+provisioned_on: '2025-09-01'
+retired_on: null
+last_reviewed: '2026-04-10'
+next_review_due: '2026-10-10'

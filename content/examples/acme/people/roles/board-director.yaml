@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/board-director
+title: "Board Director"
+unit: executive
+reports_to: null
+level: c-suite
+responsibilities:
+  - "Fiduciary oversight of company strategy and major decisions"
+  - "Investor capital deployment approval above threshold"
+  - "CEO performance evaluation and compensation approval"
+  - "Audit committee participation"
+headcount: 3
+compensation_band:
+  currency: USD
+  min: 0
+  max: 0
+  note: "Non-employee directors receive no cash; D&O insurance provided."
+custom:
+  status: filled
+  employment_type: advisor

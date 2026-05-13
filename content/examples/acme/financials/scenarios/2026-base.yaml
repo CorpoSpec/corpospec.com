@@ -1,0 +1,61 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/scenarios/2026-base
+period:
+  type: duration
+  start: "2026-01-01"
+  end: "2026-12-31"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 5750000
+  cost_of_revenue: 1150000
+  gross_profit: 4600000
+  operating_expenses:
+    research_and_development: 6000000
+    sales_and_marketing: 3000000
+    general_and_administrative: 1800000
+  operating_income: -6200000
+  net_income: -6200000
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 1800000
+    accounts_receivable: 580000
+    total_assets: 2380000
+  liabilities:
+    accounts_payable: 160000
+    total_liabilities: 160000
+  equity:
+    total_equity: 2220000
+
+cash_flow:
+  operating: -7400000
+  investing: -600000
+  financing: 0
+  net_change: -8000000
+
+custom:
+  description: >
+    2026 base scenario. ARR grows from $5M to $7.5M (50% YoY). Headcount
+    grows from 50 to 75. Gross margin holds at 80%. Burn averages
+    $1.0M/month; total 2026 net cash consumption ~$7.4M including capex.
+    Series B process expected Q3 2026; bridge capital not modeled.
+  stage: series-a
+  assumptions:
+    - id: asm-2026-base-001
+      description: "ARR grows from $5M (Jan) to $7.5M (Dec) at ~50% YoY."
+      evidence: "Historical growth rate Q3-Q4 2025 compounded forward."
+      invalidation_condition: "ARR growth drops below 35% for two consecutive quarters."
+    - id: asm-2026-base-002
+      description: "Gross margin 80% throughout 2026."
+      evidence: "Infrastructure costs scale at 25% of incremental revenue."
+      invalidation_condition: "LLM API cost spike or major infrastructure redesign."
+    - id: asm-2026-base-003
+      description: "Headcount 75 by year-end at $130K avg fully-loaded cost."
+      evidence: "Rippling compensation benchmarks + 15% employer overhead."
+      invalidation_condition: "Wage inflation exceeds 10% or attrition exceeds 15%."
+    - id: asm-2026-base-004
+      description: "Series B process begins Q3 2026 targeting $25M at $100M pre."
+      evidence: "Board resolution 2026-01-15; banker mandates TBD Q2 2026."
+      invalidation_condition: "Revenue milestones missed; ARR < $6.5M by Q3 open."

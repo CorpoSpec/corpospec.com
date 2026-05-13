@@ -1,0 +1,16 @@
+id: people/statutory/us-ca-sui-2026
+jurisdiction: US
+kind: us_state_unemployment
+effective_year: 2026
+rate_pct: 1.5
+employer_share_pct: 1.5
+bearer: employer
+annual_cap: 7000.0
+lower_threshold: null
+assessment_currency: USD
+statutory_basis: "California Unemployment Insurance Code §977; CA EDD 2026 new employer rate 3.4% (first 3 years); rate shown is illustrative post-stabilization estimate"
+regulation_ref: null
+notes: >
+  New employer rate: 3.4% on first $7,000 of wages per employee.
+  Experience-rated after 3 years. ETT 0.1% also applies up to $7,000.
+  SDI (employee-paid): 1.1% with no wage cap from 2024.

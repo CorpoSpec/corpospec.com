@@ -1,0 +1,29 @@
+id: people/hiring/reqs/data-scientist-2026-q4
+role: people/roles/data-scientist
+entity: entity/acme-corp
+headcount: 1
+hiring_manager: people/team/raj-patel
+recruiter: null
+posted_locations:
+  - kind: remote
+    country: US
+posted_jurisdictions:
+  - US
+salary_disclosed_band:
+  currency: USD
+  low: 155000.0
+  high: 195000.0
+  frequency: annual
+  basis: "US data scientist P50 Radford 2026"
+equity_disclosed_band:
+  low_pct: 0.08
+  high_pct: 0.2
+  reference_basis: post-money fully-diluted
+  option_plan_ref: entity/equity/option-pool
+benefits_summary:
+  - people/benefits/plans/us-health-anthem-ppo-2026
+posting_url: null
+requisition_state: planned
+opened_at: null
+closed_at: null
+consent_record_template: null

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/msa-kpmg
+type: service
+title: "Master Services Agreement — KPMG LLP (Audit & Advisory)"
+counterparty: people/team/lisa-park
+status: active
+effective_date: "2026-01-15"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+value:
+  amount: 185000
+  currency: USD
+  frequency: annual
+key_terms:
+  - "Annual audit of Acme Corp, Inc. consolidated financials per US GAAP"
+  - "SOC 2 Type II readiness advisory included in scope"
+  - "KPMG confidentiality and independence obligations"
+  - "Client data destruction upon engagement close"
+  - "Limitation of liability: 12 months of fees"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0018-security-framework

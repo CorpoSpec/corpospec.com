@@ -1,0 +1,39 @@
+id: operations/changes/cr-2026-04-002
+entity: entity/acme-corp
+change_class: normal
+change_category: infrastructure_upgrade
+change_status: scheduled
+change_risk: medium
+title: RDS PostgreSQL engine upgrade 15.6 → 16.2
+description: >
+  Minor-version upgrade of production RDS PostgreSQL cluster from 15.6 to 16.2.
+  Addresses 3 security advisories (PGSQL-2026-001 through 003) and includes
+  performance improvements to planner statistics. Maintenance window: Sunday
+  2026-05-05 02:00–04:00 UTC.
+justification: >
+  PostgreSQL 15 reaches end of active security support 2026-11-12. Proactive
+  upgrade to 16 captures improved planner, logical replication enhancements,
+  and patches 3 security advisories in 15.6.
+requestor: people/team/raj-patel
+implementer: people/team/raj-patel
+affected_systems:
+  - security/assets/postgres-prod
+impact_assessment: >
+  RDS automated minor-version upgrade; brief failover to standby during
+  engine restart (typically 60-90 seconds). Application connection pooler
+  (PgBouncer) handles reconnect transparently. Expected user-facing downtime
+  < 2 minutes. Rollback to 15.6 snapshot available if needed.
+rollback_plan: operations/runbooks/postgres-failover
+approvals:
+  - approver: people/team/sarah-kim
+    approver_role: cto
+    decision_at: '2026-04-28'
+    approved: true
+    note: Approved; CAB reviewed 2026-04-25.
+scheduled_for: '2026-05-05T02:00:00Z'
+implemented_at: null
+verified_at: null
+pir_ref: null
+triggering_incident: null
+bdr_ref: null
+created_at: '2026-04-25'

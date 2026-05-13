@@ -1,0 +1,44 @@
+id: operations/changes/cr-2026-04-003
+entity: entity/acme-corp
+change_class: normal
+change_category: access_control
+change_status: verified
+change_risk: low
+title: Restrict embedding-worker IAM role to read-only RDS replica
+description: >
+  Remove write permissions from the embedding-worker ECS task IAM role.
+  The worker was migrated to read-only replica access in Q1 2026 but the
+  IAM role still held legacy read_write on the production primary. Corrects
+  least-privilege gap identified in Q2 access review.
+justification: >
+  Principle of least privilege. Embedding worker does not write to primary;
+  removal of write permissions reduces blast radius if the service is
+  compromised. Flagged in security/access_reviews/prod-db-2026-q2.
+requestor: people/team/maria-rodriguez
+implementer: people/team/raj-patel
+affected_systems:
+  - security/assets/aws-root-account
+  - security/assets/postgres-prod
+impact_assessment: >
+  No user-facing impact. IAM policy change is immediate. Worker will receive
+  403 from Postgres primary on any accidental write attempt — not expected
+  in current code path. Monitoring alert added for RDS 403s on embedding worker.
+rollback_plan: operations/runbooks/postgres-failover
+approvals:
+  - approver: people/team/sarah-kim
+    approver_role: cto
+    decision_at: '2026-07-06'
+    approved: true
+    note: null
+  - approver: people/team/maria-rodriguez
+    approver_role: ciso
+    decision_at: '2026-07-06'
+    approved: true
+    note: Security-required change per access review finding.
+scheduled_for: '2026-07-08T10:00:00Z'
+implemented_at: '2026-07-08T10:12:00Z'
+verified_at: '2026-07-08T10:30:00Z'
+pir_ref: null
+triggering_incident: null
+bdr_ref: null
+created_at: '2026-07-05'

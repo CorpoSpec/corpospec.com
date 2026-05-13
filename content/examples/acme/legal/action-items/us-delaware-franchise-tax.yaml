@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/legal-action-item.schema.json
+id: legal/action-items/us-delaware-franchise-tax
+item: "File Delaware Annual Report and pay franchise tax for FY2025"
+status: done
+priority: high
+due_date: "2026-03-01"
+note: >
+  Delaware franchise tax for FY2025 filed 2026-02-28. Assumed par value method:
+  10M authorized shares x $0.00001 par = $100 minimum. Authorized shares method
+  applied: $400. Annual report fee: $50. Total paid: $450. Wilson Sonsini filed
+  via Delaware Division of Corporations online portal. Confirmation number: DE-2026-0228-AC.
+custom:
+  jurisdiction: "US"
+  entity: entity/acme-corp
+  dependencies: []

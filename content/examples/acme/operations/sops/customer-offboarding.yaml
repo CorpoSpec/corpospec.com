@@ -1,0 +1,83 @@
+id: operations/sops/customer-offboarding
+entity: entity/acme-corp
+category: customer_success
+name: Customer offboarding and data deletion
+version: 1.0.0
+objective: >
+  Process a customer contract termination: deliver data export, delete all
+  customer data per DPA, revoke access, and close all downstream records.
+  Ensures GDPR Art. 17 erasure obligations and DPA deletion clauses are met
+  within contractual timeframe (typically 30 days post-termination).
+triggers:
+  - Customer gives notice of contract termination.
+  - Contract reaches natural expiry without renewal.
+  - Customer explicitly invokes Art. 17 erasure right.
+preconditions:
+  - Contract termination date confirmed in writing.
+  - Final invoice settled (or write-off approved by CFO).
+steps:
+  - ordinal: 1
+    action: >
+      Generate and deliver full data export — workflows, run history, API keys,
+      user records — in machine-readable format (JSON/CSV) via secure link.
+    acceptance_criterion: Export delivered to customer primary contact; download confirmed or link expired after 7 days.
+    assignments:
+      - role: people/roles/customer-success-manager
+        raci: responsible
+      - role: people/roles/devops-engineer
+        raci: consulted
+    sla_duration: P5D
+    tool_refs: []
+  - ordinal: 2
+    action: >
+      Revoke all API keys, SSO access, and user accounts for the customer
+      tenant in production and staging environments.
+    acceptance_criterion: >
+      Zero active sessions or API keys for customer tenant; Okta SSO group
+      membership revoked; confirmed via access audit.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: responsible
+    sla_duration: P1D
+    tool_refs: []
+  - ordinal: 3
+    action: >
+      Schedule data deletion job — queue deletion of all customer PII and
+      workflow data; retain billing records per legal retention policy (7 years).
+    acceptance_criterion: >
+      Deletion job queued with tenant_id scoped; scheduled for execution on
+      T+30 days from termination date (per DPA default); scheduled date
+      recorded in customer record.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: responsible
+      - role: people/roles/sales-lead
+        raci: accountable
+    sla_duration: P2D
+    tool_refs: []
+  - ordinal: 4
+    action: >
+      Confirm deletion complete; issue deletion certificate to customer;
+      update ROPA to remove customer as data subject group.
+    acceptance_criterion: >
+      Deletion job log confirms zero rows for tenant_id; deletion certificate
+      issued via email; ROPA updated.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: responsible
+      - role: people/roles/ceo
+        raci: accountable
+    sla_duration: P35D
+    tool_refs: []
+postconditions:
+  - Customer data deleted (except billing records retained per legal policy).
+  - Deletion certificate issued and filed.
+  - ROPA updated; DPA marked as terminated.
+  - No active access credentials for customer tenant.
+control_basis: 'GDPR Art. 17 + Art. 28(3)(g); ISO 27001:2022 A.8.10; SOC 2 C1.2'
+owner: people/team/erin-foster
+artefact_ref: null
+status: approved
+effective_from: '2026-01-01'
+review_cadence: P12M
+next_review_due: '2027-01-01'

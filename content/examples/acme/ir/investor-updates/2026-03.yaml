@@ -1,0 +1,61 @@
+id: ir/investor-updates/2026-03
+kind: investor_update
+period: "2026-03"
+sent_date: "2026-04-03"
+author: "Alex Chen, CEO"
+distribution:
+  - "Morgan Lee, Sequoia Capital (Board)"
+  - "Jordan Park (Independent Director)"
+  - "Series A investors"
+
+headline: "Q1 close: $5.9M ARR, 200 customers, SOC 2 audit started, EU live."
+
+kpis:
+  arr_end:
+    value: 5900000
+    currency: USD
+    mom_growth_pct: 8.1
+  mrr_end:
+    value: 491667
+    currency: USD
+  new_logos:
+    value: 14
+  churned_logos:
+    value: 1
+  nrr_ltm_pct: 116
+  cac:
+    value: 3900
+    currency: USD
+  ltv:
+    value: 43200
+    currency: USD
+  ltv_cac_ratio: 11.1
+  payback_months: 9.5
+  burn_net:
+    value: 355000
+    currency: USD
+  runway_months: 20
+  headcount: 47
+
+wins:
+  - "Q1 revenue: $1.31M (quarterly), 18% above plan."
+  - "Reached 200 customers (milestone celebrated company-wide)."
+  - "SOC 2 Type I audit kicked off with Vanta; estimated completion Q2."
+  - "EU: 3 paying DACH customers on Business tier; pipeline at €2.1M."
+  - "SAP Business One connector shipped; 4 ENT prospects unblocked."
+
+losses:
+  - "One ENT churn ($18k ACV): Cascade Systems acquired by private equity, platform consolidation."
+  - "Headcount at 47 vs. plan of 52; 3 engineering roles still open."
+
+key_focuses_next_quarter:
+  - "Scale EU GTM: hire EMEA Account Executive."
+  - "SOC 2 Type I completion and public trust page."
+  - "Series B preparation: financial model refresh, data room readiness."
+  - "Ship AI workflow generator (natural-language-to-workflow) — beta for ENT customers."
+
+asks:
+  - ask: "Sequoia Growth intro for Series B Series B lead dialogue — targeting $25M round, Q3-2026."
+    contact: "Morgan Lee"
+  - ask: "Review draft Series B narrative deck — feedback on framing appreciated."
+    contact: "Jordan Park"

@@ -1,0 +1,35 @@
+id: operations/changes/cr-2026-04-001
+entity: entity/acme-corp
+change_class: normal
+change_category: schema_migration
+change_status: verified
+change_risk: medium
+title: Add composite index on workflow_runs(tenant_id, created_at DESC)
+description: >
+  Add composite index to address p99 latency regression on POST /v1/runs
+  identified during incident 2026-04-015. Index covers the primary query
+  path for tenant-scoped run listing and creation timestamp ordering.
+justification: >
+  Mitigates Sev-2 incident; reduces p99 from 8.2s to target ≤ 350ms.
+  Index build via CREATE INDEX CONCURRENTLY — no table lock; zero downtime.
+requestor: people/team/raj-patel
+implementer: people/team/raj-patel
+affected_systems:
+  - security/assets/postgres-prod
+impact_assessment: >
+  No downtime. CREATE INDEX CONCURRENTLY; brief CPU spike during build
+  (~4 minutes). Index storage cost ~180MB. No application changes required.
+rollback_plan: operations/runbooks/postgres-failover
+approvals:
+  - approver: people/team/sarah-kim
+    approver_role: cto
+    decision_at: '2026-04-15'
+    approved: true
+    note: Emergency approval — active incident; verbally confirmed by CTO.
+scheduled_for: '2026-04-15T09:40:00Z'
+implemented_at: '2026-04-15T09:45:00Z'
+verified_at: '2026-04-15T09:55:00Z'
+pir_ref: null
+triggering_incident: operations/incidents/2026-04-015-api-degradation
+bdr_ref: null
+created_at: '2026-04-15'

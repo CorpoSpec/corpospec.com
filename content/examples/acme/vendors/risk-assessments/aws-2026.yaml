@@ -1,0 +1,79 @@
+id: vendors/risk-assessments/aws-2026
+vendor: vendors/aws
+assessment_date: "2026-04-01"
+assessed_by: people/team/maria-rodriguez
+tier: critical
+status: approved
+next_assessment_due: "2027-04-01"
+outcome: approved
+dimensions:
+  - dimension: information_security
+    severity: low
+    score: 1
+    findings:
+      - description: "AWS ISO 27001, SOC 2 Type II, PCI DSS Level 1 reviewed — no exceptions"
+        status: closed
+      - description: "AWS shared responsibility model documented in security runbook"
+        status: closed
+    controls_verified:
+      - "ISO 27001:2022"
+      - "SOC 2 Type II (2025)"
+      - "PCI DSS Level 1"
+      - "Encryption at rest (SSE-S3, RDS encryption) and in transit (TLS 1.3)"
+      - "VPC with private subnets; no public DB endpoints"
+      - "IAM least-privilege policy enforced; no wildcard IAM policies in production"
+  - dimension: privacy
+    severity: low
+    score: 2
+    findings:
+      - description: "AWS GDPR DPA (2023) executed; SCCs incorporated for EU transfer"
+        status: closed
+      - description: "RDS eu-central-1 used for EU customer data; confirmed no cross-region replication to US"
+        status: closed
+    controls_verified:
+      - "AWS GDPR DPA executed"
+      - "EU-US Data Privacy Framework reliance documented"
+      - "Data residency: eu-central-1 for EU tenant data confirmed"
+      - "S3 bucket policies enforce regional restriction"
+  - dimension: financial
+    severity: low
+    score: 1
+    findings:
+      - description: "AWS is a AAA-rated subsidiary of Amazon; financial continuity risk negligible"
+        status: accepted_risk
+    controls_verified:
+      - "Enterprise Discount Program contract ($400k/yr commit) provides pricing lock"
+      - "Reserved Instances purchased for baseline EC2/RDS workloads (1-year, 30% savings)"
+      - "AWS Cost Anomaly Detection alerts configured"
+  - dimension: business_continuity
+    severity: low
+    score: 2
+    findings:
+      - description: "RDS Multi-AZ provides <60s automated failover; tested 2026-Q1"
+        status: closed
+      - description: "us-east-1 AZ outage runbook drafted and tested in tabletop exercise 2026-02"
+        status: closed
+    controls_verified:
+      - "RDS Multi-AZ enabled (us-east-1)"
+      - "Read replica in eu-central-1 for EU tenant reads"
+      - "ECS Fargate for stateless services; auto-scaling to zero and up"
+      - "S3 cross-region replication for critical backups"
+      - "RPO: 1h, RTO: 4h (per governance/decisions/0029-incident-response)"
+  - dimension: environmental
+    severity: low
+    score: 1
+    findings:
+      - description: >
+          AWS 100% renewable energy commitment verified for us-east-1 and
+          eu-central-1. AWS publishes annual Sustainability Report.
+        status: closed
+    controls_verified:
+      - "us-east-1: AWS renewable commitment (wind + solar)"
+      - "eu-central-1: AWS renewable commitment + local grid (low carbon)"
+ddq_ref: null
+evidence_refs:
+  - "vendors/evidence/aws-soc2-2025.pdf"
+  - "vendors/evidence/aws-iso27001-2025.pdf"
+  - "vendors/evidence/aws-gdpr-dpa-signed-2026.pdf"
+  - "vendors/evidence/aws-edp-contract-2026.pdf"
+confidentiality: restricted

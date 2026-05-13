@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://corpospec.com/schemas/v0.13.1/entity.schema.json
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/entity.schema.json
 id: entity/acme-corp
 type: corporation
 business_type: b2b_software
@@ -19,6 +19,8 @@ address:
 founders:
   - people/team/alex-chen
   - people/team/sarah-kim
+subsidiaries:
+  - entity/acme-eu-gmbh
 url: "https://acme-corp.example.com"
 company_purpose: "To develop and operate a workflow automation platform that enables growing teams to eliminate manual processes through AI-powered tools."
 tax_ids:
@@ -30,6 +32,6 @@ contact:
   email: "hello@acme-corp.example.com"
   phone: "+1-415-555-0142"
 number_of_employees:
-  value: 12
+  value: 50
   as_of: "2026-03-01"
 status: active

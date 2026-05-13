@@ -1,0 +1,9 @@
+id: people/skills/typescript
+entity: entity/acme-corp
+skill_family: engineering
+name: TypeScript + React
+description: >
+  Strict-mode TypeScript, React with hooks, Next.js App Router,
+  state management patterns, accessibility (WCAG 2.2 AA), and
+  end-to-end type safety from API layer to component.
+training_refs: []

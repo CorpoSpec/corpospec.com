@@ -1,0 +1,25 @@
+id: people/leave/ledger/raj-patel-2026
+person: people/team/raj-patel
+policy: people/leave/policy/us-unlimited-pto
+balance_days: null
+entries:
+  - date: "2026-01-01"
+    leave_type: vacation
+    days: 1.0
+    leave_status: taken
+    document: null
+  - date: "2026-03-14"
+    leave_type: sick
+    days: 2.0
+    leave_status: taken
+    document: null
+  - date: "2026-05-25"
+    leave_type: vacation
+    days: 5.0
+    leave_status: approved
+    document: null
+  - date: "2026-09-07"
+    leave_type: vacation
+    days: 10.0
+    leave_status: requested
+    document: null

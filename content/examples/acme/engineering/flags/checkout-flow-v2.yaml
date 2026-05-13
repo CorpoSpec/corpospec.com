@@ -1,0 +1,18 @@
+id: engineering/flags/checkout-flow-v2
+key: checkout_flow_v2
+kind: experiment
+state: archived
+description: >
+  Rolled out two-step checkout modal to 100% of traffic after experiment
+  concluded (ship_treatment decision 2026-03-01). Flag archived 2026-04-15
+  after old code path removed.
+product: product/overview
+owner: people/team/raj-patel
+rollout_pct: 100.0
+targeting_rules: []
+created_at: "2026-01-10"
+shipped_at: "2026-03-01"
+archived_at: "2026-04-15"
+experiment_ref: engineering/experiments/checkout-flow-v2
+decision_ref: governance/decisions/0025-onboarding-flow
+platform: growthbook

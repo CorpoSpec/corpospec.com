@@ -1,0 +1,69 @@
+id: knowledge/playbooks/customer-onboarding-week-1
+kind: playbook
+title: "Customer Onboarding — Week 1 Playbook"
+audience: "Customer Success Managers"
+version: "2.1"
+last_updated: "2026-03-01"
+maintained_by: "Devon Hayes (Head of Customer Success)"
+
+description: >
+  Structured week-1 onboarding playbook for new paid customers. Goal: reach
+  'first value' — defined as at least one workflow successfully automated and
+  running in production — within 5 business days of contract close.
+
+success_criteria:
+  - "At least 1 workflow created and active by Day 5"
+  - "All invited users have logged in"
+  - "First integration connected"
+  - "NPS survey sent and ≥1 response collected"
+
+timeline:
+  - day: 1
+    owner: CSM
+    actions:
+      - "Send welcome email with Getting Started guide link and Calendly scheduling link."
+      - "Provision workspace with correct plan and seat count."
+      - "Create customer Slack channel (for Growth tier and above)."
+      - "Review customer ICP data — identify top 2 use-case hypotheses."
+
+  - day: 2
+    owner: CSM
+    actions:
+      - "Kickoff call (30 min): introductions, understand current process, identify first workflow target."
+      - "Share integration checklist — identify the 1–2 systems they need connected."
+      - "Share security overview if ENT tier."
+      - "Record kickoff notes in CRM under 'Kickoff Notes' field."
+
+  - day: 3
+    owner: Customer + CSM
+    actions:
+      - "Customer connects first integration (guided async via docs or screen-share)."
+      - "CSM available in Slack for real-time questions."
+      - "CSM sends 'Day 3 check-in' email if customer has not connected an integration."
+
+  - day: 4
+    owner: Customer + CSM
+    actions:
+      - "Customer builds first workflow from template or scratch."
+      - "CSM reviews workflow draft if customer requests — flag obvious issues."
+      - "For ENT: CSM shares advanced template library specific to the customer's use case."
+
+  - day: 5
+    owner: CSM
+    actions:
+      - "First value check: verify at least 1 workflow is active and has executed at least once."
+      - "Send Day 5 NPS survey (single question: 'How likely are you to recommend Acme?')."
+      - "Schedule Week 2 check-in call (45 min: review first workflow results, identify expansions)."
+      - "If first value not achieved: escalate to Head of CS and schedule same-day troubleshooting call."
+
+escalation_triggers:
+  - "No login by Day 2 → CSM calls primary contact"
+  - "No integration connected by Day 3 → CSM offers screen-share session"
+  - "No workflow active by Day 5 → escalate to Head of CS"
+  - "Customer expresses dissatisfaction at any point → immediate red-account flag"
+
+tools:
+  - "CRM (Attio): log all interactions"
+  - "Slack: customer channel for real-time support"
+  - "Calendly: scheduling"
+  - "Acme Admin: workspace provisioning and monitoring"

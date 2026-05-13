@@ -1,0 +1,19 @@
+id: people/benefits/plans/us-wellness-stipend-2026
+entity: entity/acme-corp
+category: wellness
+name: Monthly Wellness Stipend 2026
+carrier: null
+funding: direct_reimbursement
+employer_share_pct: 100.0
+employer_cap_per_period: 300.0
+period_currency: USD
+waiting_period_months: 0
+statutory_basis: null
+jurisdiction: US
+plan_document: null
+effective_from: "2026-01-15"
+effective_to: null
+notes: >
+  $300/month taxable reimbursement for eligible wellness expenses:
+  gym membership, fitness equipment, mental health apps, ergonomic
+  home-office equipment. Submitted via Expensify monthly.

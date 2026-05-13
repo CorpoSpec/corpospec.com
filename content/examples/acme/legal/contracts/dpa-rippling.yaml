@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-rippling
+type: vendor
+title: "Data Processing Agreement — Rippling People Center, Inc."
+counterparty: people/team/lisa-park
+status: active
+effective_date: "2025-07-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+key_terms:
+  - "Rippling DPA v2.0 (GDPR/CCPA)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Data category: employee personal data (HR, payroll, benefits, identity)"
+  - "Data residency: US; EU employee data handled under SCCs when applicable"
+  - "Rippling acts as data processor for employee records"
+  - "Security: SOC 2 Type II, AES-256 encryption at rest"
+  - "Deletion: 30 days post-contract termination, extendable for tax record obligations"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr

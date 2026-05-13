@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/person.schema.json
+id: people/team/morgan-lee
+type: Person
+name:
+  given: "Morgan"
+  family: "Lee"
+  full: "Morgan Lee"
+email: "morgan.lee@sequoiacap.example.com"
+role: people/roles/board-observer
+unit: executive
+employer: null
+start_date: "2026-01-15"
+end_date: null
+status: active
+bio: "Partner at Sequoia Capital. Board observer seat per Series A SPA. Focuses on GTM and international expansion."
+custom:
+  employment_type: advisor

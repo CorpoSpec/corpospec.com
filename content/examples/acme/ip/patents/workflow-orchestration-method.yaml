@@ -1,0 +1,31 @@
+id: ip/patents/workflow-orchestration-method
+kind: patent
+title: "Method and System for AI-Driven Dynamic Workflow Orchestration with Contextual Branching"
+status: pending
+type: utility_application
+jurisdiction: US
+registry: USPTO
+application_number: "18/412,774"
+filing_date: "2026-01-08"
+priority_date: "2025-07-08"
+claims_count: 22
+independent_claims_count: 3
+abstract: >
+  A computer-implemented method for dynamically orchestrating multi-step business
+  workflows using a machine learning model that selects execution branches based on
+  contextual signals including historical run data, user role, and real-time system
+  state. The method eliminates manual branch-selection steps, reducing median
+  workflow completion time by 60% in empirical testing.
+inventors:
+  - name: "Sarah Kim"
+    role: primary_inventor
+  - name: "Blake Nguyen"
+    role: co_inventor
+classification_cpc:
+  - "G06F 9/4881"
+  - "G06N 20/00"
+owner_entity: entity/acme-corp
+ip_counsel: "Cooley LLP"
+assignment_recorded: true
+prosecution_stage: "Pre-examination — awaiting examiner assignment"
+note: "Claims drafted to capture both the core orchestration method and the ML model selection sub-system as independent claims."

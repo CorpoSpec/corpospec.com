@@ -1,0 +1,18 @@
+id: people/stakeholders/dr-wei-zhang
+type: advisor
+name: "Dr. Wei Zhang"
+email: "wei.zhang@acme-advisors.example.com"
+role_description: "Technical Advisor — ML infrastructure and data pipeline architecture"
+engagement_start: "2026-02-01"
+compensation:
+  type: equity
+  equity_pct: "0.1"
+  cliff_months: 12
+  vest_years: 2
+  note: "0.1% over 2 years, 1-year cliff. Standard advisor agreement."
+expertise:
+  - "Large-scale ML infrastructure (ex-Google Brain)"
+  - "Data pipeline architecture at petabyte scale"
+  - "Vector database and embedding system design"
+engagement_cadence: "Monthly 1-hour session with CTO + VP Engineering"
+contract_ref: people/contracts/templates/us-independent-contractor

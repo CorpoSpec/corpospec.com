@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-ropa-marketing-leads
+name: "GDPR ROPA — Marketing Leads"
+description: >
+  Record of Processing Activity (Art. 30 GDPR) for personal data of
+  prospective customers acquired through marketing channels including website
+  forms, content gating, conference badges, and outbound sales research.
+  Consent-gated for EU/EEA contacts.
+status: active
+scope: "EU/EEA data subjects who have expressed interest in Acme's product or whose contact data is held for prospecting"
+owner: people/team/alex-chen
+effective_date: "2026-01-01"
+review_date: "2027-01-01"
+provisions:
+  - "Controller: Acme Corp, Inc."
+  - "Legal basis: Art. 6(1)(a) GDPR — consent (EU contacts); Art. 6(1)(f) — legitimate interest (US contacts)"
+  - "Data categories: name, work email, job title, company, IP address, engagement history"
+  - "Retention: 3 years from last engagement if opted in; 30 days if consent declined"
+  - "Recipients: CRM (Attio), email marketing platform"
+  - "Right to object: honored within 72 hours; processed via support ticket or email"
+  - "Consent withdrawal: opt-out link in every marketing email; effective immediately"
+custom:
+  processors:
+    - name: "Attio"
+      service: "CRM and pipeline management"
+      dpa_status: signed
+      hosting_region: "EU"
+      data_categories: ["name", "work email", "company", "engagement history"]
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr

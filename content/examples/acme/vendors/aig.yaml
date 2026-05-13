@@ -1,0 +1,32 @@
+id: vendors/aig
+legal_name: "American International Group, Inc."
+display_name: "AIG"
+jurisdiction: US
+category: insurance
+relationship: vendor_only
+status: active
+registered_address:
+  street: "1271 Avenue of the Americas"
+  city: "New York"
+  state: NY
+  postal_code: "10020"
+  country: US
+primary_contact: "tech-insurance@aig.com"
+master_agreement: null
+dpa_ref: null
+gdpr_role: controller
+processing_record_refs: []
+internal_owner: people/team/lisa-park
+last_risk_assessment: null
+spend_currency: USD
+spend_per_year: 32000
+onboarded_at: "2026-02-01"
+terminated_at: null
+certifications: []
+notes: >
+  Cyber liability insurance ($5M limit, $50k retention) and D&O
+  insurance ($3M limit post-Series A). Policy reviewed by
+  vendors/wilson-sonsini. Annual renewal cycle.
+  Cyber policy covers: data breach response costs, ransomware,
+  business interruption. D&O policy covers directors and officers
+  of entity/acme-corp and entity/acme-eu-gmbh.

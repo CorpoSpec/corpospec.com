@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/scenarios/2026-upside
+period:
+  type: duration
+  start: "2026-01-01"
+  end: "2026-12-31"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 7500000
+  cost_of_revenue: 1500000
+  gross_profit: 6000000
+  operating_expenses:
+    research_and_development: 6500000
+    sales_and_marketing: 3800000
+    general_and_administrative: 1900000
+  operating_income: -6200000
+  net_income: -6200000
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 2800000
+    accounts_receivable: 750000
+    total_assets: 3550000
+  liabilities:
+    accounts_payable: 180000
+    total_liabilities: 180000
+  equity:
+    total_equity: 3370000
+
+cash_flow:
+  operating: -6200000
+  investing: -600000
+  financing: 0
+  net_change: -6800000
+
+custom:
+  description: >
+    2026 upside scenario. ARR grows from $5M to $10M (100% YoY).
+    Driven by two enterprise logo wins > $500K ACV, EU expansion
+    contributing $800K ARR by Q4. Gross margin improves to 80% on
+    infrastructure efficiencies. Series B closes Q3 2026.
+  stage: series-a
+  assumptions:
+    - id: asm-2026-up-001
+      description: "ARR reaches $10M by Dec 2026 (100% YoY growth)."
+      evidence: "Two enterprise pipeline opportunities each > $500K ACV in Q1 stage."
+      invalidation_condition: "Enterprise deals slip to 2027 or ACME EU delayed beyond Q2."
+    - id: asm-2026-up-002
+      description: "EU GmbH operational by Q2 2026, contributing $800K ARR by year-end."
+      evidence: "Notary deed scheduled 2026-03-01; first EU customer pilot under NDA."
+      invalidation_condition: "GmbH formation delayed past 2026-05-01."

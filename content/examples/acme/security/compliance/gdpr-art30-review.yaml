@@ -1,0 +1,27 @@
+id: security/compliance/gdpr-art30-review
+entity: entity/acme-corp
+regime: gdpr
+jurisdiction: DE
+title: Annual GDPR Article 30 Records of Processing Activities review
+citation: GDPR Art. 30(1)
+description: >
+  Review all records of processing activities (ROPA) at least annually or
+  upon material change in processing scope. Acme Corp GmbH (Berlin) processes
+  personal data of EU-based customers and their end users as data controller;
+  updates required when new processing activities are introduced, vendors
+  change, or retention periods are revised.
+cadence: annual
+owner: people/team/maria-rodriguez
+next_due: '2027-04-01'
+last_satisfied_on: '2026-04-01'
+status: satisfied
+evidence_refs:
+  - legal/compliance/gdpr
+control_refs:
+  - security/controls/vendor-management
+  - security/controls/access-management
+procedure_refs:
+  - operations/sops/onboard-new-vendor
+bdr_ref: governance/decisions/0027-compliance-gdpr
+penalty_exposure: Up to 4% of global annual turnover or €20M (Art. 83(5) GDPR)
+schedule_anchor: April 1 each year

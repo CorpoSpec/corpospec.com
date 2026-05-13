@@ -1,0 +1,26 @@
+id: security/assets/aws-root-account
+entity: entity/acme-corp
+asset_kind: cloud_resource
+name: AWS root account (production)
+description: >
+  AWS organization root account. Used only for billing and organization-level
+  operations. Root credentials stored in hardware-backed vault; hardware TOTP
+  MFA enforced. No IAM users or access keys attached to root. SCPs enforce
+  guardrails across member accounts.
+canonical_ref: security/controls/access-management
+owner: people/team/maria-rodriguez
+custodian: people/team/sarah-kim
+confidentiality: top_secret
+pii_class: none
+criticality: mission_critical
+location: AWS global
+retention_policy: >
+  Root credentials rotated annually. Break-glass access procedure documented
+  in operations/sops/handle-data-breach. CloudTrail root-usage alerts active.
+disposal_method: key_destruction
+regulatory_implications: 'SOC 2 CC6.1; ISO 27001 A.5.16 + A.5.18; CIS AWS Foundations Benchmark'
+lifecycle: active
+provisioned_on: '2025-06-20'
+retired_on: null
+last_reviewed: '2026-04-10'
+next_review_due: '2026-10-10'

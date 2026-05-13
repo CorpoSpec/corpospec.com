@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/legal-action-item.schema.json
+id: legal/action-items/de-transparenzregister
+item: "Register Acme Corp GmbH UBO in German Transparenzregister"
+status: pending
+priority: high
+due_date: "2026-05-15"
+note: >
+  GwG § 18-20 requires GmbH registration in the Transparenzregister within
+  one month of Handelsregister entry. Sole shareholder: Acme Corp, Inc.
+  (beneficial owner: Alex Chen 42%, Sarah Kim 28%, Sequoia 18.75%,
+  Index 6.25%, ESOP pool 5%). Notification via bundesanzeiger.de/transparenzregister.
+  Hengeler Mueller coordinating.
+custom:
+  jurisdiction: "DE"
+  entity: entity/acme-eu-gmbh
+  dependencies:
+    - "Handelsregister entry (HRB number) must be issued first"
+    - "Beneficial ownership analysis by Hengeler Mueller"

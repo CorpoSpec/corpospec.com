@@ -1,0 +1,47 @@
+id: operations/bcps/payroll-vendor-backup
+entity: entity/acme-corp
+business_process: operations/processes/release-train
+criticality: critical
+mtpd_hours: 72
+rto_hours: 24
+mbco: >
+  Manual payroll calculation and ACH wire transfer via Acme's operating
+  bank account covers one payroll cycle. Covers full gross payroll for all
+  50 employees if both Rippling and Gusto are unavailable.
+owner: people/team/lisa-park
+crisis_team:
+  - people/team/lisa-park
+  - people/team/alex-chen
+dependencies:
+  - kind: vendor
+    ref_path: integrations/sources/accounting-puzzle
+    backup_available: true
+    backup_arrangement: >
+      Manual payroll spreadsheet maintained by CFO; ACH via Sparkasse account.
+      Guideline 401(k) contributions deferred one cycle maximum under plan terms.
+  - kind: system
+    ref_path: security/assets/postgres-prod
+    backup_available: true
+    backup_arrangement: >
+      HR data exported monthly to encrypted S3 bucket; recoverable for manual
+      computation if primary database is unavailable.
+  - kind: vendor
+    ref_path: integrations/sources/banking
+    backup_available: true
+    backup_arrangement: >
+      ACH wire instructions pre-approved with Comerica; authorization form stored
+      offline in encrypted vault accessible to CFO and CEO.
+runbook_ref: null
+tests:
+  - test_kind: tabletop
+    conducted_on: '2026-02-15'
+    conducted_by: people/team/lisa-park
+    objectives_met: true
+    findings:
+      - ACH wire form was outdated — updated 2026-02-16 and stored in vault
+      - Backup payroll spreadsheet lacked benefits deduction formulas — corrected
+    report_ref: null
+bcp_status: approved
+effective_from: '2026-01-01'
+next_review_due: '2027-01-01'
+control_basis: 'ISO 22301:2019 Cl. 8.2 + 8.4; SOC 2 CC9.1'

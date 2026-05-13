@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-ropa-employees-eu
+name: "GDPR ROPA — EU Employees"
+description: >
+  Record of Processing Activity (Art. 30 GDPR) for personal data of employees
+  based in the EU or EEA who are employed by or seconded to Acme Corp GmbH
+  (Berlin). Covers the full employment lifecycle from hiring through offboarding.
+status: active
+scope: "EU/EEA-based employees and contractors of Acme Corp GmbH"
+owner: people/team/lisa-park
+effective_date: "2026-03-01"
+review_date: "2027-03-01"
+provisions:
+  - "Controller: Acme Corp GmbH, Berlin"
+  - "Legal basis: Art. 6(1)(b) GDPR (contract); Art. 9(2)(b) GDPR for health data"
+  - "Data categories: identity, contact, payroll, bank details, health (sick leave), performance"
+  - "Retention: payroll records 10 years (§ 257 HGB); personnel files 5 years post-departure"
+  - "Recipients: Rippling (HRIS/payroll), KPMG (audit), Finanzamt (tax)"
+  - "Third-country transfers: Rippling — US via SCCs Module 2"
+  - "Data minimization: health data restricted to HR lead; payroll data restricted to CFO + HR"
+custom:
+  processors:
+    - name: "Rippling People Center"
+      service: "HRIS, payroll, and benefits administration"
+      dpa_status: signed
+      hosting_region: "US (SCCs)"
+      data_categories: ["identity", "contact", "payroll", "bank details", "benefits"]
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr

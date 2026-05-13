@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/bank-account.schema.json
+id: financials/bank-accounts/jpmc-backup
+entity: entity/acme-corp
+accounts:
+  - name: JPMC Operating Backup
+    bank: JPMorgan Chase
+    currency: USD
+    type: operating
+    status: active
+    iban_last4: "3341"
+    opened: "2023-04-01"
+    closed: null
+  - name: JPMC T&E Expense
+    bank: JPMorgan Chase
+    currency: USD
+    type: operating
+    status: active
+    iban_last4: "6712"
+    opened: "2026-02-01"
+    closed: null

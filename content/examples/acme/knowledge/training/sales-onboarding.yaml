@@ -1,0 +1,80 @@
+id: knowledge/training/sales-onboarding
+kind: training_module
+title: "Sales Onboarding Program"
+audience: "New Account Executives and SDRs"
+duration_weeks: 4
+version: "1.2"
+last_updated: "2026-02-01"
+maintained_by: "Taylor Brooks (VP Sales)"
+
+objectives:
+  - "Understand Acme's product, positioning, and competitive landscape."
+  - "Execute the Acme sales motion from outbound/inbound to close."
+  - "Handle common objections with confidence and evidence."
+  - "Achieve first independent deal close within 60 days."
+
+weeks:
+  - week: 1
+    theme: "Company, product, and customer"
+    activities:
+      - "Day 1: Company orientation (mission, history, culture, team)"
+      - "Day 1–2: Product deep-dive with CTO — build 3 workflows from scratch"
+      - "Day 2–3: Shadow 3 CSM customer calls"
+      - "Day 3–4: Review top 10 customer stories and use cases"
+      - "Day 5: Pass product knowledge quiz (score ≥80%)"
+    deliverables:
+      - "Annotated demo environment set up"
+      - "Product quiz passed"
+
+  - week: 2
+    theme: "Sales motion and tools"
+    activities:
+      - "CRM (Attio) training — deal stages, activity logging, forecasting"
+      - "Review ICP definition and qualification criteria"
+      - "Study pricing plans (commercial/pricing/plans.yaml) — all four tiers internalized"
+      - "Shadow 5 discovery calls with senior AE"
+      - "Review objection handling playbook"
+    deliverables:
+      - "First 25 outbound prospects sequenced"
+      - "ICP scoring exercise completed"
+
+  - week: 3
+    theme: "Live pipeline and objection handling"
+    activities:
+      - "Take 3 discovery calls (co-facilitated with senior AE)"
+      - "Role-play all 5 common objections with VP Sales"
+      - "Complete security questionnaire walk-through with CTO"
+      - "Review top 3 closed/won deals and 3 closed/lost deals"
+    deliverables:
+      - "First self-sourced opportunity created in CRM"
+      - "Role-play sign-off from VP Sales"
+
+  - week: 4
+    theme: "Independence"
+    activities:
+      - "Own 2 deals from discovery through to demo stage"
+      - "Submit weekly forecast in CRM"
+      - "1:1 with VP Sales — review pipeline, identify coaching areas"
+      - "Complete security awareness training module"
+    deliverables:
+      - "2 opportunities progressed to 'Demo' stage"
+      - "30-60-90 day plan submitted to VP Sales"
+
+certifications_required:
+  - "Product knowledge quiz (Week 1)"
+  - "Objection handling role-play sign-off (Week 3)"
+  - "Security awareness training (Week 4)"
+
+ramp_expectations:
+  month_1:
+    quota_pct: 0
+    focus: "Learning and first opportunities"
+  month_2:
+    quota_pct: 25
+    focus: "First deals in final stage"
+  month_3:
+    quota_pct: 50
+    focus: "First close"
+  month_4_plus:
+    quota_pct: 100
+    focus: "Full ramp"

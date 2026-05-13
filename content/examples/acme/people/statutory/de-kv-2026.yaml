@@ -1,0 +1,16 @@
+id: people/statutory/de-kv-2026
+jurisdiction: DE
+kind: de_kv
+effective_year: 2026
+rate_pct: 14.6
+employer_share_pct: 7.3
+bearer: shared
+annual_cap: 66150.0
+lower_threshold: null
+assessment_currency: EUR
+statutory_basis: "SGB V § 249"
+regulation_ref: null
+notes: >
+  General contribution rate 14.6% (employer + employee 7.3% each).
+  Additional contribution (Zusatzbeitrag) varies by Krankenkasse;
+  average 2026: ~1.7%, split equally. Beitragsbemessungsgrenze 2026: €5,512.50/month.

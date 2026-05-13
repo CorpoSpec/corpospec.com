@@ -1,0 +1,17 @@
+id: people/training/modules/anti-bribery
+entity: entity/acme-corp
+category: compliance
+name: Anti-bribery and corruption training
+description: >
+  FCPA (15 U.S.C. § 78dd-1), UK Bribery Act 2010, and §299 StGB
+  requirements. Covers gift policy, third-party due diligence,
+  hospitality limits, and reporting channels.
+delivery_mode: elearning
+duration_minutes: 30
+mandatory: true
+mandatory_for_roles: []
+recertification_months: 24
+statutory_basis: "FCPA 15 U.S.C. § 78dd-1; UK Bribery Act 2010 s.7; § 299 StGB"
+builds_skills: []
+effective_from: "2026-01-01"
+effective_to: null

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/legal-action-item.schema.json
+id: legal/action-items/eu-ai-act-classification
+item: "Complete EU AI Act Article 6 risk classification for AI Workflow Assistant feature"
+status: done
+priority: medium
+due_date: "2026-03-01"
+note: >
+  AI Workflow Assistant feature classified as NOT high-risk per EU AI Act
+  Annex III. Feature provides advisory automation suggestions; no decisions
+  with legal or similarly significant effects on natural persons. Classification
+  documented in DPIA (legal/policies/gdpr-dpia-ai-workflow). Re-evaluate if
+  feature scope expands to include automated decision-making in HR, credit,
+  or access control contexts. Next review: 2027-02-01 or on material scope change.
+custom:
+  jurisdiction: "EU"
+  entity: entity/acme-corp
+  dependencies:
+    - "DPIA completion (legal/policies/gdpr-dpia-ai-workflow)"

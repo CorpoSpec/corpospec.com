@@ -1,0 +1,38 @@
+id: people/ladders/customer-success
+entity: entity/acme-corp
+name: Customer Success ladder
+skill_family_ref: null
+levels:
+  - ordinal: 1
+    title: Customer Success Manager
+    scope: Owns 20-40 accounts. Onboarding, QBRs, renewal execution.
+    required_skills:
+      - skill: people/skills/customer-success-playbooks
+        minimum: competent
+    typical_yir: 2.5
+    comp_band_ref: people/roles/customer-success-manager
+  - ordinal: 2
+    title: Senior Customer Success Manager
+    scope: Owns strategic accounts >$100k ACV. Drives expansion and exec relationships.
+    required_skills:
+      - skill: people/skills/customer-success-playbooks
+        minimum: proficient
+    typical_yir: 3.0
+    comp_band_ref: people/roles/customer-success-manager
+    promotion_criteria:
+      - "Net revenue retention >120% across owned book for 2 consecutive quarters"
+      - "Independently navigated at least 2 at-risk enterprise renewals successfully"
+      - "Contributed to playbook improvement adopted by full CS team"
+  - ordinal: 3
+    title: Director of Customer Success
+    scope: Team leadership. Owns CS strategy, tooling, and capacity planning.
+    required_skills:
+      - skill: people/skills/customer-success-playbooks
+        minimum: expert
+    typical_yir: null
+    comp_band_ref: people/roles/customer-success-manager
+    promotion_criteria:
+      - "Built CS team to 3+ CSMs with consistent NRR >115%"
+      - "Established health score methodology adopted company-wide"
+effective_from: "2026-01-15"
+effective_to: null

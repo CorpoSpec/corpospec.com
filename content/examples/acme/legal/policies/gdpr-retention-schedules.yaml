@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-retention-schedules
+name: "GDPR Data Retention Schedules"
+description: >
+  Defines the authoritative retention periods for each personal data category
+  processed by Acme Corp, Inc. and Acme Corp GmbH. Retention periods derive
+  from legal obligations, contractual necessity, and legitimate interest.
+  Where multiple legal bases apply, the longest mandatory period governs.
+status: active
+scope: "All data categories containing personal data processed by Acme globally"
+owner: people/team/david-tanaka
+effective_date: "2026-01-01"
+review_date: "2027-01-01"
+provisions:
+  - "Marketing consent records: 3 years from last consent action (GDPR Art. 7(1) burden of proof)"
+  - "Customer account data: 3 years post-contract termination (contractual limitation period)"
+  - "Billing and financial records: 7 years (IRS publication 583; DE § 257 HGB)"
+  - "Employee HR records: 10 years post-departure (DE § 257 HGB + employment law)"
+  - "Payroll records (EU): 10 years (DE Abgabenordnung § 147)"
+  - "Support tickets: 3 years (statute of limitations for contract claims)"
+  - "Application logs (non-personal): 90 days rolling"
+  - "Error telemetry (Sentry): 90 days per DPA"
+  - "Monitoring data (Datadog): 15 months rolling per DPA"
+  - "Session tokens: purged on expiry (15 min access + 7 day refresh)"
+  - "Deleted user data: anonymized within 30 days of verified deletion request"
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr
+  - governance/decisions/0008-data-privacy

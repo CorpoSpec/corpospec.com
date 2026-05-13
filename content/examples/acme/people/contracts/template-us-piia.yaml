@@ -1,0 +1,20 @@
+id: people/contracts/templates/us-piia
+entity: entity/acme-corp
+template_kind: piia
+jurisdiction: US
+employment_kind: full-time
+description: >
+  Proprietary Information and Inventions Agreement. Assigns work
+  product and inventions related to Acme's business to the company.
+  Excludes inventions developed entirely on personal time with no
+  company resources and unrelated to company business (CA Labor Code
+  § 2870). Includes non-solicitation (12 months post-departure).
+key_clauses:
+  - "IP assignment — broad, CA § 2870 carve-out"
+  - "Confidentiality obligation — indefinite"
+  - "Non-solicitation — employees and customers, 12 months"
+  - "Disclosure of prior inventions schedule"
+version: "2026-01"
+approved_by: people/team/david-tanaka
+effective_from: "2026-01-15"
+pii_class: internal

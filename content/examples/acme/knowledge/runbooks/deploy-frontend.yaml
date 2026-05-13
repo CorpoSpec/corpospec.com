@@ -1,0 +1,54 @@
+id: knowledge/runbooks/deploy-frontend
+kind: runbook
+title: "Deploy Frontend (Acme Web App)"
+category: deployment
+severity_if_skipped: high
+last_reviewed: "2026-02-15"
+reviewed_by: "Blake Nguyen"
+
+prerequisites:
+  - "AWS CLI configured with `acme-deploy` profile"
+  - "GitHub Actions CI green on target branch"
+  - "On-call engineer notified if deploying during business hours"
+
+steps:
+  - step: 1
+    action: "Verify CI passes on the target branch."
+    command: "gh run list --branch <branch> --workflow ci.yml --limit 1"
+    expected_output: "Status: completed, Conclusion: success"
+    on_failure: "Do not proceed. Investigate CI failures."
+
+  - step: 2
+    action: "Create a deployment tag."
+    command: "git tag deploy/<date>-<short-sha> && git push origin --tags"
+    notes: "Use format: deploy/2026-03-15-a1b2c3d"
+
+  - step: 3
+    action: "Trigger the production deploy workflow."
+    command: "gh workflow run deploy-frontend.yml -f environment=production -f tag=<tag>"
+    notes: "Monitor via: gh run watch"
+
+  - step: 4
+    action: "Verify deployment health."
+    url: "https://acme-corp.example.com/api/health"
+    expected_response: '{"status":"ok","version":"<expected-version>"}'
+    timeout_seconds: 120
+
+  - step: 5
+    action: "Smoke test critical paths."
+    checklist:
+      - "Login flow completes without error"
+      - "Workflow list loads within 2 seconds"
+      - "Create new workflow — save and activate succeeds"
+      - "Run history displays last 5 runs"
+
+  - step: 6
+    action: "Post deployment note to #engineering Slack channel."
+    template: ":rocket: Frontend deployed to production — <tag> — all smoke tests passing."
+
+rollback:
+  procedure: "Trigger deploy-frontend.yml with the previous stable tag."
+  command: "gh workflow run deploy-frontend.yml -f environment=production -f tag=<previous-tag>"
+  rto_minutes: 5
+
+slo_impact: "This runbook touches the user-facing frontend. Any deployment during 09:00–18:00 PT must be flagged in the #incidents channel."

@@ -1,0 +1,89 @@
+id: security/breaches/2026-04-001-phishing
+entity: entity/acme-corp
+kind: data_breach
+severity: medium
+status: closed
+title: Phishing attack compromised one employee account with temporary access to customer records
+summary: >
+  A spear-phishing email impersonating Stripe support led one accounts-payable
+  employee to submit credentials to a lookalike domain. The attacker used the
+  session to access 47 customer billing records (company name, primary billing
+  contact name, billing email, subscription tier) for approximately 38 minutes
+  before Datadog anomaly detection triggered a PagerDuty page. Affected records
+  belonged to EU-based customers, triggering GDPR Art. 33 notification obligations.
+  No payment card data or authentication credentials were accessed.
+detected_at: '2026-04-15'
+occurred_at: '2026-04-15'
+contained_at: '2026-04-15'
+affected:
+  systems:
+    - operations/services/api
+    - security/assets/postgres-prod
+  data_categories:
+    - contact_information
+    - billing_metadata
+    - company_name
+  subject_categories:
+    - b2b_customers
+  approximate_subject_count: 47
+  approximate_record_count: 47
+timeline:
+  - at: '2026-04-15T14:23:00Z'
+    actor: people/team/casey-lin
+    note: Employee submitted credentials to phishing domain acme-corp-stripe.example (since taken down).
+  - at: '2026-04-15T14:27:00Z'
+    actor: people/team/casey-lin
+    note: Attacker authenticated using stolen credentials; Datadog user-behaviour anomaly alert fired within 4 minutes.
+  - at: '2026-04-15T15:01:00Z'
+    actor: people/team/raj-patel
+    note: On-call received PagerDuty page; session forcibly terminated, account locked.
+  - at: '2026-04-15T15:15:00Z'
+    actor: people/team/maria-rodriguez
+    note: CISO notified; incident declared; affected record set identified via audit log.
+  - at: '2026-04-15T17:00:00Z'
+    actor: people/team/maria-rodriguez
+    note: Scope confirmed — 47 EU customer billing records accessed; no PAN, no auth credentials.
+  - at: '2026-04-16T09:00:00Z'
+    actor: people/team/maria-rodriguez
+    note: Legal counsel (David Tanaka) engaged to advise on Art. 33 filing timeline.
+  - at: '2026-04-16T14:00:00Z'
+    actor: people/team/david-tanaka
+    note: Art. 33 notification to Berliner Beauftragte für Datenschutz (BfDI) filed; ref BfDI-2026-04-ACM-001.
+  - at: '2026-04-17T10:00:00Z'
+    actor: people/team/maria-rodriguez
+    note: Art. 34 assessment concluded — risk to affected individuals assessed as low (no financial or identity data accessed); Art. 34 notification to data subjects not required.
+  - at: '2026-04-22T12:00:00Z'
+    actor: people/team/raj-patel
+    note: Follow-up hardening deployed — FIDO2 MFA enforced at login; phishing-resistant authenticators required for all production access.
+  - at: '2026-04-30T09:00:00Z'
+    actor: people/team/maria-rodriguez
+    note: Incident closed; post-mortem finalised; BfDI follow-up inquiry responded to.
+is_personal_data_breach: true
+art33_notified_at: '2026-04-16'
+art33_filing_ref: legal/gdpr/art33/2026-04-001
+art34_notified_at: null
+art34_skip_reason: >
+  Risk to data subjects assessed as low — accessed data limited to business
+  contact details and subscription tier; no special categories, financial data,
+  or authentication credentials exposed. Unlikely to result in high risk to
+  natural persons per GDPR Art. 34(1).
+nis2_early_warning_at: null
+nis2_notification_at: null
+nis2_final_report_at: null
+root_cause: >
+  Spear-phishing email bypassed email security gateway; targeted employee had
+  not yet completed FIDO2 hardware-key rollout scheduled for following week.
+  Session-anomaly detection fired within 4 minutes — containment was fast but
+  38-minute access window sufficient for limited data exposure.
+lessons_learned: >
+  Accelerate FIDO2 rollout — zero legacy TOTP accounts in production by
+  2026-05-01. Add phishing-domain monitoring for acme-corp.example lookalikes
+  via Datadog Synthetics. Mandatory phishing-simulation training quarterly.
+  Reduce anomaly-to-page latency target from 5 min to 2 min for authentication
+  anomaly class.
+postmortem_ref: operations/postmortems/2026-04-15-phishing.md
+follow_up_refs:
+  - operations/change_requests/cr-2026-04-003-fido2-rollout
+confidentiality: restricted
+created_at: '2026-04-15'
+last_updated: '2026-04-30'

@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-openai
+type: vendor
+title: "Data Processing Agreement — OpenAI, L.L.C."
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2025-10-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: false
+dispute_resolution: arbitration
+key_terms:
+  - "OpenAI Data Processing Addendum v2.0 (GDPR/CCPA compliant)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Zero data retention API option enabled (API calls not used to train models)"
+  - "Data category: user-submitted workflow descriptions (pseudonymised at edge)"
+  - "Data residency: US only; EU-to-US transfer via SCCs (Module 2)"
+  - "Security measures: OpenAI Trust Portal; SOC 2 Type II"
+  - "Deletion: immediate (API stateless); no persistent storage of prompts"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0021-ai-integration
+  - governance/decisions/0027-compliance-gdpr

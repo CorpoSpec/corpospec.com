@@ -1,0 +1,69 @@
+id: mcp/tools/list-integrations
+kind: mcp_tool
+name: "list_integrations"
+server: mcp/servers/acme-api
+description: >
+  Returns the list of integration definitions available in the Acme platform,
+  with connection status for the authenticated workspace. Useful for agents
+  building workflows that need to verify which systems are available before
+  constructing workflow steps.
+
+access_roles:
+  - readonly
+  - engineering
+  - leadership
+
+rate_limit_rpm: 60
+
+input_schema:
+  type: object
+  properties:
+    filter_connected:
+      type: boolean
+      description: "If true, return only integrations the workspace has connected. Default: false."
+    category:
+      type: string
+      enum: [crm, erp, communication, storage, analytics, billing, custom]
+      description: "Filter by integration category. Optional."
+  additionalProperties: false
+
+output_schema:
+  type: object
+  properties:
+    integrations:
+      type: array
+      items:
+        type: object
+        properties:
+          service_slug:
+            type: string
+            description: "Machine-readable integration identifier (e.g. 'salesforce', 'slack')."
+          display_name:
+            type: string
+          category:
+            type: string
+          connected:
+            type: boolean
+            description: "Whether this workspace has an active connection for this integration."
+          connection_status:
+            type: string
+            enum: [active, error, not_connected]
+          last_used_at:
+            type: string
+            format: date-time
+            nullable: true
+          docs_url:
+            type: string
+            format: uri
+    total_available:
+      type: integer
+    total_connected:
+      type: integer
+
+audit_log_on_call: true
+fields_logged: [workspace_id, filter_applied, result_count, latency_ms]
+
+errors:
+  - code: "UNAUTHORIZED"
+    http_status: 401
+    when: "JWT is missing, expired, or lacks required scope."

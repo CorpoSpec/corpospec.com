@@ -1,0 +1,64 @@
+id: sustainability/disclosures/tcfd-2026
+name: "TCFD Climate Risk Disclosure 2026"
+entity: entity/acme-corp
+framework: tcfd
+reporting_period_start: "2026-01-01"
+reporting_period_end: "2026-12-31"
+disclosure_status: draft
+governance:
+  board_oversight: >
+    The Board of Directors receives a sustainability briefing at the
+    annual strategy offsite (Q1). Climate risk is included as a
+    standing item in the governance/risk/register.yaml risk register.
+    No dedicated sustainability committee; oversight sits with the
+    Audit & Risk Committee chair (governance/board/members.yaml).
+  management_role: >
+    The CISO (people/team/maria-rodriguez) owns operational climate risk
+    (data center resilience, extreme weather business continuity).
+    The CFO (people/team/lisa-park) owns financial materiality assessment.
+strategy:
+  identified_risks:
+    - type: transition
+      horizon: short_term
+      description: "Carbon pricing on cloud spend if AWS passes cost through"
+      financial_impact_usd_low: 5000
+      financial_impact_usd_high: 25000
+      likelihood: possible
+    - type: transition
+      horizon: medium_term
+      description: "EU CSRD reporting obligations for EU subsidiary once thresholds met"
+      financial_impact_usd_low: 80000
+      financial_impact_usd_high: 200000
+      likelihood: likely
+    - type: physical
+      horizon: long_term
+      description: "Acute: wildfire/extreme heat disruption to SF HQ operations"
+      financial_impact_usd_low: 10000
+      financial_impact_usd_high: 50000
+      likelihood: possible
+  identified_opportunities:
+    - description: "ESG credentials accelerate enterprise sales cycle for EU customers"
+      horizon: short_term
+      financial_impact_note: "Estimated 5-10% conversion lift in EU enterprise pipeline"
+risk_management:
+  process: >
+    Climate risks are assessed annually as part of the enterprise risk
+    management cycle. Risks are scored and tracked in
+    governance/risk/register.yaml. CISO reviews quarterly.
+  integration: >
+    Climate risk is integrated into the existing ERM process; no separate
+    climate risk management process. Supply chain DD register
+    (sustainability/supply-chain/2026) covers vendor-level climate risks.
+metrics_and_targets:
+  ghg_inventory_ref: sustainability/emissions/2026
+  scope1_tco2e_2026: 0.0
+  scope2_location_based_tco2e_2026: 10.794
+  scope2_market_based_tco2e_2026: 0.0
+  scope3_tco2e_2026: 266.844
+  reduction_target: >
+    Reduce absolute Scope 3 emissions 30% by 2030 vs 2025 base year,
+    primarily through vendor decarbonization commitments and green
+    cloud region preference.
+  renewable_energy_pct: 100
+  renewable_energy_note: "PG&E CleanChoice EAC for HQ; AWS renewable commitment for cloud"
+created_at: "2026-04-30"

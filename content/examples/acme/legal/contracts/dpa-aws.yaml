@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/dpa-aws
+type: vendor
+title: "Data Processing Agreement — Amazon Web Services (AWS)"
+counterparty: people/team/sarah-kim
+status: active
+effective_date: "2025-09-01"
+expiration_date: null
+governing_law: "US"
+auto_renewal: true
+renewal_term_months: 12
+dispute_resolution: arbitration
+key_terms:
+  - "AWS GDPR Data Processing Addendum (standard SCCs)"
+  - "Processing basis: Art. 28 GDPR — controller-processor"
+  - "Sub-processors: AWS sub-processor list published at aws.amazon.com/compliance/sub-processors"
+  - "Data residency: eu-west-1 (Ireland) for EU customer data"
+  - "Security measures: SOC 2 Type II, ISO 27001 certified"
+  - "Deletion on termination: within 90 days"
+  - "Annual audit right per Art. 28(3)(h) GDPR"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr
+  - governance/decisions/0018-security-framework

@@ -1,0 +1,23 @@
+id: people/payroll/runs/2026-01
+entity: entity/acme-corp
+period_start: "2026-01-01"
+period_end: "2026-01-31"
+pay_date: "2026-01-31"
+pay_cycle: monthly
+payroll_status: paid
+currency: USD
+employee_count: 38
+total_gross: 628500.0
+total_net: 0.0
+total_employer_cost: 694000.0
+total_employer_contributions: 65500.0
+employees: []
+journal_ref: financial/journals/2026-01-payroll
+filing_ref: null
+preparer: vendors/gusto
+retention_until: "2036-01-31"
+pii_class: special_category
+notes: >
+  Schema-shape exemplar — employee-level amounts pseudonymised per
+  PII-minimisation policy; canonical data in Gusto with audit trail.
+  Employer contributions include FICA employer share + CA SUI + benefits.

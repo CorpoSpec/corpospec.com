@@ -1,0 +1,12 @@
+id: people/statutory/de-rv-2026
+jurisdiction: DE
+kind: de_rv
+effective_year: 2026
+rate_pct: 18.6
+employer_share_pct: 9.3
+bearer: shared
+annual_cap: 96600.0
+lower_threshold: null
+assessment_currency: EUR
+statutory_basis: "SGB VI § 158"
+regulation_ref: null

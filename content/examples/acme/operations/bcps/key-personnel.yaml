@@ -1,0 +1,50 @@
+id: operations/bcps/key-personnel
+entity: entity/acme-corp
+business_process: operations/processes/release-train
+criticality: critical
+mtpd_hours: 168
+rto_hours: 48
+mbco: >
+  Minimum business continuity: one engineer with production access, one
+  executive with financial authority, one contact for customer escalations.
+  Critical SLA obligations can be met with skeleton crew of 3.
+owner: people/team/alex-chen
+crisis_team:
+  - people/team/alex-chen
+  - people/team/sarah-kim
+  - people/team/lisa-park
+  - people/team/raj-patel
+  - people/team/maria-rodriguez
+dependencies:
+  - kind: person
+    ref_path: people/team/sarah-kim
+    backup_available: true
+    backup_arrangement: >
+      Raj Patel (VP Eng) as technical lead; architecture decisions escalated to
+      Alex Chen until external CTO interim engaged.
+  - kind: person
+    ref_path: people/team/raj-patel
+    backup_available: true
+    backup_arrangement: >
+      Senior backend engineers Blake Nguyen or Devon Hayes; on-call runbook
+      covers standard operational response without VP Eng.
+  - kind: person
+    ref_path: people/team/alex-chen
+    backup_available: true
+    backup_arrangement: >
+      Lisa Park (CFO) holds limited financial authority for operational
+      expenditures up to $50K; board chair contactable for major decisions.
+runbook_ref: null
+tests:
+  - test_kind: tabletop
+    conducted_on: '2026-03-15'
+    conducted_by: people/team/alex-chen
+    objectives_met: true
+    findings:
+      - Engineering handover documentation incomplete for billing subsystem
+      - No documented escalation path to legal counsel for customer data incidents when GC unavailable
+    report_ref: null
+bcp_status: approved
+effective_from: '2026-01-01'
+next_review_due: '2027-01-01'
+control_basis: 'ISO 22301:2019 Cl. 8.2 + 8.4; SOC 2 CC9.1; NIST SP 800-34 Rev. 1'

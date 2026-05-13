@@ -1,0 +1,33 @@
+id: people/comp_history/alex-chen
+person: people/team/alex-chen
+entity: entity/acme-corp
+events:
+  - effective_date: "2025-06-15"
+    reason: hire
+    component: base_salary
+    currency: USD
+    prior_value: null
+    new_value: 120000.0
+    approver: people/team/priya-nair
+    decision_ref: null
+    notes: "Founder compensation at founding. Below-market rate; offset by founder equity."
+  - effective_date: "2026-01-15"
+    reason: promotion
+    component: base_salary
+    currency: USD
+    prior_value: 120000.0
+    new_value: 145000.0
+    approver: people/team/priya-nair
+    decision_ref: null
+    notes: "Series A close. Board-approved CEO salary increase to P50 seed-stage CEO benchmark."
+  - effective_date: "2026-01-15"
+    reason: equity_refresh
+    component: equity_grant
+    currency: USD
+    prior_value: null
+    new_value: null
+    approver: people/team/priya-nair
+    decision_ref: null
+    notes: "Series A refresh grant. Amounts held in Carta; pseudonymised in this record."
+retention_until: "2036-06-15"
+pii_class: special_category

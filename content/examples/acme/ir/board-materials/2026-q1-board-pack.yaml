@@ -1,0 +1,87 @@
+id: ir/board-materials/2026-q1-board-pack
+kind: board_pack
+period: "2026-Q1"
+meeting_date: "2026-04-10"
+prepared_by: "Alex Chen, CEO"
+status: final
+
+sections:
+  - title: "Opening & Agenda"
+    type: agenda
+    duration_minutes: 10
+    items:
+      - "Call to order and quorum confirmation"
+      - "Approval of Q4-2025 board minutes"
+      - "Consent calendar: IP assignment ratification, options grants"
+
+  - title: "CEO Letter"
+    type: narrative
+    duration_minutes: 15
+    summary: >
+      Q1 delivered $1.31M quarterly revenue, 200 customer milestone, and EU market
+      entry. The team executed despite two senior hires slipping. Series B
+      preparation begins this quarter. Strategic context: the workflow automation
+      market is consolidating; our window to establish category leadership is 18 months.
+
+  - title: "Financial Review"
+    type: financials
+    duration_minutes: 20
+    subsections:
+      - "P&L vs. plan (Q1 actuals and Q2 forecast)"
+      - "Cash position: $6.2M operating, $1.1M restricted; runway 20 months"
+      - "ARR bridge: $4.8M start → $5.9M end (+$1.1M net new)"
+      - "Unit economics: CAC $3,900, LTV $43,200, ratio 11.1x, payback 9.5 months"
+      - "Headcount vs. plan: 47 actual vs. 52 plan; 5 open roles"
+
+  - title: "Go-to-Market Review"
+    type: operations
+    duration_minutes: 20
+    subsections:
+      - "Pipeline: $8.4M weighted, $21M total; 14-week average sales cycle"
+      - "Top 10 opportunities by ACV"
+      - "EU GTM progress: 3 paying customers, €2.1M pipeline"
+      - "NPS: 61 (up 7 points QoQ)"
+      - "Churn analysis: 2 churns ($20k ARR total), both non-ICP"
+
+  - title: "Product & Engineering"
+    type: operations
+    duration_minutes: 15
+    subsections:
+      - "Q1 shipped: SAP connector, NPS survey system, GDPR data export"
+      - "Q2 roadmap: AI workflow generator, SOC 2 controls, EMEA data residency"
+      - "Engineering health: 97.4% uptime, 0 P1 incidents, 3 P2 incidents resolved"
+      - "Technical debt: service mesh migration 40% complete"
+
+  - title: "Legal & Compliance"
+    type: governance
+    duration_minutes: 10
+    subsections:
+      - "SOC 2 Type I: in progress, target June 2026"
+      - "EUTM application 018745623 filed February 2026"
+      - "USPTO trademark 6847321 registered January 2026"
+      - "Patent application 18/412,774 filed January 2026 — prosecution pending"
+      - "GDPR DPA template approved; EU DPA with Bird & Bird executed"
+
+  - title: "Strategic Discussion"
+    type: discussion
+    duration_minutes: 20
+    items:
+      - "Series B timing and sizing: $25M target, Q3-2026 close"
+      - "Build vs. buy: AI model layer — train proprietary vs. fine-tune foundation model"
+      - "EU entity timing: Acme Corp GmbH formation, Berlin; target Q2-2026"
+      - "Competitive response to Zapier's SMB price cut (February 2026)"
+
+  - title: "Resolutions & Approvals"
+    type: resolution
+    duration_minutes: 10
+    items:
+      - "Approve Q2-2026 operating budget ($1.12M per month)"
+      - "Ratify option grants: 420,000 ISOs across 7 employees"
+      - "Authorize CEO to negotiate and execute Series B term sheet"
+
+  - title: "AOB & Adjournment"
+    type: agenda
+    duration_minutes: 5
+    items:
+      - "Next board meeting: July 9, 2026"
+      - "Adjournment"

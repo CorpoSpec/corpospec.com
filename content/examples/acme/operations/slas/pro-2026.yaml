@@ -1,0 +1,63 @@
+id: operations/slas/pro-2026
+entity: entity/acme-corp
+customer: null
+contract_ref: null
+service: operations/services/api
+name: Acme Pro — 99.9% SLA 2026
+slis:
+  - key: availability
+    kind: availability
+    specification: 'sum(rate(http_requests_total{status!~"5.."}[5m])) / sum(rate(http_requests_total[5m]))'
+    percentile: null
+    latency_threshold_ms: null
+  - key: latency_p99
+    kind: latency
+    specification: 'histogram_quantile(0.99, rate(http_request_duration_ms_bucket[5m]))'
+    percentile: 99.0
+    latency_threshold_ms: 800.0
+slos:
+  - key: availability-99.9
+    sli_key: availability
+    target_pct: 99.9
+    window: calendar_month
+    backed_by_sla: true
+  - key: latency-p99-800ms
+    sli_key: latency_p99
+    target_pct: 99.0
+    window: calendar_month
+    backed_by_sla: false
+credit_tiers:
+  - breach_threshold_pct: 99.9
+    credit_pct: 10.0
+  - breach_threshold_pct: 99.0
+    credit_pct: 25.0
+  - breach_threshold_pct: 95.0
+    credit_pct: 50.0
+credit_cap_pct: 50.0
+exclusions:
+  - Scheduled maintenance with >= 48h notice posted to status page
+  - Force majeure (natural disaster, AWS region-wide outage)
+period_history:
+  - period_start: '2026-01-01'
+    period_end: '2026-01-31'
+    actual_pct: 99.97
+    breached: false
+    credit_pct_owed: null
+  - period_start: '2026-02-01'
+    period_end: '2026-02-28'
+    actual_pct: 99.98
+    breached: false
+    credit_pct_owed: null
+  - period_start: '2026-03-01'
+    period_end: '2026-03-31'
+    actual_pct: 99.96
+    breached: false
+    credit_pct_owed: null
+  - period_start: '2026-04-01'
+    period_end: '2026-04-30'
+    actual_pct: 99.93
+    breached: false
+    credit_pct_owed: null
+effective_from: '2026-01-01'
+effective_to: '2026-12-31'
+owner: people/team/erin-foster

@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/cfo
+title: "Chief Financial Officer"
+abbreviation: "CFO"
+unit: finance
+reports_to: people/roles/ceo
+level: c-suite
+responsibilities:
+  - "Financial planning, budgeting, and forecasting"
+  - "Series A capital allocation and investor reporting"
+  - "409A valuations and equity administration"
+  - "Finance infrastructure (ERP, payroll, tax compliance US + DE)"
+  - "Audit readiness for SOC 2 + GAAP financial statements"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 180000
+  max: 220000
+  equity_percentage: "0.3-0.6%"
+  note: "Base salary. Equity reflects non-founder C-suite band post-Series A."
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "10+ years finance experience, 3+ years in SaaS"
+      - "GAAP + US tax fluency"
+      - "Series A+ fundraising experience"
+    nice_to_have:
+      - "International expansion (DE/EU) experience"
+      - "CPA or CFA"

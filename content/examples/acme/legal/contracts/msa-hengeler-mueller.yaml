@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/contract.schema.json
+id: legal/contracts/msa-hengeler-mueller
+type: service
+title: "Master Services Agreement — Hengeler Mueller (DE Counsel, GmbH Formation)"
+counterparty: people/team/alex-chen
+status: active
+effective_date: "2026-01-20"
+expiration_date: null
+governing_law: "DE"
+auto_renewal: false
+dispute_resolution: litigation
+value:
+  amount: 28000
+  currency: EUR
+  frequency: one-time
+key_terms:
+  - "GmbH formation: drafting Gesellschaftsvertrag and notarization coordination"
+  - "Handelsregister application filing at Amtsgericht Charlottenburg"
+  - "Stammkapital EUR 25,000 — EUR 12,500 paid at notarization"
+  - "GDPR DPA template review for EU operations"
+  - "Scope limited to formation; ongoing advisory billed hourly"
+amendments: []
+documents: []
+related_decisions:
+  - governance/decisions/0020-international-expansion

@@ -1,0 +1,20 @@
+id: people/benefits/plans/us-health-anthem-ppo-2026
+entity: entity/acme-corp
+category: health
+name: Anthem PPO Health Insurance 2026
+carrier: Anthem Blue Cross
+funding: fully_insured
+employer_share_pct: 80.0
+employer_cap_per_period: null
+period_currency: USD
+waiting_period_months: 0
+statutory_basis: "ACA §§4980H, 4980D"
+jurisdiction: US
+plan_document: null
+effective_from: "2026-01-15"
+effective_to: null
+notes: >
+  Employer pays 80% of premium; employee pays 20% pre-tax.
+  Deductible: $500 individual / $1,000 family.
+  Out-of-pocket max: $3,000 individual / $6,000 family.
+  Includes mental health parity (MHPAEA).

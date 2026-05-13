@@ -1,0 +1,43 @@
+id: engineering/metrics/dora
+name: "DORA Metrics — 2026 Q1"
+entity: entity/acme-corp
+owner: people/team/raj-patel
+reporting_period_start: "2026-01-01"
+reporting_period_end: "2026-03-31"
+source: vendors/datadog
+measurements:
+  deployment_frequency:
+    value: 4.2
+    unit: deployments_per_day
+    classification: elite
+    note: >
+      Includes both production deploys (main→prod via GitHub Actions)
+      and hotfix deployments. Calculated as total deployments / calendar days.
+  lead_time_for_changes:
+    value: 18.5
+    unit: hours
+    classification: high
+    note: >
+      P50 lead time from PR opened to production deployment.
+      Measured via GitHub Actions + Datadog deployment tracking integration.
+  change_failure_rate:
+    value: 2.1
+    unit: percent
+    classification: elite
+    note: >
+      Percentage of production deployments that required a hotfix,
+      rollback, or patch within 24h. Tracked via Sentry incident tags
+      mapped to deployment SHAs.
+  mean_time_to_restore:
+    value: 42
+    unit: minutes
+    classification: elite
+    note: >
+      P75 time from incident detection (Datadog alert or Sentry error spike)
+      to service restoration. Measured from PagerDuty incident open to resolved.
+    incidents_in_period: 4
+classifications_source: "DORA State of DevOps 2024 thresholds"
+notes: >
+  All four metrics classified elite or high for Q1 2026. Change failure
+  rate spike in January (4.3%) attributed to database migration script;
+  root-cause addressed via BDR 0029 incident response checklist update.

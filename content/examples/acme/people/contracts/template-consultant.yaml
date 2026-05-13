@@ -1,0 +1,23 @@
+id: people/contracts/templates/us-independent-contractor
+entity: entity/acme-corp
+template_kind: contractor_agreement
+jurisdiction: US
+employment_kind: contractor
+description: >
+  Independent contractor agreement for US-based consultants.
+  Covers statement of work, payment terms (net-30), IP assignment,
+  confidentiality, and Acme's right to terminate for convenience.
+  Includes IRS Form W-9 requirement and 1099-NEC filing notice.
+  Contractor classification reviewed against ABC test (CA AB 5)
+  before use for CA-based contractors.
+key_clauses:
+  - "Independent contractor status — no employment relationship"
+  - "IP work-for-hire assignment"
+  - "Confidentiality — indefinite"
+  - "Mutual indemnification for contractor's own negligence"
+  - "1099-NEC filing notice; W-9 required before first payment"
+  - "CA AB 5 / Dynamex ABC test compliance review required"
+version: "2026-01"
+approved_by: people/team/david-tanaka
+effective_from: "2026-01-15"
+pii_class: internal

@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/senior-engineer
+title: "Senior Software Engineer"
+abbreviation: "SSE"
+unit: engineering
+reports_to: people/roles/vp-engineering
+level: ic
+responsibilities:
+  - "Design and own mid-to-large scope features end-to-end"
+  - "System design review participation"
+  - "Mentoring of engineer-level ICs"
+  - "On-call primary rotation"
+  - "Architecture decision records for owned systems"
+headcount: 5
+compensation_band:
+  currency: USD
+  min: 165000
+  max: 205000
+  equity_percentage: "0.1-0.25%"
+custom:
+  status: open
+  employment_type: full-time
+  hiring_start_target: "2026-Q3"
+  requirements:
+    must_have:
+      - "5+ years professional software engineering"
+      - "TypeScript + React or Rust systems experience"
+      - "Production incident ownership experience"
+    nice_to_have:
+      - "AWS infrastructure-as-code (CDK or Terraform)"
+      - "Data pipeline or ML infrastructure experience"

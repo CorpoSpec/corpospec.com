@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/account-executive
+title: "Account Executive"
+abbreviation: "AE"
+unit: sales
+reports_to: people/roles/vp-sales
+level: ic
+responsibilities:
+  - "Full-cycle sales from discovery to close for mid-market accounts"
+  - "Pipeline generation via outbound, referrals, and PLG conversion"
+  - "Multi-stakeholder deal management (economic buyer + champion)"
+  - "CRM (Salesforce) hygiene and weekly forecast accuracy"
+  - "Customer handoff to Customer Success post-close"
+headcount: 4
+compensation_band:
+  currency: USD
+  min: 80000
+  max: 110000
+  equity_percentage: "0.02-0.06%"
+  note: "Base salary. OTE $160k-$220k with on-target commission."
+custom:
+  status: open
+  employment_type: full-time
+  hiring_start_target: "2026-Q3"
+  requirements:
+    must_have:
+      - "3+ years SaaS AE experience, $50k-$200k ACV"
+      - "MEDDPICC or Challenger Sales fluency"
+      - "Salesforce CRM proficiency"
+    nice_to_have:
+      - "Developer tools or API-first product sales experience"
+      - "EMEA market coverage"

@@ -1,0 +1,19 @@
+id: engineering/flags/dark-mode
+key: dark_mode_enabled
+kind: release
+state: active
+description: >
+  System-preference-respecting dark mode for the web application.
+  Shipped to 100% of users 2026-02-01. Flag retained to allow manual
+  override via user settings toggle; will not be archived.
+product: product/overview
+owner: people/team/raj-patel
+rollout_pct: 100.0
+targeting_rules: []
+created_at: "2026-01-05"
+shipped_at: "2026-02-01"
+archived_at: null
+experiment_ref: null
+decision_ref: null
+platform: growthbook
+expires_at: null

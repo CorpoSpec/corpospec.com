@@ -1,0 +1,9 @@
+id: people/skills/aws
+entity: entity/acme-corp
+skill_family: engineering
+name: AWS cloud infrastructure
+description: >
+  VPC, ECS/Fargate, RDS, S3, CloudFront, IAM least-privilege,
+  Infrastructure-as-Code via CDK or Terraform, CloudWatch
+  observability, multi-region architecture patterns.
+training_refs: []

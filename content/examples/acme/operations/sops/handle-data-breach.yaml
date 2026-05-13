@@ -1,0 +1,113 @@
+id: operations/sops/handle-data-breach
+entity: entity/acme-corp
+category: security
+name: Handle data breach / security incident
+version: 1.2.0
+objective: >
+  Contain a confirmed or suspected data breach; meet GDPR Art. 33 72-hour
+  supervisory-notification deadline; determine Art. 34 data-subject notification
+  requirement; produce post-mortem and follow-up corrective actions.
+triggers:
+  - Security alert indicating unauthorized data access.
+  - Employee reports suspected phishing or credential compromise.
+  - Third-party notification of data exposure.
+preconditions:
+  - Incident declared (PagerDuty or Slack #security-incidents).
+  - Incident commander assigned (CISO or backup).
+steps:
+  - ordinal: 1
+    action: >
+      Contain — isolate affected system, revoke compromised credentials,
+      preserve forensic evidence (CloudTrail, access logs, DB audit log).
+    acceptance_criterion: >
+      Affected session/account terminated; evidence stored in immutable S3 bucket
+      with object-lock enabled; no further unauthorized access possible.
+    assignments:
+      - role: people/roles/devops-engineer
+        raci: responsible
+      - role: people/roles/ceo
+        raci: accountable
+    sla_duration: PT2H
+    tool_refs: []
+  - ordinal: 2
+    action: >
+      Assess scope — determine data categories accessed, subject count, and
+      whether personal data of EU data subjects is involved.
+    acceptance_criterion: >
+      Written scope assessment: data categories, approximate subject count,
+      affected systems, time window of exposure.
+    assignments:
+      - role: people/roles/ceo
+        raci: accountable
+      - role: people/roles/devops-engineer
+        raci: responsible
+    sla_duration: PT6H
+    tool_refs: []
+  - ordinal: 3
+    action: >
+      Legal review — GC and CISO assess Art. 33 obligation; if personal data
+      breach affecting EU data subjects confirmed, target supervisory
+      notification within 64 hours of detection.
+    acceptance_criterion: >
+      Legal decision documented: Art. 33 required or not required with
+      reasoning. If required: BfDI notification filed; ref number recorded
+      in breach record.
+    assignments:
+      - role: people/roles/sales-lead
+        raci: accountable
+      - role: people/roles/ceo
+        raci: responsible
+    sla_duration: P3D
+    tool_refs: []
+  - ordinal: 4
+    action: >
+      Art. 34 assessment — if Art. 33 filed, assess whether high risk to
+      natural persons; if yes, notify affected data subjects promptly.
+    acceptance_criterion: >
+      Art. 34 decision documented: notification sent or skip reason recorded
+      in breach record per Art. 33(5).
+    assignments:
+      - role: people/roles/sales-lead
+        raci: accountable
+      - role: people/roles/ceo
+        raci: responsible
+    sla_duration: P3D
+    tool_refs: []
+  - ordinal: 5
+    action: >
+      Customer notification — notify affected enterprise customers per DPA
+      obligations; coordinate with VP Sales for account management.
+    acceptance_criterion: >
+      All affected customers under active DPA notified in writing within 72 hours
+      of confirmed scope; notification records stored.
+    assignments:
+      - role: people/roles/ceo
+        raci: accountable
+      - role: people/roles/sales-lead
+        raci: responsible
+    sla_duration: P3D
+    tool_refs: []
+  - ordinal: 6
+    action: Post-mortem — root cause, lessons learned, corrective actions with owners and due dates.
+    acceptance_criterion: >
+      Post-mortem document published in operations/postmortems/; corrective
+      actions tracked to completion; breach record updated to closed.
+    assignments:
+      - role: people/roles/ceo
+        raci: accountable
+      - role: people/roles/devops-engineer
+        raci: responsible
+    sla_duration: P14D
+    tool_refs: []
+postconditions:
+  - Breach record exists in security/breaches/ and is closed.
+  - Art. 33 filing reference recorded (or skip reason).
+  - Art. 34 decision recorded.
+  - All corrective actions assigned with due dates.
+control_basis: 'GDPR Art. 33 + 34 + 33(5); ISO 27001:2022 A.5.24 + A.5.25; SOC 2 CC7.3 + CC7.4'
+owner: people/team/maria-rodriguez
+artefact_ref: null
+status: approved
+effective_from: '2026-01-01'
+review_cadence: P6M
+next_review_due: '2026-07-01'

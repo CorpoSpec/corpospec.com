@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/sales-engineer
+title: "Sales Engineer"
+abbreviation: "SE"
+unit: sales
+reports_to: people/roles/vp-sales
+level: ic
+responsibilities:
+  - "Technical discovery and solution scoping with prospects"
+  - "Product demonstrations, POC environments, and eval management"
+  - "RFP / security questionnaire responses"
+  - "Competitive differentiation and objection handling"
+  - "Product feedback loop to Engineering from field experience"
+headcount: 2
+compensation_band:
+  currency: USD
+  min: 130000
+  max: 170000
+  equity_percentage: "0.05-0.12%"
+  note: "Base salary. OTE ~$180k-$220k with variable on closed deals."
+custom:
+  status: open
+  employment_type: full-time
+  hiring_start_target: "2026-Q3"
+  requirements:
+    must_have:
+      - "3+ years pre-sales or solutions engineering in B2B SaaS"
+      - "API integration experience (REST, webhooks)"
+      - "Ability to deliver live technical demos under pressure"
+    nice_to_have:
+      - "Software engineering background"
+      - "Enterprise security evaluation experience (SOC 2, GDPR)"

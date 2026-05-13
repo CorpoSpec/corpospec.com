@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/policy.schema.json
+id: legal/policies/gdpr-ropa-cockpit-users
+name: "GDPR ROPA — Cockpit Product Users"
+description: >
+  Record of Processing Activity (Art. 30 GDPR) for personal data processed
+  when individuals use the Acme workflow automation platform (Cockpit).
+  Covers account creation, authentication, workflow execution, and product
+  telemetry for registered B2B customer users.
+status: active
+scope: "EU and UK data subjects who are registered users of the Acme Cockpit product"
+owner: people/team/david-tanaka
+effective_date: "2026-01-01"
+review_date: "2027-01-01"
+provisions:
+  - "Controller: Acme Corp, Inc. (US); Acme Corp GmbH (DE) when operational"
+  - "Legal basis: Art. 6(1)(b) GDPR — performance of contract"
+  - "Data categories: name, work email, IP address, session tokens, workflow data"
+  - "Retention: account data 3 years post-contract termination; logs 90 days"
+  - "Recipients: AWS (hosting), Datadog (monitoring), Sentry (error tracking)"
+  - "Third-country transfers: US — AWS SCCs eu-west-1 primary; Datadog SCCs"
+  - "Security measures: TLS 1.3 in transit; AES-256 at rest; JWT with 15-min expiry"
+custom:
+  processors:
+    - name: "Amazon Web Services"
+      service: "Compute, database, and storage hosting (eu-west-1)"
+      dpa_status: signed
+      hosting_region: "EU (Ireland)"
+      data_categories: ["user account", "workflow data", "session tokens"]
+    - name: "Datadog"
+      service: "Application performance monitoring and log management"
+      dpa_status: signed
+      hosting_region: "US (with SCCs)"
+      data_categories: ["application telemetry", "pseudonymised user IDs"]
+    - name: "Sentry"
+      service: "Error tracking and diagnostics"
+      dpa_status: signed
+      hosting_region: "EU (eu.sentry.io)"
+      data_categories: ["error telemetry", "stack traces (scrubbed)"]
+related_decisions:
+  - governance/decisions/0027-compliance-gdpr
+  - governance/decisions/0008-data-privacy

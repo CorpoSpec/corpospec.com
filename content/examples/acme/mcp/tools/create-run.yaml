@@ -1,0 +1,73 @@
+id: mcp/tools/create-run
+kind: mcp_tool
+name: "create_run"
+server: mcp/servers/acme-api
+description: >
+  Triggers a new execution of a workflow definition. Accepts optional
+  runtime input parameters that override the workflow's default configuration.
+  State-mutating. Requires `runs:execute` scope.
+
+access_roles:
+  - engineering
+
+rate_limit_rpm: 60
+
+input_schema:
+  type: object
+  required: [workflow_id]
+  properties:
+    workflow_id:
+      type: string
+      format: uuid
+      description: "The workflow definition to execute."
+    parameters:
+      type: object
+      description: >
+        Key-value pairs that override the workflow's default input parameters
+        for this run. Must conform to the parameter schema defined in the
+        workflow definition.
+      additionalProperties: true
+    idempotency_key:
+      type: string
+      maxLength: 128
+      description: >
+        Caller-supplied key to prevent duplicate runs on retry. If a run with
+        this key was started within the past 24 hours, the original run_id is
+        returned without triggering a new execution.
+  additionalProperties: false
+
+output_schema:
+  type: object
+  properties:
+    run_id:
+      type: string
+      format: uuid
+    status:
+      type: string
+      enum: [queued, running]
+    workflow_id:
+      type: string
+      format: uuid
+    triggered_at:
+      type: string
+      format: date-time
+    idempotent:
+      type: boolean
+      description: "True if this response returned an existing run (idempotency key matched)."
+
+audit_log_on_call: true
+fields_logged: [workspace_id, workflow_id, parameters_keys, idempotency_key_hash, run_id_created, latency_ms]
+
+errors:
+  - code: "WORKFLOW_NOT_FOUND"
+    http_status: 404
+    when: "The workflow_id does not exist in the caller's workspace."
+  - code: "WORKFLOW_INACTIVE"
+    http_status: 422
+    when: "The workflow is in 'draft' or 'archived' status."
+  - code: "QUOTA_EXCEEDED"
+    http_status: 429
+    when: "Workspace has exceeded its monthly run execution quota."
+  - code: "INVALID_PARAMETERS"
+    http_status: 400
+    when: "Provided parameters fail validation against the workflow's parameter schema."

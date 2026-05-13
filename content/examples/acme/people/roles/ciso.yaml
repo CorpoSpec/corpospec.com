@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/ciso
+title: "Chief Information Security Officer"
+abbreviation: "CISO"
+unit: security
+reports_to: people/roles/ceo
+level: c-suite
+responsibilities:
+  - "SOC 2 Type II program ownership and evidence collection"
+  - "Security architecture review for all product changes"
+  - "Vendor risk assessment and third-party security reviews"
+  - "Incident response plan, tabletop exercises, and runbooks"
+  - "Employee security awareness training program"
+headcount: 1
+compensation_band:
+  currency: USD
+  min: 200000
+  max: 240000
+  equity_percentage: "0.2-0.4%"
+custom:
+  status: filled
+  employment_type: full-time
+  requirements:
+    must_have:
+      - "CISSP or equivalent certification"
+      - "SOC 2 Type II audit cycle experience"
+      - "Cloud security (AWS, GCP) architecture expertise"
+    nice_to_have:
+      - "GDPR / EU data privacy operational experience"
+      - "ISO 27001 lead auditor certification"

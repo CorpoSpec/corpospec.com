@@ -1,0 +1,18 @@
+id: people/benefits/plans/us-vision-vsp-2026
+entity: entity/acme-corp
+category: vision
+name: VSP Vision 2026
+carrier: VSP
+funding: fully_insured
+employer_share_pct: 100.0
+employer_cap_per_period: null
+period_currency: USD
+waiting_period_months: 0
+statutory_basis: null
+jurisdiction: US
+plan_document: null
+effective_from: "2026-01-15"
+effective_to: null
+notes: >
+  Employer pays 100% of employee premium. Annual eye exam covered;
+  $150 frame allowance + contact lens allowance.

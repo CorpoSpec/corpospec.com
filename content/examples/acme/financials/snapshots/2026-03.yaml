@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.1/financial-model.schema.json
+id: financials/snapshots/2026-03
+period:
+  type: instant
+  start: "2026-03-31"
+entity: entity/acme-corp
+currency: USD
+
+income_statement:
+  revenue: 458334
+  cost_of_revenue: 91667
+  gross_profit: 366667
+  operating_expenses:
+    research_and_development: 560000
+    sales_and_marketing: 290000
+    general_and_administrative: 170000
+  operating_income: -653333
+  net_income: -653333
+
+balance_sheet:
+  assets:
+    cash_and_equivalents: 7310000
+    accounts_receivable: 455000
+    total_assets: 7765000
+  liabilities:
+    accounts_payable: 125000
+    total_liabilities: 125000
+  equity:
+    total_equity: 7640000
+
+cash_flow:
+  operating: -940000
+  investing: -60000
+  financing: 0
+  net_change: -1000000
+
+custom:
+  description: >
+    March 2026 snapshot. ARR $5.5M (MRR $458,333). 50 employees. Burn
+    ~$1.0M/month. Runway ~7.3 months from current cash. EU expansion
+    planning underway; Acme Corp GmbH formation in progress.
+  stage: series-a
+  assumptions:
+    - id: asm-snap-mar-001
+      description: "ARR $5.5M at March close. MRR $458,333. Net new MRR $41,666."
+      evidence: "Stripe MRR dashboard 2026-03-31."
+      invalidation_condition: "Net MRR growth < 8% month-over-month."
+    - id: asm-snap-mar-002
+      description: "Runway 7.3 months at current burn. Series B process to begin Q3 2026."
+      evidence: "$7.31M cash / $1.0M monthly burn = 7.3 months."
+      invalidation_condition: "Burn exceeds $1.1M/month for two consecutive months."

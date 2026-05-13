@@ -1,0 +1,21 @@
+id: operations/api_endpoints/list-workflows
+service: operations/services/api
+api_kind: rest
+http_method: GET
+path: /v1/workflows
+operation_id: listWorkflows
+api_version: v1
+audience: first_party
+api_status: stable
+auth_required: o_auth2_bearer
+required_scopes:
+  - workflows:read
+rate_limit_rpm: 120
+pii_class: internal
+p99_latency_target_ms: 250.0
+schema_ref: product/features/workflows
+docs_ref: null
+deprecated_on: null
+sunset_on: null
+replaced_by: null
+owner: people/team/raj-patel

@@ -1,0 +1,58 @@
+id: ir/investor-updates/2026-01
+kind: investor_update
+period: "2026-01"
+sent_date: "2026-02-05"
+author: "Alex Chen, CEO"
+distribution:
+  - "Morgan Lee, Sequoia Capital (Board)"
+  - "Jordan Park (Independent Director)"
+  - "Series A investors"
+
+headline: "Strong January close — ARR crossed $5M, 9 new logos, NRR at 112%."
+
+kpis:
+  arr_end:
+    value: 5040000
+    currency: USD
+    mom_growth_pct: 4.8
+  mrr_end:
+    value: 420000
+    currency: USD
+  new_logos:
+    value: 9
+  churned_logos:
+    value: 0
+  nrr_ltm_pct: 112
+  cac:
+    value: 4200
+    currency: USD
+  ltv:
+    value: 38000
+    currency: USD
+  ltv_cac_ratio: 9.0
+  payback_months: 11
+  burn_net:
+    value: 310000
+    currency: USD
+  runway_months: 21
+  headcount: 38
+
+wins:
+  - "Closed Meridian Logistics (ENT, $84k ACV) — our largest deal to date."
+  - "Launched native Salesforce integration; 23 customers migrated within 10 days."
+  - "GDPR Data Processing Agreement template approved by Bird & Bird — EU launch unblocked."
+
+losses:
+  - "Lost RFP at Brightwater Corp to Zapier on price; prospect cited lack of native ERP connector."
+  - "Two Starter-tier churns (combined $1,200 ARR) — both cited product complexity; flagging for onboarding improvement."
+
+key_focuses_next_month:
+  - "Enterprise pipeline: 4 deals ($320k total ACV) in final negotiation stage."
+  - "Hire VP of Sales — 3 finalists selected."
+  - "Launch EU beta program with 10 Design Partners."
+
+asks:
+  - ask: "Warm intro to CFO at Vantage Supply Chain (Sequoia portfolio) — fits our ICP perfectly."
+    contact: "Morgan Lee"
+  - ask: "Recommendation for a compliance QSA with SOC 2 experience in B2B SaaS."
+    contact: "Jordan Park"

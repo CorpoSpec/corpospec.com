@@ -1,0 +1,89 @@
+id: knowledge/architecture/api-contract
+kind: architecture_artefact
+type: api_contract
+title: "Acme REST API Contract v2"
+version: "2.0"
+as_of: "2026-02-01"
+authors:
+  - "Blake Nguyen (Head of Engineering)"
+  - "Riley Chen (Senior Backend Engineer)"
+
+base_url: "https://api.acme-corp.example.com/v2"
+authentication:
+  method: "Bearer token (JWT, RS256)"
+  token_endpoint: "POST /auth/token"
+  token_ttl_seconds: 3600
+  refresh_endpoint: "POST /auth/refresh"
+
+rate_limits:
+  default_rpm: 600
+  burst_rpm: 1200
+  enterprise_rpm: 6000
+  header_remaining: "X-RateLimit-Remaining"
+  header_reset: "X-RateLimit-Reset"
+
+versioning:
+  strategy: "URI versioning (v2)"
+  deprecation_policy: "Minimum 12-month notice period before removing a version."
+  sunset_header: true
+
+core_resources:
+  - resource: workflows
+    path: /workflows
+    operations:
+      - method: GET
+        description: "List all workflow definitions for the workspace."
+        scopes: ["workflows:read"]
+        response_shape: "Array<WorkflowDefinition>"
+      - method: POST
+        description: "Create a new workflow definition."
+        scopes: ["workflows:write"]
+        response_shape: "WorkflowDefinition"
+  - resource: runs
+    path: /runs
+    operations:
+      - method: GET
+        description: "List workflow run history with filter support."
+        scopes: ["runs:read"]
+      - method: POST
+        description: "Trigger a new workflow run."
+        scopes: ["runs:execute"]
+      - method: DELETE
+        path_suffix: "/{run_id}"
+        description: "Cancel an in-progress run."
+        scopes: ["runs:execute"]
+  - resource: integrations
+    path: /integrations
+    operations:
+      - method: GET
+        description: "List available and connected integrations."
+        scopes: ["integrations:read"]
+  - resource: webhooks
+    path: /webhooks
+    operations:
+      - method: POST
+        description: "Register a webhook endpoint for run events."
+        scopes: ["webhooks:write"]
+
+error_format:
+  schema: "RFC 7807 Problem Details"
+  fields:
+    - type
+    - title
+    - status
+    - detail
+    - instance
+
+pagination:
+  style: cursor
+  params:
+    - after
+    - limit
+  max_page_size: 100
+
+conventions:
+  - "All request and response bodies are JSON."
+  - "All timestamps are ISO 8601 UTC (e.g. 2026-01-15T14:32:00Z)."
+  - "All monetary amounts include a currency_code field."
+  - "Field names use snake_case."
+  - "Null fields are omitted from responses unless explicitly documented."

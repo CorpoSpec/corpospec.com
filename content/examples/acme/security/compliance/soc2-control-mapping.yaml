@@ -1,0 +1,31 @@
+id: security/compliance/soc2-control-mapping
+entity: entity/acme-corp
+regime: soc2
+jurisdiction: US
+title: SOC 2 Type II control mapping — observation period 2026-01 to 2026-06
+citation: AICPA TSC 2017
+description: >
+  KPMG LLP engaged as SOC 2 Type II auditor for the observation period
+  2026-01-01 to 2026-06-30. Trust service categories in scope: Security (CC),
+  Availability (A), Confidentiality (C). Audit report expected 2026-08-15.
+  This record maps Acme controls to the relevant Trust Services Criteria.
+cadence: annual
+owner: people/team/maria-rodriguez
+next_due: '2027-08-15'
+last_satisfied_on: null
+status: in_progress
+evidence_refs:
+  - security/audit_evidence/2026-ac1-mfa-config
+  - security/audit_evidence/2026-sc1-kms-config
+control_refs:
+  - security/controls/access-management
+  - security/controls/encryption-at-rest
+  - security/controls/backup-recovery
+  - security/controls/change-management
+  - security/controls/incident-response
+  - security/controls/vendor-management
+procedure_refs:
+  - operations/sops/handle-data-breach
+bdr_ref: governance/decisions/0018-security-framework
+penalty_exposure: Loss of enterprise deals requiring SOC 2 report; reputational damage
+schedule_anchor: August 15 each year (report delivery target)

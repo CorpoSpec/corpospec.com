@@ -1,0 +1,17 @@
+id: people/training/modules/harassment-prevention-ca
+entity: entity/acme-corp
+category: compliance
+name: CA Sexual Harassment Prevention Training
+description: >
+  DFEH-compliant sexual harassment prevention training.
+  2 hours for supervisors / managers; 1 hour for non-supervisory employees.
+  Covers harassment definition, complaint procedures, and bystander intervention.
+delivery_mode: elearning
+duration_minutes: 120
+mandatory: true
+mandatory_for_roles: []
+recertification_months: 24
+statutory_basis: "CA Government Code § 12950.1 (SB 1343)"
+builds_skills: []
+effective_from: "2026-01-01"
+effective_to: null

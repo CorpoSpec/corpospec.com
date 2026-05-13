@@ -1,0 +1,12 @@
+id: people/statutory/us-fica-social-security-2026
+jurisdiction: US
+kind: us_social_security
+effective_year: 2026
+rate_pct: 12.4
+employer_share_pct: 6.2
+bearer: shared
+annual_cap: 176100.0
+lower_threshold: null
+assessment_currency: USD
+statutory_basis: "FICA 26 U.S.C. § 3101 (employee) + § 3111 (employer); SSA 2026 wage base"
+regulation_ref: null

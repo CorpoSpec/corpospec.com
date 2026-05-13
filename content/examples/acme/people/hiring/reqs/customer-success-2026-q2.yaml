@@ -1,0 +1,29 @@
+id: people/hiring/reqs/customer-success-2026-q2
+role: people/roles/customer-success-manager
+entity: entity/acme-corp
+headcount: 2
+hiring_manager: people/team/alex-chen
+recruiter: null
+posted_locations:
+  - kind: remote
+    country: US
+posted_jurisdictions:
+  - US
+salary_disclosed_band:
+  currency: USD
+  low: 90000.0
+  high: 130000.0
+  frequency: annual
+  basis: "US CSM market benchmark"
+equity_disclosed_band:
+  low_pct: 0.05
+  high_pct: 0.15
+  reference_basis: post-money fully-diluted
+  option_plan_ref: entity/equity/option-pool
+benefits_summary:
+  - people/benefits/plans/us-health-anthem-ppo-2026
+posting_url: null
+requisition_state: open
+opened_at: "2026-03-15"
+closed_at: null
+consent_record_template: null

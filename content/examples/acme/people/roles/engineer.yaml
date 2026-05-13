@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://corpospec.com/schemas/v0.14.2/role.schema.json
+id: people/roles/engineer
+title: "Software Engineer"
+abbreviation: "SWE"
+unit: engineering
+reports_to: people/roles/vp-engineering
+level: ic
+responsibilities:
+  - "Feature development across frontend and backend stacks"
+  - "Unit and integration test authorship"
+  - "Participation in on-call rotation (secondary)"
+  - "Code review and PR feedback"
+headcount: 0
+compensation_band:
+  currency: USD
+  min: 130000
+  max: 160000
+  equity_percentage: "0.05-0.1%"
+custom:
+  status: planned
+  employment_type: full-time
+  hiring_start_target: "2026-Q4"
+  requirements:
+    must_have:
+      - "3+ years professional software engineering"
+      - "Proficient in TypeScript or Rust"
+      - "Working knowledge of REST API design"
+    nice_to_have:
+      - "SaaS B2B product experience"
+      - "Distributed systems fundamentals"
