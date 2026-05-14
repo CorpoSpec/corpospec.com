@@ -1,0 +1,314 @@
+{
+  "$defs": {
+    "ChannelPrivacyStatus": {
+      "description": "Channel-level privacy status. Public, unlisted, and private are the\nthree states common to YouTube, Twitch, Vimeo, and most creator\nplatforms; values map onto each platform's native enum at the\nconnector boundary.",
+      "enum": [
+        "public",
+        "private",
+        "unlisted"
+      ],
+      "type": "string"
+    },
+    "ChannelStatistics": {
+      "description": "Most-recent-synced statistics for the channel.\n\nSnapshot semantics: every field is valid as of the parent record's\n`provenance.synced_at`. Long-horizon growth curves (year-over-year\nsubscriber deltas, lifetime view trajectories) are reconstructed from\nthe daily audience-snapshot history rather than from successive\nchannel re-syncs.",
+      "properties": {
+        "subscriber_count": {
+          "description": "Public subscriber count. Some platforms round (YouTube rounds to\nthree significant figures); owner-authenticated reads receive the\nplatform's published value.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "subscriber_count_hidden": {
+          "description": "True when the creator has elected to hide the public subscriber\ncount. Owner-authenticated reads still receive the underlying\nnumber.",
+          "type": "boolean"
+        },
+        "video_count_public": {
+          "description": "Public videos only; private and unlisted videos not counted.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "view_count_lifetime": {
+          "description": "Lifetime cumulative views across all videos on the channel.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "view_count_lifetime",
+        "subscriber_count",
+        "subscriber_count_hidden",
+        "video_count_public"
+      ],
+      "type": "object"
+    },
+    "CreatorPlatform": {
+      "description": "Cross-platform discriminator on `Channel`. Identifies the host\nplatform a channel lives on. Open-ended by design: new platforms\nextend the enum without breaking the channel shape — connectors map\neach platform onto the existing platform-agnostic field set\n(`platform_channel_id`, `platform_uploads_id`, `provenance`,\nstatistics, breakdowns) without renaming or restructuring.",
+      "enum": [
+        "youtube"
+      ],
+      "type": "string"
+    },
+    "DataClass": {
+      "description": "Classification of a synced field's data sensitivity. Drives subject-\nrights workflows and cache-purge retention decisions.",
+      "oneOf": [
+        {
+          "const": "aggregate",
+          "description": "Computed from upstream API outputs by simple arithmetic. Eligible\nfor retention beyond the upstream record lifetime when paired with\nexplicit derivation lineage.",
+          "type": "string"
+        },
+        {
+          "const": "personal_data",
+          "description": "Identifies a person. Subject to GDPR Article 17 erasure on\nrequest; carries the strictest retention tier the connector emits.",
+          "type": "string"
+        },
+        {
+          "const": "pseudonymous",
+          "description": "Identifies a session or device without identifying a person.",
+          "type": "string"
+        },
+        {
+          "const": "metadata",
+          "description": "Structural identifiers and immutable timestamps (channel IDs,\nvideo IDs, creation timestamps). Permitted indefinite retention by\nevery connector ToS surveyed.",
+          "type": "string"
+        }
+      ]
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RetentionTier": {
+      "description": "Retention policy applied to a synced record. Tiers are named after the\ndiscipline they impose; the connector layer maps each upstream surface\nonto the appropriate tier.\n\n- `thirty_day_strict` — atomic records that auto-purge or refresh at\n  the thirty-day boundary. The dominant tier on platforms whose\n  Terms of Service impose a thirty-day cache discipline on derived\n  data (e.g. YouTube Developer Policies §III.E.4 for Data API\n  outputs).\n- `thirty_day_aggregate_with_lineage` — atomic record purges at\n  thirty days; the aggregate computed from it may be retained when\n  accompanied by explicit `derived_from` + `derivation_method`\n  lineage.\n- `auth_lifetime` — atomic record retains against active OAuth\n  authorisation; tears down on token revocation or tenant deletion.\n  Used for analytics surfaces whose ToS explicitly exempt them from\n  the thirty-day rule (e.g. YouTube Analytics API per §III.E.4).\n- `creator_authored` — data the tenant originates rather than fetches;\n  no upstream-platform retention constraint applies.\n- `metadata_indefinite` — structural identifiers and immutable\n  timestamps the upstream ToS explicitly permits to retain.",
+      "oneOf": [
+        {
+          "const": "thirty_day_strict",
+          "description": "Atomic record purges or refreshes at the thirty-day boundary.",
+          "type": "string"
+        },
+        {
+          "const": "thirty_day_aggregate_with_lineage",
+          "description": "Atomic record purges per `thirty_day_strict`; the aggregate may\nbe retained beyond thirty days when accompanied by explicit\n`derived_from` + `derivation_method` lineage.",
+          "type": "string"
+        },
+        {
+          "const": "auth_lifetime",
+          "description": "Retains against active OAuth authorisation; tears down on token\nrevocation or tenant deletion.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Data the tenant originates rather than fetches. Tenant retention\npolicy applies; no upstream-platform constraint.",
+          "type": "string"
+        },
+        {
+          "const": "metadata_indefinite",
+          "description": "Indefinite retention permitted by upstream ToS for structural\nidentifiers and immutable timestamps.",
+          "type": "string"
+        }
+      ]
+    },
+    "SourceAttribution": {
+      "description": "Source attribution for a synced field. Records the kind of upstream\nsurface that produced the value; combined with the parent record's\n`platform`, this fully attributes any value back to its origin.\n\nOpen-ended by design: new connector kinds (e.g. monetary or content-\nowner APIs) extend without breaking changes. The platform discriminator\n(`Channel.platform`) carries the brand identity; this enum carries\nonly the kind of API surface the value came from.",
+      "oneOf": [
+        {
+          "const": "platform_data_api",
+          "description": "Platform-side metadata API (channel snippet, video snippet,\nstatistics, status). Examples: YouTube Data API v3, Twitch Helix,\nTikTok Display API.",
+          "type": "string"
+        },
+        {
+          "const": "platform_analytics_api",
+          "description": "Platform-side analytics API. Examples: YouTube Analytics API,\nTwitch Insights API. Channel-scope aggregates; never per-viewer\nidentity.",
+          "type": "string"
+        },
+        {
+          "const": "platform_monetary_api",
+          "description": "Platform-side monetary API. Examples: YouTube content-owner\nmonetary reports, Patreon earnings, Substack revenue. Reserved\nfor future connectors that surface revenue data.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Field was authored by the creator, not fetched from any external\nAPI. Carried for symmetry with synced fields when both kinds\ncoexist on the same record.",
+          "type": "string"
+        }
+      ]
+    },
+    "SyncProvenance": {
+      "description": "Provenance metadata stamped on every synced atomic record across the\ncreator pillar. Per-record granularity; the `retention_tier` reflects\nthe strictest tier of any field on the record so the cache-purge job\ncan decide conservatively. Field-level retention distinctions are\ndocumented in each entity type's struct doc-comments — the schema\ndocuments the static taxonomy, the data carries only the per-fetch\nstate.",
+      "properties": {
+        "data_class": {
+          "$ref": "#/$defs/DataClass"
+        },
+        "retention_tier": {
+          "$ref": "#/$defs/RetentionTier"
+        },
+        "source_attribution": {
+          "$ref": "#/$defs/SourceAttribution"
+        },
+        "synced_at": {
+          "description": "ISO 8601 datetime when the record was last fetched.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "synced_at",
+        "data_class",
+        "retention_tier",
+        "source_attribution"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.15.2/channel.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A single channel on a creator platform.",
+  "properties": {
+    "country": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ISO 3166-1 alpha-2 country."
+    },
+    "custom_url": {
+      "description": "Creator handle (e.g. `@unstarter`). May be unset for new channels.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "default_language": {
+      "description": "BCP-47 language code. Optional.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "entity_id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "Owning legal entity (`PathRef` to `entity/`)."
+    },
+    "first_synced_at": {
+      "$ref": "#/$defs/IsoDate",
+      "description": "First-fetch timestamp; immutable on subsequent re-syncs."
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/channels/unstarter-yt`)."
+    },
+    "keywords": {
+      "description": "Creator-authored search keywords. Free-form text (e.g. YouTube's\nspace-separated `brandingSettings.channel.keywords`). High-signal\npositioning input for AI agents.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "made_for_kids": {
+      "description": "Channel-wide kids designation; affects monetisation eligibility\nand audience-snapshot interpretation on platforms that surface\nit (e.g. YouTube `madeForKids`).",
+      "type": "boolean"
+    },
+    "platform": {
+      "$ref": "#/$defs/CreatorPlatform"
+    },
+    "platform_channel_id": {
+      "description": "Platform-side stable identifier for this channel. Format is\nplatform-specific (YouTube emits `UC…` channel IDs; Twitch emits\nnumeric user IDs; TikTok emits `@handle` SecUIDs). Treated as an\nopaque token by CorpoSpec; the connector layer interprets it.\nPersisted indefinitely as a structural identifier.",
+      "type": "string"
+    },
+    "platform_uploads_id": {
+      "description": "Platform-side identifier for the channel's enumerable uploads\ncollection, where the platform exposes one. YouTube uses an\nuploads playlist ID; platforms that paginate uploads by channel ID\ndirectly leave this empty. Optional and platform-specific.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "privacy_status": {
+      "$ref": "#/$defs/ChannelPrivacyStatus"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SyncProvenance",
+      "description": "Provenance metadata for this channel record. The `retention_tier`\nreflects the strictest tier across the record's fields —\nsnippet text typically purges with the upstream platform's\nderived-data window, while structural identifiers (channel ID,\nuploads collection, channel-creation timestamp) are persisted\nindefinitely. Stamped with the strictest applicable tier so the\ncache-purge job can decide conservatively."
+    },
+    "published_at": {
+      "description": "Channel-creation timestamp on the platform; immutable. Persisted\nindefinitely as a structural identifier.",
+      "type": "string"
+    },
+    "statistics": {
+      "$ref": "#/$defs/ChannelStatistics"
+    },
+    "thumbnail_default_url": {
+      "description": "Default thumbnail URL (HTTPS; ephemeral).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumbnail_high_url": {
+      "description": "High thumbnail URL.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumbnail_medium_url": {
+      "description": "Medium thumbnail URL.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "topic_categories": {
+      "description": "Topic descriptors as URL references (e.g. Wikipedia URLs from\nYouTube `topicDetails.topicCategories`).",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "unsubscribed_trailer_video_id": {
+      "description": "Featured \"first impression\" video for visitors who are not yet\nsubscribed. Stored as a `creator/videos/` PathRef once the video\ntable is populated; the platform's raw video identifier is\naccepted on first sync.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "entity_id",
+    "platform",
+    "platform_channel_id",
+    "title",
+    "description",
+    "published_at",
+    "privacy_status",
+    "made_for_kids",
+    "statistics",
+    "first_synced_at",
+    "provenance"
+  ],
+  "title": "Channel",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}
