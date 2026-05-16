@@ -1,0 +1,749 @@
+{
+  "$defs": {
+    "AgeGenderBreakdown": {
+      "description": "Age-group × gender breakdown row.",
+      "properties": {
+        "age_group": {
+          "$ref": "#/$defs/AgeGroup"
+        },
+        "gender": {
+          "$ref": "#/$defs/Gender"
+        },
+        "viewer_percentage": {
+          "description": "Percentage of viewers in this bucket. Sums across buckets may\nexceed 100% across playback-detail combos per YouTube documentation.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "required": [
+        "age_group",
+        "gender",
+        "viewer_percentage"
+      ],
+      "type": "object"
+    },
+    "AgeGroup": {
+      "description": "Age-group bucket. Aggregate-level only; never identifies a single\nviewer. Wire form preserves the numeric-range convention common to\nanalytics APIs that report demographics this way (e.g. YouTube\nAnalytics' `ageGroup` dimension emits `age13-17`, `age18-24`, …).",
+      "enum": [
+        "age13_17",
+        "age18_24",
+        "age25_34",
+        "age35_44",
+        "age45_54",
+        "age55_64",
+        "age65_plus"
+      ],
+      "type": "string"
+    },
+    "ContentTypeBreakdown": {
+      "description": "Content-type breakdown — Shorts vs VOD vs livestream.",
+      "properties": {
+        "creator_content_type": {
+          "$ref": "#/$defs/CreatorContentType"
+        },
+        "estimated_minutes_watched": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "creator_content_type",
+        "views",
+        "estimated_minutes_watched"
+      ],
+      "type": "object"
+    },
+    "CountryBreakdown": {
+      "description": "Country-distribution row.",
+      "properties": {
+        "country": {
+          "$ref": "#/$defs/IsoCountry"
+        },
+        "estimated_minutes_watched": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "country",
+        "views",
+        "estimated_minutes_watched"
+      ],
+      "type": "object"
+    },
+    "CreatorContentType": {
+      "description": "Authoritative content-type classification from the host platform's\nanalytics surface, where one is exposed (e.g. YouTube Analytics'\n`creatorContentType` dimension). The best available signal for\nseparating short-form, long-form, livestream, and story content in\naudience aggregates; the connector reconciles `Video.kind` against\nthis where the host platform supports it.",
+      "enum": [
+        "live_stream",
+        "shorts",
+        "story",
+        "video_on_demand",
+        "unspecified"
+      ],
+      "type": "string"
+    },
+    "DataClass": {
+      "description": "Classification of a synced field's data sensitivity. Drives subject-\nrights workflows and cache-purge retention decisions.",
+      "oneOf": [
+        {
+          "const": "aggregate",
+          "description": "Computed from upstream API outputs by simple arithmetic. Eligible\nfor retention beyond the upstream record lifetime when paired with\nexplicit derivation lineage.",
+          "type": "string"
+        },
+        {
+          "const": "personal_data",
+          "description": "Identifies a person. Subject to GDPR Article 17 erasure on\nrequest; carries the strictest retention tier the connector emits.",
+          "type": "string"
+        },
+        {
+          "const": "pseudonymous",
+          "description": "Identifies a session or device without identifying a person.",
+          "type": "string"
+        },
+        {
+          "const": "metadata",
+          "description": "Structural identifiers and immutable timestamps (channel IDs,\nvideo IDs, creation timestamps). Permitted indefinite retention by\nevery connector ToS surveyed.",
+          "type": "string"
+        }
+      ]
+    },
+    "DeviceBreakdown": {
+      "description": "Device-distribution row.",
+      "properties": {
+        "device_type": {
+          "$ref": "#/$defs/DeviceType"
+        },
+        "estimated_minutes_watched": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "device_type",
+        "views",
+        "estimated_minutes_watched"
+      ],
+      "type": "object"
+    },
+    "DeviceType": {
+      "description": "Device type reported by analytics surfaces. Connectors map their\nnative device taxonomies onto the closest member.",
+      "enum": [
+        "desktop",
+        "game_console",
+        "mobile",
+        "tablet",
+        "tv",
+        "automotive",
+        "wearable",
+        "unknown_platform"
+      ],
+      "type": "string"
+    },
+    "Gender": {
+      "description": "Gender bucket reported by analytics surfaces. `user_specified`\ncaptures platforms that expose self-declared options beyond the\nfemale/male binary.",
+      "enum": [
+        "female",
+        "male",
+        "user_specified"
+      ],
+      "type": "string"
+    },
+    "IsoCountry": {
+      "description": "ISO 3166-1 alpha-2 country code.",
+      "pattern": "^[A-Z]{2}$",
+      "type": "string"
+    },
+    "IsoDate": {
+      "description": "ISO 8601 date (YYYY-MM-DD).",
+      "format": "date",
+      "type": "string"
+    },
+    "LiveOnDemandBreakdown": {
+      "description": "Live-vs-on-demand split row.",
+      "properties": {
+        "estimated_minutes_watched": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "live_or_on_demand": {
+          "$ref": "#/$defs/LiveOrOnDemand"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "live_or_on_demand",
+        "views",
+        "estimated_minutes_watched"
+      ],
+      "type": "object"
+    },
+    "LiveOrOnDemand": {
+      "description": "Live-vs-on-demand discriminator on a daily aggregate row.",
+      "enum": [
+        "live",
+        "on_demand"
+      ],
+      "type": "string"
+    },
+    "OperatingSystem": {
+      "description": "Operating system reported by analytics surfaces.",
+      "enum": [
+        "android",
+        "ios",
+        "windows",
+        "macintosh",
+        "linux",
+        "chrome_cast",
+        "firefox",
+        "play_station",
+        "xbox",
+        "other"
+      ],
+      "type": "string"
+    },
+    "OperatingSystemBreakdown": {
+      "description": "Operating-system-distribution row.",
+      "properties": {
+        "operating_system": {
+          "$ref": "#/$defs/OperatingSystem"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "operating_system",
+        "views"
+      ],
+      "type": "object"
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "PlaybackLocation": {
+      "description": "Playback location reported by analytics surfaces. Connectors map\ntheir native location dimensions onto the closest member.",
+      "oneOf": [
+        {
+          "const": "browse",
+          "description": "Discovery / browse surfaces.",
+          "type": "string"
+        },
+        {
+          "const": "channel",
+          "description": "Channel page on the host platform.",
+          "type": "string"
+        },
+        {
+          "const": "embedded",
+          "description": "Embedded on a third-party site.",
+          "type": "string"
+        },
+        {
+          "const": "external_app",
+          "description": "External native app (the platform's own iOS / Android app surface\nthat is not the watch page).",
+          "type": "string"
+        },
+        {
+          "const": "mobile",
+          "description": "Mobile-web playback.",
+          "type": "string"
+        },
+        {
+          "const": "search",
+          "description": "Search-results surface.",
+          "type": "string"
+        },
+        {
+          "const": "watch",
+          "description": "Watch page.",
+          "type": "string"
+        },
+        {
+          "const": "platform_other",
+          "description": "Platform-internal \"other\" bucket.",
+          "type": "string"
+        }
+      ]
+    },
+    "PlaybackLocationBreakdown": {
+      "description": "Playback-location-distribution row.",
+      "properties": {
+        "playback_location": {
+          "$ref": "#/$defs/PlaybackLocation"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "playback_location",
+        "views"
+      ],
+      "type": "object"
+    },
+    "PremiumSubscriberStats": {
+      "description": "Per-channel audience activity attributable to the host platform's\npremium subscription tier, where the platform exposes one (e.g.\nYouTube Premium / formerly \"YouTube Red\"). Tracks the slice of views\nand watch-time that originated from premium subscribers; absent when\nthe platform does not surface premium-tier metrics.",
+      "properties": {
+        "estimated_minutes_watched": {
+          "description": "Estimated minutes watched from the platform's premium-subscriber\ntier.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "views": {
+          "description": "Views from the platform's premium-subscriber tier.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "views",
+        "estimated_minutes_watched"
+      ],
+      "type": "object"
+    },
+    "RetentionTier": {
+      "description": "Retention policy applied to a synced record. Tiers are named after the\ndiscipline they impose; the connector layer maps each upstream surface\nonto the appropriate tier.\n\n- `thirty_day_strict` — atomic records that auto-purge or refresh at\n  the thirty-day boundary. The dominant tier on platforms whose\n  Terms of Service impose a thirty-day cache discipline on derived\n  data (e.g. YouTube Developer Policies §III.E.4 for Data API\n  outputs).\n- `thirty_day_aggregate_with_lineage` — atomic record purges at\n  thirty days; the aggregate computed from it may be retained when\n  accompanied by explicit `derived_from` + `derivation_method`\n  lineage.\n- `auth_lifetime` — atomic record retains against active OAuth\n  authorisation; tears down on token revocation or tenant deletion.\n  Used for analytics surfaces whose ToS explicitly exempt them from\n  the thirty-day rule (e.g. YouTube Analytics API per §III.E.4).\n- `creator_authored` — data the tenant originates rather than fetches;\n  no upstream-platform retention constraint applies.\n- `metadata_indefinite` — structural identifiers and immutable\n  timestamps the upstream ToS explicitly permits to retain.",
+      "oneOf": [
+        {
+          "const": "thirty_day_strict",
+          "description": "Atomic record purges or refreshes at the thirty-day boundary.",
+          "type": "string"
+        },
+        {
+          "const": "thirty_day_aggregate_with_lineage",
+          "description": "Atomic record purges per `thirty_day_strict`; the aggregate may\nbe retained beyond thirty days when accompanied by explicit\n`derived_from` + `derivation_method` lineage.",
+          "type": "string"
+        },
+        {
+          "const": "auth_lifetime",
+          "description": "Retains against active OAuth authorisation; tears down on token\nrevocation or tenant deletion.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Data the tenant originates rather than fetches. Tenant retention\npolicy applies; no upstream-platform constraint.",
+          "type": "string"
+        },
+        {
+          "const": "metadata_indefinite",
+          "description": "Indefinite retention permitted by upstream ToS for structural\nidentifiers and immutable timestamps.",
+          "type": "string"
+        }
+      ]
+    },
+    "SourceAttribution": {
+      "description": "Source attribution for a synced field. Records the kind of upstream\nsurface that produced the value; combined with the parent record's\n`platform`, this fully attributes any value back to its origin.\n\nOpen-ended by design: new connector kinds (e.g. monetary or content-\nowner APIs) extend without breaking changes. The platform discriminator\n(`Channel.platform`) carries the brand identity; this enum carries\nonly the kind of API surface the value came from.",
+      "oneOf": [
+        {
+          "const": "platform_data_api",
+          "description": "Platform-side metadata API (channel snippet, video snippet,\nstatistics, status). Examples: YouTube Data API v3, Twitch Helix,\nTikTok Display API.",
+          "type": "string"
+        },
+        {
+          "const": "platform_analytics_api",
+          "description": "Platform-side analytics API. Examples: YouTube Analytics API,\nTwitch Insights API. Channel-scope aggregates; never per-viewer\nidentity.",
+          "type": "string"
+        },
+        {
+          "const": "platform_monetary_api",
+          "description": "Platform-side monetary API. Examples: YouTube content-owner\nmonetary reports, Patreon earnings, Substack revenue. Reserved\nfor future connectors that surface revenue data.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Field was authored by the creator, not fetched from any external\nAPI. Carried for symmetry with synced fields when both kinds\ncoexist on the same record.",
+          "type": "string"
+        }
+      ]
+    },
+    "SubscribedStatus": {
+      "description": "Subscribed-status discriminator on a daily aggregate row. Splits\naudience activity by whether the viewer is subscribed to the channel\nat the time of the play.",
+      "enum": [
+        "subscribed",
+        "unsubscribed"
+      ],
+      "type": "string"
+    },
+    "SubscribedStatusBreakdown": {
+      "description": "Subscribed-status breakdown row.",
+      "properties": {
+        "subscribed_status": {
+          "$ref": "#/$defs/SubscribedStatus"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "subscribed_status",
+        "views"
+      ],
+      "type": "object"
+    },
+    "SyncProvenance": {
+      "description": "Provenance metadata stamped on every synced atomic record across the\ncreator pillar. Per-record granularity; the `retention_tier` reflects\nthe strictest tier of any field on the record so the cache-purge job\ncan decide conservatively. Field-level retention distinctions are\ndocumented in each entity type's struct doc-comments — the schema\ndocuments the static taxonomy, the data carries only the per-fetch\nstate.",
+      "properties": {
+        "data_class": {
+          "$ref": "#/$defs/DataClass"
+        },
+        "retention_tier": {
+          "$ref": "#/$defs/RetentionTier"
+        },
+        "source_attribution": {
+          "$ref": "#/$defs/SourceAttribution"
+        },
+        "synced_at": {
+          "description": "ISO 8601 datetime when the record was last fetched.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "synced_at",
+        "data_class",
+        "retention_tier",
+        "source_attribution"
+      ],
+      "type": "object"
+    },
+    "TrafficSourceBreakdown": {
+      "description": "Traffic-source-distribution row.",
+      "properties": {
+        "traffic_source": {
+          "$ref": "#/$defs/TrafficSourceType"
+        },
+        "views": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "traffic_source",
+        "views"
+      ],
+      "type": "object"
+    },
+    "TrafficSourceType": {
+      "description": "Traffic-source type reported by analytics surfaces. The eighteen\nmembers cover the union of categories surveyed across major creator\nanalytics APIs; values prefixed `platform_` denote platform-internal\nsources (the platform's own search, channel pages, recommendation\nsurfaces) that map onto each platform's native enum at the connector\nboundary.",
+      "oneOf": [
+        {
+          "const": "advertising",
+          "description": "Paid advertising surfaces.",
+          "type": "string"
+        },
+        {
+          "const": "annotation",
+          "description": "In-video annotation overlays.",
+          "type": "string"
+        },
+        {
+          "const": "campaign",
+          "description": "Tracked campaign deep-link.",
+          "type": "string"
+        },
+        {
+          "const": "end_screen",
+          "description": "End-of-video recommendation surface.",
+          "type": "string"
+        },
+        {
+          "const": "external",
+          "description": "External referrer (any non-platform origin).",
+          "type": "string"
+        },
+        {
+          "const": "hash_tags",
+          "description": "Hashtag landing surface.",
+          "type": "string"
+        },
+        {
+          "const": "live_redirect",
+          "description": "Live-redirect (a finished livestream redirecting to its VOD).",
+          "type": "string"
+        },
+        {
+          "const": "no_link_embedded",
+          "description": "Embed without a click-through link.",
+          "type": "string"
+        },
+        {
+          "const": "no_link_other",
+          "description": "Other no-link surfaces.",
+          "type": "string"
+        },
+        {
+          "const": "notification",
+          "description": "Push notification.",
+          "type": "string"
+        },
+        {
+          "const": "playlist",
+          "description": "Playlist surface.",
+          "type": "string"
+        },
+        {
+          "const": "promoted",
+          "description": "Platform-promoted surface.",
+          "type": "string"
+        },
+        {
+          "const": "related_video",
+          "description": "Related-video surface.",
+          "type": "string"
+        },
+        {
+          "const": "shorts",
+          "description": "Short-form surface (e.g. YouTube Shorts feed).",
+          "type": "string"
+        },
+        {
+          "const": "sound_page",
+          "description": "Sound-page surface (where a video is reused as a sound source).",
+          "type": "string"
+        },
+        {
+          "const": "subscriber",
+          "description": "Subscriber-feed surface.",
+          "type": "string"
+        },
+        {
+          "const": "platform_channel_page",
+          "description": "Platform's own channel-page surface.",
+          "type": "string"
+        },
+        {
+          "const": "platform_other",
+          "description": "Platform-internal \"other\" bucket.",
+          "type": "string"
+        },
+        {
+          "const": "platform_playlist_page",
+          "description": "Platform's own playlist-page surface.",
+          "type": "string"
+        },
+        {
+          "const": "platform_search",
+          "description": "Platform's own search surface.",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.15.4/audience-snapshot.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Daily aggregate of audience activity for one channel on one date.\n\nPath-shape: `creator/audience-snapshots/YYYY-MM-DD-{channel-slug}.yaml`.\nCore activity row is fetched daily; demographic / geographic /\ntraffic-source breakdowns are fetched on a weekly cadence (the\nconnector decides — empty `*_breakdown` vectors are valid for a day\nwhere only the core row was synced).",
+  "properties": {
+    "age_gender_breakdown": {
+      "items": {
+        "$ref": "#/$defs/AgeGenderBreakdown"
+      },
+      "type": "array"
+    },
+    "average_view_duration_seconds": {
+      "format": "double",
+      "type": "number"
+    },
+    "average_view_percentage": {
+      "format": "double",
+      "type": "number"
+    },
+    "channel": {
+      "$ref": "#/$defs/PathRef"
+    },
+    "comments": {
+      "description": "Aggregate count only; comment text and author identities not\nsynced.",
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "content_type_breakdown": {
+      "items": {
+        "$ref": "#/$defs/ContentTypeBreakdown"
+      },
+      "type": "array"
+    },
+    "country_breakdown": {
+      "items": {
+        "$ref": "#/$defs/CountryBreakdown"
+      },
+      "type": "array"
+    },
+    "date": {
+      "$ref": "#/$defs/IsoDate",
+      "description": "Activity day. Connectors normalise to the platform's reporting\ntimezone (e.g. YouTube Analytics buckets in Pacific time)."
+    },
+    "device_breakdown": {
+      "items": {
+        "$ref": "#/$defs/DeviceBreakdown"
+      },
+      "type": "array"
+    },
+    "dislikes": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "engaged_views": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "estimated_minutes_watched": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef\n(e.g. `creator/audience-snapshots/2026-05-05-unstarter-yt`)."
+    },
+    "likes": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "live_on_demand_breakdown": {
+      "items": {
+        "$ref": "#/$defs/LiveOnDemandBreakdown"
+      },
+      "type": "array"
+    },
+    "operating_system_breakdown": {
+      "items": {
+        "$ref": "#/$defs/OperatingSystemBreakdown"
+      },
+      "type": "array"
+    },
+    "playback_location_breakdown": {
+      "items": {
+        "$ref": "#/$defs/PlaybackLocationBreakdown"
+      },
+      "type": "array"
+    },
+    "premium_subscriber_stats": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PremiumSubscriberStats"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Per-channel activity attributable to the host platform's premium\nsubscription tier. Optional — absent when the host platform does\nnot surface premium-tier metrics for the channel."
+    },
+    "provenance": {
+      "$ref": "#/$defs/SyncProvenance"
+    },
+    "shares": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "subscribed_status_breakdown": {
+      "items": {
+        "$ref": "#/$defs/SubscribedStatusBreakdown"
+      },
+      "type": "array"
+    },
+    "subscribers_gained": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "subscribers_lost": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "thumbnail_impressions": {
+      "description": "Number of times the channel's video thumbnails were shown to\nviewers (impression count).",
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "thumbnail_impressions_ctr": {
+      "description": "Click-through rate on `thumbnail_impressions` as a percentage.",
+      "format": "double",
+      "type": "number"
+    },
+    "traffic_source_breakdown": {
+      "items": {
+        "$ref": "#/$defs/TrafficSourceBreakdown"
+      },
+      "type": "array"
+    },
+    "videos_added_to_playlists": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "videos_removed_from_playlists": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "views": {
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "channel",
+    "date",
+    "views",
+    "engaged_views",
+    "estimated_minutes_watched",
+    "average_view_duration_seconds",
+    "average_view_percentage",
+    "likes",
+    "dislikes",
+    "comments",
+    "shares",
+    "subscribers_gained",
+    "subscribers_lost",
+    "videos_added_to_playlists",
+    "videos_removed_from_playlists",
+    "thumbnail_impressions",
+    "thumbnail_impressions_ctr",
+    "provenance"
+  ],
+  "title": "AudienceSnapshot",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}

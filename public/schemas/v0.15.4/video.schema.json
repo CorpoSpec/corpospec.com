@@ -1,0 +1,395 @@
+{
+  "$defs": {
+    "BroadcastState": {
+      "description": "Live-broadcast lifecycle state. Universal across livestream-capable\nplatforms (YouTube, Twitch, TikTok Live, Instagram Live, …).\n`none` = not a livestream / livestream finished and was archived as\nVOD; `upcoming` = scheduled but not yet started; `live` = currently\nbroadcasting.",
+      "enum": [
+        "none",
+        "live",
+        "upcoming"
+      ],
+      "type": "string"
+    },
+    "DataClass": {
+      "description": "Classification of a synced field's data sensitivity. Drives subject-\nrights workflows and cache-purge retention decisions.",
+      "oneOf": [
+        {
+          "const": "aggregate",
+          "description": "Computed from upstream API outputs by simple arithmetic. Eligible\nfor retention beyond the upstream record lifetime when paired with\nexplicit derivation lineage.",
+          "type": "string"
+        },
+        {
+          "const": "personal_data",
+          "description": "Identifies a person. Subject to GDPR Article 17 erasure on\nrequest; carries the strictest retention tier the connector emits.",
+          "type": "string"
+        },
+        {
+          "const": "pseudonymous",
+          "description": "Identifies a session or device without identifying a person.",
+          "type": "string"
+        },
+        {
+          "const": "metadata",
+          "description": "Structural identifiers and immutable timestamps (channel IDs,\nvideo IDs, creation timestamps). Permitted indefinite retention by\nevery connector ToS surveyed.",
+          "type": "string"
+        }
+      ]
+    },
+    "PathRef": {
+      "description": "Path-based cross-reference relative to .corpospec/ root.\nPattern: `^[a-z0-9_-]+(/[a-z0-9_.-]+)+$`",
+      "pattern": "^[a-z0-9_-]+(/[a-z0-9_.-]+)+$",
+      "type": "string"
+    },
+    "RetentionTier": {
+      "description": "Retention policy applied to a synced record. Tiers are named after the\ndiscipline they impose; the connector layer maps each upstream surface\nonto the appropriate tier.\n\n- `thirty_day_strict` — atomic records that auto-purge or refresh at\n  the thirty-day boundary. The dominant tier on platforms whose\n  Terms of Service impose a thirty-day cache discipline on derived\n  data (e.g. YouTube Developer Policies §III.E.4 for Data API\n  outputs).\n- `thirty_day_aggregate_with_lineage` — atomic record purges at\n  thirty days; the aggregate computed from it may be retained when\n  accompanied by explicit `derived_from` + `derivation_method`\n  lineage.\n- `auth_lifetime` — atomic record retains against active OAuth\n  authorisation; tears down on token revocation or tenant deletion.\n  Used for analytics surfaces whose ToS explicitly exempt them from\n  the thirty-day rule (e.g. YouTube Analytics API per §III.E.4).\n- `creator_authored` — data the tenant originates rather than fetches;\n  no upstream-platform retention constraint applies.\n- `metadata_indefinite` — structural identifiers and immutable\n  timestamps the upstream ToS explicitly permits to retain.",
+      "oneOf": [
+        {
+          "const": "thirty_day_strict",
+          "description": "Atomic record purges or refreshes at the thirty-day boundary.",
+          "type": "string"
+        },
+        {
+          "const": "thirty_day_aggregate_with_lineage",
+          "description": "Atomic record purges per `thirty_day_strict`; the aggregate may\nbe retained beyond thirty days when accompanied by explicit\n`derived_from` + `derivation_method` lineage.",
+          "type": "string"
+        },
+        {
+          "const": "auth_lifetime",
+          "description": "Retains against active OAuth authorisation; tears down on token\nrevocation or tenant deletion.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Data the tenant originates rather than fetches. Tenant retention\npolicy applies; no upstream-platform constraint.",
+          "type": "string"
+        },
+        {
+          "const": "metadata_indefinite",
+          "description": "Indefinite retention permitted by upstream ToS for structural\nidentifiers and immutable timestamps.",
+          "type": "string"
+        }
+      ]
+    },
+    "SourceAttribution": {
+      "description": "Source attribution for a synced field. Records the kind of upstream\nsurface that produced the value; combined with the parent record's\n`platform`, this fully attributes any value back to its origin.\n\nOpen-ended by design: new connector kinds (e.g. monetary or content-\nowner APIs) extend without breaking changes. The platform discriminator\n(`Channel.platform`) carries the brand identity; this enum carries\nonly the kind of API surface the value came from.",
+      "oneOf": [
+        {
+          "const": "platform_data_api",
+          "description": "Platform-side metadata API (channel snippet, video snippet,\nstatistics, status). Examples: YouTube Data API v3, Twitch Helix,\nTikTok Display API.",
+          "type": "string"
+        },
+        {
+          "const": "platform_analytics_api",
+          "description": "Platform-side analytics API. Examples: YouTube Analytics API,\nTwitch Insights API. Channel-scope aggregates; never per-viewer\nidentity.",
+          "type": "string"
+        },
+        {
+          "const": "platform_monetary_api",
+          "description": "Platform-side monetary API. Examples: YouTube content-owner\nmonetary reports, Patreon earnings, Substack revenue. Reserved\nfor future connectors that surface revenue data.",
+          "type": "string"
+        },
+        {
+          "const": "creator_authored",
+          "description": "Field was authored by the creator, not fetched from any external\nAPI. Carried for symmetry with synced fields when both kinds\ncoexist on the same record.",
+          "type": "string"
+        }
+      ]
+    },
+    "SyncProvenance": {
+      "description": "Provenance metadata stamped on every synced atomic record across the\ncreator pillar. Per-record granularity; the `retention_tier` reflects\nthe strictest tier of any field on the record so the cache-purge job\ncan decide conservatively. Field-level retention distinctions are\ndocumented in each entity type's struct doc-comments — the schema\ndocuments the static taxonomy, the data carries only the per-fetch\nstate.",
+      "properties": {
+        "data_class": {
+          "$ref": "#/$defs/DataClass"
+        },
+        "retention_tier": {
+          "$ref": "#/$defs/RetentionTier"
+        },
+        "source_attribution": {
+          "$ref": "#/$defs/SourceAttribution"
+        },
+        "synced_at": {
+          "description": "ISO 8601 datetime when the record was last fetched.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "synced_at",
+        "data_class",
+        "retention_tier",
+        "source_attribution"
+      ],
+      "type": "object"
+    },
+    "VideoDefinition": {
+      "description": "Resolution band for the primary streamable rendition. `hd` covers\n720p and above; `sd` covers everything below.",
+      "enum": [
+        "hd",
+        "sd"
+      ],
+      "type": "string"
+    },
+    "VideoKind": {
+      "description": "Video subtype derived from the short-form / long-form / livestream\nclassification heuristic:\n\n- `duration_seconds <= 60 && broadcast_state == \"none\"` → `short`\n- `livestream_started_at != null && broadcast_state == \"none\"`\n  → `livestream_vod`\n- `broadcast_state == \"live\"` → `live`\n- `broadcast_state == \"upcoming\"` → `upcoming`\n- otherwise → `regular_vod`\n\nWhere the host platform exposes an authoritative content-type signal\n(e.g. YouTube Analytics' `creatorContentType`), the connector is free\nto reconcile the heuristic against it on a periodic cadence.",
+      "enum": [
+        "regular_vod",
+        "short",
+        "livestream_vod",
+        "live",
+        "upcoming"
+      ],
+      "type": "string"
+    },
+    "VideoLicense": {
+      "description": "Content-licence selection. `platform_default` covers any platform's\nown all-rights-reserved licence; `creative_commons` covers any CC\nlicence the platform exposes. Connectors map native licence values\nonto the corresponding member.",
+      "oneOf": [
+        {
+          "const": "platform_default",
+          "description": "Platform-default licence (all-rights-reserved on every surveyed\nplatform).",
+          "type": "string"
+        },
+        {
+          "const": "creative_commons",
+          "description": "Creative Commons (any CC variant the platform exposes).",
+          "type": "string"
+        }
+      ]
+    },
+    "VideoPrivacyStatus": {
+      "description": "Video-level privacy status. Public, unlisted, and private are the\nthree states common across most video platforms; values map onto\neach platform's native enum at the connector boundary.",
+      "enum": [
+        "public",
+        "private",
+        "unlisted"
+      ],
+      "type": "string"
+    },
+    "VideoStatistics": {
+      "description": "Aggregate counts attached to a single video. Snapshot semantics: the\ncounts are valid as of `provenance.synced_at`. Comment text and\ncommenter identities are intentionally not stored.",
+      "properties": {
+        "comment_count": {
+          "description": "Aggregate count only; comment text and author identities not\nsynced.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "like_count": {
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "view_count": {
+          "description": "Lifetime view count.",
+          "format": "uint64",
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "view_count",
+        "like_count",
+        "comment_count"
+      ],
+      "type": "object"
+    },
+    "VideoUploadStatus": {
+      "description": "Upload-processing status surfaced by the host platform during and\nafter upload. The five states cover the union surveyed across video\nplatforms; connectors map their native states onto the closest\nmember.",
+      "enum": [
+        "uploaded",
+        "processed",
+        "failed",
+        "rejected",
+        "deleted"
+      ],
+      "type": "string"
+    }
+  },
+  "$id": "https://corpospec.com/schemas/v0.15.4/video.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A single video on a creator platform.",
+  "properties": {
+    "broadcast_state": {
+      "$ref": "#/$defs/BroadcastState",
+      "description": "Live-broadcast lifecycle state at the time of sync. Input to the\n`kind` heuristic."
+    },
+    "caption_available": {
+      "description": "Caption / subtitle track availability flag.",
+      "type": "boolean"
+    },
+    "category_id": {
+      "description": "Platform-side category identifier. Format is platform-specific\n(e.g. YouTube's numeric category ID); optional because not every\nplatform exposes a category taxonomy.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "channel": {
+      "$ref": "#/$defs/PathRef",
+      "description": "Channel this video belongs to."
+    },
+    "contains_synthetic_media": {
+      "description": "AI / synthetic-media disclosure flag where the host platform\nsurfaces one (e.g. YouTube `containsSyntheticMedia`). Defaults\nto `false` for platforms that do not expose the flag.",
+      "type": "boolean"
+    },
+    "content_series": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PathRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Optional content-series this video belongs to."
+    },
+    "default_audio_language": {
+      "description": "BCP-47 default audio language code.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "default_language": {
+      "description": "BCP-47 default language code.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "definition": {
+      "$ref": "#/$defs/VideoDefinition"
+    },
+    "description": {
+      "type": "string"
+    },
+    "duration_seconds": {
+      "description": "Duration in seconds. Used as input to the `kind` heuristic.",
+      "format": "uint64",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "embeddable": {
+      "type": "boolean"
+    },
+    "has_paid_product_placement": {
+      "description": "Paid-product-placement disclosure flag where the host platform\nsurfaces one (e.g. YouTube\n`paidProductPlacementDetails.hasPaidProductPlacement`). The\nvalidator cross-checks this against creator-authored\n`Sponsorship` records — a video flagged paid-placement without a\ncorresponding sponsorship surfaces as a domain-consistency\nadvisory.",
+      "type": "boolean"
+    },
+    "id": {
+      "$ref": "#/$defs/PathRef",
+      "description": "CorpoSpec PathRef (e.g. `creator/videos/abc123def45`)."
+    },
+    "kind": {
+      "$ref": "#/$defs/VideoKind"
+    },
+    "license": {
+      "$ref": "#/$defs/VideoLicense"
+    },
+    "livestream_ended_at": {
+      "description": "Livestream actual end timestamp; marks the livestream-VOD\nboundary.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "livestream_scheduled_for": {
+      "description": "Livestream scheduled start timestamp.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "livestream_started_at": {
+      "description": "Livestream actual start timestamp; present only on broadcasts\nthat have started. Input to the `kind` heuristic.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "made_for_kids": {
+      "type": "boolean"
+    },
+    "platform_video_id": {
+      "description": "Platform-side stable identifier for this video. Format is\nplatform-specific (YouTube emits 11-char video IDs; Twitch emits\nnumeric VOD IDs; TikTok emits numeric `aweme_id`s). Treated as an\nopaque token; persisted indefinitely as a structural identifier.",
+      "type": "string"
+    },
+    "privacy_status": {
+      "$ref": "#/$defs/VideoPrivacyStatus"
+    },
+    "provenance": {
+      "$ref": "#/$defs/SyncProvenance"
+    },
+    "published_at": {
+      "description": "Source-of-truth publish timestamp from the host platform.",
+      "type": "string"
+    },
+    "statistics": {
+      "$ref": "#/$defs/VideoStatistics"
+    },
+    "tags": {
+      "description": "Creator-authored tags. High-signal but volatile (creators iterate\nrapidly).",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "thumbnail_default_url": {
+      "description": "Default thumbnail URL.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumbnail_high_url": {
+      "description": "High thumbnail URL.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumbnail_maxres_url": {
+      "description": "Max-resolution thumbnail URL (not always present).",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "topic_categories": {
+      "description": "Topic descriptors as URL references (e.g. Wikipedia URLs from\nYouTube `topicDetails.topicCategories`).",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "upload_status": {
+      "$ref": "#/$defs/VideoUploadStatus"
+    }
+  },
+  "required": [
+    "id",
+    "channel",
+    "platform_video_id",
+    "title",
+    "description",
+    "kind",
+    "published_at",
+    "duration_seconds",
+    "broadcast_state",
+    "definition",
+    "privacy_status",
+    "upload_status",
+    "license",
+    "embeddable",
+    "made_for_kids",
+    "contains_synthetic_media",
+    "caption_available",
+    "has_paid_product_placement",
+    "statistics",
+    "provenance"
+  ],
+  "title": "Video",
+  "type": "object",
+  "x-corpospec-pillar": "creator"
+}
