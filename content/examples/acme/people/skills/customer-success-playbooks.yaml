@@ -1,9 +1,0 @@
-id: people/skills/customer-success-playbooks
-entity: entity/acme-corp
-skill_family: customer-success
-name: Customer success playbooks
-description: >
-  QBR cadence design, health score methodology, expansion playbook
-  execution, churn risk identification, escalation management,
-  and NPS/CSAT program ownership.
-training_refs: []

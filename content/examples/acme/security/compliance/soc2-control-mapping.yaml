@@ -24,8 +24,7 @@ control_refs:
   - security/controls/change-management
   - security/controls/incident-response
   - security/controls/vendor-management
-procedure_refs:
-  - operations/sops/handle-data-breach
+procedure_refs: []
 bdr_ref: governance/decisions/0018-security-framework
 penalty_exposure: Loss of enterprise deals requiring SOC 2 report; reputational damage
 schedule_anchor: August 15 each year (report delivery target)

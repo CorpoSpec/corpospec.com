@@ -1,9 +1,0 @@
-id: people/skills/data-analysis
-entity: entity/acme-corp
-skill_family: analytics
-name: Data analysis
-description: >
-  SQL query design, Python (pandas, numpy), A/B test methodology,
-  cohort and funnel analysis, statistical significance testing,
-  and self-serve dashboard tooling (Metabase, Looker).
-training_refs: []

@@ -1,9 +1,0 @@
-id: people/skills/rust
-entity: entity/acme-corp
-skill_family: engineering
-name: Rust systems programming
-description: >
-  Async runtime mastery (tokio), ownership + borrow-checker fluency,
-  lifetimes, unsafe-boundary discipline, schema-derive macros (serde, schemars).
-  Required for high-performance backend services.
-training_refs: []

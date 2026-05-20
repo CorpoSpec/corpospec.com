@@ -2,7 +2,7 @@ id: operations/slas/pro-2026
 entity: entity/acme-corp
 customer: null
 contract_ref: null
-service: operations/services/api
+service: product/features/api
 name: Acme Pro — 99.9% SLA 2026
 slis:
   - key: availability

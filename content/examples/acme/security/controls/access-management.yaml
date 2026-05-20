@@ -30,7 +30,6 @@ framework_mappings:
     clause: Art. 32(1)(b)
 procedure_refs:
   - operations/sops/onboard-new-vendor
-  - operations/sops/hire-new-employee
 owner: people/team/maria-rodriguez
 test_cadence: P3M
 last_tested: '2026-04-10'

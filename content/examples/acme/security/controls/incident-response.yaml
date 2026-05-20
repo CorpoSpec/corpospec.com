@@ -28,8 +28,7 @@ framework_mappings:
     clause: IR-4
   - framework: GDPR
     clause: Art. 33 + 34
-procedure_refs:
-  - operations/sops/handle-data-breach
+procedure_refs: []
 owner: people/team/maria-rodriguez
 test_cadence: P3M
 last_tested: '2026-04-08'
